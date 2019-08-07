@@ -15,7 +15,7 @@
     "url": "https://sendilkumarn.com"
   },
   "bin": {
-    "khipster": "./cli/mhipster.js"
+    "mhipster": "./cli/mhipster.js"
   },
   "files": [
     "generators"

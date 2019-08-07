@@ -17,13 +17,11 @@
 * limitations under the License.
 */
 /* eslint-disable consistent-return */
-const os = require('os');
-
 const chalk = require('chalk');
-const shelljs = require('shelljs');
 const ServerGenerator = require('generator-jhipster/generators/server');
+const constants = require('generator-jhipster/generators/generator-constants');
 const writeFiles = require('./files').writeFiles;
-const micronautConstants = require('../generator-micronaut-constants');
+const prompts = require('./prompts');
 
 module.exports = class extends ServerGenerator {
     constructor(args, opts) {
@@ -55,7 +53,38 @@ module.exports = class extends ServerGenerator {
 
     get prompting() {
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._prompting();
+        // return super._prompting();
+        return {
+            askForModuleName: prompts.askForModuleName,
+            askForServerSideOpts: prompts.askForServerSideOpts,
+            askForOptionalItems: prompts.askForOptionalItems,
+            askFori18n: prompts.askFori18n,
+
+            setSharedConfigOptions() {
+                this.configOptions.packageName = this.packageName;
+                this.configOptions.cacheProvider = this.cacheProvider;
+                this.configOptions.enableHibernateCache = this.enableHibernateCache;
+                this.configOptions.websocket = this.websocket;
+                this.configOptions.databaseType = this.databaseType;
+                this.configOptions.devDatabaseType = this.devDatabaseType;
+                this.configOptions.prodDatabaseType = this.prodDatabaseType;
+                this.configOptions.searchEngine = this.searchEngine;
+                this.configOptions.messageBroker = this.messageBroker;
+                this.configOptions.serviceDiscoveryType = this.serviceDiscoveryType;
+                this.configOptions.buildTool = this.buildTool;
+                this.configOptions.enableSwaggerCodegen = this.enableSwaggerCodegen;
+                this.configOptions.authenticationType = this.authenticationType;
+                const uaaBaseName = this.uaaBaseName;
+                if (uaaBaseName) {
+                    this.configOptions.uaaBaseName = this.uaaBaseName;
+                }
+                this.configOptions.serverPort = this.serverPort;
+
+                // Make dist dir available in templates
+                this.BUILD_DIR = this.getBuildDirectoryForBuildTool(this.buildTool);
+                this.CLIENT_DIST_DIR = this.getResourceBuildDirectoryForBuildTool(this.configOptions.buildTool) + constants.CLIENT_DIST_DIR;
+            }
+        };
     }
 
     get configuring() {

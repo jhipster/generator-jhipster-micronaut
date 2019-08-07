@@ -55,23 +55,6 @@ const serverFiles = {
             ]
         },
         {
-            condition: generator => generator.clientFramework === 'react',
-            path: SERVER_MAIN_RES_DIR,
-            templates: [
-                {
-                    file: 'banner.txt',
-                    method: 'copy',
-                    noEjs: true,
-                    renameTo: () => 'banner.txt'
-                }
-            ]
-        },
-        {
-            condition: generator => generator.clientFramework !== 'react',
-            path: SERVER_MAIN_RES_DIR,
-            templates: [{ file: 'banner.txt', method: 'copy', noEjs: true }]
-        },
-        {
             condition: generator => generator.devDatabaseType === 'h2Disk' || generator.devDatabaseType === 'h2Memory',
             path: SERVER_MAIN_RES_DIR,
             templates: [{ file: 'h2.server.properties', renameTo: () => '.h2.server.properties' }]
@@ -136,7 +119,7 @@ const serverFiles = {
                 'config/couchmove/changelog/V0.1__initial_setup/user__system.json',
                 'config/couchmove/changelog/V0.1__initial_setup/user__user.json'
             ]
-        },
+},
         {
             condition: generator => generator.databaseType === 'cassandra',
             path: SERVER_MAIN_RES_DIR,
