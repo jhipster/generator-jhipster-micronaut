@@ -16,7 +16,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const path = require('path');
 const mkdirp = require('mkdirp');
 const cleanup = require('generator-jhipster/generators/cleanup');
 const constants = require('generator-jhipster/generators/generator-constants');
@@ -119,7 +118,7 @@ const serverFiles = {
                 'config/couchmove/changelog/V0.1__initial_setup/user__system.json',
                 'config/couchmove/changelog/V0.1__initial_setup/user__user.json'
             ]
-},
+        },
         {
             condition: generator => generator.databaseType === 'cassandra',
             path: SERVER_MAIN_RES_DIR,
