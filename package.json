@@ -1,6 +1,6 @@
 {
   "name": "generator-jhipster-micronaut",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A Micronaut application Generator with JHipster",
   "keywords": [
     "yeoman-generator",
@@ -20,7 +20,6 @@
   "files": [
     "generators"
   ],
-  "main": "generators/app/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sendilkumarn/generator-jhipster-micronaut.git"

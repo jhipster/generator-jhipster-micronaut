@@ -143,8 +143,20 @@ const serverFiles = {
                 }
             ]
         }
-    ]
+    ],
     // TODO Add files in here
+    serverJavaApp: [
+        {
+            path: SERVER_MAIN_KOTLIN_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/App.java',
+                    renameTo: generator => `${generator.javaDir}${generator.mainClass}.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+    ]
 };
 
 /* eslint-disable no-template-curly-in-string */

@@ -77,7 +77,7 @@ function requireCLI(preferLocal) {
             if (__dirname !== path.dirname(localCLI)) {
                 // load local version
                 /* eslint-disable import/no-dynamic-require */
-                logger.info("Using JHipster version installed locally in current project's node_modules");
+                logger.info("Using MHipster version installed locally in current project's node_modules");
                 require(localCLI);
                 return;
             }
