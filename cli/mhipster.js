@@ -73,7 +73,7 @@ function requireCLI(preferLocal) {
     /* eslint-disable global-require */
     if (preferLocal) {
         try {
-            const localCLI = require.resolve(path.join(process.cwd(), 'node_modules', 'generator-jhipster', 'cli', 'cli.js'));
+            const localCLI = require.resolve(path.join(process.cwd(), 'node_modules', 'generator-jhipster-micronaut', 'cli', 'cli.js'));
             if (__dirname !== path.dirname(localCLI)) {
                 // load local version
                 /* eslint-disable import/no-dynamic-require */
@@ -83,6 +83,7 @@ function requireCLI(preferLocal) {
             }
         } catch (e) {
             // Unable to find local version, so global one will be loaded anyway
+            logger.log("Local install was preferred but not found.", e)
         }
     }
     // load global version

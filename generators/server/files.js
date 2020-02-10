@@ -144,10 +144,10 @@ const serverFiles = {
             ]
         }
     ],
-    // TODO Add files in here
+    // TODO WIP Adding files in here, will need to properly conditional and remove some in the future
     serverJavaApp: [
         {
-            path: SERVER_MAIN_KOTLIN_SRC_DIR,
+            path: SERVER_MAIN_SRC_DIR,
             templates: [
                 {
                     file: 'package/App.java',
@@ -156,7 +156,481 @@ const serverFiles = {
                 }
             ]
         },
-    ]
+    ],
+    // I'm going to organize these by package, for lack of a better means of organizing right now
+    serverJavaAppConfig: [
+        {
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/config/ActiveProfilesInfoSource.java',
+                    renameTo: generator => `${generator.javaDir}config/ActiveProfilesInfoSource.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/config/ApplicationProperties.java',
+                    renameTo: generator => `${generator.javaDir}config/ApplicationProperties.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/config/CacheConfiguration.java',
+                    renameTo: generator => `${generator.javaDir}config/CacheConfiguration.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/config/Constants.java',
+                    renameTo: generator => `${generator.javaDir}config/Constants.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/config/DefaultProfileUtil.java',
+                    renameTo: generator => `${generator.javaDir}config/DefaultProfileUtil.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/config/JacksonConfiguration.java',
+                    renameTo: generator => `${generator.javaDir}config/JacksonConfiguration.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/config/JHipsterConfigurationEndpoint.java',
+                    renameTo: generator => `${generator.javaDir}config/JHipsterConfigurationEndpoint.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/config/LoggingConfiguration.java',
+                    renameTo: generator => `${generator.javaDir}config/LoggingConfiguration.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/config/package-info.java',
+                    renameTo: generator => `${generator.javaDir}config/package-info.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/config/SnakeCasePhysicalNamingStrategy.java',
+                    renameTo: generator => `${generator.javaDir}config/SnakeCasePhysicalNamingStrategy.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/config/metric/JHipsterMetricsEndpoint.java',
+                    renameTo: generator => `${generator.javaDir}config/metric/JHipsterMetricsEndpoint.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+    ],
+    // TODO this one should not end up in the final product? Maybe User and Authority stay?
+    serverJavaAppDomain: [
+        {
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/domain/Authority.java',
+                    renameTo: generator => `${generator.javaDir}domain/Authority.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/domain/BankAccount.java',
+                    renameTo: generator => `${generator.javaDir}domain/BankAccount.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/domain/Label.java',
+                    renameTo: generator => `${generator.javaDir}domain/Label.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/domain/Operation.java',
+                    renameTo: generator => `${generator.javaDir}domain/Operation.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/domain/package-info.java',
+                    renameTo: generator => `${generator.javaDir}domain/package-info.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/domain/User.java',
+                    renameTo: generator => `${generator.javaDir}domain/User.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+    ],
+    serverJavaAppRepository: [
+        {
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/repository/AuthorityRepository.java',
+                    renameTo: generator => `${generator.javaDir}repository/AuthorityRepository.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/repository/BankAccountRepository.java',
+                    renameTo: generator => `${generator.javaDir}repository/BankAccountRepository.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/repository/LabelRepository.java',
+                    renameTo: generator => `${generator.javaDir}repository/LabelRepository.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/repository/OperationRepository.java',
+                    renameTo: generator => `${generator.javaDir}repository/OperationRepository.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/repository/package-info.java',
+                    renameTo: generator => `${generator.javaDir}repository/package-info.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/repository/UserRepository.java',
+                    renameTo: generator => `${generator.javaDir}repository/UserRepository.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+    ],
+    serverJavaAppSecurity: [
+        {
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/security/AuthoritiesConstants.java',
+                    renameTo: generator => `${generator.javaDir}security/AuthoritiesConstants.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/security/BcryptPasswordEncoder.java',
+                    renameTo: generator => `${generator.javaDir}security/BcryptPasswordEncoder.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/security/DatabaseAuthenticationProvider.java',
+                    renameTo: generator => `${generator.javaDir}security/DatabaseAuthenticationProvider.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/security/NotAuthenticatedResponse.java',
+                    renameTo: generator => `${generator.javaDir}security/NotAuthenticatedResponse.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/security/package-info.java',
+                    renameTo: generator => `${generator.javaDir}security/package-info.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/security/SecurityUtils.java',
+                    renameTo: generator => `${generator.javaDir}security/SecurityUtils.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/security/UserNotActivatedException.java',
+                    renameTo: generator => `${generator.javaDir}security/UserNotActivatedException.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+    ],
+    serverJavaAppServices: [
+        {
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/service/dto/package-info.java',
+                    renameTo: generator => `${generator.javaDir}service/dto/package-info.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/service/dto/PasswordChangeDTO.java',
+                    renameTo: generator => `${generator.javaDir}service/dto/PasswordChangeDTO.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/service/dto/UserDTO.java',
+                    renameTo: generator => `${generator.javaDir}service/dto/UserDTO.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/service/mapper/package-info.java',
+                    renameTo: generator => `${generator.javaDir}service/mapper/package-info.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/service/mapper/UserMapper.java',
+                    renameTo: generator => `${generator.javaDir}service/mapper/UserMapper.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/service/util/RandomUtil.java',
+                    renameTo: generator => `${generator.javaDir}service/util/RandomUtil.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/service/MailSenderFactory.java',
+                    renameTo: generator => `${generator.javaDir}service/MailSenderFactory.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/service/MailService.java',
+                    renameTo: generator => `${generator.javaDir}service/MailService.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/service/package-info.java',
+                    renameTo: generator => `${generator.javaDir}service/package-info.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/service/UserService.java',
+                    renameTo: generator => `${generator.javaDir}service/UserService.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+    ],
+    serverJavaAppRest: [
+        {
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
+                // Handlers
+                {
+                    file: 'package/web/rest/errors/handlers/BadRequestAlertExceptionHandler.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/BadRequestAlertExceptionHandler.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/handlers/ConcurrencyFailureExceptionHandler.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/ConcurrencyFailureExceptionHandler.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/handlers/ConstraintViolationExceptionHandler.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/ConstraintViolationExceptionHandler.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/handlers/ProblemHandler.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/BadRequestAlertExceptionHandler.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/handlers/ProblemRejectionHandler.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/ProblemRejectionHandler.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/handlers/UnsatisfiedRouteExceptionHandler.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/UnsatisfiedRouteExceptionHandler.java`,
+                    useBluePrint: true
+                },
+                // Errors
+                {
+                    file: 'package/web/rest/errors/BadRequestAlertException.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/BadRequestAlertException.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/EmailAlreadyUsedException.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/EmailAlreadyUsedException.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/EmailNotFoundException.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/EmailNotFoundException.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/ErrorConstants.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/ErrorConstants.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/FieldErrorVM.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/FieldErrorVM.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/InvalidPasswordException.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/InvalidPasswordException.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/LoginAlreadyUsedException.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/LoginAlreadyUsedException.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/package-info.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/package-info.java`,
+                    useBluePrint: true
+                },
+                // VM
+                {
+                    file: 'package/web/rest/vm/KeyAndPasswordVM.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/vm/KeyAndPasswordVM.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/vm/LoginVM.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/vm/LoginVM.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/vm/ManagedUserVM.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/vm/ManagedUserVM.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/vm/package-info.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/vm/package-info.java`,
+                    useBluePrint: true
+                },
+                // Base rest pkg
+                {
+                    file: 'package/web/rest/AccountResource.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/AccountResource.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/BankAccountResource.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/BankAccountResource.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/ClientForwardController.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/ClientForwardController.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/LabelResource.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/LabelResource.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/OperationResource.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/OperationResource.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/package-info.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/package-info.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/UserResource.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/UserResource.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+    ],
+    serverJavaAppRestTest: [
+        {
+            path: SERVER_TEST_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/web/rest/errors/ExceptionTranslatorIT.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/ExceptionTranslatorIT.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/ExceptionTranslatorTestController.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/ExceptionTranslatorTestController.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/errors/TestDTO.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/TestDTO.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/AccountResourceIT.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/AccountResourceIT.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/BankAccountResourceIT.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/BankAccountResourceIT.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/ClientForwardControllerIT.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/ClientForwardControllerIT.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/LabelResourceIT.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/LabelResourceIT.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/OperationResourceIT.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/OperationResourceIT.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/TestUtil.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/TestUtil.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/UserJWTControllerIT.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/UserJWTControllerIT.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/web/rest/UserResourceIT.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/UserResourceIT.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+    ],
+    serverBuild: [
+        {
+            templates: [{ file: 'checkstyle.xml', options: { interpolate: INTERPOLATE_REGEX } }]
+        },
+        // TODO we'll need to add these
+        {
+            condition: generator => generator.buildTool === 'gradle',
+            templates: [
+                'build.gradle',
+                'settings.gradle',
+                'gradle.properties',
+                'gradle/sonar.gradle',
+                'gradle/docker.gradle',
+                { file: 'gradle/profile_dev.gradle', options: { interpolate: INTERPOLATE_REGEX } },
+                { file: 'gradle/profile_prod.gradle', options: { interpolate: INTERPOLATE_REGEX } },
+                'gradle/war.gradle',
+                'gradle/zipkin.gradle',
+                { file: 'gradlew', method: 'copy', noEjs: true },
+                { file: 'gradlew.bat', method: 'copy', noEjs: true },
+                { file: 'gradle/wrapper/gradle-wrapper.jar', method: 'copy', noEjs: true },
+                'gradle/wrapper/gradle-wrapper.properties'
+            ]
+        },
+        {
+            condition: generator => generator.buildTool === 'gradle' && !!generator.enableSwaggerCodegen,
+            templates: ['gradle/swagger.gradle']
+        },
+        {
+            condition: generator => generator.buildTool === 'maven',
+            templates: [
+                { file: 'mvnw', method: 'copy', noEjs: true },
+                { file: 'mvnw.cmd', method: 'copy', noEjs: true },
+                { file: '.mvn/wrapper/maven-wrapper.jar', method: 'copy', noEjs: true },
+                { file: '.mvn/wrapper/maven-wrapper.properties', method: 'copy', noEjs: true },
+                { file: '.mvn/wrapper/MavenWrapperDownloader.java', method: 'copy', noEjs: true },
+                { file: 'pom.xml', options: { interpolate: INTERPOLATE_REGEX } }
+            ]
+        }
+    ], 
 };
 
 /* eslint-disable no-template-curly-in-string */
@@ -165,7 +639,7 @@ function writeFiles() {
         setUp() {
             this.javaDir = `${this.packageFolder}/`;
             this.testDir = `${this.packageFolder}/`;
-
+ 
             // Create server resource files
             mkdirp(SERVER_MAIN_RES_DIR);
             mkdirp(`${SERVER_TEST_SRC_DIR}/${this.testDir}`);

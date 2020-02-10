@@ -52,8 +52,7 @@ module.exports = class extends ServerGenerator {
     }
 
     get prompting() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        // return super._prompting();
+        // Overriding this phase to limit what's supported as we continue to add supported options
         return {
             askForModuleName: prompts.askForModuleName,
             askForServerSideOpts: prompts.askForServerSideOpts,
