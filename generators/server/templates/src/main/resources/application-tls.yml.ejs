@@ -1,0 +1,21 @@
+# ===================================================================
+# Activate this profile to enable TLS.
+#
+# JHipster has generated a self-signed certificate, which will be used to encrypt traffic.
+# As your browser will not understand this certificate, you will need to import it.
+#
+# Another (easiest) solution with Chrome is to enable the "allow-insecure-localhost" flag
+# at chrome://flags/#allow-insecure-localhost
+# ===================================================================
+micronaut:
+  server:
+    ssl:
+      port: 443
+      key-store:
+        path: classpath:config/tls/keystore.p12
+        password: password
+        type: PKCS12
+      key:
+        alias: selfsigned
+      ciphers: TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_DHE_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_RSA_WITH_AES_256_CBC_SHA256
+      protocols: TLSv1.2

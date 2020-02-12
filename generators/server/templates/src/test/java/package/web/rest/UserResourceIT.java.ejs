@@ -1,13 +1,13 @@
-package io.github.jhipster.sample.web.rest;
+package <%=packageName%>.web.rest;
 
-import io.github.jhipster.sample.domain.Authority;
-import io.github.jhipster.sample.domain.User;
-import io.github.jhipster.sample.repository.UserRepository;
-import io.github.jhipster.sample.security.AuthoritiesConstants;
-import io.github.jhipster.sample.service.MailService;
-import io.github.jhipster.sample.service.dto.UserDTO;
-import io.github.jhipster.sample.service.mapper.UserMapper;
-import io.github.jhipster.sample.web.rest.vm.ManagedUserVM;
+import <%=packageName%>.domain.Authority;
+import <%=packageName%>.domain.User;
+import <%=packageName%>.repository.UserRepository;
+import <%=packageName%>.security.AuthoritiesConstants;
+import <%=packageName%>.service.MailService;
+import <%=packageName%>.service.dto.UserDTO;
+import <%=packageName%>.service.mapper.UserMapper;
+import <%=packageName%>.web.rest.vm.ManagedUserVM;
 import io.micronaut.cache.CacheManager;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.core.type.Argument;
