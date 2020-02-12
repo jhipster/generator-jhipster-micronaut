@@ -19,7 +19,6 @@
 const mkdirp = require('mkdirp');
 const cleanup = require('generator-jhipster/generators/cleanup');
 const constants = require('generator-jhipster/generators/generator-constants');
-const baseServerFiles = require('generator-jhipster/generators/server/files').serverFiles;
 
 /* Constants use throughout */
 const INTERPOLATE_REGEX = constants.INTERPOLATE_REGEX;
@@ -39,7 +38,6 @@ const shouldSkipUserManagement = generator =>
  * For any other config an object { file:.., method:.., template:.. } can be used
  */
 const serverFiles = {
-    ...baseServerFiles,
     serverResource: [
         {
             path: SERVER_MAIN_RES_DIR,
@@ -158,7 +156,7 @@ const serverFiles = {
         },
     ],
     // I'm going to organize these by package, for lack of a better means of organizing right now
-    serverJavaAppConfig: [
+    serverJavaConfig: [
         {
             path: SERVER_MAIN_SRC_DIR,
             templates: [
@@ -221,7 +219,7 @@ const serverFiles = {
         },
     ],
     // TODO this one should not end up in the final product? Maybe User and Authority stay?
-    serverJavaAppDomain: [
+    serverJavaDomain: [
         {
             path: SERVER_MAIN_SRC_DIR,
             templates: [
@@ -258,7 +256,7 @@ const serverFiles = {
             ]
         },
     ],
-    serverJavaAppRepository: [
+    serverJavaRepository: [
         {
             path: SERVER_MAIN_SRC_DIR,
             templates: [
@@ -295,7 +293,7 @@ const serverFiles = {
             ]
         },
     ],
-    serverJavaAppSecurity: [
+    serverJavaSecurity: [
         {
             path: SERVER_MAIN_SRC_DIR,
             templates: [
@@ -337,7 +335,7 @@ const serverFiles = {
             ]
         },
     ],
-    serverJavaAppServices: [
+    serverJavaServices: [
         {
             path: SERVER_MAIN_SRC_DIR,
             templates: [
@@ -394,7 +392,7 @@ const serverFiles = {
             ]
         },
     ],
-    serverJavaAppRest: [
+    serverJavaRest: [
         {
             path: SERVER_MAIN_SRC_DIR,
             templates: [
@@ -530,7 +528,90 @@ const serverFiles = {
             ]
         },
     ],
-    serverJavaAppRestTest: [
+    serverJavaConfigTest: [
+        {
+            path: SERVER_TEST_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/config/timezone/HibernateTimeZoneIT.java',
+                    renameTo: generator => `${generator.javaDir}config/timezone/HibernateTimeZoneIT.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/config/CorsController.java',
+                    renameTo: generator => `${generator.javaDir}config/CorsController.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/config/CorsTest.java',
+                    renameTo: generator => `${generator.javaDir}config/CorsTest.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+    ],
+    serverJavaRepositoryTest: [
+        {
+            path: SERVER_TEST_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/repository/timezone/DateTimeWrapper.java',
+                    renameTo: generator => `${generator.javaDir}repository/timezone/DateTimeWrapper.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/repository/timezone/DateTimeWrapperRepository.java',
+                    renameTo: generator => `${generator.javaDir}repository/timezone/DateTimeWrapperRepository.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+    ],
+    serverJavaSecurityTest: [
+        {
+            path: SERVER_TEST_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/security/jwt/JWTFilterTest.java',
+                    renameTo: generator => `${generator.javaDir}security/jwt/JWTFilterTest.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/security/DomainUserDetailsServiceIT.java',
+                    renameTo: generator => `${generator.javaDir}security/DomainUserDetailsServiceIT.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/security/SecurityUtilsUnitTest.java',
+                    renameTo: generator => `${generator.javaDir}security/SecurityUtilsUnitTest.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+    ],
+    serverJavaServiceTest: [
+        {
+            path: SERVER_TEST_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/service/mapper/UserMapperIT.java',
+                    renameTo: generator => `${generator.javaDir}service/mapper/UserMapperIT.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/service/MailServiceIT.java',
+                    renameTo: generator => `${generator.javaDir}service/MailServiceIT.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/service/UserServiceIT.java',
+                    renameTo: generator => `${generator.javaDir}service/UserServiceIT.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+    ],
+    serverJavaRestTest: [
         {
             path: SERVER_TEST_SRC_DIR,
             templates: [
@@ -622,12 +703,12 @@ const serverFiles = {
         {
             condition: generator => generator.buildTool === 'maven',
             templates: [
-                { file: 'mvnw', method: 'copy', noEjs: true },
-                { file: 'mvnw.cmd', method: 'copy', noEjs: true },
-                { file: '.mvn/wrapper/maven-wrapper.jar', method: 'copy', noEjs: true },
-                { file: '.mvn/wrapper/maven-wrapper.properties', method: 'copy', noEjs: true },
-                { file: '.mvn/wrapper/MavenWrapperDownloader.java', method: 'copy', noEjs: true },
-                { file: 'pom.xml', options: { interpolate: INTERPOLATE_REGEX } }
+                { file: 'mvnw', method: 'copy', noEjs: true, useBluePrint: true },
+                { file: 'mvnw.cmd', method: 'copy', noEjs: true, useBluePrint: true },
+                { file: '.mvn/wrapper/maven-wrapper.jar', method: 'copy', noEjs: true, useBluePrint: true },
+                { file: '.mvn/wrapper/maven-wrapper.properties', method: 'copy', noEjs: true, useBluePrint: true },
+                { file: '.mvn/wrapper/MavenWrapperDownloader.java', method: 'copy', noEjs: true, useBluePrint: true },
+                { file: 'pom.xml', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true }
             ]
         }
     ], 
