@@ -153,7 +153,7 @@ const serverFiles = {
                     useBluePrint: true
                 }
             ]
-        },
+        }
     ],
     // I'm going to organize these by package, for lack of a better means of organizing right now
     serverJavaConfig: [
@@ -216,7 +216,7 @@ const serverFiles = {
                     useBluePrint: true
                 }
             ]
-        },
+        }
     ],
     // TODO this one should not end up in the final product? Maybe User and Authority stay?
     serverJavaDomain: [
@@ -254,7 +254,7 @@ const serverFiles = {
                     useBluePrint: true
                 }
             ]
-        },
+        }
     ],
     serverJavaRepository: [
         {
@@ -291,7 +291,7 @@ const serverFiles = {
                     useBluePrint: true
                 }
             ]
-        },
+        }
     ],
     serverJavaSecurity: [
         {
@@ -333,9 +333,9 @@ const serverFiles = {
                     useBluePrint: true
                 }
             ]
-        },
+        }
     ],
-    serverJavaServices: [
+    serverJavaService: [
         {
             path: SERVER_MAIN_SRC_DIR,
             templates: [
@@ -390,7 +390,29 @@ const serverFiles = {
                     useBluePrint: true
                 }
             ]
-        },
+        }
+    ],
+    serverJavaUtil: [
+        {
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/util/HeaderUtil.java',
+                    renameTo: generator => `${generator.javaDir}util/HeaderUtil.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/util/JHipsterProperties.java',
+                    renameTo: generator => `${generator.javaDir}util/JHipsterProperties.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/util/PaginationUtil.java',
+                    renameTo: generator => `${generator.javaDir}util/PaginationUtil.java`,
+                    useBluePrint: true
+                }
+            ]
+        }
     ],
     serverJavaRest: [
         {
@@ -526,7 +548,7 @@ const serverFiles = {
                     useBluePrint: true
                 }
             ]
-        },
+        }
     ],
     serverJavaConfigTest: [
         {
@@ -548,7 +570,7 @@ const serverFiles = {
                     useBluePrint: true
                 }
             ]
-        },
+        }
     ],
     serverJavaRepositoryTest: [
         {
@@ -565,7 +587,7 @@ const serverFiles = {
                     useBluePrint: true
                 }
             ]
-        },
+        }
     ],
     serverJavaSecurityTest: [
         {
@@ -587,7 +609,7 @@ const serverFiles = {
                     useBluePrint: true
                 }
             ]
-        },
+        }
     ],
     serverJavaServiceTest: [
         {
@@ -609,7 +631,7 @@ const serverFiles = {
                     useBluePrint: true
                 }
             ]
-        },
+        }
     ],
     serverJavaRestTest: [
         {
@@ -671,7 +693,7 @@ const serverFiles = {
                     useBluePrint: true
                 }
             ]
-        },
+        }
     ],
     serverBuild: [
         {
@@ -711,7 +733,7 @@ const serverFiles = {
                 { file: 'pom.xml', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true }
             ]
         }
-    ], 
+    ]
 };
 
 /* eslint-disable no-template-curly-in-string */
@@ -720,7 +742,7 @@ function writeFiles() {
         setUp() {
             this.javaDir = `${this.packageFolder}/`;
             this.testDir = `${this.packageFolder}/`;
- 
+
             // Create server resource files
             mkdirp(SERVER_MAIN_RES_DIR);
             mkdirp(`${SERVER_TEST_SRC_DIR}/${this.testDir}`);
