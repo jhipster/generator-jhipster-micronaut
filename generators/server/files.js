@@ -436,7 +436,7 @@ const serverFiles = {
                 },
                 {
                     file: 'package/web/rest/errors/handlers/ProblemHandler.java',
-                    renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/BadRequestAlertExceptionHandler.java`,
+                    renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/ProblemHandler.java`,
                     useBluePrint: true
                 },
                 {
