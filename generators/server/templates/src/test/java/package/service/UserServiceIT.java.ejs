@@ -1,15 +1,15 @@
-package io.github.jhipster.sample.service;
+package <%=packageName%>.service;
 
-import io.github.jhipster.sample.config.Constants;
-import io.github.jhipster.sample.domain.User;
-import io.github.jhipster.sample.repository.AuthorityRepository;
-import io.github.jhipster.sample.repository.UserRepository;
-import io.github.jhipster.sample.security.AuthoritiesConstants;
-import io.github.jhipster.sample.service.dto.UserDTO;
-import io.github.jhipster.sample.service.util.RandomUtil;
-import io.github.jhipster.sample.web.rest.errors.EmailAlreadyUsedException;
-import io.github.jhipster.sample.web.rest.errors.LoginAlreadyUsedException;
-import io.github.jhipster.sample.web.rest.vm.ManagedUserVM;
+import <%=packageName%>.config.Constants;
+import <%=packageName%>.domain.User;
+import <%=packageName%>.repository.AuthorityRepository;
+import <%=packageName%>.repository.UserRepository;
+import <%=packageName%>.security.AuthoritiesConstants;
+import <%=packageName%>.service.dto.UserDTO;
+import <%=packageName%>.service.util.RandomUtil;
+import <%=packageName%>.web.rest.errors.EmailAlreadyUsedException;
+import <%=packageName%>.web.rest.errors.LoginAlreadyUsedException;
+import <%=packageName%>.web.rest.vm.ManagedUserVM;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;

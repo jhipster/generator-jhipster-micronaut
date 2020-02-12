@@ -1,6 +1,6 @@
-package io.github.jhipster.sample.security.jwt;
+package <%=packageName%>.security.jwt;
 
-import io.github.jhipster.sample.security.AuthoritiesConstants;
+import <%=packageName%>.security.AuthoritiesConstants;
 
 import java.security.Key;
 import java.util.*;
