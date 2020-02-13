@@ -38,7 +38,7 @@ const shouldSkipUserManagement = generator =>
  * For any other config an object { file:.., method:.., template:.. } can be used
  */
 const serverFiles = {
-    serverResource: [
+    serverResources: [
         {
             path: SERVER_MAIN_RES_DIR,
             templates: [
@@ -64,14 +64,12 @@ const serverFiles = {
         {
             path: SERVER_MAIN_RES_DIR,
             templates: [
-                // Thymeleaf templates
-                { file: 'templates/error.html', method: 'copy' },
-                'logback-spring.xml',
-                'config/application.yml',
-                'config/application-dev.yml',
-                'config/application-tls.yml',
-                'config/application-prod.yml',
-                'i18n/messages.properties'
+                { file: 'logback.xml', useBluePrint: true },
+                { file: 'application.yml', useBluePrint: true },
+                { file: 'application-dev.yml', useBluePrint: true },
+                { file: 'application-tls.yml', useBluePrint: true },
+                { file: 'application-prod.yml', useBluePrint: true },
+                { file: 'i18n/messages.properties', useBluePrint: true, noEjs: true }
             ]
         },
         {
