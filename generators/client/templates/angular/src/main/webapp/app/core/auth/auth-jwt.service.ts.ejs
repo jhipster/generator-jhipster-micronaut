@@ -1,88 +1,61 @@
-<%#
- Copyright 2013-2020 the original author or authors from the JHipster project.
-
- This file is part of the JHipster project, see https://www.jhipster.tech/
- for more information.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
--%>
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-<%_ if (authenticationType !== 'uaa') { _%>
 import { map } from 'rxjs/operators';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
-<%_ } _%>
 
 import { SERVER_API_URL } from 'app/app.constants';
-import { Login } from 'app/core/login/login.model';
-
-<%_ if (authenticationType !== 'uaa') { _%>
-type JwtToken = {
-    id_token: string;
-};
-<%_ } else { _%>
-export const LOGOUT_URL = SERVER_API_URL + 'auth/logout';
-<%_ } _%>
 
 @Injectable({ providedIn: 'root' })
 export class AuthServerProvider {
-    constructor(
-        private http: HttpClient,
-        <%_ if (authenticationType !== 'uaa') { _%>
-        private $localStorage: LocalStorageService,
-        private $sessionStorage: SessionStorageService
-        <%_ } _%>
-    ) {}
+  constructor(private http: HttpClient, private $localStorage: LocalStorageService, private $sessionStorage: SessionStorageService) {}
 
-    <%_ if (authenticationType === 'uaa') { _%>
+  getToken() {
+    return this.$localStorage.retrieve('authenticationToken') || this.$sessionStorage.retrieve('authenticationToken');
+  }
 
-    login(credentials: Login): Observable<any> {
-        return this.http.post(SERVER_API_URL + 'auth/login', credentials);
+  login(credentials): Observable<any> {
+    const data = {
+      username: credentials.username,
+      password: credentials.password,
+      rememberMe: credentials.rememberMe
+    };
+    return this.http.post(SERVER_API_URL + 'api/authenticate', data, { observe: 'response' }).pipe(map(authenticateSuccess.bind(this)));
+
+    function authenticateSuccess(resp: HttpResponse<any>) {
+      console.log(resp);
+      console.log(resp.body);
+      console.log(resp.body.access_token);
+      const jwt = resp.body.access_token;
+      if (jwt) {
+        this.storeAuthenticationToken(jwt, credentials.rememberMe);
+        return jwt;
+      }
     }
+  }
 
-    logout(): Observable<{}> {
-        return this.http.post(LOGOUT_URL, null);
+  loginWithToken(jwt, rememberMe) {
+    if (jwt) {
+      this.storeAuthenticationToken(jwt, rememberMe);
+      return Promise.resolve(jwt);
+    } else {
+      return Promise.reject('auth-jwt-service Promise reject'); // Put appropriate error message here
     }
+  }
 
-    <%_ } else { _%>
-
-    getToken(): string {
-        return this.$localStorage.retrieve('authenticationToken') || this.$sessionStorage.retrieve('authenticationToken') || '';
+  storeAuthenticationToken(jwt, rememberMe) {
+    if (rememberMe) {
+      this.$localStorage.store('authenticationToken', jwt);
+    } else {
+      this.$sessionStorage.store('authenticationToken', jwt);
     }
+  }
 
-    login(credentials: Login): Observable<void> {
-        return this.http
-            .post<JwtToken>(SERVER_API_URL + 'api/authenticate', credentials)
-            .pipe(map(response => this.authenticateSuccess(response, credentials.rememberMe)));
-    }
-
-    logout(): Observable<void> {
-        return new Observable((observer) => {
-            this.$localStorage.clear('authenticationToken');
-            this.$sessionStorage.clear('authenticationToken');
-            observer.complete();
-        });
-    }
-
-    private authenticateSuccess(response: JwtToken, rememberMe: boolean): void {
-        const jwt = response.id_token;
-        if (rememberMe) {
-            this.$localStorage.store('authenticationToken', jwt);
-        } else {
-            this.$sessionStorage.store('authenticationToken', jwt);
-        }
-    }
-
-    <%_ } _%>
+  logout(): Observable<any> {
+    return new Observable(observer => {
+      this.$localStorage.clear('authenticationToken');
+      this.$sessionStorage.clear('authenticationToken');
+      observer.complete();
+    });
+  }
 }
