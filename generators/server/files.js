@@ -76,12 +76,71 @@ const serverFiles = {
             condition: generator => generator.databaseType === 'sql',
             path: SERVER_MAIN_RES_DIR,
             templates: [
-                {
-                    file: 'config/liquibase/changelog/initial_schema.xml',
-                    renameTo: () => 'config/liquibase/changelog/00000000000000_initial_schema.xml',
-                    options: { interpolate: INTERPOLATE_REGEX }
+                { 
+                    file: 'config/liquibase/master.xml', 
+                    useBluePrint: true,
+                    noEjs: true
                 },
-                'config/liquibase/master.xml'
+                {
+                    file: 'config/liquibase/changelog/00000000000000_initial_schema.xml',
+                    useBluePrint: true,
+                    noEjs: true
+                },
+                {
+                    file: 'config/liquibase/changelog/20150805124838_added_entity_BankAccount.xml',
+                    useBluePrint: true,
+                    noEjs: true
+                },
+                {
+                    file: 'config/liquibase/changelog/20150805124936_added_entity_Label.xml',
+                    useBluePrint: true,
+                    noEjs: true
+                },
+                {
+                    file: 'config/liquibase/changelog/20150805125054_added_entity_Operation.xml',
+                    useBluePrint: true,
+                    noEjs: true
+                },
+                {
+                    file: 'config/liquibase/changelog/20150805124838_added_entity_constraints_BankAccount.xml',
+                    useBluePrint: true,
+                    noEjs: true
+                },
+                {
+                    file: 'config/liquibase/changelog/20150805125054_added_entity_constraints_Operation.xml',
+                    useBluePrint: true,
+                    noEjs: true
+                },
+                {
+                    file: 'config/liquibase/data/authority.csv',
+                    useBluePrint: true,
+                    noEjs: true
+                },
+                {
+                    file: 'config/liquibase/data/bank_account.csv',
+                    useBluePrint: true,
+                    noEjs: true
+                },
+                {
+                    file: 'config/liquibase/data/label.csv',
+                    useBluePrint: true,
+                    noEjs: true
+                },
+                {
+                    file: 'config/liquibase/data/operation.csv',
+                    useBluePrint: true,
+                    noEjs: true
+                },
+                {
+                    file: 'config/liquibase/data/user_authority.csv',
+                    useBluePrint: true,
+                    noEjs: true
+                },
+                {
+                    file: 'config/liquibase/data/user.csv',
+                    useBluePrint: true,
+                    noEjs: true
+                }
             ]
         },
         {
