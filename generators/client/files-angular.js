@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 const mkdirp = require('mkdirp');
-const constants = require('../generator-constants');
+const constants = require('generator-jhipster/generators/generator-constants');
 
 /* Constants use throughout */
 const MAIN_SRC_DIR = constants.CLIENT_MAIN_SRC_DIR;
@@ -229,11 +229,12 @@ const files = {
             templates: [
                 { file: 'admin/admin-routing.module.ts', method: 'processJs' },
                 // admin modules
-                { file: 'admin/configuration/configuration.route.ts', method: 'processJs' },
-                { file: 'admin/configuration/configuration.module.ts', method: 'processJs' },
-                { file: 'admin/configuration/configuration.component.ts', method: 'processJs' },
-                { file: 'admin/configuration/configuration.component.html', method: 'processHtml' },
-                'admin/configuration/configuration.service.ts',
+                { file: 'admin/configuration/configuration.route.ts', method: 'processJs', useBlueprint: true },
+                { file: 'admin/configuration/configuration.filter.ts', method: 'processJs', useBlueprint: true },
+                { file: 'admin/configuration/configuration.component.ts', method: 'processJs', useBlueprint: true },
+                { file: 'admin/configuration/configuration.module.ts', method: 'processJs', useBlueprint: true },
+                { file: 'admin/configuration/configuration.component.html', method: 'processHtml', useBlueprint: true },
+                { file: 'admin/configuration/configuration.service.ts', useBlueprint: true },
                 { file: 'admin/docs/docs.route.ts', method: 'processJs' },
                 { file: 'admin/docs/docs.module.ts', method: 'processJs' },
                 { file: 'admin/docs/docs.component.ts', method: 'processJs' },
@@ -399,7 +400,9 @@ const files = {
         {
             condition: generator => generator.authenticationType === 'jwt' || generator.authenticationType === 'uaa',
             path: ANGULAR_DIR,
-            templates: ['core/auth/auth-jwt.service.ts']
+            templates: [
+                { file: 'core/auth/auth-jwt.service.ts', useBlueprint: true }
+            ]
         },
         {
             condition: generator => generator.authenticationType === 'session' || generator.authenticationType === 'oauth2',

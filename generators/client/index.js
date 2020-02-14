@@ -19,17 +19,17 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const _ = require('lodash');
-const BaseBlueprintGenerator = require('../generator-base-blueprint');
+const ClientGenerator = require('generator-jhipster/generators/client');
 const prompts = require('./prompts');
 const writeAngularFiles = require('./files-angular').writeFiles;
 const writeReactFiles = require('./files-react').writeFiles;
 const packagejs = require('../../package.json');
-const constants = require('../generator-constants');
-const statistics = require('../statistics');
+const constants = require('generator-jhipster/generators/generator-constants');
+const statistics = require('generator-jhipster/generators/statistics');
 
 let useBlueprints;
 
-module.exports = class extends BaseBlueprintGenerator {
+module.exports = class extends ClientGenerator {
     constructor(args, opts) {
         super(args, opts);
 
@@ -369,7 +369,7 @@ module.exports = class extends BaseBlueprintGenerator {
     }
 
     get writing() {
-        if (useBlueprints) return;
+        // Overriding the JHipster client generation with one appropriate for Micronaut.
         return this._writing();
     }
 

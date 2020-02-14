@@ -97,7 +97,7 @@ module.exports = class extends ServerGenerator {
     }
 
     get writing() {
-        // Overriding the JHipster file generation with the custom one.
+        // Overriding the JHipster file generation with the custom Micronaut server.
         return writeFiles();
     }
 
