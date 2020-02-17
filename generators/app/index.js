@@ -4,14 +4,14 @@ const AppGenerator = require('generator-jhipster/generators/app');
 const jhipsterPackagejs = require('generator-jhipster/package.json');
 
 module.exports = class extends AppGenerator {
-    /**
-     * Override yeoman standard storage function for yo-rc.json
-     *  in order to save variables in generator-jhipster key.
-     * @return {String} The name of the root generator
-     */
-    rootGeneratorName() {
-        return jhipsterPackagejs.name;
-    }
+    // /**
+    //  * Override yeoman standard storage function for yo-rc.json
+    //  *  in order to save variables in generator-jhipster key.
+    //  * @return {String} The name of the root generator
+    //  */
+    // rootGeneratorName() {
+    //     return jhipsterPackagejs.name;
+    // }
 
     constructor(args, opts) {
         super(args, Object.assign({ fromBlueprint: true }, opts)); // fromBlueprint variable is important
