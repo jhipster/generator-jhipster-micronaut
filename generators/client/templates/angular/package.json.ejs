@@ -63,7 +63,6 @@
     "@angular/cli": "8.3.20",
     "@angular/compiler-cli": "8.2.14",
     "@ngtools/webpack": "8.3.20",
-    "@openapitools/openapi-generator-cli": "0.0.14-4.0.2",
     <%_ if (protractorTests) { _%>
     "@types/chai": "4.2.7",
     "@types/chai-string": "1.4.2",
@@ -73,15 +72,15 @@
     "@types/mocha": "5.2.7",
     <%_ } _%>
     "@types/node": "12.12.17",
-    <%_ if (protractorTests) { _%>
-    "@types/selenium-webdriver": "4.0.5",
-    <%_ } _%>
     <%_ if (websocket === 'spring-websocket') { _%>
     "@types/sockjs-client": "1.1.1",
     <%_ } _%>
     "@typescript-eslint/eslint-plugin": "2.11.0",
     "@typescript-eslint/eslint-plugin-tslint": "2.11.0",
     "@typescript-eslint/parser": "2.11.0",
+    <%_ if (protractorTests) { _%>
+    "@types/selenium-webdriver": "4.0.5",
+    <%_ } _%>
     "angular2-template-loader": "0.6.2",
     "autoprefixer": "9.7.3",
     "base-href-webpack-plugin": "2.0.0",
@@ -115,7 +114,6 @@
     "jest-preset-angular": "8.0.0",
     "jest-sonar-reporter": "2.0.0",
     <%_ if (!skipCommitHook) { _%>
-    <%# Not using the latest version because of https://github.com/jhipster/generator-jhipster/issues/10312 -%>
     "lint-staged": "8.2.1",
     <%_ } _%>
     <%_ if (enableTranslation) { _%>
@@ -147,12 +145,10 @@
     <%_ } _%>
     "tslint": "5.20.1",
     "typescript": "3.4.5",
-    <%_ otherModules.forEach(module => { _%>
-    "<%= module.name %>": "<%= module.version %>",
-    <%_ }); _%>
     <%_ if (protractorTests) { _%>
     "webdriver-manager": "12.1.7",
     <%_ } _%>
+    "@openapitools/openapi-generator-cli": "0.0.14-4.0.2",
     "webpack": "4.41.2",
     "webpack-cli": "3.3.10",
     "webpack-dev-server": "3.9.0",
@@ -178,9 +174,11 @@
     "postinstall": "node node_modules/protractor/bin/webdriver-manager update --gecko false",
     <%_ } _%>
     "start": "<%= clientPackageManager %> run webpack:dev",
+	"start:app": "<%= clientPackageManager %> run build && cd server && <%= clientPackageManager %> run start",
     "start-tls": "<%= clientPackageManager %> run webpack:dev <%= optionsForwarder %>--env.tls",
     "serve": "<%= clientPackageManager %> run start",
     "build": "<%= clientPackageManager %> run webpack:prod",
+  	"build:app": "<%= clientPackageManager %> run build && cd server && <%= clientPackageManager %> run build",
     "test": "<%= clientPackageManager %> run lint && jest --coverage --logHeapUsage -w=2 --config src/test/javascript/jest.conf.js",
     "test:watch": "<%= clientPackageManager %> run test <%= optionsForwarder %>--watch",
     "webpack:dev": "<%= clientPackageManager %> run webpack-dev-server <%= optionsForwarder %>--config webpack/webpack.dev.js --inline --hot --port=9060 --watch-content-base --env.stats=minimal",
