@@ -74,16 +74,6 @@ const clientFiles = {
                     method: 'processJs',
                     renameTo: () => `${ANGULAR_DIR}admin/health/health.component.ts`
                 },
-                // {
-                //     file: 'angular/src/main/webapp/app/admin/health/health.module.ts',
-                //     method: 'processJs',
-                //     renameTo: () => `${ANGULAR_DIR}admin/health/health.module.ts`
-                // },
-                // {
-                //     file: 'angular/src/main/webapp/app/admin/health/health.route.ts',
-                //     method: 'processJs',
-                //     renameTo: () => `${ANGULAR_DIR}admin/health/health.route.ts`
-                // },
                 {
                     file: 'angular/src/main/webapp/app/admin/health/health.service.ts',
                     method: 'processJs',
@@ -103,6 +93,27 @@ const clientFiles = {
                     file: 'angular/src/test/javascript/spec/app/admin/health/health.component.spec.ts',
                     method: 'processJs',
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/admin/health/health.component.spec.ts`
+                },
+                // Admin metric changes
+                {
+                    file: 'angular/src/main/webapp/app/admin/metrics/metrics.component.html',
+                    method: 'processHtml',
+                    renameTo: () => `${ANGULAR_DIR}admin/metrics/metrics.component.html`
+                },
+                {
+                    file: 'angular/src/main/webapp/app/admin/metrics/metrics.component.ts',
+                    method: 'processJs',
+                    renameTo: () => `${ANGULAR_DIR}admin/metrics/metrics.component.ts`
+                },
+                {
+                    file: 'angular/src/main/webapp/app/admin/metrics/metrics.service.ts',
+                    method: 'processJs',
+                    renameTo: () => `${ANGULAR_DIR}admin/metrics/metrics.service.ts`
+                },
+                {
+                    file: 'angular/src/test/javascript/spec/app/admin/metrics/metrics.service.spec.ts',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/admin/metrics/metrics.service.spec.ts`
                 },
                 // Layouts changes to override nav bar elements for admin, includes stock entities TODO remove them later?
                 {
