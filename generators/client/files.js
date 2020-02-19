@@ -63,6 +63,47 @@ const clientFiles = {
                     method: 'processJs',
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/admin/configuration/configuration.service.spec.ts`
                 },
+                // Admin health changes
+                {
+                    file: 'angular/src/main/webapp/app/admin/health/health.component.html',
+                    method: 'processHtml',
+                    renameTo: () => `${ANGULAR_DIR}admin/health/health.component.html`
+                },
+                {
+                    file: 'angular/src/main/webapp/app/admin/health/health.component.ts',
+                    method: 'processJs',
+                    renameTo: () => `${ANGULAR_DIR}admin/health/health.component.ts`
+                },
+                // {
+                //     file: 'angular/src/main/webapp/app/admin/health/health.module.ts',
+                //     method: 'processJs',
+                //     renameTo: () => `${ANGULAR_DIR}admin/health/health.module.ts`
+                // },
+                // {
+                //     file: 'angular/src/main/webapp/app/admin/health/health.route.ts',
+                //     method: 'processJs',
+                //     renameTo: () => `${ANGULAR_DIR}admin/health/health.route.ts`
+                // },
+                {
+                    file: 'angular/src/main/webapp/app/admin/health/health.service.ts',
+                    method: 'processJs',
+                    renameTo: () => `${ANGULAR_DIR}admin/health/health.service.ts`
+                },
+                {
+                    file: 'angular/src/main/webapp/app/admin/health/health-modal.component.html',
+                    method: 'processHtml',
+                    renameTo: () => `${ANGULAR_DIR}admin/health/health-modal.component.html`
+                },
+                {
+                    file: 'angular/src/main/webapp/app/admin/health/health-modal.component.ts',
+                    method: 'processJs',
+                    renameTo: () => `${ANGULAR_DIR}admin/health/health-modal.component.ts`
+                },
+                {
+                    file: 'angular/src/test/javascript/spec/app/admin/health/health.component.spec.ts',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/admin/health/health.component.spec.ts`
+                },
                 // Layouts changes to override nav bar elements for admin, includes stock entities TODO remove them later?
                 {
                     file: 'angular/src/main/webapp/app/layouts/navbar/navbar.component.html',
