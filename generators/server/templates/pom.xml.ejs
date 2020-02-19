@@ -30,10 +30,10 @@
     <properties>
         <!-- Build properties -->
         <exec.mainClass><%=packageName%>.<%=mainClass%></exec.mainClass>
-        <maven.version>3.0.0</maven.version>
+        <maven.version>3.3.9</maven.version>
         <java.version>1.8</java.version>
-        <node.version>v10.15.3</node.version>
-        <npm.version>6.9.0</npm.version>
+        <node.version>v12.14.0</node.version>
+        <npm.version>6.13.7</npm.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
@@ -74,7 +74,7 @@
         <!-- Plugin versions -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
         <!-- We can't go to 3.0.0-M2 as it has a regression. See https://issues.apache.org/jira/browse/MENFORCER-306 -->
         <maven-enforcer-plugin.version>3.0.0-M1</maven-enforcer-plugin.version>
@@ -84,13 +84,14 @@
         <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
         <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
         <maven-exec-plugin.version>1.6.0</maven-exec-plugin.version>
+        <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
         <frontend-maven-plugin.version>1.7.6</frontend-maven-plugin.version>
         <git-commit-id-plugin.version>2.2.6</git-commit-id-plugin.version>
         <jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
         <jib-maven-plugin.version>0.9.11</jib-maven-plugin.version>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
-        <sonar-maven-plugin.version>3.6.0.1398</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
         <jacoco.reportFolder>${project.build.directory}/jacoco</jacoco.reportFolder>
         <jacoco.utReportFile>${jacoco.reportFolder}/test.exec</jacoco.utReportFile>
         <jacoco.itReportFile>${jacoco.reportFolder}/integrationTest.exec</jacoco.itReportFile>
@@ -401,6 +402,7 @@
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
     <build>
+        <defaultGoal>compile exec:exec</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -417,6 +419,17 @@
                         <argument>${exec.mainClass}</argument>
                     </arguments>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -491,6 +504,10 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -585,6 +602,7 @@
                     </executions>
                     <configuration>
                         <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                        <failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
                         <generateGitPropertiesFile>true</generateGitPropertiesFile>
                         <includeOnlyProperties>
                             <includeOnlyProperty>^git.commit.id.abbrev$</includeOnlyProperty>
@@ -690,6 +708,11 @@
                         <contexts>!test</contexts>
                     </configuration>
                     <dependencies>
+                        <dependency>
+                            <groupId>io.github.jhipster</groupId>
+                            <artifactId>jhipster-framework</artifactId>
+                            <version>${jhipster-dependencies.version}</version>
+                        </dependency>
                         <dependency>
                             <groupId>org.hibernate</groupId>
                             <artifactId>hibernate-core</artifactId>
