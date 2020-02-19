@@ -87,47 +87,7 @@ const serverFiles = {
                     noEjs: true
                 },
                 {
-                    file: 'config/liquibase/changelog/20150805124838_added_entity_BankAccount.xml',
-                    useBluePrint: true,
-                    noEjs: true
-                },
-                {
-                    file: 'config/liquibase/changelog/20150805124936_added_entity_Label.xml',
-                    useBluePrint: true,
-                    noEjs: true
-                },
-                {
-                    file: 'config/liquibase/changelog/20150805125054_added_entity_Operation.xml',
-                    useBluePrint: true,
-                    noEjs: true
-                },
-                {
-                    file: 'config/liquibase/changelog/20150805124838_added_entity_constraints_BankAccount.xml',
-                    useBluePrint: true,
-                    noEjs: true
-                },
-                {
-                    file: 'config/liquibase/changelog/20150805125054_added_entity_constraints_Operation.xml',
-                    useBluePrint: true,
-                    noEjs: true
-                },
-                {
                     file: 'config/liquibase/data/authority.csv',
-                    useBluePrint: true,
-                    noEjs: true
-                },
-                {
-                    file: 'config/liquibase/data/bank_account.csv',
-                    useBluePrint: true,
-                    noEjs: true
-                },
-                {
-                    file: 'config/liquibase/data/label.csv',
-                    useBluePrint: true,
-                    noEjs: true
-                },
-                {
-                    file: 'config/liquibase/data/operation.csv',
                     useBluePrint: true,
                     noEjs: true
                 },
@@ -275,7 +235,6 @@ const serverFiles = {
             ]
         }
     ],
-    // TODO this one should not end up in the final product? Maybe User and Authority stay?
     serverJavaDomain: [
         {
             path: SERVER_MAIN_SRC_DIR,
@@ -283,21 +242,6 @@ const serverFiles = {
                 {
                     file: 'package/domain/Authority.java',
                     renameTo: generator => `${generator.javaDir}domain/Authority.java`,
-                    useBluePrint: true
-                },
-                {
-                    file: 'package/domain/BankAccount.java',
-                    renameTo: generator => `${generator.javaDir}domain/BankAccount.java`,
-                    useBluePrint: true
-                },
-                {
-                    file: 'package/domain/Label.java',
-                    renameTo: generator => `${generator.javaDir}domain/Label.java`,
-                    useBluePrint: true
-                },
-                {
-                    file: 'package/domain/Operation.java',
-                    renameTo: generator => `${generator.javaDir}domain/Operation.java`,
                     useBluePrint: true
                 },
                 {
@@ -320,21 +264,6 @@ const serverFiles = {
                 {
                     file: 'package/repository/AuthorityRepository.java',
                     renameTo: generator => `${generator.javaDir}repository/AuthorityRepository.java`,
-                    useBluePrint: true
-                },
-                {
-                    file: 'package/repository/BankAccountRepository.java',
-                    renameTo: generator => `${generator.javaDir}repository/BankAccountRepository.java`,
-                    useBluePrint: true
-                },
-                {
-                    file: 'package/repository/LabelRepository.java',
-                    renameTo: generator => `${generator.javaDir}repository/LabelRepository.java`,
-                    useBluePrint: true
-                },
-                {
-                    file: 'package/repository/OperationRepository.java',
-                    renameTo: generator => `${generator.javaDir}repository/OperationRepository.java`,
                     useBluePrint: true
                 },
                 {
@@ -575,23 +504,8 @@ const serverFiles = {
                     useBluePrint: true
                 },
                 {
-                    file: 'package/web/rest/BankAccountResource.java',
-                    renameTo: generator => `${generator.javaDir}web/rest/BankAccountResource.java`,
-                    useBluePrint: true
-                },
-                {
                     file: 'package/web/rest/ClientForwardController.java',
                     renameTo: generator => `${generator.javaDir}web/rest/ClientForwardController.java`,
-                    useBluePrint: true
-                },
-                {
-                    file: 'package/web/rest/LabelResource.java',
-                    renameTo: generator => `${generator.javaDir}web/rest/LabelResource.java`,
-                    useBluePrint: true
-                },
-                {
-                    file: 'package/web/rest/OperationResource.java',
-                    renameTo: generator => `${generator.javaDir}web/rest/OperationResource.java`,
                     useBluePrint: true
                 },
                 {
@@ -715,23 +629,8 @@ const serverFiles = {
                     useBluePrint: true
                 },
                 {
-                    file: 'package/web/rest/BankAccountResourceIT.java',
-                    renameTo: generator => `${generator.javaDir}web/rest/BankAccountResourceIT.java`,
-                    useBluePrint: true
-                },
-                {
                     file: 'package/web/rest/ClientForwardControllerIT.java',
                     renameTo: generator => `${generator.javaDir}web/rest/ClientForwardControllerIT.java`,
-                    useBluePrint: true
-                },
-                {
-                    file: 'package/web/rest/LabelResourceIT.java',
-                    renameTo: generator => `${generator.javaDir}web/rest/LabelResourceIT.java`,
-                    useBluePrint: true
-                },
-                {
-                    file: 'package/web/rest/OperationResourceIT.java',
-                    renameTo: generator => `${generator.javaDir}web/rest/OperationResourceIT.java`,
                     useBluePrint: true
                 },
                 {
