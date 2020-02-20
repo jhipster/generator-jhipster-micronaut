@@ -76,8 +76,8 @@ const serverFiles = {
             condition: generator => generator.databaseType === 'sql',
             path: SERVER_MAIN_RES_DIR,
             templates: [
-                { 
-                    file: 'config/liquibase/master.xml', 
+                {
+                    file: 'config/liquibase/master.xml',
                     useBluePrint: true,
                     noEjs: true
                 },

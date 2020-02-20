@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const AppGenerator = require('generator-jhipster/generators/app');
-const jhipsterPackagejs = require('generator-jhipster/package.json');
+// const jhipsterPackagejs = require('generator-jhipster/package.json');
 
 module.exports = class extends AppGenerator {
     // /**
@@ -31,6 +31,9 @@ module.exports = class extends AppGenerator {
 
         const jhipsterInitAppPhaseSteps = {
             displayLogo() {
+                /* eslint-disable prettier/prettier */
+                /* This just isn't going to be pretty */
+
                 this.log('\n');
                 this.log(`${chalk.blue(' ███╗   ███╗')}${chalk.green(' ██╗   ██╗ ████████╗ ███████╗   ██████╗ ████████╗ ████████╗ ███████╗')}`);
                 this.log(`${chalk.blue(' ████╗ ████║')}${chalk.green(' ██║   ██║ ╚══██╔══╝ ██╔═══██╗ ██╔════╝ ╚══██╔══╝ ██╔═════╝ ██╔═══██╗')}`);
