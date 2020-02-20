@@ -20,9 +20,7 @@ module.exports = class extends ClientGenerator {
 
     get initializing() {
         const initPhaseFromJHipster = super._initializing();
-        const initMicronautClientPhaseSteps = {
-
-        };
+        const initMicronautClientPhaseSteps = {};
         return Object.assign(initPhaseFromJHipster, initMicronautClientPhaseSteps);
     }
 
@@ -37,9 +35,7 @@ module.exports = class extends ClientGenerator {
 
     get default() {
         const defaultPhaseFromJHipster = super._default();
-        const defaultMicronautClientPhaseSteps = {
-            
-        };
+        const defaultMicronautClientPhaseSteps = {};
         return Object.assign(defaultPhaseFromJHipster, defaultMicronautClientPhaseSteps);
     }
 

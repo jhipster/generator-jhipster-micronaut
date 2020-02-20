@@ -83,7 +83,7 @@ function requireCLI(preferLocal) {
             }
         } catch (e) {
             // Unable to find local version, so global one will be loaded anyway
-            logger.log("Local install was preferred but not found.", e)
+            logger.log('Local install was preferred but not found.', e);
         }
     }
     // load global version
