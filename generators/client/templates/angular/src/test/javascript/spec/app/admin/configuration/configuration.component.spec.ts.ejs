@@ -47,15 +47,11 @@ describe('Component Tests', () => {
 
         describe('OnInit', () => {
             it('should set all default values correctly', () => {
-              expect(comp.configKeys).toEqual([]);
               expect(comp.filter).toBe('');
-              expect(comp.orderProp).toBe('prefix');
-              expect(comp.reverse).toBe(false);
             });
             it('Should call load all on init', () => {
               // GIVEN
               const body = [{ config: 'test', properties: 'test' }, { config: 'test2' }];
-              const envConfig = { envConfig: 'test' };
               spyOn(service, 'get').and.returnValue(of(body));
       
               // WHEN
@@ -63,8 +59,7 @@ describe('Component Tests', () => {
       
               // THEN
               expect(service.get).toHaveBeenCalled();
-              expect(comp.configKeys).toEqual([['0', '1', '2', '3']]);
-              expect(comp.allConfiguration).toEqual(envConfig);
+              expect(comp.allConfiguration).toEqual(body);
             });
           });
     });

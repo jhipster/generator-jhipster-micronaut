@@ -3,26 +3,19 @@ import { Component, OnInit } from '@angular/core';
 import { ConfigurationService } from './configuration.service';
 
 @Component({
-  selector: 'jhi-configuration',
+  selector: '<%= jhiPrefixDashed %>-configuration',
   templateUrl: './configuration.component.html'
 })
 export class ConfigurationComponent implements OnInit {
   allConfiguration: any = null;
-  configuration: any = null;
-  configKeys: any[];
   filter: string;
-  orderProp: string;
-  reverse: boolean;
 
   constructor(private configurationService: ConfigurationService) {
-    this.configKeys = [];
     this.filter = '';
-    this.orderProp = 'prefix';
-    this.reverse = false;
   }
 
   ngOnInit(): void {
-    this.configurationService.get().subscribe(configuration => {
+    this.configurationService.get().subscribe((configuration: any) => {
       this.allConfiguration = configuration;
     });
   }
