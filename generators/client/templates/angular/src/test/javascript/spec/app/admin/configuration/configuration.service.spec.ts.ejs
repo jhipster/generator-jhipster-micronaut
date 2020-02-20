@@ -65,27 +65,9 @@ describe('Service Tests', () => {
       
               const req = httpMock.expectOne({ method: 'GET' });
               req.flush(angularConfig);
-              expect(expectedResult).toEqual(['test2']);
+              expect(expectedResult).toEqual(angularConfig); // We expect config to be a straight map
             });
-      
-            it('should get the env', () => {
-              const propertySources = {
-                propertySources: [
-                  {
-                    name: 'server.ports',
-                    properties: {
-                      'local.server.port': {
-                        value: 8080
-                      }
-                    }
-                  }
-                ]
-              };
-      
-              const req = httpMock.expectOne({ method: 'GET' });
-              req.flush(propertySources);
-              expect(expectedResult).toEqual({ 'server.ports': [{ key: 'local.server.port', val: 8080 }] });
-            });
-          });
+            // We don't get property sources separately like Spring Boot, so no need for env test
+        });
     });
 });
