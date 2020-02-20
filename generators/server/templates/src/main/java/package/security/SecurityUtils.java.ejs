@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * Utility class for Spring Security.
+ * Utility class for Micronaut Security.
  */
 public final class SecurityUtils {
 
