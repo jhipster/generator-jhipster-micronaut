@@ -64,12 +64,37 @@ const serverFiles = {
         {
             path: SERVER_MAIN_RES_DIR,
             templates: [
+                { 
+                    file: 'templates/error.html', 
+                    method: 'copy', 
+                    renameTo:  () => 'views/error.html' 
+                },
                 { file: 'logback.xml', useBluePrint: true },
                 { file: 'application.yml', useBluePrint: true },
                 { file: 'application-dev.yml', useBluePrint: true },
+                { file: 'application-test.yml', useBluePrint: true },
                 { file: 'application-tls.yml', useBluePrint: true },
                 { file: 'application-prod.yml', useBluePrint: true },
                 { file: 'i18n/messages.properties', useBluePrint: true, noEjs: true }
+            ]
+        },
+        // Emails should be fine to import from base generator, no need for useBluePrint
+        {
+            condition: generator => !generator.skipUserManagement,
+            path: SERVER_MAIN_RES_DIR,
+            templates: [
+                { file: 'templates/mail/activationEmail.html', renameTo:  () => 'views/mail/activationEmail.html' } ,
+                { file: 'templates/mail/creationEmail.html', renameTo:  () => 'views/mail/creationEmail.html' }, 
+                { file: 'templates/mail/passwordResetEmail.html', renameTo:  () => 'views/mail/passwordResetEmail.html' } ,
+                { file: 'views/mail/testEmail.html', useBluePrint: true , noEjs: true} 
+            ]
+        },
+        {
+            condition: generator => !generator.skipUserManagement,
+            path: SERVER_TEST_RES_DIR,
+            templates: [
+                /* User management java test files */
+                'i18n/messages_en.properties'
             ]
         },
         {
@@ -215,6 +240,11 @@ const serverFiles = {
                 {
                     file: 'package/config/LoggingConfiguration.java',
                     renameTo: generator => `${generator.javaDir}config/LoggingConfiguration.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/config/MessagesBundleMessageSource.java',
+                    renameTo: generator => `${generator.javaDir}config/MessagesBundleMessageSource.java`,
                     useBluePrint: true
                 },
                 {
