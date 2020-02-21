@@ -15,7 +15,7 @@
 # ===================================================================
 micronaut:
   application:
-    name: jhipsterSampleApplication
+    name: <%= baseName %>
   router:
     static-resources:
       client:
@@ -133,13 +133,13 @@ info:
 
 jhipster:
   clientApp:
-    name: 'jhipsterSampleApplicationApp'
+    name: '<%= baseName %>App'
   mail:
-    from: jhipsterSampleApplication@localhost
+    from: <%= baseName %>@localhost
   swagger:
     default-include-pattern: /api/.*
-    title: jhipsterSampleApplication API
-    description: jhipsterSampleApplication API documentation
+    title: <%= baseName %> API
+    description: <%= baseName %> API documentation
     version: 0.0.1
     terms-of-service-url:
     contact-name:
