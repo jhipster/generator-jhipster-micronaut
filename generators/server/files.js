@@ -64,10 +64,10 @@ const serverFiles = {
         {
             path: SERVER_MAIN_RES_DIR,
             templates: [
-                { 
-                    file: 'templates/error.html', 
-                    method: 'copy', 
-                    renameTo:  () => 'views/error.html' 
+                {
+                    file: 'templates/error.html',
+                    method: 'copy',
+                    renameTo: () => 'views/error.html'
                 },
                 { file: 'logback.xml', useBluePrint: true },
                 { file: 'application.yml', useBluePrint: true },
@@ -83,10 +83,10 @@ const serverFiles = {
             condition: generator => !generator.skipUserManagement,
             path: SERVER_MAIN_RES_DIR,
             templates: [
-                { file: 'templates/mail/activationEmail.html', renameTo:  () => 'views/mail/activationEmail.html' } ,
-                { file: 'templates/mail/creationEmail.html', renameTo:  () => 'views/mail/creationEmail.html' }, 
-                { file: 'templates/mail/passwordResetEmail.html', renameTo:  () => 'views/mail/passwordResetEmail.html' } ,
-                { file: 'views/mail/testEmail.html', useBluePrint: true , noEjs: true} 
+                { file: 'templates/mail/activationEmail.html', renameTo: () => 'views/mail/activationEmail.html' },
+                { file: 'templates/mail/creationEmail.html', renameTo: () => 'views/mail/creationEmail.html' },
+                { file: 'templates/mail/passwordResetEmail.html', renameTo: () => 'views/mail/passwordResetEmail.html' },
+                { file: 'views/mail/testEmail.html', useBluePrint: true, noEjs: true }
             ]
         },
         {
