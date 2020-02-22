@@ -20,12 +20,8 @@ module.exports = class extends CommonGenerator {
     }
 
     get initializing() {
-        const initPhaseFromJHipster = super._initializing();
-        const initMicronautCommonPhaseSteps = {};
-        return Object.assign(initPhaseFromJHipster, initMicronautCommonPhaseSteps);
-
         // Here we are not overriding this phase and hence its being handled by JHipster
-        // return super._initializing();
+        return super._initializing();
     }
 
     get default() {
