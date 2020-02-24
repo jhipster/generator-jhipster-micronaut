@@ -14,8 +14,14 @@ jpa:
     properties:
       hibernate:
         hbm2ddl:
-          auto: create-drop
+        auto: update
 
+liquibase:
+    datasources:
+    default:
+        async: true
+        change-log: classpath:config/liquibase/master.xml
+        contexts: dev,faker
 
 jhipster:
   clientApp:
