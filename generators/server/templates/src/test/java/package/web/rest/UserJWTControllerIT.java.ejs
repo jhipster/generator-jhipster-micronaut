@@ -1,6 +1,6 @@
 package <%=packageName%>.web.rest;
 
-import <%=packageName%>.JhipsterSampleApplicationApp;
+import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.domain.User;
 import <%=packageName%>.repository.UserRepository;
 import <%=packageName%>.web.rest.vm.LoginVM;
@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Integration tests for the {@link io.micronaut.security.endpoints.LoginController} REST controller.
  */
-@MicronautTest(application = JhipsterSampleApplicationApp.class, transactional = false)
+@MicronautTest(application = <%= mainClass %>.class, transactional = false)
 public class UserJWTControllerIT {
 
     @Inject

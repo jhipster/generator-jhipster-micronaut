@@ -1,6 +1,6 @@
 package <%=packageName%>.web.rest;
 
-import <%=packageName%>.JhipsterSampleApplicationApp;
+import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.config.Constants;
 import <%=packageName%>.domain.Authority;
 import <%=packageName%>.domain.User;
@@ -42,7 +42,7 @@ import static org.mockito.Mockito.*;
 /**
  * Integration tests for the {@link AccountResource} REST controller.
  */
-@MicronautTest(application = JhipsterSampleApplicationApp.class, transactional = false)
+@MicronautTest(application = <%= mainClass %>.class, transactional = false)
 @Property(name = "micronaut.security.enabled", value = "false")
 public class AccountResourceIT {
 

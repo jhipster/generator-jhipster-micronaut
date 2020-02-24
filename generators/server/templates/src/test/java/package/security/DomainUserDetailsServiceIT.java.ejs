@@ -1,6 +1,6 @@
 package <%=packageName%>.security;
 
-import <%=packageName%>.JhipsterSampleApplicationApp;
+import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.domain.User;
 import <%=packageName%>.repository.UserRepository;
 
@@ -23,7 +23,7 @@ import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@MicronautTest(application = JhipsterSampleApplicationApp.class)
+@MicronautTest(application = <%= mainClass %>.class)
 @Transactional
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DomainUserDetailsServiceIT {
