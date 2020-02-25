@@ -1,6 +1,7 @@
 package <%=packageName%>.service;
 
 import <%=packageName%>.config.Constants;
+import <%=packageName%>.domain.Authority;
 import <%=packageName%>.domain.User;
 import <%=packageName%>.repository.AuthorityRepository;
 import <%=packageName%>.repository.UserRepository;
@@ -22,6 +23,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -69,6 +71,16 @@ public class UserServiceIT {
         user.setLastName(DEFAULT_LASTNAME);
         user.setImageUrl(DEFAULT_IMAGEURL);
         user.setLangKey(DEFAULT_LANGKEY);
+        List<Authority> authorities = authorityRepository.findAll();
+            if(authorities.isEmpty()) {
+                // Set up expected authorities, ADMIN and USER
+                Authority admin = new Authority();
+                admin.setName(AuthoritiesConstants.ADMIN);
+                authorityRepository.save(admin);
+                Authority user = new Authority();
+                user.setName(AuthoritiesConstants.USER);
+                authorityRepository.save(user);
+            }
     }
 
     @AfterEach
