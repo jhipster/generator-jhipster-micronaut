@@ -2,6 +2,7 @@ package <%=packageName%>.web.rest;
 
 import <%=packageName%>.domain.Authority;
 import <%=packageName%>.domain.User;
+import <%=packageName%>.repository.AuthorityRepository;
 import <%=packageName%>.repository.UserRepository;
 import <%=packageName%>.security.AuthoritiesConstants;
 import <%=packageName%>.service.MailService;
@@ -64,6 +65,9 @@ public class UserResourceIT {
     private UserRepository userRepository;
 
     @Inject
+    AuthorityRepository authorityRepository;
+
+    @Inject
     private UserMapper userMapper;
 
     @Inject
@@ -93,6 +97,16 @@ public class UserResourceIT {
         user.setLogin(DEFAULT_LOGIN);
         user.setEmail(DEFAULT_EMAIL);
         userRepository.saveAndFlush(user);
+        List<Authority> authorities = authorityRepository.findAll();
+            if(authorities.isEmpty()) {
+                // Set up expected authorities, ADMIN and USER
+                Authority admin = new Authority();
+                admin.setName(AuthoritiesConstants.ADMIN);
+                authorityRepository.save(admin);
+                Authority user = new Authority();
+                user.setName(AuthoritiesConstants.USER);
+                authorityRepository.save(user);
+            }
     }
 
     @BeforeEach
