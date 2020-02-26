@@ -2,6 +2,7 @@
 const chalk = require('chalk');
 const CommonGenerator = require('generator-jhipster/generators/common');
 const writeFiles = require('./files').writeFiles;
+const _ = require('lodash');
 
 module.exports = class extends CommonGenerator {
     constructor(args, opts) {
@@ -19,6 +20,17 @@ module.exports = class extends CommonGenerator {
         jhContext.setupClientOptions(this, jhContext);
     }
 
+    get configuring() {
+        const phaseFromJHipster = super._configuring();
+        const jhipsterMicronautConfigPhaseSteps = {
+            configureGlobal() {
+                // Application name modified, using each technology's conventions
+                this.dasherizedBaseName = _.kebabCase(this.baseName);
+            },
+        }
+        return Object.assign(phaseFromJHipster, jhipsterMicronautConfigPhaseSteps);
+    }
+
     get initializing() {
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._initializing();
@@ -31,7 +43,7 @@ module.exports = class extends CommonGenerator {
 
     get writing() {
         const phaseFromJHipster = super._writing();
-        const jhipsterMicronautCommonPhaseSteps = writeFiles();
-        return Object.assign(phaseFromJHipster, jhipsterMicronautCommonPhaseSteps);
+        const jhipsterMicronautWritingPhaseSteps = writeFiles();
+        return Object.assign(phaseFromJHipster, jhipsterMicronautWritingPhaseSteps);
     }
 };
