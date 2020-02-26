@@ -685,7 +685,7 @@ const serverFiles = {
         {
             templates: [{ file: 'checkstyle.xml', options: { interpolate: INTERPOLATE_REGEX } }]
         },
-        // TODO we'll need to add these
+        // TODO we'll need to add these specific to micronaut
         {
             condition: generator => generator.buildTool === 'gradle',
             templates: [
