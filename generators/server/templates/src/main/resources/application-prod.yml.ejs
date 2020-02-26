@@ -49,30 +49,31 @@ management:
           h2:
             console:
               enabled: false
-  jpa:
-    default:
-      packages-to-scan: 
-      - <%=packageName%>.domain
-      - <%=packageName%>.repository
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    database: MYSQL
-    show-sql: false
-    properties:
-      hibernate.id.new_generator_mappings: true
-      hibernate.connection.provider_disables_autocommit: true
-      hibernate.cache.use_second_level_cache: true
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
-  # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
-  liquibase:
-    contexts: prod
-  mail:
-    host: localhost
-    port: 25
-    username:
-    password:
-  thymeleaf:
-    cache: true
+jpa:
+  default:
+    packages-to-scan: 
+    - <%=packageName%>.domain
+    - <%=packageName%>.repository
+  database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  database: MYSQL
+  show-sql: false
+  properties:
+    hibernate.id.new_generator_mappings: true
+    hibernate.connection.provider_disables_autocommit: true
+    hibernate.cache.use_second_level_cache: true
+    hibernate.cache.use_query_cache: false
+    hibernate.generate_statistics: false
+
+# Replace by 'prod, faker' to add the faker context and have sample data loaded in production
+liquibase:
+  contexts: prod
+mail:
+  host: localhost
+  port: 25
+  username:
+  password:
+thymeleaf:
+  cache: true
 
 # ===================================================================
 # To enable TLS in production, generate a certificate using:

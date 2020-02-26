@@ -1045,6 +1045,13 @@
                     </plugin>
                 </plugins>
             </build>
+            <!-- TODO remove this once we're good using MYSQL in prod -->
+            <dependencies>
+                <dependency>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                </dependency>
+            </dependencies>
             <properties>
                 <!-- default Spring profiles -->
                 <profiles.active>prod${profile.swagger}${profile.no-liquibase}</profiles.active>
