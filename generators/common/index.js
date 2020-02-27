@@ -1,8 +1,8 @@
 /* eslint-disable consistent-return */
+const _ = require('lodash');
 const chalk = require('chalk');
 const CommonGenerator = require('generator-jhipster/generators/common');
 const writeFiles = require('./files').writeFiles;
-const _ = require('lodash');
 
 module.exports = class extends CommonGenerator {
     constructor(args, opts) {
@@ -26,8 +26,8 @@ module.exports = class extends CommonGenerator {
             configureGlobal() {
                 // Application name modified, using each technology's conventions
                 this.dasherizedBaseName = _.kebabCase(this.baseName);
-            },
-        }
+            }
+        };
         return Object.assign(phaseFromJHipster, jhipsterMicronautConfigPhaseSteps);
     }
 

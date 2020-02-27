@@ -27,7 +27,6 @@ module.exports = class extends AppGenerator {
 
     get initializing() {
         const initPhaseFromJHipster = this._initializing();
-        this.log(chalk.white('Initializing...'));
 
         const jhipsterInitAppPhaseSteps = {
             displayLogo() {
@@ -65,14 +64,16 @@ module.exports = class extends AppGenerator {
     }
 
     get prompting() {
-        this.log(chalk.white('Prompting...'));
-        // If the prompts need to be overriden then use the code commented out above instead
-        return super._prompting();
+        const defaultPhaseFromJHipster = super._prompting();
+        const mhipsterPromptingPhaseSteps = {
+
+        };
+
+        return Object.assign(defaultPhaseFromJHipster, mhipsterPromptingPhaseSteps);
     }
 
     get configuring() {
         const configuringPhaseFromJHipster = super._configuring();
-        this.log(chalk.white('Configuring...'));
 
         const jhipsterConfigureAppPhaseSteps = {
             composeServer() {
@@ -117,31 +118,17 @@ module.exports = class extends AppGenerator {
     }
 
     get default() {
-        const defaultPhaseFromJHipster = super._default();
-        const jhipsterConfigureAppPhaseSteps = {
-
-        };
-
-        this.log(chalk.white('Default...'));
-
-        return Object.assign(defaultPhaseFromJHipster, jhipsterConfigureAppPhaseSteps);
+        // Here we are not overriding this phase and hence its being handled by JHipster
+        return super._default();
     }
 
     get writing() {
-        const writingPhaseFromJHipster = super._writing();
-
-        const jhipsterWritingAppPhaseSteps = {
-
-        };
-
-        this.log(chalk.white('Writing...'));
-
-        return Object.assign(writingPhaseFromJHipster, jhipsterWritingAppPhaseSteps);
+        // Here we are not overriding this phase and hence its being handled by JHipster
+        return super._writing();
     }
 
     get end() {
         // Here we are not overriding this phase and hence its being handled by JHipster
-        this.log(chalk.white('Ending...'));
         return super._end();
     }
 };
