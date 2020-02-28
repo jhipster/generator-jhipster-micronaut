@@ -72,41 +72,43 @@ import <%= packageName %>.service.dto.<%= entityClass %>Criteria;
 import <%= packageName %>.service.<%= entityClass %>QueryService;
 <%_ } _%>
 
-import io.github.jhipster.web.util.HeaderUtil;
+import <%= packageName %>.util.HeaderUtil;
 <%_ if (pagination !== 'no') { _%>
-import io.github.jhipster.web.util.PaginationUtil;
+import <%= packageName %>.util.PaginationUtil;
 <%_ } _%>
+import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
+import io.micronaut.http.uri.UriBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 <%_ if (pagination !== 'no') { _%>
-// import org.springframework.data.domain.Page;
-// import org.springframework.data.domain.Pageable;
-// import org.springframework.http.HttpHeaders;
-// import org.springframework.http.HttpStatus;
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
+<%# import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus; %>
     <%_ if (reactive) { _%>
-// import org.springframework.http.server.reactive.ServerHttpRequest;
+<%# import org.springframework.http.server.reactive.ServerHttpRequest; %>
     <%_ } _%>
     <%_ if (!reactive) { _%>
-// import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+<%# import org.springframework.web.servlet.support.ServletUriComponentsBuilder; %>
     <%_ } else { _%>
-// import org.springframework.web.util.UriComponentsBuilder;
+<%# import org.springframework.web.util.UriComponentsBuilder; %>
     <%_ } _%>
 <%_ } _%>
 <%_ if (reactiveRepositories) { _%>
-// import org.springframework.http.MediaType;
+<%# import org.springframework.http.MediaType; %>
 <%_ } _%>
-// import org.springframework.http.HttpResponse;
+<%# import org.springframework.http.HttpResponse; %>
 <%_ if (!viaService && !saveUserSnapshot) { _%>
-// import org.springframework.transaction.annotation.Transactional;
+<%# import org.springframework.transaction.annotation.Transactional; %>
 <%_ } _%>
-// import org.springframework.web.bind.annotation.*;
+
 <%_ if (reactiveRepositories) { _%>
 import reactor.core.publisher.Flux;
 <%_ } _%>
-
+import javax.annotation.Nullable;
 <%_ if (validation) { _%>
 import javax.validation.Valid;
 <%_ } _%>
@@ -130,15 +132,13 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 <%_ } _%>
 <%_ if (searchEngine === 'elasticsearch') { _%>
-
 import static org.elasticsearch.index.query.QueryBuilders.*;
 <%_ } _%>
 
 /**
  * REST controller for managing {@link <%= packageName %>.domain.<%= asEntity(entityClass) %>}.
  */
-@Contrller("/api")
-<%_ } _%>
+@Controller("/api")
 public class <%= entityClass %>Resource {
 
     private final Logger log = LoggerFactory.getLogger(<%= entityClass %>Resource.class);
@@ -189,9 +189,11 @@ public class <%= entityClass %>Resource {
         <%= instanceName %>.setId(UUID.randomUUID());
         <%_ } _%>
 <%- include('../../common/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: false, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: true}); -%>
-        return HttpResponse.<<%= instanceType %>>created(new URI("/api/<%= entityApiUrl %>/" + result.getId()))
-            .headers(headers -> HeaderUtil.createEntityCreationAlert(headers, applicationName, <%= enableTranslation %>, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        URI location = new URI("/api/<%= entityApiUrl %>/" + result.getId());
+        return HttpResponse.created(result).headers(headers -> {
+            headers.location(location);    
+            HeaderUtil.createEntityCreationAlert(headers, applicationName, <%= enableTranslation %>, ENTITY_NAME, result.getId().toString());
+        });
     }
 
     /**
@@ -223,8 +225,8 @@ public class <%= entityClass %>Resource {
             <%_ } _%>
         <%_ } _%>
 <%- include('../../common/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: false, isUsingMapsId: false, mapsIdAssoc: mapsIdAssoc}); -%>
-        return HttpResponse.ok()
-            .headers(headers -> HeaderUtilcreateEntityUpdateAlert(headers, applicationName, <%= enableTranslation %>, ENTITY_NAME, <%= instanceName %>.getId().toString()));
+        return HttpResponse.ok(result).headers(headers -> 
+            HeaderUtil.createEntityUpdateAlert(headers, applicationName, <%= enableTranslation %>, ENTITY_NAME, <%= instanceName %>.getId().toString()));
     }
 <%_ } _%>
 
@@ -247,7 +249,7 @@ public class <%= entityClass %>Resource {
      <%_ } _%>
      * @return the {@link HttpResponse} with status {@code 200 (OK)} and the list of <%= entityInstancePlural %> in body.
      */
-    @Get("/<%= entityApiUrl %>")
+     @Get("/<%= entityApiUrl %><% if (pagination !== 'no') { _%>{?eagerload}<% } %>")
     <%_ if (databaseType === 'sql' && isUsingMapsId === true && !viaService) { _%>
     @Transactional(readOnly = true)
     <%_ } _%>
@@ -294,11 +296,11 @@ public class <%= entityClass %>Resource {
      * @param id the id of the <%= instanceName %> to delete.
      * @return the {@link HttpResponse} with status {@code 204 (NO_CONTENT)}.
      */
-    @DeleteMapping("/<%= entityApiUrl %>/{id}")
-    public HttpResponse<Void> delete<%= entityClass %>(@PathVariable <%= primaryKeyType %> id) {
+    @Delete("/<%= entityApiUrl %>/{id}")
+    public HttpResponse delete<%= entityClass %>(@PathVariable <%= primaryKeyType %> id) {
         log.debug("REST request to delete <%= entityClass %> : {}", id);
 <%- include('../../common/delete_template', {viaService: viaService}); -%>
-        return HttpResponse.noContent().headers(headers -> HeaderUtil.createEntityDeletionAlert(applicationName, <%= enableTranslation %>, ENTITY_NAME, id<% if (pkType !== 'String') { %>.toString()<% } %>)).build();
+        return HttpResponse.noContent().headers(headers -> HeaderUtil.createEntityDeletionAlert(headers, applicationName, <%= enableTranslation %>, ENTITY_NAME, id<% if (pkType !== 'String') { %>.toString()<% } %>));
     }
 <%_ } _%>
 <%_ if (searchEngine === 'elasticsearch') { _%>
