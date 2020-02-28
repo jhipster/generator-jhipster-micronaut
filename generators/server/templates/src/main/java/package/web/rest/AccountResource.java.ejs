@@ -152,10 +152,10 @@ public class AccountResource {
      */
     @Post("/account/reset-password/init")
     public void requestPasswordReset(@Body String mail) {
-       mailService.sendPasswordResetMail(
+        mailService.sendPasswordResetMail(
            userService.requestPasswordReset(mail)
                .orElseThrow(EmailNotFoundException::new)
-       );
+        );
     }
 
     /**
