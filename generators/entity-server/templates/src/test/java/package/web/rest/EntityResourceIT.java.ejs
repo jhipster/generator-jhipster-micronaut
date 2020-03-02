@@ -43,7 +43,7 @@ import <%= packageName %>.AbstractCassandraTest;
 <%_ if (cacheProvider === 'redis') { _%>
 import <%= packageName %>.RedisTestContainerExtension;
 <%_ } _%>
-import <%= packageName %>.<%= mainClass %>;
+
 <%_ if (authenticationType === 'uaa') { _%>
 import <%= packageName %>.config.SecurityBeanOverrideConfiguration;
 <%_ } _%>
@@ -66,60 +66,24 @@ import <%= packageName %>.domain.<%= asEntity(otherEntityNameCapitalized) %>;
 import <%= packageName %>.repository.UserRepository;
 <%_ } _%>
 import <%= packageName %>.repository.<%= entityClass %>Repository;
-<%_ if (isUsingMapsId === true && ( dto !== 'mapstruct' && service === 'no')) { _%>
-import <%= packageName %>.repository.<%= mapsIdAssoc.otherEntityNameCapitalized %>Repository;
-<%_ } _%>
-<%_ if (searchEngine === 'elasticsearch') { _%>
-import <%= packageName %>.repository.search.<%= entityClass %>SearchRepository;
-<%_ } _%>
-<%_ if (service !== 'no') { _%>
-import <%= packageName %>.service.<%= entityClass %>Service;
-<%_ } else if (reactiveRepositories) { _%>
-import <%= packageName %>.repository.reactive.<%= entityClass %>ReactiveRepository;
-<%_ } _%>
-<%_ if (dto === 'mapstruct') { _%>
-import <%= packageName %>.service.dto.<%= asDto(entityClass) %>;
-import <%= packageName %>.service.mapper.<%= entityClass %>Mapper;
-<%_ } _%>
-import <%= packageName %>.web.rest.errors.ExceptionTranslator;
-<%_ if (jpaMetamodelFiltering) { _%>
-import <%= packageName %>.service.dto.<%= entityClass %>Criteria;
-import <%= packageName %>.service.<%= entityClass %>QueryService;
-<%_ } _%>
 
+import io.micronaut.context.annotation.Property;
+import io.micronaut.core.type.Argument;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.client.RxHttpClient;
+import io.micronaut.http.client.annotation.Client;
+import io.micronaut.http.client.exceptions.HttpClientResponseException;
+import io.micronaut.test.annotation.MicronautTest;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-<%_ if (cacheProvider === 'redis') { _%>
-import org.junit.jupiter.api.extension.ExtendWith;
-<%_ } _%>
-<%_ if (fieldsContainOwnerManyToMany) { _%>
-import org.mockito.Mock;
-<%_ } _%>
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-<%_ if (searchEngine === 'elasticsearch' && pagination !== 'no' || fieldsContainOwnerManyToMany) { _%>
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-<%_ } _%>
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-<%_ if (reactiveRepositories) { _%>
-import org.springframework.test.web.reactive.server.WebTestClient;
-<%_ } _%>
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-<%_ if (databaseType === 'sql') { _%>
-import org.springframework.transaction.annotation.Transactional;
-<%_ } _%>
-<%_ if (fieldsContainBlob === true) { _%>
-import org.springframework.util.Base64Utils;
-<%_ } _%>
-import org.springframework.validation.Validator;
+import org.junit.jupiter.api.TestInstance;
 
-<%_ if (databaseType === 'sql') { _%>
-import javax.persistence.EntityManager;<% } %><% if (fieldsContainBigDecimal === true) { %>
+import javax.inject.Inject;
+<% if (fieldsContainBigDecimal === true) { %>
 import java.math.BigDecimal;<% } %><% if (fieldsContainBlob === true && databaseType === 'cassandra') { %>
 import java.nio.ByteBuffer;<% } %><% if (reactiveRepositories || fieldsContainDuration === true) { %>
 import java.time.Duration;<% } %><% if (fieldsContainLocalDate === true) { %>
@@ -129,9 +93,6 @@ import java.time.ZonedDateTime;
 import java.time.ZoneOffset;<% } %><% if (fieldsContainLocalDate === true || fieldsContainZonedDateTime === true) { %>
 import java.time.ZoneId;<% } %><% if (fieldsContainInstant === true) { %>
 import java.time.temporal.ChronoUnit;<% } %>
-<%_ if (fieldsContainOwnerManyToMany) { _%>
-import java.util.ArrayList;
-<%_ } _%>
 <%_ if (searchEngine === 'elasticsearch') { _%>
 import java.util.Collections;
 <%_ } _%>
@@ -139,40 +100,22 @@ import java.util.List;
 <%_ if (databaseType === 'cassandra' || fieldsContainUUID === true || (databaseType === 'sql' && hasOauthUser === true)) { _%>
 import java.util.UUID;
 <%_ } _%>
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 <%_ if (databaseType === 'couchbase') { _%>
     import static <%= packageName %>.web.rest.TestUtil.mockAuthentication;
 <%_ } _%>
 
-<%_ if (fieldsContainZonedDateTime === true) { _%>
-import static <%= packageName %>.web.rest.TestUtil.sameInstant;
-<%_ } _%>
-import static <%= packageName %>.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-<%_ if (searchEngine === 'elasticsearch') { _%>
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-<%_ } _%>
-import static org.hamcrest.Matchers.hasItem;
-<%_ if (searchEngine === 'elasticsearch' || fieldsContainOwnerManyToMany === true) { _%>
-import static org.mockito.Mockito.*;
-<%_ } _%>
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 <%_ for (idx in fields) { if (fields[idx].fieldIsEnum === true) { _%>import <%= packageName %>.domain.enumeration.<%= fields[idx].fieldType %>;
 <%_ } } _%>
 /**
- * Integration tests for the {@link <%= entityClass %>Resource} REST controller.
+ * Integration tests for the {@Link <%= entityClass %>Resource} REST controller.
  */
-<%_ if (authenticationType === 'oauth2') { _%>
-@SpringBootTest(classes = {<%= mainClass %>.class, TestSecurityConfiguration.class})
-<%_ } else if (authenticationType === 'uaa' && applicationType !== 'uaa') { _%>
-@SpringBootTest(classes = {SecurityBeanOverrideConfiguration.class, <%= mainClass %>.class})
-<%_ } else { _%>
-@SpringBootTest(classes = <%= mainClass %>.class)
-<%_ } _%>
-<%_ if (cacheProvider === 'redis') { _%>
-@ExtendWith(RedisTestContainerExtension.class)
-<%_ } _%>
+@MicronautTest(transactional = false)
+@Property(name = "micronaut.security.enabled", value = "false")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') { %>extends AbstractCassandraTest <% } %>{
     <%_ for (idx in fields) {
     const defaultValueName = 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase();
@@ -347,111 +290,55 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     private static final <%= fieldType %> <%= updatedValueName %> = <%= fieldType %>.<%= enumValue2 %>;
     <%_ } } _%>
 
-    @Autowired
+    @Inject
     private <%= entityClass %>Repository <%= entityInstance %>Repository;
     <%_ if (isUsingMapsId === true && ( dto !== 'mapstruct' && service === 'no')) { _%>
-    @Autowired
+    @Inject
     private <%= mapsIdEntity %>Repository <%= mapsIdRepoInstance %>;
     <%_ } _%>
     <%_ if (saveUserSnapshot) { _%>
 
-    @Autowired
+    @Inject
     private UserRepository userRepository;
     <%_ } _%>
     <%_ if (reactiveRepositories && service === 'no') { _%>
 
-    @Autowired
+    @Inject
     private <%= entityClass %>ReactiveRepository <%= entityInstance %>ReactiveRepository;
     <%_ } _%>
-    <%_ if (fieldsContainOwnerManyToMany === true) { _%>
 
-    @Mock
-    private <%= entityClass %>Repository <%= entityInstance %>RepositoryMock;
-    <%_ } _%>
-    <%_ if (dto === 'mapstruct') { _%>
-
-    @Autowired
-    private <%= entityClass %>Mapper <%= entityInstance %>Mapper;
-    <%_ } if (service !== 'no') { _%>
-    <%_ if (fieldsContainOwnerManyToMany === true) { _%>
-
-    @Mock
-    private <%= entityClass %>Service <%= entityInstance %>ServiceMock;
-    <%_ } _%>
-
-    @Autowired
-    private <%= entityClass %>Service <%= entityInstance %>Service;
-    <%_ } if (searchEngine === 'elasticsearch') { _%>
-
-    /**
-     * This repository is mocked in the <%= packageName %>.repository.search test package.
-     *
-     * @see <%= packageName %>.repository.search.<%= entityClass %>SearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private <%= entityClass %>SearchRepository mock<%= entityClass %>SearchRepository;
-    <%_ } _%>
-    <%_ if (jpaMetamodelFiltering) { _%>
-
-    @Autowired
-    private <%= entityClass %>QueryService <%= entityInstance %>QueryService;
-    <%_ } _%>
-
-    @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
-
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
-<%_ if (databaseType === 'sql') { _%>
-
-    @Autowired
-    private EntityManager em;
-<%_ } _%>
-
-    @Autowired
-    private Validator validator;
-
-    private MockMvc rest<%= entityClass %>MockMvc;
+    @Inject @Client("/")
+    RxHttpClient client;
 
     private <%= asEntity(entityClass) %> <%= asEntity(entityInstance) %>;
 
     @BeforeEach
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        <%_ if (service !== 'no') { _%>
-        final <%= entityClass %>Resource <%= entityInstance %>Resource = new <%= entityClass %>Resource(<%= entityInstance %>Service<% if (jpaMetamodelFiltering) { %>, <%= entityInstance %>QueryService<% } %><% if (saveUserSnapshot) { %>, userRepository<% } %>);
-        <%_ } else { _%>
-        final <%= entityClass %>Resource <%= entityInstance %>Resource = new <%= entityClass %>Resource(<%= entityInstance %>Repository<% if (dto === 'mapstruct') { %>, <%= entityInstance %>Mapper<% } %><% if (searchEngine === 'elasticsearch') { %>, mock<%= entityClass %>SearchRepository<% } %><% if (reactiveRepositories) { %>, <%= entityInstance %>ReactiveRepository<% } %><% if (saveUserSnapshot) { %>, userRepository<% } %><% if (isUsingMapsId === true && dto !== 'mapstruct') { %>, <%= mapsIdRepoInstance _%> <% } %>);
-        <%_ } _%>
-        this.rest<%= entityClass %>MockMvc = MockMvcBuilders.standaloneSetup(<%= entityInstance %>Resource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter)
-            .setValidator(validator).build();
+    public void initTest() {
+        <%= asEntity(entityInstance) %> = createEntity();
     }
 
-<%_ ['DEFAULT_', 'UPDATED_'].forEach((fieldStatus) => { _%>
+    @AfterEach
+    public void cleanUpTest() {
+        <%= asEntity(entityInstance) %>Repository.deleteAll();
+    }
+
     /**
-     * Create an <% if (fieldStatus === 'UPDATED_') { %>updated <% } %>entity for this test.
+     * Create an entity for this test.
      *
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static <%= asEntity(entityClass) %> create<% if (fieldStatus === 'UPDATED_') { _%>Updated<%_ } %>Entity(<% if (databaseType === 'sql') { %>EntityManager em<% } %>) {
+    public static <%= asEntity(entityClass) %> createEntity() {
         <%_ if (fluentMethods) { _%>
         <%= asEntity(entityClass) %> <%= asEntity(entityInstance) %> = new <%= asEntity(entityClass) %>()<% for (idx in fields) { %>
-            .<%= fields[idx].fieldName %>(<%= fieldStatus + fields[idx].fieldNameUnderscored.toUpperCase() %>)<% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %>
-            .<%= fields[idx].fieldName %>ContentType(<%= fieldStatus + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE)<% } %><% } %>;
+            .<%= fields[idx].fieldName %>(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>)<% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %>
+            .<%= fields[idx].fieldName %>ContentType(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE)<% } %><% } %>;
         <%_ } else { _%>
         <%= asEntity(entityClass) %> <%= asEntity(entityInstance) %> = new <%= asEntity(entityClass) %>();
             <%_ for (idx in fields) { _%>
-        <%= asEntity(entityInstance) %>.set<%= fields[idx].fieldInJavaBeanMethod %>(<%= fieldStatus + fields[idx].fieldNameUnderscored.toUpperCase() %>);
+        <%= asEntity(entityInstance) %>.set<%= fields[idx].fieldInJavaBeanMethod %>(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>);
                 <%_ if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { _%>
-        <%= asEntity(entityInstance) %>.set<%= fields[idx].fieldInJavaBeanMethod %>ContentType(<%= fieldStatus + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE);
+        <%= asEntity(entityInstance) %>.set<%= fields[idx].fieldInJavaBeanMethod %>ContentType(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE);
                 <%_ } _%>
             <%_ } _%>
         <%_ } _%>
@@ -469,26 +356,16 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         // Add required entity
             <%_ if (alreadyGeneratedEntities.indexOf(otherEntityName) == -1) { _%>
     <%_ if (otherEntityName === 'user') { // TODO or other entity has no unique fields _%>
-        <%= asEntity(otherEntityNameCapitalized) %> <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.createEntity(<% if (databaseType === 'sql') { %>em<% } %>);
-                <%_ if (databaseType === 'sql') { _%>
-        em.persist(<%= otherEntityName %>);
-        em.flush();
-                <%_ } _%>
+        <%= asEntity(otherEntityNameCapitalized) %> <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.createEntity();
                 <%_ if (databaseType === 'mongodb') { _%>
         <%= otherEntityName %>.setId("fixed-id-for-tests");
                 <%_ } _%>
     <%_ } else { _%>
         <%= asEntity(otherEntityNameCapitalized) %> <%= otherEntityName %>;
         <%_ if (databaseType === 'sql') { _%>
-        if (TestUtil.findAll(em, <%= otherEntityNameCapitalized %>.class).isEmpty()) {
-            <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.create<% if (fieldStatus === 'UPDATED_') { %>Updated<% } %>Entity(em);
-            em.persist(<%= otherEntityName %>);
-            em.flush();
-        } else {
-            <%= otherEntityName %> = TestUtil.findAll(em, <%= otherEntityNameCapitalized %>.class).get(0);
-        }
+        
         <%_ } else { _%>
-        <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.create<% if (fieldStatus === 'UPDATED_') { %>Updated<% } %>Entity(<% if (databaseType === 'sql') { %>em<% } %>);
+        <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.createEntity());
         <%_ } _%>
         <%_ if (databaseType === 'mongodb') { _%>
         <%= otherEntityName %>.setId("fixed-id-for-tests");
@@ -504,62 +381,26 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ } } _%>
         return <%= asEntity(entityInstance) %>;
     }
-<%_ }); _%>
 
-    @BeforeEach
-    public void initTest() {
-        <%_ if (databaseType === 'couchbase') { _%>
-        mockAuthentication();
-        <%_ } _%>
-        <%_ if (databaseType === 'mongodb' || databaseType === 'couchbase' || databaseType === 'cassandra') { _%>
-        <%= entityInstance %>Repository.deleteAll();
-        <%_ } _%>
-        <%= asEntity(entityInstance) %> = createEntity(<% if (databaseType === 'sql') { %>em<% } %>);
-    }
 <%_ if (!readOnly) { _%>
 
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
+    @Test
     public void create<%= entityClass %>() throws Exception {
         int databaseSizeBeforeCreate = <%= entityInstance %>Repository.findAll().size();
 
         // Create the <%= entityClass %>
-        <%_ if (dto === 'mapstruct') { _%>
-        <%= asDto(entityClass) %> <%= asDto(entityInstance) %> = <%= entityInstance %>Mapper.toDto(<%= asEntity(entityInstance) %>);
-        <%_ } _%>
-        rest<%= entityClass %>MockMvc.perform(post("/api/<%= entityApiUrl %>")
-            .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(<%= (dto === 'mapstruct' ? asDto(entityInstance) : asEntity(entityInstance)) %>)))
-            .andExpect(status().isCreated());
+        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.POST("/api/<%= entityApiUrl %>", <%= asEntity(entityInstance) %>), <%= entityClass %>.class).blockingFirst();
+
+        assertThat(response.status().getCode()).isEqualTo(HttpStatus.CREATED.getCode());
 
         // Validate the <%= entityClass %> in the database
         List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
         assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeCreate + 1);
         <%= asEntity(entityClass) %> test<%= entityClass %> = <%= entityInstance %>List.get(<%= entityInstance %>List.size() - 1);
-        <%_ for (idx in fields) { if (fields[idx].fieldType === 'ZonedDateTime') { _%>
-        assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
-        <%_ } else if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { _%>
-        assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
-        assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>ContentType()).isEqualTo(<%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE);
-        <%_ } else if (fields[idx].fieldType.toLowerCase() === 'boolean') { _%>
-        assertThat(test<%= entityClass %>.is<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
-        <%_ } else { _%>
-        assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
-        <%_ }} _%>
-        <%_ if (isUsingMapsId === true) { _%>
-
-        // Validate the id for MapsId, the ids must be same
-        assertThat(test<%= entityClass %>.getId()).isEqualTo(test<%= entityClass %>.get<%= mapsIdEntity %>().getId());
-        <%_ } _%>
-        <%_ if (searchEngine === 'elasticsearch') { _%>
-
-        // Validate the <%= entityClass %> in Elasticsearch
-        verify(mock<%= entityClass %>SearchRepository, times(1)).save(test<%= entityClass %>);
-        <%_ } _%>
+<%- include('../../common/validate_entity_fields_template'); -%>
     }
 
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
+    @Test
     public void create<%= entityClass %>WithExistingId() throws Exception {
         int databaseSizeBeforeCreate = <%= entityInstance %>Repository.findAll().size();
 
@@ -570,10 +411,10 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ } _%>
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        rest<%= entityClass %>MockMvc.perform(post("/api/<%= entityApiUrl %>")
-            .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(<%= (dto === 'mapstruct' ? asDto(entityInstance) : asEntity(entityInstance)) %>)))
-            .andExpect(status().isBadRequest());
+        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.POST("/api/<%= entityApiUrl %>", <%= asEntity(entityInstance) %>), <%= entityClass %>.class)
+            .onErrorReturn(t -> (HttpResponse<<%= entityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+
+        assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
         // Validate the <%= entityClass %> in the database
         List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
@@ -585,79 +426,13 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ } _%>
     }
 
-    <%_ if (databaseType === 'sql' && isUsingMapsId === true) { _%>
-    @Test
-    @Transactional
-    public void update<%= entityClass %>MapsIdAssociationWithNewId() throws Exception {
-        // Initialize the database
-<%_ if (service !== 'no' && dto !== 'mapstruct') { _%>
-        <%= entityInstance %>Service.save(<%= asEntity(entityInstance) %>);
-<%_ } else { _%>
-        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
-<%_ } _%>
-        <%_ const alreadyGeneratedEntities = []; _%>
-        int databaseSizeBeforeCreate = <%= entityInstance %>Repository.findAll().size();
-
-        <%_ for (idx in relationships) {
-            const relationshipValidate = relationships[idx].relationshipValidate;
-            const otherEntityName = relationships[idx].otherEntityName;
-            const otherEntityNameCapitalized = relationships[idx].otherEntityNameCapitalized;
-            const mapsIdUse = relationships[idx].useJPADerivedIdentifier;
-            if (mapsIdUse === true) { _%>
-        // Add a new parent entity
-                <%_ if (alreadyGeneratedEntities.indexOf(otherEntityName) == -1) { _%>
-        <%= asEntity(otherEntityNameCapitalized) %> <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.create<% if (otherEntityName !== 'user') { _%>Updated<%_ } %>Entity(em);
-        em.persist(<%= otherEntityName %>);
-        em.flush();
-                <%_ } _%>
-        <%_ alreadyGeneratedEntities.push(otherEntityName) _%>
-        <%_ } break; } _%>
-
-        // Load the <%= entityInstance %>
-        <%= asEntity(entityClass) %> updated<%= asEntity(entityClass) %> = <%= entityInstance %>Repository.findById(<%= asEntity(entityInstance) %>.getId()).get();<% if (databaseType === 'sql') { %>
-        // Disconnect from session so that the updates on updated<%= asEntity(entityClass) %> are not directly saved in db
-        em.detach(updated<%= asEntity(entityClass) %>);<% } %>
-
-        // Update the <%= mapsIdEntity %> with new association value
-        updated<%= asEntity(entityClass) %>.set<%= mapsIdEntity %>(<%= alreadyGeneratedEntities.pop() %>);
-        <%_ if (dto === 'mapstruct') { _%>
-        <%= asDto(entityClass) %> updated<%= asDto(entityClass) %> = <%= entityInstance %>Mapper.toDto(updated<%= asEntity(entityClass) %>);
-        <%_ } _%>
-
-        // Update the entity
-        rest<%= entityClass %>MockMvc.perform(put("/api/<%= entityApiUrl %>")
-            .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(<%_ if (dto === 'mapstruct') { _%>updated<%= asDto(entityClass) %> <%_ } else { _%> updated<%= asEntity(entityClass) %> <%_ } _%>)))
-            .andExpect(status().isOk());
-
-        // Validate the <%= entityClass %> in the database
-        List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
-        assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeCreate);
-        <%= asEntity(entityClass) %> test<%= entityClass %> = <%= entityInstance %>List.get(<%= entityInstance %>List.size() - 1);
-
-        // Validate the id for MapsId, the ids must be same
-        // Uncomment the following line for assertion. However, please note that there is a known issue and uncommenting will fail the test.
-        // Please look at https://github.com/jhipster/generator-jhipster/issues/9100. You can modify this test as necessary.
-        // assertThat(test<%= entityClass %>.getId()).isEqualTo(test<%= entityClass %>.get<%= mapsIdEntity %>().getId());
-        <%_ if (searchEngine === 'elasticsearch') { _%>
-
-        // Validate the <%= entityClass %> in Elasticsearch
-        <%_ if (service !== 'no' && dto !== 'mapstruct') { _%>
-        verify(mock<%= entityClass %>SearchRepository, times(2)).save(<%= asEntity(entityInstance) %>);
-<%_ } else { _%>
-        verify(mock<%= entityClass %>SearchRepository, times(1)).save(<%= asEntity(entityInstance) %>);
-<%_ } _%>
-        <%_ } _%>
-    }
-<%_ } _%>
 <% for (idx in fields) { %><% if (fields[idx].fieldValidate === true) {
     let required = false;
     if (fields[idx].fieldType !== 'byte[]' && fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('required')) {
         required = true;
     }
     if (required) { %>
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
+    @Test
     public void check<%= fields[idx].fieldInJavaBeanMethod %>IsRequired() throws Exception {
         int databaseSizeBeforeTest = <%= entityInstance %>Repository.findAll().size();
         // set the field null
@@ -666,10 +441,10 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         // Create the <%= entityClass %>, which fails.<% if (dto === 'mapstruct') { %>
         <%= asDto(entityClass) %> <%= asDto(entityInstance) %> = <%= entityInstance %>Mapper.toDto(<%= asEntity(entityInstance) %>);<% } %>
 
-        rest<%= entityClass %>MockMvc.perform(post("/api/<%= entityApiUrl %>")
-            .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(<%= (dto === 'mapstruct' ? asDto(entityInstance) : asEntity(entityInstance)) %>)))
-            .andExpect(status().isBadRequest());
+        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.POST("/api/<%= entityApiUrl %>", <%= asEntity(entityInstance) %>), <%= entityClass %>.class)
+            .onErrorReturn(t -> (HttpResponse<<%= entityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+
+        assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
         List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
         assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeTest);
@@ -677,8 +452,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
 <%_ } } } _%>
 <%_ } _%>
 
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
+    @Test
     public void getAll<%= entityClassPlural %>() throws Exception {
         // Initialize the database
         <%_ if (databaseType === 'cassandra') { _%>
@@ -686,74 +460,14 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ } _%>
         <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
 
-        // Get all the <%= entityInstance %>List
-        rest<%= entityClass %>MockMvc.perform(get("/api/<%= entityApiUrl %><% if (databaseType !== 'cassandra') { %>?sort=id,desc<% } %>"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))<% if (databaseType === 'sql' && hasOauthUser === true) { %>
-            .andExpect(jsonPath("$.[*].id").value(hasItem(<%= asEntity(entityInstance) %>.getId())))<% } else if (databaseType === 'sql') { %>
-            .andExpect(jsonPath("$.[*].id").value(hasItem(<%= asEntity(entityInstance) %>.getId().intValue())))<% } %><% if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>
-            .andExpect(jsonPath("$.[*].id").value(hasItem(<%= asEntity(entityInstance) %>.getId())))<% } %><% if (databaseType === 'cassandra') { %>
-            .andExpect(jsonPath("$.[*].id").value(hasItem(<%= asEntity(entityInstance) %>.getId().toString())))<% } %><% for (idx in fields) { %>
-            <%_ if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { _%>
-            .andExpect(jsonPath("$.[*].<%= fields[idx].fieldName %>ContentType").value(hasItem(<%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE)))
-            <%_ } _%>
-            .andExpect(jsonPath("$.[*].<%= fields[idx].fieldName %>").value(hasItem(<% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %>Base64Utils.encodeToString(<% } else if (fields[idx].fieldType === 'ZonedDateTime') { %>sameInstant(<% } %><%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %><% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %><% if (databaseType === 'cassandra') { %>.array()<% } %>)<% } else if (fields[idx].fieldType === 'Integer') { %><% } else if (fields[idx].fieldType === 'Long') { %>.intValue()<% } else if (fields[idx].fieldType === 'Float' || fields[idx].fieldType === 'Double') { %>.doubleValue()<% } else if (fields[idx].fieldType === 'BigDecimal') { %>.intValue()<% } else if (fields[idx].fieldType === 'Boolean') { %>.booleanValue()<% } else if (fields[idx].fieldType === 'ZonedDateTime') { %>)<% } else if (fields[idx].fieldType !== 'String') { %>.toString()<% } %>)))<% } %>;
+        // Get the <%= entityInstance %>List w/ all the <%= entityInstancePlural %>
+        List<<%= entityClass %>> <%= entityInstancePlural %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>?eagerload=true"), Argument.listOf(<%= entityClass %>.class)).blockingFirst();
+        <%= asEntity(entityClass) %> test<%= entityClass %> = <%= entityInstancePlural %>.get(0);
+
+<%- include('../../common/validate_entity_fields_template'); -%>
     }
-    <% if (fieldsContainOwnerManyToMany === true) { %>
-    @SuppressWarnings({"unchecked"})
-    public void getAll<%= entityClassPlural %>WithEagerRelationshipsIsEnabled() throws Exception {
-        <%_ if (service !== 'no') { _%>
-        <%= entityClass %>Resource <%= entityInstance %>Resource = new <%= entityClass %>Resource(<%= entityInstance %>ServiceMock<% if (jpaMetamodelFiltering) { %>, <%= entityInstance %>QueryService<% } %><% if (saveUserSnapshot) { %>, userRepository<% } %>);
-        when(<%= entityInstance %>ServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-        <%_ } else { _%>
-        <%= entityClass %>Resource <%= entityInstance %>Resource = new <%= entityClass %>Resource(<%= entityInstance %>RepositoryMock<% if (dto === 'mapstruct') { %>, <%= entityInstance %>Mapper<% } %><% if (searchEngine === 'elasticsearch') { %>, mock<%= entityClass %>SearchRepository<% } %><% if (jpaMetamodelFiltering) { %>, <%= entityInstance %>QueryService<% } %><% if (saveUserSnapshot) { %>, userRepository<% } %>);
-        when(<%= entityInstance %>RepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-        <%_ } _%>
-
-        MockMvc rest<%= entityClass %>MockMvc = MockMvcBuilders.standaloneSetup(<%= entityInstance %>Resource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        rest<%= entityClass %>MockMvc.perform(get("/api/<%= entityApiUrl %>?eagerload=true"))
-        .andExpect(status().isOk());
-
-        <%_ if (service !== 'no') { _%>
-        verify(<%= entityInstance %>ServiceMock, times(1)).findAllWithEagerRelationships(any());
-        <%_ } else { _%>
-        verify(<%= entityInstance %>RepositoryMock, times(1)).findAllWithEagerRelationships(any());
-        <%_ } _%>
-    }
-
-    @SuppressWarnings({"unchecked"})
-    public void getAll<%= entityClassPlural %>WithEagerRelationshipsIsNotEnabled() throws Exception {
-        <%_ if (service !== 'no') { _%>
-        <%= entityClass %>Resource <%= entityInstance %>Resource = new <%= entityClass %>Resource(<%= entityInstance %>ServiceMock<% if (jpaMetamodelFiltering) { %>, <%= entityInstance %>QueryService<% } %><% if (saveUserSnapshot) { %>, userRepository<% } %>);
-            when(<%= entityInstance %>ServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-        <%_ } else { _%>
-        <%= entityClass %>Resource <%= entityInstance %>Resource = new <%= entityClass %>Resource(<%= entityInstance %>RepositoryMock<% if (dto === 'mapstruct') { %>, <%= entityInstance %>Mapper<% } %><% if (searchEngine === 'elasticsearch') { %>, mock<%= entityClass %>SearchRepository<% } %><% if (jpaMetamodelFiltering) { %>, <%= entityInstance %>QueryService<% } %><% if (saveUserSnapshot) { %>, userRepository<% } %>);
-            when(<%= entityInstance %>RepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-        <%_ } _%>
-            MockMvc rest<%= entityClass %>MockMvc = MockMvcBuilders.standaloneSetup(<%= entityInstance %>Resource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-
-        rest<%= entityClass %>MockMvc.perform(get("/api/<%= entityApiUrl %>?eagerload=true"))
-        .andExpect(status().isOk());
-
-        <%_ if (service !== 'no') { _%>
-            verify(<%= entityInstance %>ServiceMock, times(1)).findAllWithEagerRelationships(any());
-        <%_ } else { _%>
-            verify(<%= entityInstance %>RepositoryMock, times(1)).findAllWithEagerRelationships(any());
-        <%_ } _%>
-    }
-    <%_ } _%>
-
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
+    
+    @Test
     public void get<%= entityClass %>() throws Exception {
         // Initialize the database
         <%_ if (databaseType === 'cassandra') { _%>
@@ -762,327 +476,22 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
 
         // Get the <%= entityInstance %>
-        rest<%= entityClass %>MockMvc.perform(get("/api/<%= entityApiUrl %>/{id}", <%= asEntity(entityInstance) %>.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))<% if (databaseType === 'sql' && hasOauthUser === true) { %>
-            .andExpect(jsonPath("$.id").value(<%= asEntity(entityInstance) %>.getId()))<% } else if (databaseType === 'sql') { %>
-            .andExpect(jsonPath("$.id").value(<%= asEntity(entityInstance) %>.getId().intValue()))<% } %><% if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>
-            .andExpect(jsonPath("$.id").value(<%= asEntity(entityInstance) %>.getId()))<% } %><% if (databaseType === 'cassandra') { %>
-            .andExpect(jsonPath("$.id").value(<%= asEntity(entityInstance) %>.getId().toString()))<% } %><% for (idx in fields) { %>
-            <%_ if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { _%>
-            .andExpect(jsonPath("$.<%= fields[idx].fieldName %>ContentType").value(<%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE))
-            <%_ } _%>
-            .andExpect(jsonPath("$.<%= fields[idx].fieldName %>").value(<% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %>Base64Utils.encodeToString(<% } else if (fields[idx].fieldType === 'ZonedDateTime') { %>sameInstant(<% } %><%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %><% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %><% if (databaseType === 'cassandra') { %>.array()<% } %>)<% } else if (fields[idx].fieldType === 'Integer') { %><% } else if (fields[idx].fieldType === 'Long') { %>.intValue()<% } else if (fields[idx].fieldType === 'Float' || fields[idx].fieldType === 'Double') { %>.doubleValue()<% } else if (fields[idx].fieldType === 'BigDecimal') { %>.intValue()<% } else if (fields[idx].fieldType === 'Boolean') { %>.booleanValue()<% } else if (fields[idx].fieldType === 'ZonedDateTime') { %>)<% } else if (fields[idx].fieldType !== 'String') { %>.toString()<% } %>))<% } %>;
+        <%= entityClass %> test<%= entityClass %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>/" + this.<%= asEntity(entityInstance) %>.getId()), <%= entityClass %>.class).blockingFirst();
+
+<%- include('../../common/validate_entity_fields_template'); -%>
     }
-<%_ if (jpaMetamodelFiltering) {  %>
-
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
-    public void get<%= entityClassPlural %>ByIdFiltering() throws Exception {
-        // Initialize the database
-        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
-
-        Long id = <%= asEntity(entityInstance) %>.getId();
-
-        default<%= entityClass %>ShouldBeFound("id.equals=" + id);
-        default<%= entityClass %>ShouldNotBeFound("id.notEquals=" + id);
-
-        default<%= entityClass %>ShouldBeFound("id.greaterThanOrEqual=" + id);
-        default<%= entityClass %>ShouldNotBeFound("id.greaterThan=" + id);
-
-        default<%= entityClass %>ShouldBeFound("id.lessThanOrEqual=" + id);
-        default<%= entityClass %>ShouldNotBeFound("id.lessThan=" + id);
-    }
-
-<%_
-        fields.forEach((searchBy) => {
-            // we can't filter by all the fields.
-            if (isFilterableType(searchBy.fieldType)) {
-                 _%>
-
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
-    public void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsEqualToSomething() throws Exception {
-        // Initialize the database
-        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> equals to <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>
-        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.equals=" + <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> equals to <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>
-        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.equals=" + <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
-    }
-
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
-    public void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> not equals to <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>
-        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.notEquals=" + <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> not equals to <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>
-        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.notEquals=" + <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
-    }
-
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
-    public void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsInShouldWork() throws Exception {
-        // Initialize the database
-        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> in <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %> or <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>
-        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.in=" + <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %> + "," + <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> equals to <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>
-        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.in=" + <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
-    }
-
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
-    public void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsNullOrNotNull() throws Exception {
-        // Initialize the database
-        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is not null
-        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.specified=true");
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is null
-        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.specified=false");
-    }
-<%_
-            }
-            if (searchBy.fieldType === 'String') {
-                _%>
-                @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
-    public void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>ContainsSomething() throws Exception {
-        // Initialize the database
-        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> contains <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>
-        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.contains=" + <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> contains <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>
-        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.contains=" + <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
-    }
-
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
-    public void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>NotContainsSomething() throws Exception {
-        // Initialize the database
-        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> does not contain <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>
-        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.doesNotContain=" + <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> does not contain <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>
-        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.doesNotContain=" + <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
-    }
-
-<%_
-            }
-            // the range criteria
-            if (['BigDecimal', 'Byte', 'Double', 'Duration', 'Float', 'Short',
-                 'Integer', 'Long', 'LocalDate', 'ZonedDateTime'].includes(searchBy.fieldType)) {
-              var defaultValue = 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase();
-              var biggerValue = 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase();
-              var smallerValue = 'SMALLER_' + searchBy.fieldNameUnderscored.toUpperCase();
-              if (searchBy.fieldValidate === true && searchBy.fieldValidateRules.includes('max')) {
-                  // if maximum is specified the updated variable is smaller than the default one!
-                  if (searchBy.fieldType === 'BigDecimal') {
-                      biggerValue = '(' + defaultValue + '.add(BigDecimal.ONE))';
-                  } else if (['Duration', 'LocalDate', 'ZonedDateTime'].includes(searchBy.fieldType)) {
-                      biggerValue = '(' + defaultValue + '.plus(1, ChronoUnit.DAYS))';
-                  } else {
-                      biggerValue = '(' + defaultValue + ' + 1)';
-                  }
-              }
-            _%>
-
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
-    public void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is greater than or equal to <%= defaultValue %>
-        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.greaterThanOrEqual=" + <%= defaultValue %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is greater than or equal to <%= biggerValue %>
-        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.greaterThanOrEqual=" + <%= biggerValue %>);
-    }
-
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
-    public void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is less than or equal to <%= defaultValue %>
-        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.lessThanOrEqual=" + <%= defaultValue %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is less than or equal to <%= smallerValue %>
-        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.lessThanOrEqual=" + <%= smallerValue %>);
-    }
-
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
-    public void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsLessThanSomething() throws Exception {
-        // Initialize the database
-        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is less than <%= defaultValue %>
-        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.lessThan=" + <%= defaultValue %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is less than <%= biggerValue %>
-        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.lessThan=" + <%= biggerValue %>);
-    }
-
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
-    public void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is greater than <%= defaultValue %>
-        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.greaterThan=" + <%= defaultValue %>);
-
-        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is greater than <%= smallerValue %>
-        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.greaterThan=" + <%= smallerValue %>);
-    }
-
-<%_         } _%>
-<%_     }); _%>
-<%_ relationships.forEach((relationship) => { _%>
-
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
-    public void getAll<%= entityClassPlural %>By<%= relationship.relationshipNameCapitalized %>IsEqualToSomething() throws Exception {
-        <%_ if (relationship.relationshipValidate === true || relationship.useJPADerivedIdentifier === true) { _%>
-        // Get already existing entity
-        <%= asEntity(relationship.otherEntityNameCapitalized) %> <%= relationship.relationshipFieldName %> = <%= asEntity(entityInstance) %>.get<%= relationship.relationshipNameCapitalized %>();
-        <%_ } else { _%>
-        // Initialize the database
-        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
-        <%= asEntity(relationship.otherEntityNameCapitalized) %> <%= relationship.relationshipFieldName %> = <%= relationship.otherEntityNameCapitalized %>ResourceIT.createEntity(em);
-        em.persist(<%= relationship.relationshipFieldName %>);
-        em.flush();
-<%_ if (relationship.relationshipType === 'many-to-many' || relationship.relationshipType === 'one-to-many') { _%>
-        <%= asEntity(entityInstance) %>.add<%= relationship.relationshipNameCapitalized %>(<%= relationship.relationshipFieldName %>);
-<%_ } else { _%>
-        <%= asEntity(entityInstance) %>.set<%= relationship.relationshipNameCapitalized %>(<%= relationship.relationshipFieldName %>);
-<%_     if (relationship.ownerSide === false) { _%>
-        <%= relationship.relationshipFieldName %>.set<%= relationship.otherEntityRelationshipNameCapitalized %>(<%= asEntity(entityInstance) %>);
-<%_     } _%>
-<%_ } _%>
-        <%_ } _%>
-        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
-        <% if (authenticationType === 'oauth2' && relationship.otherEntityName === 'user') { _%>String<%_ } else { _%>Long<% } %> <%= relationship.relationshipFieldName %>Id = <%= relationship.relationshipFieldName %>.getId();
-
-        // Get all the <%= entityInstance %>List where <%= relationship.relationshipFieldName %> equals to <%= relationship.relationshipFieldName %>Id
-        default<%= entityClass %>ShouldBeFound("<%= relationship.relationshipFieldName %>Id.equals=" + <%= relationship.relationshipFieldName %>Id);
-
-        // Get all the <%= entityInstance %>List where <%= relationship.relationshipFieldName %> equals to <%= relationship.relationshipFieldName %>Id + 1
-        default<%= entityClass %>ShouldNotBeFound("<%= relationship.relationshipFieldName %>Id.equals=" + (<%= relationship.relationshipFieldName %>Id + 1));
-    }
-
-<%_ }); _%>
-    /**
-     * Executes the search, and checks that the default entity is returned.
-     */
-    private void default<%= entityClass %>ShouldBeFound(String filter) throws Exception {
-        rest<%= entityClass %>MockMvc.perform(get("/api/<%= entityApiUrl %>?sort=id,desc&" + filter))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(<%= asEntity(entityInstance) %><% if (databaseType === 'sql' && hasOauthUser === true) { %>.getId()<% } else { %>.getId().intValue()<% } %>)))<% fields.forEach((field) => { %>
-            <%_ if ((field.fieldType === 'byte[]' || field.fieldType === 'ByteBuffer') && field.fieldTypeBlobContent !== 'text') { _%>
-            .andExpect(jsonPath("$.[*].<%= field.fieldName %>ContentType").value(hasItem(<%= 'DEFAULT_' + field.fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE)))
-            <%_ } _%>
-            .andExpect(jsonPath("$.[*].<%= field.fieldName %>").value(hasItem(<% if ((field.fieldType === 'byte[]' || field.fieldType === 'ByteBuffer') && field.fieldTypeBlobContent !== 'text') { %>Base64Utils.encodeToString(<% } else if (field.fieldType === 'ZonedDateTime') { %>sameInstant(<% } %><%= 'DEFAULT_' + field.fieldNameUnderscored.toUpperCase() %><% if ((field.fieldType === 'byte[]' || field.fieldType === 'ByteBuffer') && field.fieldTypeBlobContent !== 'text') { %><% if (databaseType === 'cassandra') { %>.array()<% } %>)<% } else if (field.fieldType === 'Integer') { %><% } else if (field.fieldType === 'Long') { %>.intValue()<% } else if (field.fieldType === 'Float' || field.fieldType === 'Double') { %>.doubleValue()<% } else if (field.fieldType === 'BigDecimal') { %>.intValue()<% } else if (field.fieldType === 'Boolean') { %>.booleanValue()<% } else if (field.fieldType === 'ZonedDateTime') { %>)<% } else if (field.fieldType !== 'String') { %>.toString()<% } %>)))<% }); %>;
-
-        // Check, that the count call also returns 1
-        rest<%= entityClass %>MockMvc.perform(get("/api/<%= entityApiUrl %>/count?sort=id,desc&" + filter))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(content().string("1"));
-    }
-
-    /**
-     * Executes the search, and checks that the default entity is not returned.
-     */
-    private void default<%= entityClass %>ShouldNotBeFound(String filter) throws Exception {
-        rest<%= entityClass %>MockMvc.perform(get("/api/<%= entityApiUrl %>?sort=id,desc&" + filter))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$").isArray())
-            .andExpect(jsonPath("$").isEmpty());
-
-        // Check, that the count call also returns 0
-        rest<%= entityClass %>MockMvc.perform(get("/api/<%= entityApiUrl %>/count?sort=id,desc&" + filter))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(content().string("0"));
-    }
-
-<%_  } _%>
-<%_ if (reactiveRepositories) { _%>
 
     @Test
-    public void getAll<%= entityClassPlural %>AsStream() {
-        // Initialize the database
-        <%_ if (databaseType === 'cassandra') { _%>
-        <%= asEntity(entityInstance) %>.setId(UUID.randomUUID());
-        <%_ } _%>
-        <%= entityInstance %>Repository.save(<%= asEntity(entityInstance) %>);
-
-        <%_ if (service !== 'no') { _%>
-        final <%= entityClass %>Resource <%= entityInstance %>Resource = new <%= entityClass %>Resource(<%= entityInstance %>Service<% if (jpaMetamodelFiltering) { %>, <%= entityInstance %>QueryService<% } %><% if (saveUserSnapshot) { %>, userRepository<% } %>);
-        <%_ } else { _%>
-        final <%= entityClass %>Resource <%= entityInstance %>Resource = new <%= entityClass %>Resource(<%= entityInstance %>Repository<% if (dto === 'mapstruct') { %>, <%= entityInstance %>Mapper<% } %><% if (searchEngine === 'elasticsearch') { %>, mock<%= entityClass %>SearchRepository<% } %><% if (reactiveRepositories) { %>, <%= entityInstance %>ReactiveRepository<% } %><% if (jpaMetamodelFiltering) { %>, <%= entityInstance %>QueryService<% } %><% if (saveUserSnapshot) { %>, userRepository<% } %>);
-        <%_ } _%>
-        WebTestClient client = WebTestClient.bindToController(<%= entityInstance %>Resource).build();
-
-        List<<%= entityClass %>> <%= entityInstance %>List = client.get().uri("/api/<%= entityApiUrl %>").accept(MediaType.APPLICATION_STREAM_JSON).exchange()
-            .expectStatus().isOk()
-            .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_STREAM_JSON)
-            .returnResult(<%= (dto !== 'no' ? asDto(entityInstance) : asEntity(entityInstance)) %>.class)
-            .getResponseBody()
-            <%_ if (dto !== 'no') { _%>
-            .map(<%= entityInstance %>Mapper::toEntity)
-            <%_ } _%>
-            .filter(<%= asEntity(entityInstance) %>::equals)
-            .collectList()
-            .block(Duration.ofSeconds(5));
-
-        assertThat(<%= entityInstance %>List).isNotNull();
-        assertThat(<%= entityInstance %>List).hasSize(1);
-        <%= asEntity(entityClass) %> test<%= entityClass %> = <%= entityInstance %>List.get(0);
-        <%_ for (idx in fields) { if (fields[idx].fieldType === 'ZonedDateTime') { _%>
-        assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
-        <%_ } else if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { _%>
-        assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
-        assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>ContentType()).isEqualTo(<%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE);
-        <%_ } else if (fields[idx].fieldType.toLowerCase() === 'boolean') { _%>
-        assertThat(test<%= entityClass %>.is<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
-        <%_ } else { _%>
-        assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
-        <%_ }} _%>
-    }
-    <%_  } _%>
-
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
     public void getNonExisting<%= entityClass %>() throws Exception {
         // Get the <%= entityInstance %>
-        rest<%= entityClass %>MockMvc.perform(get("/api/<%= entityApiUrl %>/{id}", <% if (databaseType === 'sql' || databaseType === 'mongodb' || databaseType === 'couchbase') { %>Long.MAX_VALUE<% } if (databaseType === 'cassandra') { %>UUID.randomUUID().toString()<% } %>))
-            .andExpect(status().isNotFound());
-    }
-<%_ if (!readOnly) { _%>
+        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.GET("/api/<%= entityApiUrl %>/"+ Long.MAX_VALUE), <%= entityClass %>.class)
+            .onErrorReturn(t -> (HttpResponse<<%= entityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
+        assertThat(response.status().getCode()).isEqualTo(HttpStatus.NOT_FOUND.getCode());
+    }
+    
+<%_ if (!readOnly) { _%>
+    @Test
     public void update<%= entityClass %>() throws Exception {
         // Initialize the database
         <%_ if (databaseType === 'cassandra') { _%>
@@ -1101,9 +510,8 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         int databaseSizeBeforeUpdate = <%= entityInstance %>Repository.findAll().size();
 
         // Update the <%= entityInstance %>
-        <%= asEntity(entityClass) %> updated<%= asEntity(entityClass) %> = <%= entityInstance %>Repository.findById(<%= asEntity(entityInstance) %>.getId()).get();<% if (databaseType === 'sql') { %>
-        // Disconnect from session so that the updates on updated<%= asEntity(entityClass) %> are not directly saved in db
-        em.detach(updated<%= asEntity(entityClass) %>);<% } %>
+        <%= asEntity(entityClass) %> updated<%= asEntity(entityClass) %> = <%= entityInstance %>Repository.findById(<%= asEntity(entityInstance) %>.getId()).get();
+
         <%_ if (fluentMethods && fields.length > 0) { _%>
         updated<%= asEntity(entityClass) %><% for (idx in fields) { %>
             .<%= fields[idx].fieldName %>(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>)<% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %>
@@ -1120,34 +528,19 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%= asDto(entityClass) %> <%= asDto(entityInstance) %> = <%= entityInstance %>Mapper.toDto(updated<%= asEntity(entityClass) %>);
         <%_ } _%>
 
-        rest<%= entityClass %>MockMvc.perform(put("/api/<%= entityApiUrl %>")
-            .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(<%= (dto === 'mapstruct' ? asDto(entityInstance) : 'updated' + asEntity(entityClass)) %>)))
-            .andExpect(status().isOk());
+        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>", updated<%= entityClass %>), <%= entityClass %>.class)
+            .onErrorReturn(t -> (HttpResponse<<%= entityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+
+        assertThat(response.status().getCode()).isEqualTo(HttpStatus.OK.getCode());
 
         // Validate the <%= entityClass %> in the database
         List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
         assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeUpdate);
         <%= asEntity(entityClass) %> test<%= entityClass %> = <%= entityInstance %>List.get(<%= entityInstance %>List.size() - 1);
-        <%_ for (idx in fields) { if (fields[idx].fieldType === 'ZonedDateTime') { _%>
-        assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
-        <%_ } else if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { _%>
-        assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
-        assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>ContentType()).isEqualTo(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE);
-        <%_ } else if (fields[idx].fieldType.toLowerCase() === 'boolean') { _%>
-        assertThat(test<%= entityClass %>.is<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
-        <%_ } else { _%>
-        assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
-        <%_ } } _%>
-        <%_ if (searchEngine === 'elasticsearch') { _%>
-
-        // Validate the <%= entityClass %> in Elasticsearch
-        verify(mock<%= entityClass %>SearchRepository, times(1)).save(test<%= entityClass %>);
-        <%_ } _%>
+<%- include('../../common/validate_entity_fields_template'); -%>
     }
 
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
+    @Test
     public void updateNonExisting<%= entityClass %>() throws Exception {
         int databaseSizeBeforeUpdate = <%= entityInstance %>Repository.findAll().size();
 
@@ -1155,10 +548,10 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%= asDto(entityClass) %> <%= asDto(entityInstance) %> = <%= entityInstance %>Mapper.toDto(<%= asEntity(entityInstance) %>);<% } %>
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        rest<%= entityClass %>MockMvc.perform(put("/api/<%= entityApiUrl %>")
-            .contentType(TestUtil.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(<%= (dto === 'mapstruct' ? asDto(entityInstance) : asEntity(entityInstance)) %>)))
-            .andExpect(status().isBadRequest());
+        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>", <%= asEntity(entityInstance) %>), <%= entityClass %>.class)
+            .onErrorReturn(t -> (HttpResponse<<%= entityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+
+        assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
         // Validate the <%= entityClass %> in the database
         List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
@@ -1170,10 +563,9 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ } _%>
     }
 
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
+    @Test
     public void delete<%= entityClass %>() throws Exception {
-        // Initialize the database
+        // Initialize the database with one entity
         <%_ if (databaseType === 'cassandra') { _%>
         <%= asEntity(entityInstance) %>.setId(UUID.randomUUID());
         <%_ } _%>
@@ -1186,11 +578,10 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         int databaseSizeBeforeDelete = <%= entityInstance %>Repository.findAll().size();
 
         // Delete the <%= entityInstance %>
-        rest<%= entityClass %>MockMvc.perform(delete("/api/<%= entityApiUrl %>/{id}", <%= asEntity(entityInstance) %>.getId())
-            .accept(TestUtil.APPLICATION_JSON))
-            .andExpect(status().isNoContent());
+        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.DELETE("/api/<%= entityApiUrl %>/"+ <%= asEntity(entityInstance) %>.getId()), <%= entityClass %>.class)
+            .onErrorReturn(t -> (HttpResponse<<%= entityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
-        // Validate the database contains one less item
+        // Validate the database is now empty
         List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
         assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeDelete - 1);
         <%_ if (searchEngine === 'elasticsearch') { _%>
@@ -1200,39 +591,18 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ } _%>
     }
 <%_ } _%>
-    <%_ if (searchEngine === 'elasticsearch') { _%>
 
-    @Test<% if (databaseType === 'sql') { %>
-    @Transactional<% } %>
-    public void search<%= entityClass %>() throws Exception {
-        // Initialize the database
-        <%_ if (databaseType === 'cassandra') { _%>
-        <%= asEntity(entityInstance) %>.setId(UUID.randomUUID());
-        <%_ } _%>
-<%_ if (service !== 'no' && dto !== 'mapstruct') { _%>
-        <%= entityInstance %>Service.save(<%= asEntity(entityInstance) %>);
-<%_ } else { _%>
-        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
-<%_ } _%>
-<%_ if (searchEngine === 'elasticsearch' && pagination !== 'no') { _%>
-        when(mock<%= entityClass %>SearchRepository.search(queryStringQuery("id:" + <%= asEntity(entityInstance) %>.getId()), PageRequest.of(0, 20)))
-            .thenReturn(new PageImpl<>(Collections.singletonList(<%= asEntity(entityInstance) %>), PageRequest.of(0, 1), 1));
-<%_ } else { _%>
-        when(mock<%= entityClass %>SearchRepository.search(queryStringQuery("id:" + <%= asEntity(entityInstance) %>.getId())))
-            .thenReturn(Collections.singletonList(<%= asEntity(entityInstance) %>));
-<%_ } _%>
-        // Search the <%= entityInstance %>
-        rest<%= entityClass %>MockMvc.perform(get("/api/_search/<%= entityApiUrl %>?query=id:" + <%= asEntity(entityInstance) %>.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))<% if (databaseType === 'sql' && hasOauthUser === true) { %>
-            .andExpect(jsonPath("$.[*].id").value(hasItem(<%= asEntity(entityInstance) %>.getId())))<% } else if (databaseType === 'sql') { %>
-            .andExpect(jsonPath("$.[*].id").value(hasItem(<%= asEntity(entityInstance) %>.getId().intValue())))<% } %><% if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>
-            .andExpect(jsonPath("$.[*].id").value(hasItem(<%= asEntity(entityInstance) %>.getId())))<% } %><% if (databaseType === 'cassandra') { %>
-            .andExpect(jsonPath("$.[*].id").value(hasItem(<%= asEntity(entityInstance) %>.getId().toString())))<% } %><% for (idx in fields) { %>
-            <%_ if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { _%>
-            .andExpect(jsonPath("$.[*].<%= fields[idx].fieldName %>ContentType").value(hasItem(<%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE)))
-            <%_ } _%>
-            .andExpect(jsonPath("$.[*].<%= fields[idx].fieldName %>").value(hasItem(<% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %>Base64Utils.encodeToString(<% } else if (fields[idx].fieldType === 'ZonedDateTime') { %>sameInstant(<% } %><%= 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase() %><% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %><% if (databaseType === 'cassandra') { %>.array()<% } %>)<% } else if (fields[idx].fieldType === 'Integer') { %><% } else if (fields[idx].fieldType === 'Long') { %>.intValue()<% } else if (fields[idx].fieldType === 'Float' || fields[idx].fieldType === 'Double') { %>.doubleValue()<% } else if (fields[idx].fieldType === 'BigDecimal') { %>.intValue()<% } else if (fields[idx].fieldType === 'Boolean') { %>.booleanValue()<% } else if (fields[idx].fieldType === 'ZonedDateTime') { %>)<% } else if (fields[idx].fieldType !== 'String') { %>.toString()<% } %>)))<% } %>;
+    @Test
+    public void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(<%= entityClass %>.class);
+        <%= entityClass %> <%= asEntity(entityInstance) %>1 = new <%= entityClass %>();
+        <%= asEntity(entityInstance) %>1.setId(1L);
+        <%= entityClass %> <%= asEntity(entityInstance) %>2 = new <%= entityClass %>();
+        <%= asEntity(entityInstance) %>2.setId(<%= asEntity(entityInstance) %>1.getId());
+        assertThat(<%= asEntity(entityInstance) %>1).isEqualTo(<%= asEntity(entityInstance) %>2);
+        <%= asEntity(entityInstance) %>2.setId(2L);
+        assertThat(<%= asEntity(entityInstance) %>1).isNotEqualTo(<%= asEntity(entityInstance) %>2);
+        <%= asEntity(entityInstance) %>1.setId(null);
+        assertThat(<%= asEntity(entityInstance) %>1).isNotEqualTo(<%= asEntity(entityInstance) %>2);
     }
-    <%_ } _%>
 }
