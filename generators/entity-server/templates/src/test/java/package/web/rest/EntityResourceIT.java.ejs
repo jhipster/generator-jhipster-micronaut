@@ -397,7 +397,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
         assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeCreate + 1);
         <%= asEntity(entityClass) %> test<%= entityClass %> = <%= entityInstance %>List.get(<%= entityInstance %>List.size() - 1);
-<%- include('../../common/validate_entity_fields_template'); -%>
+<%- include('../../common/validate_entity_fields_template', {isUpdate: false}); -%>
     }
 
     @Test
@@ -464,7 +464,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         List<<%= entityClass %>> <%= entityInstancePlural %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>?eagerload=true"), Argument.listOf(<%= entityClass %>.class)).blockingFirst();
         <%= asEntity(entityClass) %> test<%= entityClass %> = <%= entityInstancePlural %>.get(0);
 
-<%- include('../../common/validate_entity_fields_template'); -%>
+<%- include('../../common/validate_entity_fields_template', {isUpdate: false}); -%>
     }
     
     @Test
@@ -478,7 +478,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         // Get the <%= entityInstance %>
         <%= entityClass %> test<%= entityClass %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>/" + this.<%= asEntity(entityInstance) %>.getId()), <%= entityClass %>.class).blockingFirst();
 
-<%- include('../../common/validate_entity_fields_template'); -%>
+<%- include('../../common/validate_entity_fields_template', {isUpdate: false}); -%>
     }
 
     @Test
@@ -537,7 +537,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
         assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeUpdate);
         <%= asEntity(entityClass) %> test<%= entityClass %> = <%= entityInstance %>List.get(<%= entityInstance %>List.size() - 1);
-<%- include('../../common/validate_entity_fields_template'); -%>
+<%- include('../../common/validate_entity_fields_template', {isUpdate: true}); -%>
     }
 
     @Test
