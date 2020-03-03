@@ -19,6 +19,8 @@
 const mkdirp = require('mkdirp');
 const cleanup = require('generator-jhipster/generators/cleanup');
 const constants = require('generator-jhipster/generators/generator-constants');
+const baseServerFiles = require('generator-jhipster/generators/server/files').serverFiles;
+
 
 /* Constants use throughout */
 const INTERPOLATE_REGEX = constants.INTERPOLATE_REGEX;
@@ -38,6 +40,8 @@ const shouldSkipUserManagement = generator =>
  * For any other config an object { file:.., method:.., template:.. } can be used
  */
 const serverFiles = {
+    jib: baseServerFiles.jib,
+    docker: baseServerFiles.docker,
     serverResources: [
         {
             path: SERVER_MAIN_RES_DIR,
