@@ -48,11 +48,11 @@ for (idx in fields) {
 }
 _%>
 <%_ if (databaseType === 'cassandra') { _%>
-import org.springframework.data.annotation.Id;
+// import org.springframework.data.annotation.Id;
     <%_ if (fieldsContainBlob) { _%>
-import org.springframework.data.cassandra.core.mapping.Column;
+// import org.springframework.data.cassandra.core.mapping.Column;
     <%_ } _%>
-import org.springframework.data.cassandra.core.mapping.Table;
+// import org.springframework.data.cassandra.core.mapping.Table;
 <%_ } if (importJsonIgnore === true) { _%>
 import com.fasterxml.jackson.annotation.JsonIgnore;
 <%_ } if (importJsonIgnoreProperties === true) { _%>
@@ -67,21 +67,21 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 <%_ } if (hasTextBlob === true || (fieldsContainUUID === true && ['mysql', 'mariadb'].includes(prodDatabaseType))) { _%>
 import org.hibernate.annotations.Type;
 <%_ } if (databaseType === 'mongodb') { _%>
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.Document;
+// import org.springframework.data.annotation.Id;
+// import org.springframework.data.mongodb.core.mapping.Field;
+// import org.springframework.data.mongodb.core.mapping.Document;
     <%_ if (hasRelationship) { _%>
-import org.springframework.data.mongodb.core.mapping.DBRef;
+// import org.springframework.data.mongodb.core.mapping.DBRef;
     <%_ } _%>
 <%_ } else if (databaseType === 'couchbase') { _%>
-import org.springframework.data.annotation.Id;
+// import org.springframework.data.annotation.Id;
 import com.couchbase.client.java.repository.annotation.Field;
-import org.springframework.data.couchbase.core.mapping.Document;
-import org.springframework.data.couchbase.core.mapping.id.GeneratedValue;
-import org.springframework.data.couchbase.core.mapping.id.IdPrefix;
+// import org.springframework.data.couchbase.core.mapping.Document;
+// import org.springframework.data.couchbase.core.mapping.id.GeneratedValue;
+// import org.springframework.data.couchbase.core.mapping.id.IdPrefix;
     <%_ if (hasRelationship) { _%>
-import org.springframework.data.couchbase.core.query.FetchType;
-import org.springframework.data.couchbase.core.query.N1qlJoin;
+// import org.springframework.data.couchbase.core.query.FetchType;
+// import org.springframework.data.couchbase.core.query.N1qlJoin;
     <%_ } _%>
 <%_ } if (databaseType === 'sql') { _%>
 
@@ -91,7 +91,7 @@ import javax.validation.constraints.*;
 <%_ } _%>
 
 <%_ if (searchEngine === 'elasticsearch') { _%>
-import org.springframework.data.elasticsearch.annotations.FieldType;
+// import org.springframework.data.elasticsearch.annotations.FieldType;
 <%_ } _%>
 import java.io.Serializable;
 <%_ if (fieldsContainBigDecimal === true) { _%>
@@ -122,7 +122,7 @@ import <%= packageName %>.domain.enumeration.<%= element %>;
 
 <%_ if (databaseType === 'couchbase') { _%>
 import static <%= packageName %>.config.Constants.ID_DELIMITER;
-import static org.springframework.data.couchbase.core.mapping.id.GenerationStrategy.UNIQUE;
+// import static org.springframework.data.couchbase.core.mapping.id.GenerationStrategy.UNIQUE;
 
 <%_ } _%>
 <%_ if (typeof javadoc == 'undefined') { _%>
@@ -152,7 +152,7 @@ import static org.springframework.data.couchbase.core.mapping.id.GenerationStrat
 <%_ } if (databaseType === 'cassandra') { _%>
 @Table("<%= entityInstance %>")
 <%_ } if (searchEngine === 'elasticsearch') { _%>
-@org.springframework.data.elasticsearch.annotations.Document(indexName = "<%= entityInstance.toLowerCase() %>")
+// @org.springframework.data.elasticsearch.annotations.Document(indexName = "<%= entityInstance.toLowerCase() %>")
 <%_ } _%>
 public class <%= asEntity(entityClass) %> implements Serializable {
 

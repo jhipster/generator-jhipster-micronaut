@@ -225,7 +225,7 @@ public class <%= entityClass %>Resource {
             <%_ } _%>
         <%_ } _%>
 <%- include('../../common/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: false, isUsingMapsId: false, mapsIdAssoc: mapsIdAssoc}); -%>
-        return HttpResponse.ok(result).headers(headers -> 
+        return HttpResponse.ok(result).headers(headers ->
             HeaderUtil.createEntityUpdateAlert(headers, applicationName, <%= enableTranslation %>, ENTITY_NAME, <%= instanceName %>.getId().toString()));
     }
 <%_ } _%>
