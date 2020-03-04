@@ -1,0 +1,33 @@
+<%#
+ Copyright 2019 Will Buck and the respective JHipster contributors
+
+ This file is part of the JHipster project, see https://www.jhipster.tech/
+ for more information.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-%>
+# <%= baseName %>
+
+Welcome to your new Micronaut-backed JHipster project!
+
+## Running the App locally
+
+Use `./mvnw` to start your server (it will run the `compile` and `exec:exec` goals), then `npm start` to serve the frontend via webpack!
+
+## Testing
+
+Frontend tests are run via `npm test`, and the backend via `./mvnw clean verify`
+
+## Packaging as a FAT jar
+
+Use `./mvnw -Pprod,-dev package` to produce a prod-profiled runnable jar, which you can run via `java -jar target/<%= dasherizedBaseName %>-0.0.1-SNAPSHOT.jar`

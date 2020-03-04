@@ -1,0 +1,28 @@
+package <%=packageName%>.web.rest.errors.handlers;
+
+import io.micronaut.context.annotation.Replaces;
+import io.micronaut.core.async.publisher.Publishers;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.MutableHttpResponse;
+import io.micronaut.security.handlers.HttpStatusCodeRejectionHandler;
+import io.micronaut.security.handlers.RejectionHandler;
+import org.reactivestreams.Publisher;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
+
+import javax.inject.Singleton;
+
+@Singleton
+@Replaces(HttpStatusCodeRejectionHandler.class)
+public class ProblemRejectionHandler extends ProblemHandler implements RejectionHandler {
+
+    @Override
+    public Publisher<MutableHttpResponse<?>> reject(HttpRequest<?> request, boolean forbidden) {
+        Problem problem = Problem.builder()
+            .withType(request.getUri())
+            .withStatus(Status.UNAUTHORIZED)
+            .build();
+
+        return Publishers.just(create(problem, request, null));
+    }
+}

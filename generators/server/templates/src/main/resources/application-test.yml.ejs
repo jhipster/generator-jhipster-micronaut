@@ -1,0 +1,44 @@
+datasources:
+  default:
+    url: jdbc:h2:mem:<%= lowercaseBaseName %>;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: <%= baseName %>
+    password: ''
+    poolName: Hikari
+    autoCommit: false
+
+jpa:
+  default:
+    packages-to-scan: 
+      - <%=packageName%>.domain
+      - <%=packageName%>.repository
+    properties:
+      hibernate:
+        hbm2ddl:
+            auto: create-drop
+
+jhipster:
+  clientApp:
+    name: '<%= angularAppName %>'
+  logging:
+    # To test json console appender
+    use-json-format: true # By default, logs are in Json format
+    # To test logstash appender
+    logstash:
+      enabled: true
+      host: localhost
+      port: 5000
+      queue-size: 512
+  mail:
+    from: test@localhost
+    base-url: http://127.0.0.1:8080
+  security:
+    authentication:
+      jwt:
+        # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
+        base64-secret: <%= jwtSecretKey %>
+        # Token is valid 24 hours
+        token-validity-in-seconds: 86400
+  metrics:
+    logs: # Reports metrics in the logs
+      enabled: true
+      report-frequency: 60 # in seconds
