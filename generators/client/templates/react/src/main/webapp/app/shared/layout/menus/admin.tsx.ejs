@@ -52,21 +52,10 @@ const swaggerItem = (
   <MenuItem icon="book" to="/admin/docs"><Translate contentKey="global.menu.admin.apidocs">API</Translate></MenuItem>
 );
 
-<% if (devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') { %>
-const databaseItem = (
-  <DropdownItem tag="a" href="./h2-console" target="_tab">
-    <FontAwesomeIcon icon="hdd" fixedWidth /> <Translate contentKey="global.menu.admin.database">Database</Translate>
-  </DropdownItem>
-);
-<%_ } _%>
-
-export const AdminMenu = ({ showSwagger <% if (devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') { %>, showDatabase <%_ } _%>}) => (
+export const AdminMenu = ({ showSwagger }) => (
   <NavDropdown icon="user-plus" name={translate('global.menu.admin.main')} style={{ width: '140%' }} id="admin-menu">
       {adminMenuItems}
       {showSwagger && swaggerItem}
-      <% if (devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') { %>
-      {showDatabase && databaseItem}
-      <%_ } _%>
   </NavDropdown>
 );
 
