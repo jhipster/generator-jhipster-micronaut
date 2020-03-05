@@ -132,6 +132,30 @@ const clientFiles = {
                     file: 'react/home/home.tsx',
                     method: 'processJsx',
                     renameTo: () => `${REACT_DIR}modules/home/home.tsx`
+                },
+                // custom auth since we don't return same props expected
+                {
+                    file: 'react/src/main/webapp/app/shared/reducers/authentication.ts',
+                    method: 'processJs',
+                    renameTo: () => `${REACT_DIR}shared/reducers/authentication.ts`
+                },
+                // profiles response returns a hyphenated key
+                {
+                    file: 'react/src/main/webapp/app/shared/reducers/application-profile.ts',
+                    method: 'processJs',
+                    renameTo: () => `${REACT_DIR}shared/reducers/application-profile.ts`
+                },
+                // Remove database menu item (unsupported)
+                {
+                    file: 'react/src/main/webapp/app/shared/layout/menus/admin.tsx',
+                    method: 'processJsx',
+                    renameTo: () => `${REACT_DIR}shared/layout/menus/admin.tsx`
+                },
+                // Remove database menu item (unsupported)
+                {
+                    file: 'react/src/main/webapp/app/shared/layout/header/header.tsx',
+                    method: 'processJsx',
+                    renameTo: () => `${REACT_DIR}shared/layout/header/header.tsx`
                 }
             ]
         }
