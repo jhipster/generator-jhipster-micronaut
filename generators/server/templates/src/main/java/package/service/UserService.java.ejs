@@ -16,11 +16,12 @@ import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.scheduling.annotation.Scheduled;
 import io.micronaut.security.authentication.providers.PasswordEncoder;
-import io.micronaut.spring.tx.annotation.Transactional;
+import io.micronaut.transaction.annotation.ReadOnly;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -245,23 +246,23 @@ public class UserService {
             });
     }
 
-    @Transactional(readOnly = true)
+    @ReadOnly
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
         Page<User> userPage = userRepository.findAllByLoginNot(Constants.ANONYMOUS_USER, pageable);
         return Page.of(userPage.getContent().stream().map(UserDTO::new).collect(Collectors.toList()), pageable, userPage.getTotalSize());
     }
 
-    @Transactional(readOnly = true)
+    @ReadOnly
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneByLogin(login);
     }
 
-    @Transactional(readOnly = true)
+    @ReadOnly
     public Optional<User> getUserWithAuthorities(Long id) {
         return userRepository.findOneById(id);
     }
 
-    @Transactional(readOnly = true)
+    @ReadOnly
     public Optional<User> getUserWithAuthorities() {
         return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin);
     }

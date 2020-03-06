@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class ProblemHandler {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ConcurrencyFailureExceptionHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ProblemHandler.class);
 
     protected static final String FIELD_ERRORS_KEY = "fieldErrors";
     protected static final String MESSAGE_KEY = "message";

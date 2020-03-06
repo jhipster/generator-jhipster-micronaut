@@ -31,16 +31,6 @@ public class ExceptionTranslatorIT {
     RxHttpClient client;
 
     @Test
-    public void testConcurrencyFailure() throws Exception {
-        HttpResponse<String> response = client.exchange(HttpRequest.GET("/test/concurrency-failure"), Argument.of(String.class), Argument.of(Problem.class)).onErrorReturn(t -> (HttpResponse<String>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
-
-        assertThat(response.status().getCode()).isEqualTo(409);
-        assertThat(response.getContentType()).hasValue(ProblemHandler.PROBLEM);
-        assertThat(response.getBody(Problem.class).get().getParameters().get("message")).isEqualTo(ErrorConstants.ERR_CONCURRENCY_FAILURE);
-    }
-
-
-    @Test
     public void testMethodArgumentNotValid() throws Exception {
 
         HttpResponse<String> response = client.exchange(HttpRequest.POST("/test/method-argument", new TestDTO()).contentType(MediaType.APPLICATION_JSON_TYPE), Argument.of(String.class), Argument.of(Problem.class)).onErrorReturn(t -> (HttpResponse<String>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
