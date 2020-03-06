@@ -444,11 +444,6 @@ const serverFiles = {
                     useBluePrint: true
                 },
                 {
-                    file: 'package/web/rest/errors/handlers/ConcurrencyFailureExceptionHandler.java',
-                    renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/ConcurrencyFailureExceptionHandler.java`,
-                    useBluePrint: true
-                },
-                {
                     file: 'package/web/rest/errors/handlers/ConstraintViolationExceptionHandler.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/ConstraintViolationExceptionHandler.java`,
                     useBluePrint: true

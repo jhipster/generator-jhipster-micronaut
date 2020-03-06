@@ -2,16 +2,15 @@ package <%=packageName%>.repository;
 
 import <%=packageName%>.domain.User;
 import io.micronaut.cache.annotation.Cacheable;
-import io.micronaut.configuration.hibernate.jpa.scope.CurrentSession;
 import io.micronaut.data.annotation.Id;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.annotation.EntityGraph;
 import io.micronaut.data.jpa.repository.JpaRepository;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
-import io.micronaut.spring.tx.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.time.Instant;
@@ -51,7 +50,7 @@ public abstract class UserRepository implements JpaRepository<User, Long> {
 
     public abstract void update(@Id Long id, Instant createdDate);
 
-    public UserRepository(@CurrentSession EntityManager entityManager) {
+    public UserRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

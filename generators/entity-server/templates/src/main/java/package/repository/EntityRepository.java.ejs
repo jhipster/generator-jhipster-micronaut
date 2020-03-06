@@ -28,13 +28,14 @@ import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 <%_ } _%>
 <%_ if (databaseType === 'sql') { _%>
-import io.micronaut.configuration.hibernate.jpa.scope.CurrentSession;
+
 import io.micronaut.data.annotation.Query;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.repository.JpaRepository;
-import io.micronaut.spring.tx.annotation.Transactional;
+
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
     <%_ if (fieldsContainOwnerManyToMany) { _%>
 // TODO what is MN equivalent? 
 // import org.springframework.data.repository.query.Param;
@@ -123,7 +124,7 @@ public abstract class <%= entityClass %>Repository implements <% if (databaseTyp
     <%_ }
     } _%>
 
-    public <%= entityClass %>Repository(@CurrentSession EntityManager entityManager) {
+    public <%= entityClass %>Repository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

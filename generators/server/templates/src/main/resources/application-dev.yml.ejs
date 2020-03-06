@@ -33,8 +33,11 @@ jpa:
     packages-to-scan: <%=packageName%>.domain
     properties:
       hibernate:
+        javax:
+          cache:
+            missing_cache_strategy: create
         hbm2ddl:
-          auto: update
+          auto: none
         show_sql: true
         id:
           new_generator_mappings: true
