@@ -7,7 +7,6 @@ import io.micronaut.http.annotation.Error;
 import io.micronaut.http.annotation.*;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
-import org.springframework.dao.ConcurrencyFailureException;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
@@ -16,11 +15,6 @@ import javax.validation.Valid;
 @Controller("/test")
 @Secured(SecurityRule.IS_ANONYMOUS)
 public class ExceptionTranslatorTestController {
-
-    @Get("/concurrency-failure")
-    public void concurrencyFailure() {
-        throw new ConcurrencyFailureException("test concurrency failure");
-    }
 
     @Post("/method-argument")
     public void methodArgument(@Valid @Body TestDTO testDTO) {
