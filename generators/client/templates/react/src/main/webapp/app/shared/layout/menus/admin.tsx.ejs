@@ -52,7 +52,7 @@ const swaggerItem = (
   <MenuItem icon="book" to="/admin/docs"><Translate contentKey="global.menu.admin.apidocs">API</Translate></MenuItem>
 );
 
-export const AdminMenu = ({ showSwagger }) => (
+export const AdminMenu = ({ showSwagger <% if (devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') { %>, showDatabase <%_ } _%>}) => (
   <NavDropdown icon="user-plus" name={translate('global.menu.admin.main')} style={{ width: '140%' }} id="admin-menu">
       {adminMenuItems}
       {showSwagger && swaggerItem}
