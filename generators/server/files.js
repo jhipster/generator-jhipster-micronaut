@@ -687,12 +687,12 @@ const serverFiles = {
         {
             condition: generator => generator.buildTool === 'gradle',
             templates: [
-                'build.gradle',
-                'settings.gradle',
-                'gradle.properties',
+                { file: 'build.gradle', useBluePrint: true },
+                { file: 'settings.gradle', useBluePrint: true },
+                { file: 'gradle.properties', useBluePrint: true },
                 'gradle/sonar.gradle',
                 'gradle/docker.gradle',
-                { file: 'gradle/profile_dev.gradle', options: { interpolate: INTERPOLATE_REGEX } },
+                { file: 'gradle/profile_dev.gradle', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true},
                 { file: 'gradle/profile_prod.gradle', options: { interpolate: INTERPOLATE_REGEX } },
                 'gradle/war.gradle',
                 'gradle/zipkin.gradle',
