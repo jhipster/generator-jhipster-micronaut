@@ -156,6 +156,23 @@ const clientFiles = {
                     file: 'react/src/main/webapp/app/shared/layout/header/header.tsx',
                     method: 'processJsx',
                     renameTo: () => `${REACT_DIR}shared/layout/header/header.tsx`
+                },
+                // Support Micronaut info/configuration endpoint
+                {
+                    file: 'react/src/main/webapp/app/modules/administration/configuration/configuration.tsx',
+                    method: 'processJsx',
+                    renameTo: () => `${REACT_DIR}modules/administration/configuration/configuration.tsx`
+                },
+                // Support Micronaut health endpoint
+                {
+                    file: 'react/src/main/webapp/app/modules/administration/health/health.tsx',
+                    method: 'processJsx',
+                    renameTo: () => `${REACT_DIR}modules/administration/health/health.tsx`
+                },
+                {
+                    file: 'react/src/main/webapp/app/modules/administration/health/health-modal.tsx',
+                    method: 'processJsx',
+                    renameTo: () => `${REACT_DIR}modules/administration/health/health-modal.tsx`
                 }
             ]
         }
