@@ -42,6 +42,7 @@ const shouldSkipUserManagement = generator =>
 const serverFiles = {
     jib: baseServerFiles.jib,
     docker: [
+        ...baseServerFiles.docker,
         {
             path: DOCKER_DIR,
             templates: [
