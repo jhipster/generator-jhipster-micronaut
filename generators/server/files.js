@@ -27,6 +27,7 @@ const SERVER_MAIN_SRC_DIR = constants.SERVER_MAIN_SRC_DIR;
 const SERVER_MAIN_RES_DIR = constants.SERVER_MAIN_RES_DIR;
 const SERVER_TEST_SRC_DIR = constants.SERVER_TEST_SRC_DIR;
 const SERVER_TEST_RES_DIR = constants.SERVER_TEST_RES_DIR;
+const DOCKER_DIR = constants.DOCKER_DIR;
 
 /* TODO: Do a PR in the parent JHipster project to export and re-use here as well in order to have a single source of truth!!!
 const TEST_DIR = constants.TEST_DIR;
@@ -40,7 +41,29 @@ const shouldSkipUserManagement = generator =>
  */
 const serverFiles = {
     jib: baseServerFiles.jib,
-    docker: baseServerFiles.docker,
+    docker: [
+        {
+            path: DOCKER_DIR,
+            templates: [
+                {
+                    file: () => 'app.yml',
+                    renameTo: () => 'app.yml',
+                    useBluePrint: true
+                }
+            ]
+        },
+        {
+            condition: generator => generator.prodDatabaseType !== 'no' && generator.prodDatabaseType !== 'oracle',
+            path: DOCKER_DIR,
+            templates: [
+                {
+                    file: generator => `${generator.prodDatabaseType}.yml`,
+                    renameTo: generator => `${generator.prodDatabaseType}.yml`,
+                    useBluePrint: true
+                }
+            ]
+        }
+    ],
     serverResources: [
         {
             path: SERVER_MAIN_RES_DIR,
