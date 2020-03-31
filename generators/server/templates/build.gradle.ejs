@@ -527,7 +527,6 @@ if (project.hasProperty("gae")) {
             }.writeTo("${basePath}/${project.group}/${project.name}/pom.xml")
         }
     }
-    bootJar.dependsOn = [createPom]
 }
 
 task cleanResources(type: Delete) {
@@ -549,10 +548,5 @@ if (project.hasProperty("nodeInstall")) {
     }
 }
 <%_ } _%>
-<%_ if (embeddableLaunchScript) { _%>
 
-bootJar {
-    launchScript()
-}
-<%_ } _%>
 compileJava.dependsOn processResources
