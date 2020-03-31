@@ -24,34 +24,35 @@ management:
     export:
       prometheus:
         enabled: false
-
-        spring:
-        devtools:
-          restart:
-            enabled: false
-          livereload:
-            enabled: false
-        datasource:
-          type: com.zaxxer.hikari.HikariDataSource
-          url: jdbc:h2:mem:<%= baseName %>;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-          username: <%= baseName %>
-          #url: jdbc:mysql://localhost:3306/<%= baseName %>?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
-          #username: /<%= baseName %>
-          password:
-          hikari:
-            poolName: Hikari
-            auto-commit: false
-            data-source-properties:
-              cachePrepStmts: true
-              prepStmtCacheSize: 250
-              prepStmtCacheSqlLimit: 2048
-              useServerPrepStmts: true
-          h2:
-            console:
-              enabled: false
+datasource:
+  type: com.zaxxer.hikari.HikariDataSource
+<%_ if (prodDatabaseType === 'mysql') { _%>
+  url: "${JDBC_URL:`jdbc:mysql://localhost:3306/<%= baseName %>?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true`}"
+  username: root
+  password:
+<%_ } else if (prodDatabaseType === 'postgresql') { _%>
+  url: "${JDBC_URL:`jdbc:postgresql://localhost:5432/<%= baseName %>`}"
+  username: <%= baseName %>
+  password:
+<%_ } else { _%>
+  url: jdbc:h2:mem:<%= baseName %>;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  username: <%= baseName %>
+  password:
+<%_ } _%>
+  hikari:
+    poolName: Hikari
+    auto-commit: false
+    data-source-properties:
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useServerPrepStmts: true
+  h2:
+    console:
+      enabled: false
 jpa:
   default:
-    packages-to-scan: 
+    packages-to-scan:
     - <%=packageName%>.domain
     - <%=packageName%>.repository
   database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
