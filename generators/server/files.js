@@ -45,7 +45,7 @@ const serverFiles = {
         {
             path: DOCKER_DIR,
             templates: [
-                'app.yml',
+                { file: 'app.yml', useBlueprint: true },
                 'sonar.yml',
                 'monitoring.yml',
                 'prometheus/prometheus.yml',
