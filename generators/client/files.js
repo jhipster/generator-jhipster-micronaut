@@ -175,17 +175,17 @@ const clientFiles = {
                     renameTo: () => `${REACT_DIR}modules/administration/health/health-modal.tsx`
                 },
                 {
-                    file: 'react/src/test/javascript/spec/app/modules/administration/administration.reducer.spec.ts.ejs',
+                    file: 'react/src/test/javascript/spec/app/modules/administration/administration.reducer.spec.ts',
                     method: 'processJs',
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/modules/administration/administration.reducer.spec.ts`
                 },
                 {
-                    file: 'react/src/test/javascript/spec/app/shared/reducers/application-profile.spec.ts.ejs',
+                    file: 'react/src/test/javascript/spec/app/shared/reducers/application-profile.spec.ts',
                     method: 'processJs',
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/shared/reducers/application-profile.spec.ts`
                 },
                 {
-                    file: 'react/src/test/javascript/spec/app/shared/reducers/authentication.spec.ts.ejs',
+                    file: 'react/src/test/javascript/spec/app/shared/reducers/authentication.spec.ts',
                     method: 'processJs',
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/shared/reducers/authentication.spec.ts`
                 }
