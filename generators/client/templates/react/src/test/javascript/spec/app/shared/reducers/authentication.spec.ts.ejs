@@ -256,7 +256,7 @@ describe('Authentication reducer tests', () => {
     <%_ if (authenticationType !== 'oauth2') { _%>
     it('dispatches LOGIN, GET_SESSION and SET_LOCALE success and request actions', async () => {
       <%_ if (authenticationType === 'jwt') { _%>
-      const loginResponse = { headers: { authorization: 'auth' } };
+      const loginResponse = { data: { 'access_token': 'auth' } }; // eslint-disable-line @typescript-eslint/camelcase
       <%_ } else { _%>
       const loginResponse = { value: 'any' };
       <%_ } _%>
@@ -295,7 +295,7 @@ describe('Authentication reducer tests', () => {
     });
     it('clears the session token on clearAuthToken', async () => {
       const AUTH_TOKEN_KEY = '<%= jhiPrefixDashed %>-authenticationToken';
-      const loginResponse = { headers: { authorization: 'Bearer TestToken' } };
+      const loginResponse = { data: { 'access_token': 'TestToken' } }; // eslint-disable-line @typescript-eslint/camelcase
       axios.post = sinon.stub().returns(Promise.resolve(loginResponse));
 
       await store.dispatch(login('test', 'test'));
@@ -307,7 +307,7 @@ describe('Authentication reducer tests', () => {
     });
     it('clears the local storage token on clearAuthToken', async () => {
       const AUTH_TOKEN_KEY = '<%= jhiPrefixDashed %>-authenticationToken';
-      const loginResponse = { headers: { authorization: 'Bearer TestToken' } };
+      const loginResponse = { data: { 'access_token': 'TestToken' } }; // eslint-disable-line @typescript-eslint/camelcase
       axios.post = sinon.stub().returns(Promise.resolve(loginResponse));
 
       await store.dispatch(login('user', 'user', true));
