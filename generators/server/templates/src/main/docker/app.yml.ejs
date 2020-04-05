@@ -23,12 +23,12 @@ services:
         environment:
             - _JAVA_OPTIONS=-Xmx512m -Xms256m
             - MICRONAUT_ENVIRONMENTS=prod
-               <%_ if (prodDatabaseType === 'postgresql') { _%>
-               - JDBC_URL=jdbc:postgresql://<%= baseName.toLowerCase() %>-postgresql:5432/<%= baseName %>
-               <%_ } _%>
-               <%_ if (prodDatabaseType === 'mssql') { _%>
-               - JDBC_URL=jdbc:sqlserver://<%= baseName.toLowerCase() %>-mssql:1433;database=<%= baseName %>
-               <%_ } _%>
+        <%_ if (prodDatabaseType === 'postgresql') { _%>
+            - JDBC_URL=jdbc:postgresql://<%= baseName.toLowerCase() %>-postgresql:5432/<%= baseName %>
+        <%_ } _%>
+        <%_ if (prodDatabaseType === 'mysql') { _%>
+            - JDBC_URL=jdbc:mysql://<%= baseName.toLowerCase() %>-mysql:3306/<%= baseName.toLowerCase() %>?useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true
+        <%_ } _%>
         <%_
         if (prodDatabaseType === 'cassandra') { _%>
             - SPRING_DATA_CASSANDRA_CONTACTPOINTS=<%= baseName.toLowerCase() %>-cassandra

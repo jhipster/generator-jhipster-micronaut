@@ -45,7 +45,6 @@ const serverFiles = {
         {
             path: DOCKER_DIR,
             templates: [
-                { file: 'app.yml', useBlueprint: true },
                 'sonar.yml',
                 'monitoring.yml',
                 'prometheus/prometheus.yml',
@@ -53,6 +52,10 @@ const serverFiles = {
                 'grafana/provisioning/dashboards/JVM.json',
                 'grafana/provisioning/datasources/datasource.yml'
             ]
+        },
+        {
+            path: DOCKER_DIR,
+            templates: [{ file: 'app.yml', useBluePrint: true }]
         },
         {
             condition: generator => generator.prodDatabaseType !== 'no' && generator.prodDatabaseType !== 'oracle',
