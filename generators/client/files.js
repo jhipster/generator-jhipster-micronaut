@@ -173,6 +173,21 @@ const clientFiles = {
                     file: 'react/src/main/webapp/app/modules/administration/health/health-modal.tsx',
                     method: 'processJsx',
                     renameTo: () => `${REACT_DIR}modules/administration/health/health-modal.tsx`
+                },
+                {
+                    file: 'react/src/test/javascript/spec/app/modules/administration/administration.reducer.spec.ts.ejs',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/modules/administration/administration.reducer.spec.ts`
+                },
+                {
+                    file: 'react/src/test/javascript/spec/app/shared/reducers/application-profile.spec.ts.ejs',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/shared/reducers/application-profile.spec.ts`
+                },
+                {
+                    file: 'react/src/test/javascript/spec/app/shared/reducers/authentication.spec.ts.ejs',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/shared/reducers/authentication.spec.ts`
                 }
             ]
         }
