@@ -24,8 +24,9 @@ services:
         #     - ~/volumes/jhipster/<%= baseName %>/mysql/:/var/lib/mysql/
         environment:
             - MYSQL_USER=<%= baseName %>
-            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            - MYSQL_PASSWORD=password
             - MYSQL_DATABASE=<%= baseName.toLowerCase() %>
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
         ports:
             - 3306:3306
         command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp

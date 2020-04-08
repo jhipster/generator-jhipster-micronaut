@@ -27,7 +27,8 @@ services:
             - JDBC_URL=jdbc:postgresql://<%= baseName.toLowerCase() %>-postgresql:5432/<%= baseName %>
         <%_ } _%>
         <%_ if (prodDatabaseType === 'mysql') { _%>
-            - JDBC_URL=jdbc:mysql://<%= baseName.toLowerCase() %>-mysql:3306/<%= baseName.toLowerCase() %>?useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true
+            - JDBC_URL=jdbc:mysql://<%= baseName.toLowerCase() %>-mysql:3306/<%= baseName.toLowerCase() %>?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true
+            - JDBC_PASSWORD=password
         <%_ } _%>
         <%_
         if (prodDatabaseType === 'cassandra') { _%>

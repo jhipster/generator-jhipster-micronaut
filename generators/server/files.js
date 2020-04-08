@@ -60,7 +60,7 @@ const serverFiles = {
         {
             condition: generator => generator.prodDatabaseType !== 'no' && generator.prodDatabaseType !== 'oracle',
             path: DOCKER_DIR,
-            templates: [{ file: generator => `${generator.prodDatabaseType}.yml` }]
+            templates: [{ file: generator => `${generator.prodDatabaseType}.yml`, useBluePrint: true }]
         },
         {
             condition: generator => generator.prodDatabaseType === 'mongodb',
