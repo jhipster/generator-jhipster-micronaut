@@ -132,6 +132,62 @@ const clientFiles = {
                     file: 'react/home/home.tsx',
                     method: 'processJsx',
                     renameTo: () => `${REACT_DIR}modules/home/home.tsx`
+                },
+                // custom auth since we don't return same props expected
+                {
+                    file: 'react/src/main/webapp/app/shared/reducers/authentication.ts',
+                    method: 'processJs',
+                    renameTo: () => `${REACT_DIR}shared/reducers/authentication.ts`
+                },
+                // profiles response returns a hyphenated key
+                {
+                    file: 'react/src/main/webapp/app/shared/reducers/application-profile.ts',
+                    method: 'processJs',
+                    renameTo: () => `${REACT_DIR}shared/reducers/application-profile.ts`
+                },
+                // Remove database menu item (unsupported)
+                {
+                    file: 'react/src/main/webapp/app/shared/layout/menus/admin.tsx',
+                    method: 'processJsx',
+                    renameTo: () => `${REACT_DIR}shared/layout/menus/admin.tsx`
+                },
+                // Remove database menu item (unsupported)
+                {
+                    file: 'react/src/main/webapp/app/shared/layout/header/header.tsx',
+                    method: 'processJsx',
+                    renameTo: () => `${REACT_DIR}shared/layout/header/header.tsx`
+                },
+                // Support Micronaut info/configuration endpoint
+                {
+                    file: 'react/src/main/webapp/app/modules/administration/configuration/configuration.tsx',
+                    method: 'processJsx',
+                    renameTo: () => `${REACT_DIR}modules/administration/configuration/configuration.tsx`
+                },
+                // Support Micronaut health endpoint
+                {
+                    file: 'react/src/main/webapp/app/modules/administration/health/health.tsx',
+                    method: 'processJsx',
+                    renameTo: () => `${REACT_DIR}modules/administration/health/health.tsx`
+                },
+                {
+                    file: 'react/src/main/webapp/app/modules/administration/health/health-modal.tsx',
+                    method: 'processJsx',
+                    renameTo: () => `${REACT_DIR}modules/administration/health/health-modal.tsx`
+                },
+                {
+                    file: 'react/src/test/javascript/spec/app/modules/administration/administration.reducer.spec.ts',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/modules/administration/administration.reducer.spec.ts`
+                },
+                {
+                    file: 'react/src/test/javascript/spec/app/shared/reducers/application-profile.spec.ts',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/shared/reducers/application-profile.spec.ts`
+                },
+                {
+                    file: 'react/src/test/javascript/spec/app/shared/reducers/authentication.spec.ts',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/shared/reducers/authentication.spec.ts`
                 }
             ]
         }
