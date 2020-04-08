@@ -54,4 +54,9 @@ services:
         extends:
             file: mysql.yml
             service: <%= baseName.toLowerCase() %>-mysql
-    <%_ } _%>
+    <%_ } else if (prodDatabaseType === 'postgresql') { _%>
+    <%= baseName.toLowerCase() %>-postgresql:
+        extends:
+            file: postgresql.yml
+            service: <%= baseName.toLowerCase() %>-postgresql
+<%_ } _%>

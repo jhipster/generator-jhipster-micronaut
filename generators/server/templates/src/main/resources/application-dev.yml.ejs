@@ -15,9 +15,10 @@
 
 datasources:
   default:
-    url: jdbc:h2:mem:<%= lowercaseBaseName %>;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    username: <%= baseName %>
-    password: ''
+    url: ${JDBC_URL:`jdbc:h2:mem:<%= lowercaseBaseName %>;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE`}
+    username: ${JDBC_USER:<%= baseName %>}
+    password: ${JDBC_PASSWORD:""}
+    driverClassName: ${JDBC_DRIVER:org.h2.Driver}
     poolName: Hikari
     autoCommit: false
 
