@@ -24,32 +24,28 @@ management:
     export:
       prometheus:
         enabled: false
-datasource:
-  type: com.zaxxer.hikari.HikariDataSource
-<%_ if (prodDatabaseType === 'mysql') { _%>
-  url: "${JDBC_URL:`jdbc:mysql://localhost:3306/<%= baseName %>?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true`}"
-  username: root
-  password:
+datasources:
+  default:
+    type: com.zaxxer.hikari.HikariDataSource
+<%_
+    if (prodDatabaseType === 'mysql') { _%>
+    url: "${JDBC_URL:`jdbc:mysql://localhost:3306/<%= baseName %>?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true`}"
 <%_ } else if (prodDatabaseType === 'postgresql') { _%>
-  url: "${JDBC_URL:`jdbc:postgresql://localhost:5432/<%= baseName %>`}"
-  username: <%= baseName %>
-  password:
+    url: "${JDBC_URL:`jdbc:postgresql://localhost:5432/<%= baseName %>`}"
 <%_ } else { _%>
-  url: jdbc:h2:mem:<%= baseName %>;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-  username: <%= baseName %>
-  password:
+    url: "${JDBC_URL:`jdbc:h2:mem:<%= baseName %>;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE`}"
 <%_ } _%>
-  hikari:
-    poolName: Hikari
-    auto-commit: false
-    data-source-properties:
-      cachePrepStmts: true
-      prepStmtCacheSize: 250
-      prepStmtCacheSqlLimit: 2048
-      useServerPrepStmts: true
-  h2:
-    console:
-      enabled: false
+    username: ${JDBC_USER:<%= baseName %>}
+    password: ${JDBC_PASSWORD:""}
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+---
 jpa:
   default:
     packages-to-scan:
@@ -67,7 +63,11 @@ jpa:
 
 # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
 liquibase:
-  contexts: prod
+  datasources:
+    default:
+      async: true
+      change-log: classpath:config/liquibase/master.xml
+      contexts: prod,faker
 mail:
   host: localhost
   port: 25
