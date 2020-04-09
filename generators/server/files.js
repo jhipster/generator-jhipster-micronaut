@@ -226,9 +226,10 @@ const serverFiles = {
                     noEjs: true
                 },
                 {
-                    file: 'config/liquibase/changelog/00000000000000_initial_schema.xml',
-                    useBluePrint: true,
-                    noEjs: true
+                    file: 'config/liquibase/changelog/initial_schema.xml',
+                    renameTo: () => 'config/liquibase/changelog/00000000000000_initial_schema.xml',
+                    options: { interpolate: INTERPOLATE_REGEX },
+                    useBluePrint: true
                 },
                 {
                     file: 'config/liquibase/data/authority.csv',
