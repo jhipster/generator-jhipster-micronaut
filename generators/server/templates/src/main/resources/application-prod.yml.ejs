@@ -1,5 +1,5 @@
 # ===================================================================
-# Spring Boot configuration for the "prod" profile.
+# Micronaut configuration for the "prod" environment.
 #
 # This configuration overrides the application.yml file.
 #
@@ -8,9 +8,9 @@
 # ===================================================================
 
 # ===================================================================
-# Standard Spring Boot properties.
+# Standard Micronaut configuration properties.
 # Full reference is available at:
-# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# https://docs.micronaut.io/latest/guide/configurationreference.html
 # ===================================================================
 
 logging:
@@ -24,34 +24,31 @@ management:
     export:
       prometheus:
         enabled: false
-
-        spring:
-        devtools:
-          restart:
-            enabled: false
-          livereload:
-            enabled: false
-        datasource:
-          type: com.zaxxer.hikari.HikariDataSource
-          url: jdbc:h2:mem:<%= baseName %>;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-          username: <%= baseName %>
-          #url: jdbc:mysql://localhost:3306/<%= baseName %>?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
-          #username: /<%= baseName %>
-          password:
-          hikari:
-            poolName: Hikari
-            auto-commit: false
-            data-source-properties:
-              cachePrepStmts: true
-              prepStmtCacheSize: 250
-              prepStmtCacheSqlLimit: 2048
-              useServerPrepStmts: true
-          h2:
-            console:
-              enabled: false
+datasources:
+  default:
+    type: com.zaxxer.hikari.HikariDataSource
+<%_
+    if (prodDatabaseType === 'mysql') { _%>
+    url: "${JDBC_URL:`jdbc:mysql://localhost:3306/<%= baseName %>?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true`}"
+<%_ } else if (prodDatabaseType === 'postgresql') { _%>
+    url: "${JDBC_URL:`jdbc:postgresql://localhost:5432/<%= baseName %>`}"
+<%_ } else { _%>
+    url: "${JDBC_URL:`jdbc:h2:mem:<%= baseName %>;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE`}"
+<%_ } _%>
+    username: ${JDBC_USER:<%= baseName %>}
+    password: ${JDBC_PASSWORD:""}
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+---
 jpa:
   default:
-    packages-to-scan: 
+    packages-to-scan:
     - <%=packageName%>.domain
     - <%=packageName%>.repository
   database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -66,7 +63,11 @@ jpa:
 
 # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
 liquibase:
-  contexts: prod
+  datasources:
+    default:
+      async: true
+      change-log: classpath:config/liquibase/master.xml
+      contexts: prod,faker
 mail:
   host: localhost
   port: 25

@@ -6,7 +6,17 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
+    <% const isAutoIncrementDB = reactive || ['mysql', 'mariadb'].includes(prodDatabaseType);
+    const isSequenceDB = !reactive && ['postgresql', 'oracle', 'mssql'].includes(prodDatabaseType);
+    _%>
+    <%_ if (isAutoIncrementDB) { _%>
     <property name="autoIncrement" value="true"/>
+    <%_ } _%>
+    <%_ if (isSequenceDB) { _%>
+    <changeSet id="00000000000000" author="jhipster">
+        <createSequence sequenceName="sequence_generator" startValue="1050" incrementBy="50"/>
+    </changeSet>
+    <%_ } _%>
 
     <!--
         JHipster core tables.
@@ -77,6 +87,7 @@
                   separator=";"
                   tableName="jhi_user">
             <column name="activated" type="boolean"/>
+            <column name="id" type="numeric"/>
             <column name="created_date" type="timestamp"/>
         </loadData>
         <dropDefaultValue tableName="jhi_user" columnName="created_date" columnDataType="datetime"/>

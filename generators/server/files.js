@@ -27,6 +27,7 @@ const SERVER_MAIN_SRC_DIR = constants.SERVER_MAIN_SRC_DIR;
 const SERVER_MAIN_RES_DIR = constants.SERVER_MAIN_RES_DIR;
 const SERVER_TEST_SRC_DIR = constants.SERVER_TEST_SRC_DIR;
 const SERVER_TEST_RES_DIR = constants.SERVER_TEST_RES_DIR;
+const DOCKER_DIR = constants.DOCKER_DIR;
 
 /* TODO: Do a PR in the parent JHipster project to export and re-use here as well in order to have a single source of truth!!!
 const TEST_DIR = constants.TEST_DIR;
@@ -40,7 +41,122 @@ const shouldSkipUserManagement = generator =>
  */
 const serverFiles = {
     jib: baseServerFiles.jib,
-    docker: baseServerFiles.docker,
+    docker: [
+        {
+            path: DOCKER_DIR,
+            templates: [
+                'sonar.yml',
+                'monitoring.yml',
+                'prometheus/prometheus.yml',
+                'grafana/provisioning/dashboards/dashboard.yml',
+                'grafana/provisioning/dashboards/JVM.json',
+                'grafana/provisioning/datasources/datasource.yml'
+            ]
+        },
+        {
+            path: DOCKER_DIR,
+            templates: [{ file: 'app.yml', useBluePrint: true }]
+        },
+        {
+            condition: generator => generator.prodDatabaseType !== 'no' && generator.prodDatabaseType !== 'oracle',
+            path: DOCKER_DIR,
+            templates: [{ file: generator => `${generator.prodDatabaseType}.yml`, useBluePrint: true }]
+        },
+        {
+            condition: generator => generator.prodDatabaseType === 'mongodb',
+            path: DOCKER_DIR,
+            templates: ['mongodb-cluster.yml', 'mongodb/MongoDB.Dockerfile', 'mongodb/scripts/init_replicaset.js']
+        },
+        {
+            condition: generator => generator.prodDatabaseType === 'couchbase',
+            path: DOCKER_DIR,
+            templates: ['couchbase-cluster.yml', 'couchbase/Couchbase.Dockerfile', 'couchbase/scripts/configure-node.sh']
+        },
+        {
+            condition: generator => generator.prodDatabaseType === 'cassandra',
+            path: DOCKER_DIR,
+            templates: [
+                // docker-compose files
+                'cassandra-cluster.yml',
+                'cassandra-migration.yml',
+                // dockerfiles
+                'cassandra/Cassandra-Migration.Dockerfile',
+                // scripts
+                'cassandra/scripts/autoMigrate.sh',
+                'cassandra/scripts/execute-cql.sh'
+            ]
+        },
+        {
+            condition: generator => generator.cacheProvider === 'hazelcast',
+            path: DOCKER_DIR,
+            templates: ['hazelcast-management-center.yml']
+        },
+        {
+            condition: generator => generator.cacheProvider === 'memcached',
+            path: DOCKER_DIR,
+            templates: ['memcached.yml']
+        },
+        {
+            condition: generator => generator.cacheProvider === 'redis',
+            path: DOCKER_DIR,
+            templates: ['redis.yml', 'redis-cluster.yml', 'redis/Redis-Cluster.Dockerfile', 'redis/connectRedisCluster.sh']
+        },
+        {
+            condition: generator => generator.searchEngine === 'elasticsearch',
+            path: DOCKER_DIR,
+            templates: ['elasticsearch.yml']
+        },
+        {
+            condition: generator => generator.messageBroker === 'kafka',
+            path: DOCKER_DIR,
+            templates: ['kafka.yml']
+        },
+        {
+            condition: generator => !!generator.serviceDiscoveryType,
+            path: DOCKER_DIR,
+            templates: [{ file: 'config/README.md', renameTo: () => 'central-server-config/README.md' }]
+        },
+        {
+            condition: generator => generator.serviceDiscoveryType && generator.serviceDiscoveryType === 'consul',
+            path: DOCKER_DIR,
+            templates: [
+                'consul.yml',
+                { file: 'config/git2consul.json', method: 'copy' },
+                { file: 'config/consul-config/application.yml', method: 'copy', renameTo: () => 'central-server-config/application.yml' }
+            ]
+        },
+        {
+            condition: generator => generator.serviceDiscoveryType && generator.serviceDiscoveryType === 'eureka',
+            path: DOCKER_DIR,
+            templates: [
+                'jhipster-registry.yml',
+                {
+                    file: 'config/docker-config/application.yml',
+                    method: 'copy',
+                    renameTo: () => 'central-server-config/docker-config/application.yml'
+                },
+                {
+                    file: 'config/localhost-config/application.yml',
+                    method: 'copy',
+                    renameTo: () => 'central-server-config/localhost-config/application.yml'
+                }
+            ]
+        },
+        {
+            condition: generator => !!generator.enableSwaggerCodegen,
+            path: DOCKER_DIR,
+            templates: ['swagger-editor.yml']
+        },
+        {
+            condition: generator => generator.authenticationType === 'oauth2' && generator.applicationType !== 'microservice',
+            path: DOCKER_DIR,
+            templates: [
+                'keycloak.yml',
+                { file: 'config/realm-config/jhipster-realm.json', renameTo: () => 'realm-config/jhipster-realm.json' },
+                { file: 'config/realm-config/jhipster-users-0.json', method: 'copy', renameTo: () => 'realm-config/jhipster-users-0.json' }
+            ]
+        }
+    ],
     serverResources: [
         {
             path: SERVER_MAIN_RES_DIR,
@@ -110,9 +226,10 @@ const serverFiles = {
                     noEjs: true
                 },
                 {
-                    file: 'config/liquibase/changelog/00000000000000_initial_schema.xml',
-                    useBluePrint: true,
-                    noEjs: true
+                    file: 'config/liquibase/changelog/initial_schema.xml',
+                    renameTo: () => 'config/liquibase/changelog/00000000000000_initial_schema.xml',
+                    options: { interpolate: INTERPOLATE_REGEX },
+                    useBluePrint: true
                 },
                 {
                     file: 'config/liquibase/data/authority.csv',
@@ -683,7 +800,6 @@ const serverFiles = {
         {
             templates: [{ file: 'checkstyle.xml', options: { interpolate: INTERPOLATE_REGEX } }]
         },
-        // TODO we'll need to add these specific to micronaut
         {
             condition: generator => generator.buildTool === 'gradle',
             templates: [
@@ -693,7 +809,7 @@ const serverFiles = {
                 'gradle/sonar.gradle',
                 'gradle/docker.gradle',
                 { file: 'gradle/profile_dev.gradle', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
-                { file: 'gradle/profile_prod.gradle', options: { interpolate: INTERPOLATE_REGEX } },
+                { file: 'gradle/profile_prod.gradle', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
                 'gradle/war.gradle',
                 'gradle/zipkin.gradle',
                 { file: 'gradlew', method: 'copy', noEjs: true },
