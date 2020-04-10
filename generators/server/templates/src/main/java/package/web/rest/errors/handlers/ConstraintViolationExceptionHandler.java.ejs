@@ -9,7 +9,6 @@ import io.micronaut.http.hateoas.JsonError;
 import io.micronaut.http.server.exceptions.ExceptionHandler;
 import io.micronaut.validation.exceptions.ConstraintExceptionHandler;
 import io.micronaut.validation.exceptions.ValidationExceptionHandler;
-import org.springframework.validation.Errors;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
