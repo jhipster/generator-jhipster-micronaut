@@ -56,7 +56,7 @@ public class <%= mainClass %> {
 
         ApplicationContext context = Micronaut.build(args)
             .mainClass(<%= mainClass %>.class)
-            //TODO .environments(environments.toArray(new String[0]))
+            .environments(environments.toArray(new String[0]))
             .start();
 
         checkProfiles(context.getEnvironment());
