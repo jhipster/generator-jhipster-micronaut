@@ -82,7 +82,7 @@ import io.micronaut.http.annotation.*;
 import io.micronaut.http.uri.UriBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import io.micronaut.context.annotation.Value;
 <%_ if (pagination !== 'no') { _%>
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
@@ -191,7 +191,7 @@ public class <%= entityClass %>Resource {
 <%- include('../../common/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: false, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: true}); -%>
         URI location = new URI("/api/<%= entityApiUrl %>/" + result.getId());
         return HttpResponse.created(result).headers(headers -> {
-            headers.location(location);    
+            headers.location(location);
             HeaderUtil.createEntityCreationAlert(headers, applicationName, <%= enableTranslation %>, ENTITY_NAME, result.getId().toString());
         });
     }
