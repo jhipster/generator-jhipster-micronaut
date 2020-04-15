@@ -44,12 +44,9 @@ public class <%= mainClass %> {
      * @param args the command line arguments.
      */
     public static void main(String[] args) {
-        CommandLine commandLine = CommandLine.parse(args);
-        Map<String, Object> options = commandLine.getUndeclaredOptions();
         List<String> environments;
-        if (options.containsKey("profiles.active")) {
-            String[] profiles = options.get("profiles.active").toString().split(",");
-            environments = Arrays.asList(profiles);
+        if (System.getenv("MICRONAUT_ENVIRONMENTS") != null) {
+            environments = Arrays.asList(System.getenv("MICRONAUT_ENVIRONMENTS").split(","));
         } else {
             environments = DefaultProfileUtil.getDefaultEnvironments();
         }
