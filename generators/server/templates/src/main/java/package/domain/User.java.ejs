@@ -34,7 +34,7 @@ public class User implements Serializable {
 
 
     @Id
-    <%_ if (databaseType === 'sql' && isUsingMapsId === false) { _%>
+    <%_ if (databaseType === 'sql') { _%>
         <%_ if (prodDatabaseType === 'mysql' || prodDatabaseType === 'mariadb') { _%>
     @GeneratedValue(strategy = GenerationType.IDENTITY)
         <%_ }  else { _%>
