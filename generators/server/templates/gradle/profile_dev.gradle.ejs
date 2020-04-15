@@ -60,6 +60,22 @@ task webpack(type: <%= _.upperFirst(clientPackageManager) %>Task) {
 }
 <%_ } _%>
 
+<%_ if (!skipClient) { _%>
+task webpackBuildDev(type: NpmTask, dependsOn: 'npmInstall') {
+    inputs.dir("src/main/webapp/")
+    inputs.files(fileTree('src/main/webapp/'))
+    outputs.dir("build/www/")
+    outputs.file("build/www/app/main.bundle.js")
+    args = ["run", "webpack:build"]
+}
+
+
+task copyIntoStatic (type: Copy) {
+    from 'build/www/'
+    into 'build/resources/main/static'
+}
+<%_ } _%>
+
 processResources {
     inputs.property('version', version)
     filesMatching("**/application.yml") {
@@ -71,4 +87,15 @@ processResources {
 
 <%_ if (!skipClient) { _%>
 processResources.dependsOn webpack
+
+processResources.dependsOn webpackBuildDev
+copyIntoStatic.dependsOn processResources
+assemble.dependsOn copyIntoStatic
+
+npmInstall.onlyIf { shouldWebpackRun() == true }
+
+def shouldWebpackRun() {
+    project.hasProperty('webpack')
+}
+
 <%_ } _%>
