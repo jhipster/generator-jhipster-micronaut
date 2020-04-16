@@ -69,7 +69,6 @@ task webpackBuildDev(type: NpmTask, dependsOn: 'npmInstall') {
     args = ["run", "webpack:build"]
 }
 
-
 task copyIntoStatic (type: Copy) {
     from 'build/www/'
     into 'build/resources/main/static'
