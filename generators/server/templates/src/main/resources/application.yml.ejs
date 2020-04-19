@@ -89,6 +89,9 @@ micronaut:
     scheduled:
       type: scheduled
       core-pool-size: 2
+    io:
+      type: fixed
+      nThreads: 10
   server:
     # By default CORS is disabled. Uncomment to enable.
     # cors:
