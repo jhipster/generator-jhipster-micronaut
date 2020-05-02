@@ -65,8 +65,8 @@ micronaut:
         bearer:
           enabled: true
 <%_ if (authenticationType === 'oauth2') { _%>
-      cookie:
-        enabled: true
+        cookie:
+          enabled: true
 <%_ } _%>
     intercept-url-map:
       - pattern: /

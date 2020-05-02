@@ -186,6 +186,11 @@ const clientFiles = {
                     renameTo: () => `${REACT_DIR}modules/administration/health/health-modal.tsx`
                 },
                 {
+                    file: 'react/src/main/webapp/app/modules/login/logout.tsx',
+                    method: 'processJsx',
+                    renameTo: () => `${REACT_DIR}modules/login/logout.tsx`
+                },
+                {
                     file: 'react/src/test/javascript/spec/app/modules/administration/administration.reducer.spec.ts',
                     method: 'processJs',
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/modules/administration/administration.reducer.spec.ts`
