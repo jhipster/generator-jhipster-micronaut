@@ -16,6 +16,12 @@ const clientFiles = {
                     method: 'processHtml',
                     renameTo: () => `${ANGULAR_DIR}home/home.component.html`
                 },
+                // Remove Spring Security comment
+                {
+                    file: 'angular/src/main/webapp/app/core/login/login.service.ts',
+                    method: 'processJs',
+                    renameTo: () => `${ANGULAR_DIR}core/login/login.service.ts`
+                },
                 // custom auth since we don't return same props expected
                 {
                     file: 'angular/src/main/webapp/app/core/auth/auth-jwt.service.ts',
@@ -120,6 +126,11 @@ const clientFiles = {
                     file: 'angular/src/main/webapp/app/layouts/navbar/navbar.component.html',
                     method: 'processHtml',
                     renameTo: () => `${ANGULAR_DIR}layouts/navbar/navbar.component.html`
+                },
+                {
+                    file: 'angular/src/main/webapp/app/layouts/navbar/navbar.component.ts',
+                    method: 'processJs',
+                    renameTo: () => `${ANGULAR_DIR}layouts/navbar/navbar.component.ts`
                 }
             ]
         }

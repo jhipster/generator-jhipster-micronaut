@@ -467,6 +467,11 @@ const serverFiles = {
                     file: 'package/security/UserNotActivatedException.java',
                     renameTo: generator => `${generator.javaDir}security/UserNotActivatedException.java`,
                     useBluePrint: true
+                },
+                {
+                    file: 'package/security/JHipsterOpenIdUserDetailsMapper.java',
+                    renameTo: generator => `${generator.javaDir}security/JHipsterOpenIdUserDetailsMapper.java`,
+                    useBluePrint: true
                 }
             ]
         }
