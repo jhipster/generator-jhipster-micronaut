@@ -17,7 +17,7 @@
                 </a>
             </li>
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
                     <span>
                         <fa-icon icon="th-list"></fa-icon>
@@ -30,7 +30,7 @@
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                 </ul>
             </li>
-            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
                     <span>
                         <fa-icon icon="user-plus"></fa-icon>
@@ -38,12 +38,14 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+                    <%_ if (!skipUserManagement) { _%>
                     <li>
                         <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="user" fixedWidth="true"></fa-icon>
                             <span jhiTranslate="global.menu.admin.userManagement">User management</span>
                         </a>
                     </li>
+                    <%_ } _%>
                     <li>
                         <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="tachometer-alt" fixedWidth="true"></fa-icon>
@@ -92,7 +94,7 @@
                     </ul>
                 </li>
             <%_ } _%>
-            <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
                   <span *ngIf="!getImageUrl()">
                     <fa-icon icon="user"></fa-icon>
@@ -105,8 +107,9 @@
                   </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
+                     <%_ if (!skipUserManagement) { _%>
                     <li *ngSwitchCase="true">
-                        <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active" (click)="collapseNavbar()">
+                        <a class="dropdown-item" routerLink="account/settings" display="dynamic" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="wrench" fixedWidth="true"></fa-icon>
                             <span jhiTranslate="global.menu.account.settings">Settings</span>
                         </a>
@@ -117,6 +120,7 @@
                             <span jhiTranslate="global.menu.account.password">Password</span>
                         </a>
                     </li>
+                    <%_ } _%>
                     <li *ngSwitchCase="true">
                         <a class="dropdown-item" (click)="logout()" id="logout">
                             <fa-icon icon="sign-out-alt" fixedWidth="true"></fa-icon>
@@ -129,12 +133,14 @@
                             <span jhiTranslate="global.menu.account.login">Sign in</span>
                         </a>
                     </li>
+                    <%_ if (!skipUserManagement) { _%>
                     <li *ngSwitchCase="false">
                         <a class="dropdown-item" routerLink="account/register" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="user-plus" fixedWidth="true"></fa-icon>
                             <span jhiTranslate="global.menu.account.register">Register</span>
                         </a>
                     </li>
+                    <%_ } _%>
                 </ul>
             </li>
         </ul>

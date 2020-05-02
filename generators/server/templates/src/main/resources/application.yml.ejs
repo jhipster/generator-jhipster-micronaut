@@ -40,17 +40,34 @@ micronaut:
         enabled: true
   security:
     enabled: true
+<%_ if (authenticationType === 'oauth2') { _%>
+    oauth2:
+      enabled: true
+      login-uri: /oauth2/authorization{/provider}
+      callback-uri: /login/oauth2/code{/provider}
+      clients:
+        oidc:
+          client-secret: web_app
+          client-id: web_app
+          openid:
+            issuer: http://localhost:9080/auth/realms/jhipster
+<%_ } _%>
     endpoints:
       login:
         enabled: true
         path: /api/authenticate
       logout:
         enabled: true
+        path: /api/logout
     token:
       jwt:
         enabled: true
         bearer:
           enabled: true
+<%_ if (authenticationType === 'oauth2') { _%>
+      cookie:
+        enabled: true
+<%_ } _%>
     intercept-url-map:
       - pattern: /
         access: isAnonymous()
