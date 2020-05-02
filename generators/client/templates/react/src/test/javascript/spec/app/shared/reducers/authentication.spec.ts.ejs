@@ -225,7 +225,7 @@ describe('Authentication reducer tests', () => {
         {
          "payload": {},
          type: SUCCESS(ACTION_TYPES.LOGOUT),
-        },
+        }<%_   if (authenticationType !== 'oauth2') { _%>,
         {
          type: REQUEST(ACTION_TYPES.GET_SESSION),
         },
@@ -233,6 +233,7 @@ describe('Authentication reducer tests', () => {
          "payload": resolvedObject,
          type: SUCCESS(ACTION_TYPES.GET_SESSION),
         }
+        <%_   } _%>
         <%_ } _%>
       ];
       await store.dispatch(logout());
