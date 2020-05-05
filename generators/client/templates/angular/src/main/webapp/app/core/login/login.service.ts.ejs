@@ -51,7 +51,7 @@ export class LoginService {
 
     <%_ if (authenticationType === 'oauth2') { _%>
     login(): void {
-        location.href = `${location.origin}${this.location.prepareExternalUrl('oauth/login/oidc')}`;
+        location.href = `${location.origin}${this.location.prepareExternalUrl('oauth2/authorization/oidc')}`;
     }
     <%_ } else { _%>
     login(credentials: Login): Observable<Account | null> {
