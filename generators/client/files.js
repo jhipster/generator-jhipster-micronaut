@@ -131,6 +131,11 @@ const clientFiles = {
                     file: 'angular/src/main/webapp/app/layouts/navbar/navbar.component.ts',
                     method: 'processJs',
                     renameTo: () => `${ANGULAR_DIR}layouts/navbar/navbar.component.ts`
+                },
+                {
+                    file: 'angular/src/test/javascript/e2e/admin/administration.spec.ts',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/admin/administration.spec.ts`
                 }
             ]
         }
@@ -204,6 +209,11 @@ const clientFiles = {
                     file: 'react/src/test/javascript/spec/app/shared/reducers/authentication.spec.ts',
                     method: 'processJs',
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/shared/reducers/authentication.spec.ts`
+                },
+                {
+                    file: 'react/src/test/javascript/e2e/modules/administration/administration.spec.ts',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/modules/administration/administration.spec.ts`
                 }
             ]
         }
