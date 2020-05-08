@@ -136,6 +136,12 @@ const clientFiles = {
                     file: 'angular/src/test/javascript/e2e/admin/administration.spec.ts',
                     method: 'processJs',
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/admin/administration.spec.ts`
+                },
+                {
+                    file: 'angular/webpack/webpack.dev.js',
+                    method: 'processJs',
+                    useBluePrint: true,
+                    renameTo: () => `${ANGULAR_DIR}webpack/webpack.dev.js`
                 }
             ]
         }
@@ -214,6 +220,12 @@ const clientFiles = {
                     file: 'react/src/test/javascript/e2e/modules/administration/administration.spec.ts',
                     method: 'processJs',
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/modules/administration/administration.spec.ts`
+                },
+                {
+                    file: 'react/webpack/webpack.dev.js',
+                    method: 'processJs',
+                    useBluePrint: true,
+                    renameTo: () => `${REACT_DIR}webpack/webpack.dev.js`
                 }
             ]
         }
