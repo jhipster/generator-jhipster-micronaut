@@ -5,24 +5,28 @@ import com.nimbusds.jwt.JWTParser;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.security.authentication.UserDetails;
 import io.micronaut.security.oauth2.configuration.OpenIdAdditionalClaimsConfiguration;
-import io.micronaut.security.oauth2.endpoint.token.response.*;
+import io.micronaut.security.oauth2.endpoint.token.response.DefaultOpenIdUserDetailsMapper;
+import io.micronaut.security.oauth2.endpoint.token.response.OpenIdClaims;
+import io.micronaut.security.oauth2.endpoint.token.response.OpenIdTokenResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.text.ParseException;
-import java.util.*;
+import java.util.List;
+import java.util.Collections;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Singleton
-@Requires(configuration = "io.micronaut.security.token.jwt")
+@Requires(classes = JWTParser.class)
 @Named("oidc")
 public class JHipsterOpenIdUserDetailsMapper extends DefaultOpenIdUserDetailsMapper {
     private static final Logger LOG = LoggerFactory.getLogger(DefaultOpenIdUserDetailsMapper.class);
     public static final String GROUPS_CLAIM = "groups";
     public static final String ROLES_CLAIM = "roles";
+    public static final String ROLE_PREFIX = "ROLE_";
+
 
     /**
     * Default constructor.
@@ -32,17 +36,6 @@ public class JHipsterOpenIdUserDetailsMapper extends DefaultOpenIdUserDetailsMap
     public JHipsterOpenIdUserDetailsMapper(OpenIdAdditionalClaimsConfiguration openIdAdditionalClaimsConfiguration) {
         super(openIdAdditionalClaimsConfiguration);
     }
-
-
-    @Override
-    @Nonnull
-    public UserDetails createUserDetails(String providerName, OpenIdTokenResponse tokenResponse, OpenIdClaims openIdClaims) {
-    Map<String, Object> claims = buildAttributes(providerName, tokenResponse, openIdClaims);
-    List<String> roles = getRoles(providerName, tokenResponse, openIdClaims);
-        String username = getUsername(providerName, tokenResponse, openIdClaims);
-        return new UserDetails(username, roles, claims);
-    }
-
 
     /**
     * @param providerName The OpenID provider name
@@ -78,7 +71,7 @@ public class JHipsterOpenIdUserDetailsMapper extends DefaultOpenIdUserDetailsMap
 
     private static List<String> mapRolesToGrantedAuthorities(Collection<String> roles) {
         return roles.stream()
-            .filter(role -> role.startsWith("ROLE_"))
+            .filter(role -> role.startsWith(ROLE_PREFIX))
             .collect(Collectors.toList());
     }
 

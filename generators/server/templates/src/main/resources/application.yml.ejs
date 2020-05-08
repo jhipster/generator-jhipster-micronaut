@@ -43,27 +43,35 @@ micronaut:
 <%_ if (authenticationType === 'oauth2') { _%>
     oauth2:
       enabled: true
-      login-uri: /oauth2/authorization{/provider}
-      callback-uri: /login/oauth2/code{/provider}
       clients:
         oidc:
           client-secret: web_app
           client-id: web_app
           openid:
             issuer: http://localhost:9080/auth/realms/jhipster
+      login-uri: /oauth2/authorization{/provider}
+      callback-uri: /oauth2/callback{/provider}
 <%_ } _%>
     endpoints:
       login:
         enabled: true
         path: /api/authenticate
+<%_ if (authenticationType === 'oauth2') { _%>
+      logout:
+        enabled: true
+        get-allowed: true
+<%_ } else { _%>
       logout:
         enabled: true
         path: /api/logout
+<%_ } _%>
     token:
       jwt:
         enabled: true
+<%_ if (authenticationType === 'jwt') { _%>
         bearer:
           enabled: true
+<%_ } _%>
 <%_ if (authenticationType === 'oauth2') { _%>
         cookie:
           enabled: true
