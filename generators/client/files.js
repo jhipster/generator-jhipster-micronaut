@@ -142,7 +142,7 @@ const clientFiles = {
                     file: 'angular/webpack/webpack.dev.js',
                     method: 'processJs',
                     useBluePrint: true,
-                    renameTo: () => `${CLIENT_WEBPACK_DIR}/webpack.dev.js`
+                    renameTo: () => `${ANGULAR_DIR}/webpack.dev.js`
                 }
             ]
         }
