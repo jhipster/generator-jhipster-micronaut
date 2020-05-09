@@ -44,7 +44,7 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
                 '/v2/api-docs',
                 '/h2-console',
                 <%_ if (authenticationType === 'oauth2') { _%>
-                '/oauth',
+                '/oauth2',
                 '/login',
                 '/logout',
                 <%_ } _%>
