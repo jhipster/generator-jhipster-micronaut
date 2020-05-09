@@ -2,6 +2,7 @@ const jhipsterConstants = require('generator-jhipster/generators/generator-const
 
 const ANGULAR_DIR = jhipsterConstants.ANGULAR_DIR;
 const REACT_DIR = jhipsterConstants.REACT_DIR;
+const CLIENT_WEBPACK_DIR = jhipsterConstants.CLIENT_WEBPACK_DIR;
 
 const CLIENT_TEST_SRC_DIR = jhipsterConstants.CLIENT_TEST_SRC_DIR;
 
@@ -141,7 +142,7 @@ const clientFiles = {
                     file: 'angular/webpack/webpack.dev.js',
                     method: 'processJs',
                     useBluePrint: true,
-                    renameTo: () => `${ANGULAR_DIR}webpack/webpack.dev.js`
+                    renameTo: () => `${CLIENT_WEBPACK_DIR}/webpack.dev.js`
                 }
             ]
         }
@@ -225,7 +226,7 @@ const clientFiles = {
                     file: 'react/webpack/webpack.dev.js',
                     method: 'processJs',
                     useBluePrint: true,
-                    renameTo: () => `${REACT_DIR}webpack/webpack.dev.js`
+                    renameTo: () => `${CLIENT_WEBPACK_DIR}/webpack.dev.js`
                 }
             ]
         }
