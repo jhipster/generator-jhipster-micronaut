@@ -134,6 +134,7 @@ const clientFiles = {
                     renameTo: () => `${ANGULAR_DIR}layouts/navbar/navbar.component.ts`
                 },
                 {
+                    condition: generator => generator.protractorTests,
                     file: 'angular/src/test/javascript/e2e/admin/administration.spec.ts',
                     method: 'processJs',
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/admin/administration.spec.ts`
@@ -218,6 +219,7 @@ const clientFiles = {
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/shared/reducers/authentication.spec.ts`
                 },
                 {
+                    condition: generator => generator.protractorTests,
                     file: 'react/src/test/javascript/e2e/modules/administration/administration.spec.ts',
                     method: 'processJs',
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/modules/administration/administration.spec.ts`
