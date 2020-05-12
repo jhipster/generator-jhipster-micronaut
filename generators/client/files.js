@@ -134,16 +134,20 @@ const clientFiles = {
                     renameTo: () => `${ANGULAR_DIR}layouts/navbar/navbar.component.ts`
                 },
                 {
-                    condition: generator => generator.protractorTests,
-                    file: 'angular/src/test/javascript/e2e/admin/administration.spec.ts',
-                    method: 'processJs',
-                    renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/admin/administration.spec.ts`
-                },
-                {
                     file: 'angular/webpack/webpack.dev.js',
                     method: 'processJs',
                     useBluePrint: true,
                     renameTo: () => `${CLIENT_WEBPACK_DIR}/webpack.dev.js`
+                }
+            ]
+        },
+        {
+            condition: generator => generator.protractorTests && generator.clientFramework === 'angularX',
+            templates: [
+                {
+                    file: 'angular/src/test/javascript/e2e/admin/administration.spec.ts',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/admin/administration.spec.ts`
                 }
             ]
         }
