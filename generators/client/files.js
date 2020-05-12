@@ -223,16 +223,20 @@ const clientFiles = {
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/shared/reducers/authentication.spec.ts`
                 },
                 {
-                    condition: generator => generator.protractorTests,
-                    file: 'react/src/test/javascript/e2e/modules/administration/administration.spec.ts',
-                    method: 'processJs',
-                    renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/modules/administration/administration.spec.ts`
-                },
-                {
                     file: 'react/webpack/webpack.dev.js',
                     method: 'processJs',
                     useBluePrint: true,
                     renameTo: () => `${CLIENT_WEBPACK_DIR}/webpack.dev.js`
+                }
+            ]
+        },
+        {
+            condition: generator => generator.protractorTests && generator.clientFramework === 'react',
+            templates: [
+                {
+                    file: 'react/src/test/javascript/e2e/modules/administration/administration.spec.ts',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/modules/administration/administration.spec.ts`
                 }
             ]
         }
