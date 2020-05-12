@@ -301,6 +301,13 @@
             <artifactId>micronaut-security-jwt</artifactId>
             <scope>compile</scope>
         </dependency>
+<%_ if (authenticationType == 'oauth2') { _%>
+        <dependency>
+            <groupId>io.micronaut.configuration</groupId>
+            <artifactId>micronaut-security-oauth2</artifactId>
+            <scope>compile</scope>
+        </dependency>
+<%_ } _%>
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>

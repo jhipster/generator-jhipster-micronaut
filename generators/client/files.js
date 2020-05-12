@@ -2,6 +2,7 @@ const jhipsterConstants = require('generator-jhipster/generators/generator-const
 
 const ANGULAR_DIR = jhipsterConstants.ANGULAR_DIR;
 const REACT_DIR = jhipsterConstants.REACT_DIR;
+const CLIENT_WEBPACK_DIR = jhipsterConstants.CLIENT_WEBPACK_DIR;
 
 const CLIENT_TEST_SRC_DIR = jhipsterConstants.CLIENT_TEST_SRC_DIR;
 
@@ -15,6 +16,12 @@ const clientFiles = {
                     file: 'angular/home/home.component.html',
                     method: 'processHtml',
                     renameTo: () => `${ANGULAR_DIR}home/home.component.html`
+                },
+                // Remove Spring Security comment
+                {
+                    file: 'angular/src/main/webapp/app/core/login/login.service.ts',
+                    method: 'processJs',
+                    renameTo: () => `${ANGULAR_DIR}core/login/login.service.ts`
                 },
                 // custom auth since we don't return same props expected
                 {
@@ -120,6 +127,27 @@ const clientFiles = {
                     file: 'angular/src/main/webapp/app/layouts/navbar/navbar.component.html',
                     method: 'processHtml',
                     renameTo: () => `${ANGULAR_DIR}layouts/navbar/navbar.component.html`
+                },
+                {
+                    file: 'angular/src/main/webapp/app/layouts/navbar/navbar.component.ts',
+                    method: 'processJs',
+                    renameTo: () => `${ANGULAR_DIR}layouts/navbar/navbar.component.ts`
+                },
+                {
+                    file: 'angular/webpack/webpack.dev.js',
+                    method: 'processJs',
+                    useBluePrint: true,
+                    renameTo: () => `${CLIENT_WEBPACK_DIR}/webpack.dev.js`
+                }
+            ]
+        },
+        {
+            condition: generator => generator.protractorTests && generator.clientFramework === 'angularX',
+            templates: [
+                {
+                    file: 'angular/src/test/javascript/e2e/admin/administration.spec.ts',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/admin/administration.spec.ts`
                 }
             ]
         }
@@ -175,6 +203,11 @@ const clientFiles = {
                     renameTo: () => `${REACT_DIR}modules/administration/health/health-modal.tsx`
                 },
                 {
+                    file: 'react/src/main/webapp/app/modules/login/logout.tsx',
+                    method: 'processJsx',
+                    renameTo: () => `${REACT_DIR}modules/login/logout.tsx`
+                },
+                {
                     file: 'react/src/test/javascript/spec/app/modules/administration/administration.reducer.spec.ts',
                     method: 'processJs',
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/modules/administration/administration.reducer.spec.ts`
@@ -188,6 +221,22 @@ const clientFiles = {
                     file: 'react/src/test/javascript/spec/app/shared/reducers/authentication.spec.ts',
                     method: 'processJs',
                     renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/shared/reducers/authentication.spec.ts`
+                },
+                {
+                    file: 'react/webpack/webpack.dev.js',
+                    method: 'processJs',
+                    useBluePrint: true,
+                    renameTo: () => `${CLIENT_WEBPACK_DIR}/webpack.dev.js`
+                }
+            ]
+        },
+        {
+            condition: generator => generator.protractorTests && generator.clientFramework === 'react',
+            templates: [
+                {
+                    file: 'react/src/test/javascript/e2e/modules/administration/administration.spec.ts',
+                    method: 'processJs',
+                    renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/modules/administration/administration.spec.ts`
                 }
             ]
         }
