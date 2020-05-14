@@ -18,6 +18,7 @@
  */
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
+const os = require('os');
 const ServerGenerator = require('generator-jhipster/generators/server');
 const constants = require('generator-jhipster/generators/generator-constants');
 const writeFiles = require('./files').writeFiles;
@@ -56,7 +57,6 @@ module.exports = class extends ServerGenerator {
         return {
             askForModuleName: prompts.askForModuleName,
             askForServerSideOpts: prompts.askForServerSideOpts,
-            askForOptionalItems: prompts.askForOptionalItems,
             askFori18n: prompts.askFori18n,
 
             setSharedConfigOptions() {
@@ -106,7 +106,25 @@ module.exports = class extends ServerGenerator {
     } */
 
     get end() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._end();
+        return {
+            end() {
+                this.log(chalk.green.bold('\nServer application generated successfully.\n'));
+
+                let executable = 'mvnw';
+                if (this.buildTool === 'gradle') {
+                    executable = 'gradlew';
+                }
+
+                let logMsgComment = '';
+                if (os.platform() === 'win32') {
+                    logMsgComment = ` (${chalk.yellow.bold(executable)} if using Windows Command Prompt)`;
+                }
+                this.log(
+                    chalk.green(
+                        `Run your ${chalk.blue.bold('Micronaut')} application:\n${chalk.yellow.bold(`./${executable}`)}${logMsgComment}`
+                    )
+                );
+            }
+        };
     }
 };

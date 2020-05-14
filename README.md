@@ -9,9 +9,6 @@ This project generates a Micronaut based JHipster application 😎. It is based 
 - Monolith only
 - maven or gradle
 
-
 ## ❤️ for community
 
 Interested in contributing, check out our [contributing guide](https://github.com/jhipster/generator-jhipster-micronaut/blob/master/CONTRIBUTING.md) to get started.
-
-Any questions [sendilkumarn](https://twitter.com/sendilkumarn)

@@ -19,14 +19,12 @@
 
 const chalk = require('chalk');
 
-const constants = require('generator-jhipster/generators/generator-constants');
 const { getBase64Secret, getRandomHex } = require('generator-jhipster/generators/utils');
-const { logger } = require('generator-jhipster/generators/utils');
+const { logger } = require('generator-jhipster/cli/utils');
 
 module.exports = {
     askForModuleName,
     askForServerSideOpts,
-    askForOptionalItems,
     askFori18n
 };
 
@@ -40,6 +38,17 @@ function askForServerSideOpts(meta) {
     if (!meta && this.existingProject) return;
 
     const applicationType = this.applicationType;
+
+    const dbOptions = [
+        {
+            value: 'mysql',
+            name: 'MySQL'
+        },
+        {
+            value: 'postgresql',
+            name: 'PostgreSQL'
+        }
+    ];
 
     if (applicationType !== 'monolith') {
         logger.error('Application should be only monolith for this blueprint');
@@ -125,12 +134,6 @@ function askForServerSideOpts(meta) {
                         name: 'JWT authentication (stateless, with a token)'
                     }
                 ];
-                if (applicationType === 'monolith' && response.serviceDiscoveryType !== 'eureka') {
-                    opts.push({
-                        value: 'session',
-                        name: 'HTTP Session Authentication (stateful, default Spring Security mechanism)'
-                    });
-                }
                 if (!reactive) {
                     opts.push({
                         value: 'oauth2',
@@ -172,7 +175,7 @@ function askForServerSideOpts(meta) {
                 if (!reactive) {
                     opts.push({
                         value: 'sql',
-                        name: 'SQL (H2, MySQL, MariaDB, PostgreSQL, Oracle, MSSQL)'
+                        name: 'SQL (H2, MySQL, PostgreSQL)'
                     });
                 }
                 // TODO enable when we support these things
@@ -205,7 +208,7 @@ function askForServerSideOpts(meta) {
             type: 'list',
             name: 'prodDatabaseType',
             message: `Which ${chalk.yellow('*production*')} database would you like to use?`,
-            choices: constants.SQL_DB_OPTIONS,
+            choices: dbOptions,
             default: 0
         },
         {
@@ -223,32 +226,18 @@ function askForServerSideOpts(meta) {
                         value: 'h2Memory',
                         name: 'H2 with in-memory persistence'
                     }
-                ].concat(constants.SQL_DB_OPTIONS.find(it => it.value === response.prodDatabaseType)),
+                ].concat(dbOptions.find(it => it.value === response.prodDatabaseType)),
             default: 0
         },
         {
             when: () => !reactive,
             type: 'list',
             name: 'cacheProvider',
-            message: 'Do you want to use the Spring cache abstraction?',
+            message: "Do you want to use Micronaut's cache abstraction?",
             choices: [
                 {
                     value: 'ehcache',
                     name: 'Yes, with the Ehcache implementation (local cache, for a single node)'
-                },
-                {
-                    value: 'hazelcast',
-                    name:
-                        'Yes, with the Hazelcast implementation (distributed cache, for multiple nodes, supports rate-limiting for gateway applications)'
-                },
-                {
-                    value: 'infinispan',
-                    name: '[BETA] Yes, with the Infinispan implementation (hybrid cache, for multiple nodes)'
-                },
-                {
-                    value: 'memcached',
-                    name:
-                        'Yes, with Memcached (distributed cache) - Warning, when using an SQL database, this will disable the Hibernate 2nd level cache!'
                 },
                 {
                     value: 'no',
@@ -351,64 +340,6 @@ function askForServerSideOpts(meta) {
         }
         done();
     });
-}
-
-function askForOptionalItems(meta) {
-    if (!meta && this.existingProject) return;
-
-    const applicationType = this.applicationType;
-    const choices = [];
-    const defaultChoice = [];
-    if (!this.reactive) {
-        if (this.databaseType === 'sql' || this.databaseType === 'mongodb') {
-            choices.push({
-                name: 'Search engine using Elasticsearch',
-                value: 'searchEngine:elasticsearch'
-            });
-        }
-        if (applicationType === 'monolith' || applicationType === 'gateway') {
-            choices.push({
-                name: 'WebSockets using Spring Websocket',
-                value: 'websocket:spring-websocket'
-            });
-        }
-        choices.push({
-            name: 'Asynchronous messages using Apache Kafka',
-            value: 'messageBroker:kafka'
-        });
-    }
-    choices.push({
-        name: 'API first development using OpenAPI-generator',
-        value: 'enableSwaggerCodegen:true'
-    });
-
-    const PROMPTS = {
-        type: 'checkbox',
-        name: 'serverSideOptions',
-        message: 'Which other technologies would you like to use?',
-        choices,
-        default: defaultChoice
-    };
-
-    if (meta) return PROMPTS; // eslint-disable-line consistent-return
-
-    const done = this.async();
-    if (choices.length > 0) {
-        this.prompt(PROMPTS).then(prompt => {
-            this.serverSideOptions = prompt.serverSideOptions;
-            this.websocket = this.getOptionFromArray(this.serverSideOptions, 'websocket');
-            this.searchEngine = this.getOptionFromArray(this.serverSideOptions, 'searchEngine');
-            this.messageBroker = this.getOptionFromArray(this.serverSideOptions, 'messageBroker');
-            this.enableSwaggerCodegen = this.getOptionFromArray(this.serverSideOptions, 'enableSwaggerCodegen');
-            // Only set this option if it hasn't been set in a previous question, as it's only optional for monoliths
-            if (!this.serviceDiscoveryType) {
-                this.serviceDiscoveryType = this.getOptionFromArray(this.serverSideOptions, 'serviceDiscoveryType');
-            }
-            done();
-        });
-    } else {
-        done();
-    }
 }
 
 function askFori18n() {
