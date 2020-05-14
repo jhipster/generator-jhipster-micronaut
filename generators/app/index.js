@@ -3,6 +3,8 @@ const chalk = require('chalk');
 const AppGenerator = require('generator-jhipster/generators/app');
 // const jhipsterPackagejs = require('generator-jhipster/package.json');
 
+const prompts = require('./prompts');
+
 module.exports = class extends AppGenerator {
     // /**
     //  * Override yeoman standard storage function for yo-rc.json
@@ -40,11 +42,11 @@ module.exports = class extends AppGenerator {
                 this.log(`${chalk.blue(' ██║╚██╔╝██║')}${chalk.green(' ██╔═══██║    ██║    ██╔════╝   ╚═══██╗    ██║    ██╔═══╝   ██╔══██║')}`);
                 this.log(`${chalk.blue(' ██║ ╚═╝ ██║')}${chalk.green(' ██║   ██║ ████████╗ ██║       ██████╔╝    ██║    ████████╗ ██║  ╚██╗')}`);
                 this.log(`${chalk.blue(' ╚═╝     ╚═╝')}${chalk.green(' ╚═╝   ╚═╝ ╚═══════╝ ╚═╝       ╚═════╝     ╚═╝    ╚═══════╝ ╚═╝   ╚═╝')}\n`);
-                this.log(chalk.white.bold('                            https://www.jhipster.tech\n'));
-                this.log(chalk.white('Welcome to MHipster  🤓  :: Running Micronaut version 1.3.0'));
-                this.log(chalk.white('This blueprint generates your backend as a Micronaut Java project.'));
+                this.log(chalk.white.bold('                            https://www.jhipster.tech'));
+                this.log(chalk.blue.bold('                              https://micronaut.io\n'));
+                this.log(chalk.white(' Welcome to MHipster  🤓  :: Running Micronaut version 1.3.4'));
+                this.log(chalk.white(' This blueprint generates your backend as a Micronaut Java project.'));
                 this.log(chalk.green(' _______________________________________________________________________________________________________________\n'));
-                this.log(chalk.white(`  For any questions or improvements refer to the stream lead at ${chalk.yellow('https://github.com/willbuck')}`));
                 this.log(
                     chalk.white(
                         `  If you find MHipster useful, support and star the project at ${chalk.yellow(
@@ -65,17 +67,17 @@ module.exports = class extends AppGenerator {
 
     get prompting() {
         const defaultPhaseFromJHipster = super._prompting();
-        const mhipsterPromptingPhaseSteps = {
 
+        return {
+            ...defaultPhaseFromJHipster,
+            askForApplicationType: prompts.askForApplicationType
         };
-
-        return Object.assign(defaultPhaseFromJHipster, mhipsterPromptingPhaseSteps);
     }
 
     get configuring() {
         const configuringPhaseFromJHipster = super._configuring();
 
-        const jhipsterConfigureAppPhaseSteps = {
+        const mhipsterConfigureAppPhaseSteps = {
             composeServer() {
                 if (this.skipServer) return;
                 const options = this.options;
@@ -114,12 +116,17 @@ module.exports = class extends AppGenerator {
             }
         };
 
-        return Object.assign(configuringPhaseFromJHipster, jhipsterConfigureAppPhaseSteps);
+        return Object.assign(configuringPhaseFromJHipster, mhipsterConfigureAppPhaseSteps);
     }
 
     get default() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._default();
+        const jhipsterDefault = super._default();
+
+        return {
+            ...jhipsterDefault,
+            askForTestOpts: prompts.askForTestOpts,
+            askForMoreModules: undefined
+        };
     }
 
     get writing() {
