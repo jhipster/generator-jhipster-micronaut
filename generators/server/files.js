@@ -434,11 +434,6 @@ const serverFiles = {
             path: SERVER_MAIN_SRC_DIR,
             templates: [
                 {
-                    file: 'package/security/ApiLogoutController.java',
-                    renameTo: generator => `${generator.javaDir}security/ApiLogoutController.java`,
-                    useBluePrint: true
-                },
-                {
                     file: 'package/security/AuthoritiesConstants.java',
                     renameTo: generator => `${generator.javaDir}security/AuthoritiesConstants.java`,
                     useBluePrint: true
@@ -451,16 +446,6 @@ const serverFiles = {
                 {
                     file: 'package/security/DatabaseAuthenticationProvider.java',
                     renameTo: generator => `${generator.javaDir}security/DatabaseAuthenticationProvider.java`,
-                    useBluePrint: true
-                },
-                {
-                    file: 'package/security/JHipsterOpenIdUserDetailsMapper.java',
-                    renameTo: generator => `${generator.javaDir}security/JHipsterOpenIdUserDetailsMapper.java`,
-                    useBluePrint: true
-                },
-                {
-                    file: 'package/security/KeycloakEndSessionEndpoint.java',
-                    renameTo: generator => `${generator.javaDir}security/KeycloakEndSessionEndpoint.java`,
                     useBluePrint: true
                 },
                 {
@@ -486,6 +471,27 @@ const serverFiles = {
                 {
                     file: 'package/security/UserNotActivatedException.java',
                     renameTo: generator => `${generator.javaDir}security/UserNotActivatedException.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+        {
+            condition: generator => generator.authenticationType === 'oauth2',
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/security/ApiLogoutController.java',
+                    renameTo: generator => `${generator.javaDir}security/ApiLogoutController.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/security/JHipsterOpenIdUserDetailsMapper.java',
+                    renameTo: generator => `${generator.javaDir}security/JHipsterOpenIdUserDetailsMapper.java`,
+                    useBluePrint: true
+                },
+                {
+                    file: 'package/security/KeycloakEndSessionEndpoint.java',
+                    renameTo: generator => `${generator.javaDir}security/KeycloakEndSessionEndpoint.java`,
                     useBluePrint: true
                 }
             ]
