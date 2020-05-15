@@ -3,14 +3,11 @@
 #
 # This configuration overrides the application.yml file.
 #
-# More information on profiles: https://www.jhipster.tech/profiles/
-# More information on configuration properties: https://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
-# ===================================================================
-# Standard Micronaut configuration properties.
-# Full reference is available at:
+# Full Micronaut configuration reference is available at:
 # https://docs.micronaut.io/latest/guide/configurationreference.html
+#
+# More information on JHipster configuration properties:
+# https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
 logging:
@@ -59,9 +56,16 @@ jpa:
   database: MYSQL
   show-sql: false
   properties:
+<%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached'].includes(cacheProvider)) { _%>
+    hibernate.javax.cache.missing_cache_strategy: create
+<%_ } _%>
     hibernate.id.new_generator_mappings: true
     hibernate.connection.provider_disables_autocommit: true
+<%_ if (enableHibernateCache) { _%>
     hibernate.cache.use_second_level_cache: true
+<%_ } else { _%>
+    hibernate.cache.use_second_level_cache: false
+<%_ } _%>
     hibernate.cache.use_query_cache: false
     hibernate.generate_statistics: false
 
@@ -128,10 +132,14 @@ jhipster:
   http:
     cache: # Used by the CachingHttpHeadersFilter
       timeToLiveInDays: 1461
+<%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached'].includes(cacheProvider)) { _%>
   cache: # Cache configuration
+  <%_ if (cacheProvider === 'ehcache') { _%>
     ehcache: # Ehcache configuration
       time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
       max-entries: 1000 # Number of objects in each cache entry
+  <%_ } _%>
+<%_ } _%>
   mail: # specific JHipster mail property, for standard properties see MailProperties
     from: <%= baseName %>@localhost
     base-url: http://my-server-url-to-change # Modify according to your server's URL
