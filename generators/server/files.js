@@ -333,11 +333,6 @@ const serverFiles = {
                     useBluePrint: true
                 },
                 {
-                    file: 'package/config/CacheConfiguration.java',
-                    renameTo: generator => `${generator.javaDir}config/CacheConfiguration.java`,
-                    useBluePrint: true
-                },
-                {
                     file: 'package/config/Constants.java',
                     renameTo: generator => `${generator.javaDir}config/Constants.java`,
                     useBluePrint: true
@@ -380,6 +375,18 @@ const serverFiles = {
                 {
                     file: 'package/config/metric/JHipsterMetricsEndpoint.java',
                     renameTo: generator => `${generator.javaDir}config/metric/JHipsterMetricsEndpoint.java`,
+                    useBluePrint: true
+                }
+            ]
+        },
+        {
+            condition: generator =>
+                ['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(generator.cacheProvider),
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/config/CacheConfiguration.java',
+                    renameTo: generator => `${generator.javaDir}config/CacheConfiguration.java`,
                     useBluePrint: true
                 }
             ]

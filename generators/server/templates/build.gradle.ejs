@@ -263,9 +263,7 @@ dependencies {
         exclude group: "org.springframework.boot", module: "spring-boot-starter-web"
     }
     implementation "javax.annotation:javax.annotation-api"
-    <%_ if (cacheProvider !== 'no') { _%>
-    implementation "org.springframework.boot:spring-boot-starter-cache"
-    <%_ } _%>
+    implementation "ch.qos.logback:logback-classic:1.2.3"
     implementation "io.dropwizard.metrics:metrics-core"
     implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "net.logstash.logback:logstash-logback-encoder"

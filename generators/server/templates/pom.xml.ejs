@@ -195,10 +195,12 @@
             <artifactId>logback-classic</artifactId>
             <version>1.2.3</version>
         </dependency>
+<%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached'].includes(cacheProvider)) { _%>
         <dependency>
             <groupId>javax.cache</groupId>
             <artifactId>cache-api</artifactId>
         </dependency>
+<%_ } _%>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -232,15 +234,19 @@
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
+<%_ if (cacheProvider === 'ehcache') { _%>
         <dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
         </dependency>
+    <%_ if (enableHibernateCache) { _%>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jcache</artifactId>
             <version>5.4.3.Final</version>
         </dependency>
+    <%_ } _%>
+<%_ } _%>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
@@ -1124,7 +1130,6 @@
                     </plugin>
                 </plugins>
             </build>
-            <!-- TODO remove this once we're good using MYSQL in prod -->
             <dependencies>
                 <%_
                 if (prodDatabaseType === 'mysql') { _%>
