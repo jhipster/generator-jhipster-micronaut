@@ -71,9 +71,9 @@ public class <%= mainClass %> {
 
         log.info("\n----------------------------------------------------------\n\t" +
                 "Application '{}' is running! Access URLs:\n\t" +
-                "Local: \t\t{}://localhost:{}\n\t" +
-                "External: \t{}://{}:{}\n\t" +
-                "Profile(s): \t{}\n----------------------------------------------------------",
+                "Local: \t\t\t{}://localhost:{}\n\t" +
+                "External: \t\t{}://{}:{}\n\t" +
+                "Environment(s): \t{}\n----------------------------------------------------------",
             application.getName().orElse(null),
             protocol,
             serverPort,
