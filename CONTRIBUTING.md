@@ -1,47 +1,33 @@
-# We really love to have you and your awesome (intention) contributions here. 🎉🎉🎉 Thanks 🎉🎉🎉
+# So you're interested in contributing to this generator? 🎉🎉🎉 That's Great! 🎉🎉🎉
 
 ## To run the application in development
 
-### Step 1 👍 : install [yeoman](https://yeoman.io/)
+### Step 1 👍 : setup JHipster locally
 
-`npm install -g yo | yarn global add yo`
-
-### Step 2 👍 : to setup JHipster locally
-
-`git clone https://github.com/jhipster/generator-jhipster`
-
-`cd generator-jhipster`
-
-`npm install | yarn`
-
-`npm link | yarn link`
+* `git clone https://github.com/jhipster/generator-jhipster`
+* `cd generator-jhipster`
+* `npm install` -or- `yarn`
+* `npm link` -or- `yarn link`
 
 ( 🏁 Kudos, you just setup JHipster and linked to it locally )
 
-### Step 3 ✌️ : to setup JHipster-Micronaut generator
+### Step 2 ✌️ : setup the JHipster-Micronaut generator locally
 
-`git clone https://github.com/generator-jhipster/generator-jhipster-micronaut`
-
-`cd jhipster-micronaut`
-
-`npm link generator-jhipster | yarn link generator-jhipster`
-
-`npm install | yarn`
-
-`npm link | yarn link`
+* `git clone https://github.com/generator-jhipster/generator-jhipster-micronaut`
+* `cd generator-jhipster-micronaut`
+* `npm link generator-jhipster` -or- `yarn link generator-jhipster`
+* `npm install` -or- `yarn`
+* `npm link` -or- `yarn link`
 
 ( 🏁 Kudos, you just setup JHipster-Micronaut and linked to it locally )
-( 📝 Note: you are linking the JHipster to JHipster-Micronaut with the final command)
+( 📝 Note: you have linked JHipster to JHipster-Micronaut)
 
-### Step 4 🤟 : before generating your application, go to your application folder
+### Step 3 🤟 : before generating your application, go to your application folder
 
-`yarn link "generator-jhipster-micronaut"`
+* `npm link "generator-jhipster-micronaut"` -or- `yarn link "generator-jhipster-micronaut"`
+* `mhipster`
 
-or
-
-`npm link "generator-jhipster-micronaut"`
-
-( 🏁 Kudos, you have done it. It is the time to generate the application `mhipster` )
+( 🏁 Kudos, you have done it! It is the time to generate the application )
 
 ✨✨✨✨ You are rocking ✨✨✨✨
 
