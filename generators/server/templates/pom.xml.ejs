@@ -7,7 +7,7 @@
     <artifactId><%= dasherizedBaseName %></artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>MHipster Sample Application</name>
+    <name><%= humanizedBaseName %></name>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
@@ -31,9 +31,16 @@
         <!-- Build properties -->
         <exec.mainClass><%=packageName%>.<%=mainClass%></exec.mainClass>
         <maven.version>3.3.9</maven.version>
-        <java.version>1.8</java.version>
-        <node.version>v12.14.0</node.version>
-        <npm.version>6.13.7</npm.version>
+        <java.version><%= JAVA_VERSION %></java.version>
+<%_ if (!skipClient) { _%>
+        <node.version>v<%= NODE_VERSION %></node.version>
+    <%_ if (clientPackageManager === 'npm') { _%>
+        <npm.version><%= NPM_VERSION %></npm.version>
+    <%_ } _%>
+    <%_ if (clientPackageManager === 'yarn') { _%>
+        <yarn.version>v<%= YARN_VERSION %></yarn.version>
+    <%_ } _%>
+<%_ } _%>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
@@ -44,15 +51,14 @@
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <run.addResources>false</run.addResources>
         <!-- These remain empty unless the corresponding profile is active -->
+<%_ if (databaseType === 'sql') { _%>
         <profile.no-liquibase />
+<%_ } _%>
         <profile.swagger />
         <profile.tls />
 
         <!-- Dependency versions -->
         <jhipster-dependencies.version>3.0.1</jhipster-dependencies.version>
-        <!-- The spring-boot version should match the one managed by
-        https://mvnrepository.com/artifact/io.github.jhipster/jhipster-dependencies/${jhipster-dependencies.version} -->
-        <spring-boot.version>2.1.4.RELEASE</spring-boot.version>
         <!-- The hibernate version should match the one managed by
         https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
         <hibernate.version>5.3.9.Final</hibernate.version>
@@ -65,7 +71,6 @@
         <liquibase-hibernate5.version>3.6</liquibase-hibernate5.version>
         <!-- The hibernate version to be used to override default version of liquibase maven plugin -->
         <hibernate-core.version>5.4.3.Final</hibernate-core.version>
-        <spring.version>5.1.5.RELEASE</spring.version>
         <micronaut.version>1.3.4</micronaut.version>
         <micronaut-data.version>1.0.2</micronaut-data.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
@@ -86,7 +91,9 @@
         <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
         <maven-exec-plugin.version>1.6.0</maven-exec-plugin.version>
 
-        <frontend-maven-plugin.version>1.7.6</frontend-maven-plugin.version>
+<%_ if (!skipClient) { _%>
+        <frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
+<%_ } _%>
         <git-commit-id-plugin.version>2.2.6</git-commit-id-plugin.version>
         <jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
         <jib-maven-plugin.version>0.9.11</jib-maven-plugin.version>
@@ -603,11 +610,13 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                 </plugin>
+<%_ if (!skipClient) { _%>
                 <plugin>
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>${frontend-maven-plugin.version}</version>
                 </plugin>
+<%_ } _%>
                 <plugin>
                     <groupId>pl.project13.maven</groupId>
                     <artifactId>git-commit-id-plugin</artifactId>
@@ -916,6 +925,7 @@
                 <profile.tls>,tls</profile.tls>
             </properties>
         </profile>
+<%_ if (!skipClient) { _%>
         <profile>
             <id>webpack</id>
             <activation>
@@ -924,10 +934,12 @@
                 </file>
             </activation>
             <dependencies>
+    <%_ if (devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') { _%>
                 <dependency>
                     <groupId>com.h2database</groupId>
                     <artifactId>h2</artifactId>
                 </dependency>
+    <%_ } _%>
             </dependencies>
             <build>
                 <plugins>
@@ -935,6 +947,24 @@
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
                         <executions>
+    <%_ if (clientPackageManager === 'yarn') { _%>
+                            <execution>
+                                <id>install node and yarn</id>
+                                <goals>
+                                    <goal>install-node-and-yarn</goal>
+                                </goals>
+                                <configuration>
+                                    <nodeVersion>${node.version}</nodeVersion>
+                                    <yarnVersion>${yarn.version}</yarnVersion>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>yarn install</id>
+                                <goals>
+                                    <goal>yarn</goal>
+                                </goals>
+                            </execution>
+    <%_ } else if (clientPackageManager === 'npm') { _%>
                             <execution>
                                 <id>install node and npm</id>
                                 <goals>
@@ -951,15 +981,20 @@
                                     <goal>npm</goal>
                                 </goals>
                             </execution>
+    <%_ } _%>
                             <execution>
                                 <id>webpack build dev</id>
                                 <goals>
-                                    <goal>npm</goal>
+                                    <goal><%= clientPackageManager %></goal>
                                 </goals>
                                 <phase>generate-resources</phase>
                                 <configuration>
                                     <arguments>run webpack:build</arguments>
+    <%_ if (clientPackageManager === 'yarn') { _%>
+                                    <yarnInheritsProxyConfigFromMaven>false</yarnInheritsProxyConfigFromMaven>
+    <%_ } else if (clientPackageManager === 'npm') { _%>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
+    <%_ } _%>
                                 </configuration>
                             </execution>
                         </executions>
@@ -967,10 +1002,10 @@
                 </plugins>
             </build>
             <properties>
-                <!-- default Spring profiles -->
                 <profiles.active>dev${profile.no-liquibase}</profiles.active>
             </properties>
         </profile>
+<%_ } _%>
         <profile>
             <id>dev</id>
             <activation>
@@ -1001,10 +1036,32 @@
                             </filesets>
                         </configuration>
                     </plugin>
+<%_ if (!skipClient) { _%>
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
                         <executions>
+    <%_ if (clientPackageManager === 'yarn') { _%>
+                            <execution>
+                                <id>install node and yarn</id>
+                                <goals>
+                                    <goal>install-node-and-yarn</goal>
+                                </goals>
+                                <configuration>
+                                    <nodeVersion>${node.version}</nodeVersion>
+                                    <yarnVersion>${yarn.version}</yarnVersion>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>yarn install</id>
+                                <goals>
+                                    <goal>yarn</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>install</arguments>
+                                </configuration>
+                            </execution>
+    <%_ } else if (clientPackageManager === 'npm') { _%>
                             <execution>
                                 <id>install node and npm</id>
                                 <goals>
@@ -1024,30 +1081,43 @@
                                     <arguments>install</arguments>
                                 </configuration>
                             </execution>
+    <%_ } _%>
                             <execution>
                                 <id>webpack build test</id>
                                 <goals>
-                                    <goal>npm</goal>
+                                    <goal><%= clientPackageManager %></goal>
                                 </goals>
                                 <phase>test</phase>
                                 <configuration>
                                     <arguments>run webpack:test</arguments>
+    <%_ if (clientPackageManager === 'yarn') { _%>
+                                    <yarnInheritsProxyConfigFromMaven>false</yarnInheritsProxyConfigFromMaven>
+    <%_ } else if (clientPackageManager === 'npm') { _%>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
+    <%_ } _%>
                                 </configuration>
                             </execution>
                             <execution>
                                 <id>webpack build prod</id>
                                 <goals>
-                                    <goal>npm</goal>
+                                    <goal><%= clientPackageManager %></goal>
                                 </goals>
                                 <phase>generate-resources</phase>
                                 <configuration>
                                     <arguments>run webpack:prod</arguments>
+                                    <environmentVariables>
+                                        <APP_VERSION>${project.version}</APP_VERSION>
+                                    </environmentVariables>
+    <%_ if (clientPackageManager === 'yarn') { _%>
+                                    <yarnInheritsProxyConfigFromMaven>false</yarnInheritsProxyConfigFromMaven>
+    <%_ } else if (clientPackageManager === 'npm') { _%>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
+    <%_ } _%>
                                 </configuration>
                             </execution>
                         </executions>
                     </plugin>
+<%_ } _%>
                     <plugin>
                         <groupId>pl.project13.maven</groupId>
                         <artifactId>git-commit-id-plugin</artifactId>
@@ -1163,20 +1233,27 @@
                                                 <ignore/>
                                             </action>
                                         </pluginExecution>
+<%_ if (!skipClient) { _%>
                                         <pluginExecution>
                                             <pluginExecutionFilter>
                                                 <groupId>com.github.eirslett</groupId>
                                                 <artifactId>frontend-maven-plugin</artifactId>
                                                 <versionRange>${frontend-maven-plugin.version}</versionRange>
                                                 <goals>
+    <%_ if (clientPackageManager === 'yarn') { _%>
+                                                    <goal>install-node-and-yarn</goal>
+                                                    <goal>yarn</goal>
+    <%_ } else if (clientPackageManager === 'npm') { _%>
                                                     <goal>install-node-and-npm</goal>
                                                     <goal>npm</goal>
+    <%_ } _%>
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
                                                 <ignore/>
                                             </action>
                                         </pluginExecution>
+<%_ } _%>
                                     </pluginExecutions>
                                 </lifecycleMappingMetadata>
                             </configuration>
