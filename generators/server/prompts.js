@@ -25,7 +25,7 @@ const { logger } = require('generator-jhipster/cli/utils');
 module.exports = {
     askForModuleName,
     askForServerSideOpts,
-    askFori18n
+    askFori18n,
 };
 
 function askForModuleName() {
@@ -42,12 +42,12 @@ function askForServerSideOpts(meta) {
     const dbOptions = [
         {
             value: 'mysql',
-            name: 'MySQL'
+            name: 'MySQL',
         },
         {
             value: 'postgresql',
-            name: 'PostgreSQL'
-        }
+            name: 'PostgreSQL',
+        },
     ];
 
     if (applicationType !== 'monolith') {
@@ -68,7 +68,7 @@ function askForServerSideOpts(meta) {
             validate: input => (/^([0-9]*)$/.test(input) ? true : 'This is not a valid port number.'),
             message:
                 'As you are running in a microservice architecture, on which port would like your server to run? It should be unique to avoid port conflicts.',
-            default: defaultPort
+            default: defaultPort,
         },
         {
             type: 'input',
@@ -79,7 +79,7 @@ function askForServerSideOpts(meta) {
                     : 'The package name you have provided is not a valid Java package name.',
             message: 'What is your default Java package name?',
             default: 'com.mycompany.myapp',
-            store: true
+            store: true,
         },
         // TODO enable it when we allow other apps than monoliths
         // {
@@ -131,24 +131,24 @@ function askForServerSideOpts(meta) {
                 const opts = [
                     {
                         value: 'jwt',
-                        name: 'JWT authentication (stateless, with a token)'
-                    }
+                        name: 'JWT authentication (stateless, with a token)',
+                    },
                 ];
                 if (!reactive) {
                     opts.push({
                         value: 'oauth2',
-                        name: 'OAuth 2.0 / OIDC Authentication (stateful, works with Keycloak and Okta)'
+                        name: 'OAuth 2.0 / OIDC Authentication (stateful, works with Keycloak and Okta)',
                     });
                     if (['gateway', 'microservice'].includes(applicationType)) {
                         opts.push({
                             value: 'uaa',
-                            name: 'Authentication with JHipster UAA server (the server must be generated separately)'
+                            name: 'Authentication with JHipster UAA server (the server must be generated separately)',
                         });
                     }
                 }
                 return opts;
             },
-            default: 0
+            default: 0,
         },
         {
             when: response =>
@@ -164,7 +164,7 @@ function askForServerSideOpts(meta) {
                     return true;
                 }
                 return `Could not find a valid JHipster UAA server in path "${input}"`;
-            }
+            },
         },
         {
             type: 'list',
@@ -175,7 +175,7 @@ function askForServerSideOpts(meta) {
                 if (!reactive) {
                     opts.push({
                         value: 'sql',
-                        name: 'SQL (H2, MySQL, PostgreSQL)'
+                        name: 'SQL (H2, MySQL, PostgreSQL)',
                     });
                 }
                 // TODO enable when we support these things
@@ -201,7 +201,7 @@ function askForServerSideOpts(meta) {
                 // }
                 return opts;
             },
-            default: 0
+            default: 0,
         },
         {
             when: response => response.databaseType === 'sql',
@@ -209,7 +209,7 @@ function askForServerSideOpts(meta) {
             name: 'prodDatabaseType',
             message: `Which ${chalk.yellow('*production*')} database would you like to use?`,
             choices: dbOptions,
-            default: 0
+            default: 0,
         },
         {
             when: response => response.databaseType === 'sql',
@@ -220,14 +220,14 @@ function askForServerSideOpts(meta) {
                 [
                     {
                         value: 'h2Disk',
-                        name: 'H2 with disk-based persistence'
+                        name: 'H2 with disk-based persistence',
                     },
                     {
                         value: 'h2Memory',
-                        name: 'H2 with in-memory persistence'
-                    }
+                        name: 'H2 with in-memory persistence',
+                    },
                 ].concat(dbOptions.find(it => it.value === response.prodDatabaseType)),
-            default: 0
+            default: 0,
         },
         {
             when: () => !reactive,
@@ -237,14 +237,14 @@ function askForServerSideOpts(meta) {
             choices: [
                 {
                     value: 'ehcache',
-                    name: 'Yes, with the Ehcache implementation (local cache, for a single node)'
+                    name: 'Yes, with the Ehcache implementation (local cache, for a single node)',
                 },
                 {
                     value: 'no',
-                    name: 'No - Warning, when using an SQL database, this will disable the Hibernate 2nd level cache!'
-                }
+                    name: 'No - Warning, when using an SQL database, this will disable the Hibernate 2nd level cache!',
+                },
             ],
-            default: applicationType === 'microservice' || applicationType === 'uaa' ? 1 : 0
+            default: applicationType === 'microservice' || applicationType === 'uaa' ? 1 : 0,
         },
         {
             when: response =>
@@ -253,7 +253,7 @@ function askForServerSideOpts(meta) {
             type: 'confirm',
             name: 'enableHibernateCache',
             message: 'Do you want to use Hibernate 2nd level cache?',
-            default: true
+            default: true,
         },
         {
             type: 'list',
@@ -262,15 +262,15 @@ function askForServerSideOpts(meta) {
             choices: [
                 {
                     value: 'maven',
-                    name: 'Maven'
+                    name: 'Maven',
                 },
                 {
                     value: 'gradle',
-                    name: 'Gradle'
-                }
+                    name: 'Gradle',
+                },
             ],
-            default: 'maven'
-        }
+            default: 'maven',
+        },
     ];
 
     if (meta) return prompts; // eslint-disable-line consistent-return

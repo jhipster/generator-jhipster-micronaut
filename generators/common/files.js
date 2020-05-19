@@ -5,21 +5,21 @@ const commonFiles = {
                 'README.md',
                 {
                     file: 'gitignore',
-                    renameTo: () => '.gitignore'
-                }
-            ]
-        }
-    ]
+                    renameTo: () => '.gitignore',
+                },
+            ],
+        },
+    ],
 };
 
 function writeFiles() {
     return {
         overrideFiles() {
             this.writeFilesToDisk(commonFiles, this, false);
-        }
+        },
     };
 }
 
 module.exports = {
-    writeFiles
+    writeFiles,
 };

@@ -11,14 +11,14 @@ describe('Subgenerator client of micronaut JHipster blueprint', () => {
                     'from-cli': true,
                     skipInstall: true,
                     blueprint: 'micronaut',
-                    skipChecks: true
+                    skipChecks: true,
                 })
                 .withGenerators([
                     [
                         require('../generators/client/index.js'), // eslint-disable-line global-require
                         'jhipster-micronaut:client',
-                        path.join(__dirname, '../generators/client/index.js')
-                    ]
+                        path.join(__dirname, '../generators/client/index.js'),
+                    ],
                 ])
                 .withPrompts({
                     baseName: 'jhipster',
@@ -26,7 +26,7 @@ describe('Subgenerator client of micronaut JHipster blueprint', () => {
                     enableTranslation: true,
                     nativeLanguage: 'en',
                     languages: ['fr'],
-                    clientFramework: 'angularX'
+                    clientFramework: 'angularX',
                 })
                 .on('end', done);
         });

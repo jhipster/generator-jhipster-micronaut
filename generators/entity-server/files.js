@@ -39,7 +39,7 @@ const SERVER_TEST_SRC_DIR = constants.SERVER_TEST_SRC_DIR;
  * https://github.com/Marak/faker.js/blob/10bfb9f467b0ac2b8912ffc15690b50ef3244f09/lib/date.js#L73-L96
  * Needed for reproducible builds
  */
-const getRecentDate = function(days, refDate) {
+const getRecentDate = function (days, refDate) {
     let date = new Date();
     if (refDate !== undefined) {
         date = new Date(Date.parse(refDate));
@@ -47,7 +47,7 @@ const getRecentDate = function(days, refDate) {
 
     const range = {
         min: 1000,
-        max: (days || 1) * 24 * 3600 * 1000
+        max: (days || 1) * 24 * 3600 * 1000,
     };
 
     let future = date.getTime();
@@ -57,7 +57,7 @@ const getRecentDate = function(days, refDate) {
     return date;
 };
 
-const getRecentForLiquibase = function(days, changelogDate) {
+const getRecentForLiquibase = function (days, changelogDate) {
     let formatedDate;
     if (changelogDate !== undefined) {
         formatedDate = `${changelogDate.substring(0, 4)}-${changelogDate.substring(4, 6)}-${changelogDate.substring(
@@ -82,9 +82,10 @@ const serverFiles = {
                     file: 'config/liquibase/changelog/added_entity.xml',
                     options: { interpolate: INTERPOLATE_REGEX },
                     useBluePrint: true,
-                    renameTo: generator => `config/liquibase/changelog/${generator.changelogDate}_added_entity_${generator.entityClass}.xml`
-                }
-            ]
+                    renameTo: generator =>
+                        `config/liquibase/changelog/${generator.changelogDate}_added_entity_${generator.entityClass}.xml`,
+                },
+            ],
         },
         {
             condition: generator =>
@@ -98,9 +99,9 @@ const serverFiles = {
                     options: { interpolate: INTERPOLATE_REGEX },
                     useBluePrint: true,
                     renameTo: generator =>
-                        `config/liquibase/changelog/${generator.changelogDate}_added_entity_constraints_${generator.entityClass}.xml`
-                }
-            ]
+                        `config/liquibase/changelog/${generator.changelogDate}_added_entity_constraints_${generator.entityClass}.xml`,
+                },
+            ],
         },
         {
             condition: generator => generator.databaseType === 'cassandra' && !generator.skipDbChangelog,
@@ -109,10 +110,10 @@ const serverFiles = {
                 {
                     file: 'config/cql/changelog/added_entity.cql',
                     useBluePrint: true,
-                    renameTo: generator => `config/cql/changelog/${generator.changelogDate}_added_entity_${generator.entityClass}.cql`
-                }
-            ]
-        }
+                    renameTo: generator => `config/cql/changelog/${generator.changelogDate}_added_entity_${generator.entityClass}.cql`,
+                },
+            ],
+        },
     ],
     fakeData: [
         {
@@ -127,12 +128,12 @@ const serverFiles = {
                         context: {
                             getRecentForLiquibase,
                             faker,
-                            randexp
-                        }
+                            randexp,
+                        },
                     },
-                    renameTo: generator => `config/liquibase/fake-data/${generator.entityTableName}.csv`
-                }
-            ]
+                    renameTo: generator => `config/liquibase/fake-data/${generator.entityTableName}.csv`,
+                },
+            ],
         },
         {
             condition: generator =>
@@ -141,7 +142,7 @@ const serverFiles = {
                 !generator.skipDbChangelog &&
                 (generator.fieldsContainImageBlob === true || generator.fieldsContainBlob === true),
             path: SERVER_MAIN_RES_DIR,
-            templates: [{ file: 'config/liquibase/fake-data/blob/hipster.png', method: 'copy', useBluePrint: true, noEjs: true }]
+            templates: [{ file: 'config/liquibase/fake-data/blob/hipster.png', method: 'copy', useBluePrint: true, noEjs: true }],
         },
         {
             condition: generator =>
@@ -150,8 +151,8 @@ const serverFiles = {
                 !generator.skipDbChangelog &&
                 generator.fieldsContainTextBlob === true,
             path: SERVER_MAIN_RES_DIR,
-            templates: [{ file: 'config/liquibase/fake-data/blob/hipster.txt', useBluePrint: true, method: 'copy' }]
-        }
+            templates: [{ file: 'config/liquibase/fake-data/blob/hipster.txt', useBluePrint: true, method: 'copy' }],
+        },
     ],
     server: [
         {
@@ -160,19 +161,19 @@ const serverFiles = {
                 {
                     file: 'package/domain/Entity.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/domain/${generator.asEntity(generator.entityClass)}.java`
+                    renameTo: generator => `${generator.packageFolder}/domain/${generator.asEntity(generator.entityClass)}.java`,
                 },
                 {
                     file: 'package/repository/EntityRepository.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/repository/${generator.entityClass}Repository.java`
+                    renameTo: generator => `${generator.packageFolder}/repository/${generator.entityClass}Repository.java`,
                 },
                 {
                     file: 'package/web/rest/EntityResource.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/web/rest/${generator.entityClass}Resource.java`
-                }
-            ]
+                    renameTo: generator => `${generator.packageFolder}/web/rest/${generator.entityClass}Resource.java`,
+                },
+            ],
         },
         {
             condition: generator => generator.jpaMetamodelFiltering,
@@ -181,14 +182,14 @@ const serverFiles = {
                 {
                     file: 'package/service/dto/EntityCriteria.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/service/dto/${generator.entityClass}Criteria.java`
+                    renameTo: generator => `${generator.packageFolder}/service/dto/${generator.entityClass}Criteria.java`,
                 },
                 {
                     file: 'package/service/EntityQueryService.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/service/${generator.entityClass}QueryService.java`
-                }
-            ]
+                    renameTo: generator => `${generator.packageFolder}/service/${generator.entityClass}QueryService.java`,
+                },
+            ],
         },
         {
             condition: generator => generator.searchEngine === 'elasticsearch',
@@ -197,9 +198,9 @@ const serverFiles = {
                 {
                     file: 'package/repository/search/EntitySearchRepository.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/repository/search/${generator.entityClass}SearchRepository.java`
-                }
-            ]
+                    renameTo: generator => `${generator.packageFolder}/repository/search/${generator.entityClass}SearchRepository.java`,
+                },
+            ],
         },
         {
             condition: generator => generator.reactive && ['mongodb', 'cassandra', 'couchbase'].includes(generator.databaseType),
@@ -208,9 +209,9 @@ const serverFiles = {
                 {
                     file: 'package/repository/reactive/EntityReactiveRepository.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/repository/reactive/${generator.entityClass}ReactiveRepository.java`
-                }
-            ]
+                    renameTo: generator => `${generator.packageFolder}/repository/reactive/${generator.entityClass}ReactiveRepository.java`,
+                },
+            ],
         },
         {
             condition: generator => generator.service === 'serviceImpl',
@@ -219,14 +220,14 @@ const serverFiles = {
                 {
                     file: 'package/service/EntityService.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/service/${generator.entityClass}Service.java`
+                    renameTo: generator => `${generator.packageFolder}/service/${generator.entityClass}Service.java`,
                 },
                 {
                     file: 'package/service/impl/EntityServiceImpl.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/service/impl/${generator.entityClass}ServiceImpl.java`
-                }
-            ]
+                    renameTo: generator => `${generator.packageFolder}/service/impl/${generator.entityClass}ServiceImpl.java`,
+                },
+            ],
         },
         {
             condition: generator => generator.service === 'serviceClass',
@@ -235,9 +236,9 @@ const serverFiles = {
                 {
                     file: 'package/service/impl/EntityServiceImpl.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/service/${generator.entityClass}Service.java`
-                }
-            ]
+                    renameTo: generator => `${generator.packageFolder}/service/${generator.entityClass}Service.java`,
+                },
+            ],
         },
         {
             condition: generator => generator.dto === 'mapstruct',
@@ -246,20 +247,20 @@ const serverFiles = {
                 {
                     file: 'package/service/dto/EntityDTO.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/service/dto/${generator.asDto(generator.entityClass)}.java`
+                    renameTo: generator => `${generator.packageFolder}/service/dto/${generator.asDto(generator.entityClass)}.java`,
                 },
                 {
                     file: 'package/service/mapper/BaseEntityMapper.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/service/mapper/EntityMapper.java`
+                    renameTo: generator => `${generator.packageFolder}/service/mapper/EntityMapper.java`,
                 },
                 {
                     file: 'package/service/mapper/EntityMapper.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/service/mapper/${generator.entityClass}Mapper.java`
-                }
-            ]
-        }
+                    renameTo: generator => `${generator.packageFolder}/service/mapper/${generator.entityClass}Mapper.java`,
+                },
+            ],
+        },
     ],
     test: [
         {
@@ -275,13 +276,13 @@ const serverFiles = {
                             _,
                             chalkRed: chalk.red,
                             fs,
-                            SERVER_TEST_SRC_DIR
-                        }
+                            SERVER_TEST_SRC_DIR,
+                        },
                     },
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/web/rest/${generator.entityClass}ResourceIT.java`
-                }
-            ]
+                    renameTo: generator => `${generator.packageFolder}/web/rest/${generator.entityClass}ResourceIT.java`,
+                },
+            ],
         },
         {
             condition: generator => generator.searchEngine === 'elasticsearch',
@@ -291,9 +292,9 @@ const serverFiles = {
                     file: 'package/repository/search/EntitySearchRepositoryMockConfiguration.java',
                     useBluePrint: true,
                     renameTo: generator =>
-                        `${generator.packageFolder}/repository/search/${generator.entityClass}SearchRepositoryMockConfiguration.java`
-                }
-            ]
+                        `${generator.packageFolder}/repository/search/${generator.entityClass}SearchRepositoryMockConfiguration.java`,
+                },
+            ],
         },
         {
             condition: generator => generator.gatlingTests,
@@ -303,9 +304,9 @@ const serverFiles = {
                     file: 'gatling/user-files/simulations/EntityGatlingTest.scala',
                     options: { interpolate: INTERPOLATE_REGEX },
                     useBluePrint: true,
-                    renameTo: generator => `gatling/user-files/simulations/${generator.entityClass}GatlingTest.scala`
-                }
-            ]
+                    renameTo: generator => `gatling/user-files/simulations/${generator.entityClass}GatlingTest.scala`,
+                },
+            ],
         },
         {
             path: SERVER_TEST_SRC_DIR,
@@ -313,9 +314,9 @@ const serverFiles = {
                 {
                     file: 'package/domain/EntityTest.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/domain/${generator.entityClass}Test.java`
-                }
-            ]
+                    renameTo: generator => `${generator.packageFolder}/domain/${generator.entityClass}Test.java`,
+                },
+            ],
         },
         {
             condition: generator => generator.dto === 'mapstruct',
@@ -324,9 +325,9 @@ const serverFiles = {
                 {
                     file: 'package/service/dto/EntityDTOTest.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/service/dto/${generator.asDto(generator.entityClass)}Test.java`
-                }
-            ]
+                    renameTo: generator => `${generator.packageFolder}/service/dto/${generator.asDto(generator.entityClass)}Test.java`,
+                },
+            ],
         },
         {
             condition: generator =>
@@ -337,17 +338,17 @@ const serverFiles = {
                 {
                     file: 'package/service/mapper/EntityMapperTest.java',
                     useBluePrint: true,
-                    renameTo: generator => `${generator.packageFolder}/service/mapper/${generator.entityClass}MapperTest.java`
-                }
-            ]
-        }
-    ]
+                    renameTo: generator => `${generator.packageFolder}/service/mapper/${generator.entityClass}MapperTest.java`,
+                },
+            ],
+        },
+    ],
 };
 
 module.exports = {
     writeFiles,
     writeFilesToDisk,
-    serverFiles
+    serverFiles,
 };
 
 function writeFiles() {
@@ -417,7 +418,7 @@ function writeFiles() {
                     }
                 }
             });
-        }
+        },
     };
 }
 

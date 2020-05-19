@@ -15,18 +15,18 @@ describe('Subgenerator spring-service of micronaut JHipster blueprint', () => {
                     'from-cli': true,
                     skipInstall: true,
                     blueprint: 'micronaut',
-                    skipChecks: true
+                    skipChecks: true,
                 })
                 .withGenerators([
                     [
                         require('../generators/spring-service/index.js'), // eslint-disable-line global-require
                         'jhipster-micronaut:spring-service',
-                        path.join(__dirname, '../generators/spring-service/index.js')
-                    ]
+                        path.join(__dirname, '../generators/spring-service/index.js'),
+                    ],
                 ])
                 .withArguments(['foo'])
                 .withPrompts({
-                    useInterface: false
+                    useInterface: false,
                 })
                 .on('end', done);
         });

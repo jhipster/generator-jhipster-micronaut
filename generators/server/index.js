@@ -82,7 +82,7 @@ module.exports = class extends ServerGenerator {
                 // Make dist dir available in templates
                 this.BUILD_DIR = this.getBuildDirectoryForBuildTool(this.buildTool);
                 this.CLIENT_DIST_DIR = this.getResourceBuildDirectoryForBuildTool(this.configOptions.buildTool) + constants.CLIENT_DIST_DIR;
-            }
+            },
         };
     }
 
@@ -121,10 +121,10 @@ module.exports = class extends ServerGenerator {
                 }
                 this.log(
                     chalk.green(
-                        `Run your ${chalk.blue.bold('Micronaut')} application:\n${chalk.yellow.bold(`./${executable}`)}${logMsgComment}`
+                        `Run your ${chalk.blue.bold('Micronaut')} application:\n ${chalk.yellow.bold(`./${executable}`)}${logMsgComment}`
                     )
                 );
-            }
+            },
         };
     }
 };
