@@ -26,7 +26,7 @@ module.exports = class extends CommonGenerator {
             configureGlobal() {
                 // Application name modified, using each technology's conventions
                 this.dasherizedBaseName = _.kebabCase(this.baseName);
-            }
+            },
         };
         return Object.assign(phaseFromJHipster, jhipsterMicronautConfigPhaseSteps);
     }

@@ -20,7 +20,7 @@ const chalk = require('chalk');
 
 module.exports = {
     askForApplicationType,
-    askForTestOpts
+    askForTestOpts,
 };
 
 function askForApplicationType(meta) {
@@ -31,8 +31,8 @@ function askForApplicationType(meta) {
     const applicationTypeChoices = [
         {
             value: DEFAULT_APPTYPE,
-            name: 'Monolithic application (recommended for simple projects)'
-        }
+            name: 'Monolithic application (recommended for simple projects)',
+        },
     ];
 
     const PROMPT = {
@@ -40,7 +40,7 @@ function askForApplicationType(meta) {
         name: 'applicationType',
         message: `Which ${chalk.yellow('*type*')} of application would you like to create?`,
         choices: applicationTypeChoices,
-        default: DEFAULT_APPTYPE
+        default: DEFAULT_APPTYPE,
     };
 
     if (meta) return PROMPT; // eslint-disable-line consistent-return
@@ -71,7 +71,7 @@ function askForTestOpts(meta) {
         name: 'testFrameworks',
         message: 'Besides JUnit and Jest, which testing frameworks would you like to use?',
         choices,
-        default: defaultChoice
+        default: defaultChoice,
     };
 
     if (meta) return PROMPT; // eslint-disable-line consistent-return

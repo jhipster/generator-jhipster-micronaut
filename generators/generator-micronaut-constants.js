@@ -20,7 +20,7 @@
 const MICRONAUT_VERSION = '1.3.0';
 
 const constants = {
-    MICRONAUT_VERSION
+    MICRONAUT_VERSION,
 };
 
 module.exports = constants;

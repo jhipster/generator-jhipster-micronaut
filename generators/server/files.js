@@ -50,27 +50,27 @@ const serverFiles = {
                 'prometheus/prometheus.yml',
                 'grafana/provisioning/dashboards/dashboard.yml',
                 'grafana/provisioning/dashboards/JVM.json',
-                'grafana/provisioning/datasources/datasource.yml'
-            ]
+                'grafana/provisioning/datasources/datasource.yml',
+            ],
         },
         {
             path: DOCKER_DIR,
-            templates: [{ file: 'app.yml', useBluePrint: true }]
+            templates: [{ file: 'app.yml', useBluePrint: true }],
         },
         {
             condition: generator => generator.prodDatabaseType !== 'no' && generator.prodDatabaseType !== 'oracle',
             path: DOCKER_DIR,
-            templates: [{ file: generator => `${generator.prodDatabaseType}.yml`, useBluePrint: true }]
+            templates: [{ file: generator => `${generator.prodDatabaseType}.yml`, useBluePrint: true }],
         },
         {
             condition: generator => generator.prodDatabaseType === 'mongodb',
             path: DOCKER_DIR,
-            templates: ['mongodb-cluster.yml', 'mongodb/MongoDB.Dockerfile', 'mongodb/scripts/init_replicaset.js']
+            templates: ['mongodb-cluster.yml', 'mongodb/MongoDB.Dockerfile', 'mongodb/scripts/init_replicaset.js'],
         },
         {
             condition: generator => generator.prodDatabaseType === 'couchbase',
             path: DOCKER_DIR,
-            templates: ['couchbase-cluster.yml', 'couchbase/Couchbase.Dockerfile', 'couchbase/scripts/configure-node.sh']
+            templates: ['couchbase-cluster.yml', 'couchbase/Couchbase.Dockerfile', 'couchbase/scripts/configure-node.sh'],
         },
         {
             condition: generator => generator.prodDatabaseType === 'cassandra',
@@ -83,38 +83,38 @@ const serverFiles = {
                 'cassandra/Cassandra-Migration.Dockerfile',
                 // scripts
                 'cassandra/scripts/autoMigrate.sh',
-                'cassandra/scripts/execute-cql.sh'
-            ]
+                'cassandra/scripts/execute-cql.sh',
+            ],
         },
         {
             condition: generator => generator.cacheProvider === 'hazelcast',
             path: DOCKER_DIR,
-            templates: ['hazelcast-management-center.yml']
+            templates: ['hazelcast-management-center.yml'],
         },
         {
             condition: generator => generator.cacheProvider === 'memcached',
             path: DOCKER_DIR,
-            templates: ['memcached.yml']
+            templates: ['memcached.yml'],
         },
         {
             condition: generator => generator.cacheProvider === 'redis',
             path: DOCKER_DIR,
-            templates: ['redis.yml', 'redis-cluster.yml', 'redis/Redis-Cluster.Dockerfile', 'redis/connectRedisCluster.sh']
+            templates: ['redis.yml', 'redis-cluster.yml', 'redis/Redis-Cluster.Dockerfile', 'redis/connectRedisCluster.sh'],
         },
         {
             condition: generator => generator.searchEngine === 'elasticsearch',
             path: DOCKER_DIR,
-            templates: ['elasticsearch.yml']
+            templates: ['elasticsearch.yml'],
         },
         {
             condition: generator => generator.messageBroker === 'kafka',
             path: DOCKER_DIR,
-            templates: ['kafka.yml']
+            templates: ['kafka.yml'],
         },
         {
             condition: generator => !!generator.serviceDiscoveryType,
             path: DOCKER_DIR,
-            templates: [{ file: 'config/README.md', renameTo: () => 'central-server-config/README.md' }]
+            templates: [{ file: 'config/README.md', renameTo: () => 'central-server-config/README.md' }],
         },
         {
             condition: generator => generator.serviceDiscoveryType && generator.serviceDiscoveryType === 'consul',
@@ -122,8 +122,8 @@ const serverFiles = {
             templates: [
                 'consul.yml',
                 { file: 'config/git2consul.json', method: 'copy' },
-                { file: 'config/consul-config/application.yml', method: 'copy', renameTo: () => 'central-server-config/application.yml' }
-            ]
+                { file: 'config/consul-config/application.yml', method: 'copy', renameTo: () => 'central-server-config/application.yml' },
+            ],
         },
         {
             condition: generator => generator.serviceDiscoveryType && generator.serviceDiscoveryType === 'eureka',
@@ -133,19 +133,19 @@ const serverFiles = {
                 {
                     file: 'config/docker-config/application.yml',
                     method: 'copy',
-                    renameTo: () => 'central-server-config/docker-config/application.yml'
+                    renameTo: () => 'central-server-config/docker-config/application.yml',
                 },
                 {
                     file: 'config/localhost-config/application.yml',
                     method: 'copy',
-                    renameTo: () => 'central-server-config/localhost-config/application.yml'
-                }
-            ]
+                    renameTo: () => 'central-server-config/localhost-config/application.yml',
+                },
+            ],
         },
         {
             condition: generator => !!generator.enableSwaggerCodegen,
             path: DOCKER_DIR,
-            templates: ['swagger-editor.yml']
+            templates: ['swagger-editor.yml'],
         },
         {
             condition: generator => generator.authenticationType === 'oauth2' && generator.applicationType !== 'microservice',
@@ -153,9 +153,9 @@ const serverFiles = {
             templates: [
                 'keycloak.yml',
                 { file: 'config/realm-config/jhipster-realm.json', renameTo: () => 'realm-config/jhipster-realm.json' },
-                { file: 'config/realm-config/jhipster-users-0.json', method: 'copy', renameTo: () => 'realm-config/jhipster-users-0.json' }
-            ]
-        }
+                { file: 'config/realm-config/jhipster-users-0.json', method: 'copy', renameTo: () => 'realm-config/jhipster-users-0.json' },
+            ],
+        },
     ],
     serverResources: [
         {
@@ -166,19 +166,19 @@ const serverFiles = {
                     method: 'copy',
                     noEjs: true,
                     renameTo: () => 'banner.txt',
-                    useBluePrint: true
-                }
-            ]
+                    useBluePrint: true,
+                },
+            ],
         },
         {
             condition: generator => generator.devDatabaseType === 'h2Disk' || generator.devDatabaseType === 'h2Memory',
             path: SERVER_MAIN_RES_DIR,
-            templates: [{ file: 'h2.server.properties', renameTo: () => '.h2.server.properties' }]
+            templates: [{ file: 'h2.server.properties', renameTo: () => '.h2.server.properties' }],
         },
         {
             condition: generator => !!generator.enableSwaggerCodegen,
             path: SERVER_MAIN_RES_DIR,
-            templates: ['swagger/api.yml']
+            templates: ['swagger/api.yml'],
         },
         {
             path: SERVER_MAIN_RES_DIR,
@@ -186,7 +186,7 @@ const serverFiles = {
                 {
                     file: 'templates/error.html',
                     method: 'copy',
-                    renameTo: () => 'views/error.html'
+                    renameTo: () => 'views/error.html',
                 },
                 { file: 'logback.xml', useBluePrint: true },
                 { file: 'application.yml', useBluePrint: true },
@@ -194,8 +194,8 @@ const serverFiles = {
                 { file: 'application-test.yml', useBluePrint: true },
                 { file: 'application-tls.yml', useBluePrint: true },
                 { file: 'application-prod.yml', useBluePrint: true },
-                { file: 'i18n/messages.properties', useBluePrint: true, noEjs: true }
-            ]
+                { file: 'i18n/messages.properties', useBluePrint: true, noEjs: true },
+            ],
         },
         // Emails should be fine to import from base generator, no need for useBluePrint
         {
@@ -205,16 +205,16 @@ const serverFiles = {
                 { file: 'templates/mail/activationEmail.html', renameTo: () => 'views/mail/activationEmail.html' },
                 { file: 'templates/mail/creationEmail.html', renameTo: () => 'views/mail/creationEmail.html' },
                 { file: 'templates/mail/passwordResetEmail.html', renameTo: () => 'views/mail/passwordResetEmail.html' },
-                { file: 'views/mail/testEmail.html', useBluePrint: true, noEjs: true }
-            ]
+                { file: 'views/mail/testEmail.html', useBluePrint: true, noEjs: true },
+            ],
         },
         {
             condition: generator => !generator.skipUserManagement,
             path: SERVER_TEST_RES_DIR,
             templates: [
                 /* User management java test files */
-                'i18n/messages_en.properties'
-            ]
+                'i18n/messages_en.properties',
+            ],
         },
         {
             condition: generator => generator.databaseType === 'sql',
@@ -223,30 +223,30 @@ const serverFiles = {
                 {
                     file: 'config/liquibase/master.xml',
                     useBluePrint: true,
-                    noEjs: true
+                    noEjs: true,
                 },
                 {
                     file: 'config/liquibase/changelog/initial_schema.xml',
                     renameTo: () => 'config/liquibase/changelog/00000000000000_initial_schema.xml',
                     options: { interpolate: INTERPOLATE_REGEX },
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'config/liquibase/data/authority.csv',
                     useBluePrint: true,
-                    noEjs: true
+                    noEjs: true,
                 },
                 {
                     file: 'config/liquibase/data/user_authority.csv',
                     useBluePrint: true,
-                    noEjs: true
+                    noEjs: true,
                 },
                 {
                     file: 'config/liquibase/data/user.csv',
                     useBluePrint: true,
-                    noEjs: true
-                }
-            ]
+                    noEjs: true,
+                },
+            ],
         },
         {
             condition: generator =>
@@ -257,14 +257,14 @@ const serverFiles = {
                 {
                     file: 'package/config/dbmigrations/InitialSetupMigration.kt',
                     renameTo: generator => `${generator.javaDir}config/dbmigrations/InitialSetupMigration.kt`,
-                    useBluePrint: true
-                }
-            ]
+                    useBluePrint: true,
+                },
+            ],
         },
         {
             condition: generator => generator.databaseType === 'couchbase',
             path: SERVER_MAIN_RES_DIR,
-            templates: ['config/couchmove/changelog/V0__create_indexes.n1ql']
+            templates: ['config/couchmove/changelog/V0__create_indexes.n1ql'],
         },
         {
             condition: generator =>
@@ -276,8 +276,8 @@ const serverFiles = {
                 'config/couchmove/changelog/V0.1__initial_setup/user__admin.json',
                 'config/couchmove/changelog/V0.1__initial_setup/user__anonymoususer.json',
                 'config/couchmove/changelog/V0.1__initial_setup/user__system.json',
-                'config/couchmove/changelog/V0.1__initial_setup/user__user.json'
-            ]
+                'config/couchmove/changelog/V0.1__initial_setup/user__user.json',
+            ],
         },
         {
             condition: generator => generator.databaseType === 'cassandra',
@@ -286,8 +286,8 @@ const serverFiles = {
                 'config/cql/create-keyspace-prod.cql',
                 'config/cql/create-keyspace.cql',
                 'config/cql/drop-keyspace.cql',
-                { file: 'config/cql/changelog/README.md', method: 'copy' }
-            ]
+                { file: 'config/cql/changelog/README.md', method: 'copy' },
+            ],
         },
         {
             condition: generator =>
@@ -299,10 +299,10 @@ const serverFiles = {
                 { file: 'config/cql/changelog/create-tables.cql', renameTo: () => 'config/cql/changelog/00000000000000_create-tables.cql' },
                 {
                     file: 'config/cql/changelog/insert_default_users.cql',
-                    renameTo: () => 'config/cql/changelog/00000000000001_insert_default_users.cql'
-                }
-            ]
-        }
+                    renameTo: () => 'config/cql/changelog/00000000000001_insert_default_users.cql',
+                },
+            ],
+        },
     ],
     // TODO WIP Adding files in here, will need to properly conditional and remove some in the future
     serverJavaApp: [
@@ -312,10 +312,10 @@ const serverFiles = {
                 {
                     file: 'package/App.java',
                     renameTo: generator => `${generator.javaDir}${generator.mainClass}.java`,
-                    useBluePrint: true
-                }
-            ]
-        }
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     // I'm going to organize these by package, for lack of a better means of organizing right now
     serverJavaConfig: [
@@ -325,59 +325,59 @@ const serverFiles = {
                 {
                     file: 'package/config/ActiveProfilesInfoSource.java',
                     renameTo: generator => `${generator.javaDir}config/ActiveProfilesInfoSource.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/config/ApplicationProperties.java',
                     renameTo: generator => `${generator.javaDir}config/ApplicationProperties.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/config/Constants.java',
                     renameTo: generator => `${generator.javaDir}config/Constants.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/config/DefaultProfileUtil.java',
                     renameTo: generator => `${generator.javaDir}config/DefaultProfileUtil.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/config/JacksonConfiguration.java',
                     renameTo: generator => `${generator.javaDir}config/JacksonConfiguration.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/config/JHipsterConfigurationEndpoint.java',
                     renameTo: generator => `${generator.javaDir}config/JHipsterConfigurationEndpoint.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/config/LoggingConfiguration.java',
                     renameTo: generator => `${generator.javaDir}config/LoggingConfiguration.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/config/MessagesBundleMessageSource.java',
                     renameTo: generator => `${generator.javaDir}config/MessagesBundleMessageSource.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/config/package-info.java',
                     renameTo: generator => `${generator.javaDir}config/package-info.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/config/SnakeCasePhysicalNamingStrategy.java',
                     renameTo: generator => `${generator.javaDir}config/SnakeCasePhysicalNamingStrategy.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/config/metric/JHipsterMetricsEndpoint.java',
                     renameTo: generator => `${generator.javaDir}config/metric/JHipsterMetricsEndpoint.java`,
-                    useBluePrint: true
-                }
-            ]
+                    useBluePrint: true,
+                },
+            ],
         },
         {
             condition: generator =>
@@ -387,10 +387,10 @@ const serverFiles = {
                 {
                     file: 'package/config/CacheConfiguration.java',
                     renameTo: generator => `${generator.javaDir}config/CacheConfiguration.java`,
-                    useBluePrint: true
-                }
-            ]
-        }
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     serverJavaDomain: [
         {
@@ -399,20 +399,20 @@ const serverFiles = {
                 {
                     file: 'package/domain/Authority.java',
                     renameTo: generator => `${generator.javaDir}domain/Authority.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/domain/package-info.java',
                     renameTo: generator => `${generator.javaDir}domain/package-info.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/domain/User.java',
                     renameTo: generator => `${generator.javaDir}domain/User.java`,
-                    useBluePrint: true
-                }
-            ]
-        }
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     serverJavaRepository: [
         {
@@ -421,20 +421,20 @@ const serverFiles = {
                 {
                     file: 'package/repository/AuthorityRepository.java',
                     renameTo: generator => `${generator.javaDir}repository/AuthorityRepository.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/repository/package-info.java',
                     renameTo: generator => `${generator.javaDir}repository/package-info.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/repository/UserRepository.java',
                     renameTo: generator => `${generator.javaDir}repository/UserRepository.java`,
-                    useBluePrint: true
-                }
-            ]
-        }
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     serverJavaSecurity: [
         {
@@ -443,44 +443,44 @@ const serverFiles = {
                 {
                     file: 'package/security/AuthoritiesConstants.java',
                     renameTo: generator => `${generator.javaDir}security/AuthoritiesConstants.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/security/BcryptPasswordEncoder.java',
                     renameTo: generator => `${generator.javaDir}security/BcryptPasswordEncoder.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/security/DatabaseAuthenticationProvider.java',
                     renameTo: generator => `${generator.javaDir}security/DatabaseAuthenticationProvider.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/security/Logout.java',
                     renameTo: generator => `${generator.javaDir}security/Logout.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/security/NotAuthenticatedResponse.java',
                     renameTo: generator => `${generator.javaDir}security/NotAuthenticatedResponse.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/security/package-info.java',
                     renameTo: generator => `${generator.javaDir}security/package-info.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/security/SecurityUtils.java',
                     renameTo: generator => `${generator.javaDir}security/SecurityUtils.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/security/UserNotActivatedException.java',
                     renameTo: generator => `${generator.javaDir}security/UserNotActivatedException.java`,
-                    useBluePrint: true
-                }
-            ]
+                    useBluePrint: true,
+                },
+            ],
         },
         {
             condition: generator => generator.authenticationType === 'oauth2',
@@ -489,20 +489,20 @@ const serverFiles = {
                 {
                     file: 'package/security/ApiLogoutController.java',
                     renameTo: generator => `${generator.javaDir}security/ApiLogoutController.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/security/JHipsterOpenIdUserDetailsMapper.java',
                     renameTo: generator => `${generator.javaDir}security/JHipsterOpenIdUserDetailsMapper.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/security/KeycloakEndSessionEndpoint.java',
                     renameTo: generator => `${generator.javaDir}security/KeycloakEndSessionEndpoint.java`,
-                    useBluePrint: true
-                }
-            ]
-        }
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     serverJavaService: [
         {
@@ -511,55 +511,55 @@ const serverFiles = {
                 {
                     file: 'package/service/dto/package-info.java',
                     renameTo: generator => `${generator.javaDir}service/dto/package-info.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/service/dto/PasswordChangeDTO.java',
                     renameTo: generator => `${generator.javaDir}service/dto/PasswordChangeDTO.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/service/dto/UserDTO.java',
                     renameTo: generator => `${generator.javaDir}service/dto/UserDTO.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/service/mapper/package-info.java',
                     renameTo: generator => `${generator.javaDir}service/mapper/package-info.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/service/mapper/UserMapper.java',
                     renameTo: generator => `${generator.javaDir}service/mapper/UserMapper.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/service/util/RandomUtil.java',
                     renameTo: generator => `${generator.javaDir}service/util/RandomUtil.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/service/MailSenderFactory.java',
                     renameTo: generator => `${generator.javaDir}service/MailSenderFactory.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/service/MailService.java',
                     renameTo: generator => `${generator.javaDir}service/MailService.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/service/package-info.java',
                     renameTo: generator => `${generator.javaDir}service/package-info.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/service/UserService.java',
                     renameTo: generator => `${generator.javaDir}service/UserService.java`,
-                    useBluePrint: true
-                }
-            ]
-        }
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     serverJavaUtil: [
         {
@@ -568,20 +568,20 @@ const serverFiles = {
                 {
                     file: 'package/util/HeaderUtil.java',
                     renameTo: generator => `${generator.javaDir}util/HeaderUtil.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/util/JHipsterProperties.java',
                     renameTo: generator => `${generator.javaDir}util/JHipsterProperties.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/util/PaginationUtil.java',
                     renameTo: generator => `${generator.javaDir}util/PaginationUtil.java`,
-                    useBluePrint: true
-                }
-            ]
-        }
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     serverJavaRest: [
         {
@@ -591,113 +591,113 @@ const serverFiles = {
                 {
                     file: 'package/web/rest/errors/handlers/BadRequestAlertExceptionHandler.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/BadRequestAlertExceptionHandler.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/errors/handlers/ConstraintViolationExceptionHandler.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/ConstraintViolationExceptionHandler.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/errors/handlers/ProblemHandler.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/ProblemHandler.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/errors/handlers/ProblemRejectionHandler.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/ProblemRejectionHandler.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/errors/handlers/UnsatisfiedRouteExceptionHandler.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/UnsatisfiedRouteExceptionHandler.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 // Errors
                 {
                     file: 'package/web/rest/errors/BadRequestAlertException.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/BadRequestAlertException.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/errors/EmailAlreadyUsedException.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/EmailAlreadyUsedException.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/errors/EmailNotFoundException.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/EmailNotFoundException.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/errors/ErrorConstants.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/ErrorConstants.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/errors/FieldErrorVM.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/FieldErrorVM.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/errors/InvalidPasswordException.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/InvalidPasswordException.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/errors/LoginAlreadyUsedException.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/LoginAlreadyUsedException.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/errors/package-info.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/package-info.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 // VM
                 {
                     file: 'package/web/rest/vm/KeyAndPasswordVM.java',
                     renameTo: generator => `${generator.javaDir}web/rest/vm/KeyAndPasswordVM.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/vm/LoginVM.java',
                     renameTo: generator => `${generator.javaDir}web/rest/vm/LoginVM.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/vm/ManagedUserVM.java',
                     renameTo: generator => `${generator.javaDir}web/rest/vm/ManagedUserVM.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/vm/package-info.java',
                     renameTo: generator => `${generator.javaDir}web/rest/vm/package-info.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 // Base rest pkg
                 {
                     file: 'package/web/rest/AccountResource.java',
                     renameTo: generator => `${generator.javaDir}web/rest/AccountResource.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/ClientForwardController.java',
                     renameTo: generator => `${generator.javaDir}web/rest/ClientForwardController.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/package-info.java',
                     renameTo: generator => `${generator.javaDir}web/rest/package-info.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/UserResource.java',
                     renameTo: generator => `${generator.javaDir}web/rest/UserResource.java`,
-                    useBluePrint: true
-                }
-            ]
-        }
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     serverJavaConfigTest: [
         {
@@ -706,20 +706,20 @@ const serverFiles = {
                 {
                     file: 'package/config/timezone/HibernateTimeZoneIT.java',
                     renameTo: generator => `${generator.javaDir}config/timezone/HibernateTimeZoneIT.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/config/CorsController.java',
                     renameTo: generator => `${generator.javaDir}config/CorsController.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/config/CorsTest.java',
                     renameTo: generator => `${generator.javaDir}config/CorsTest.java`,
-                    useBluePrint: true
-                }
-            ]
-        }
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     serverJavaRepositoryTest: [
         {
@@ -728,15 +728,15 @@ const serverFiles = {
                 {
                     file: 'package/repository/timezone/DateTimeWrapper.java',
                     renameTo: generator => `${generator.javaDir}repository/timezone/DateTimeWrapper.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/repository/timezone/DateTimeWrapperRepository.java',
                     renameTo: generator => `${generator.javaDir}repository/timezone/DateTimeWrapperRepository.java`,
-                    useBluePrint: true
-                }
-            ]
-        }
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     serverJavaSecurityTest: [
         {
@@ -745,20 +745,20 @@ const serverFiles = {
                 {
                     file: 'package/security/jwt/JWTFilterTest.java',
                     renameTo: generator => `${generator.javaDir}security/jwt/JWTFilterTest.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/security/DomainUserDetailsServiceIT.java',
                     renameTo: generator => `${generator.javaDir}security/DomainUserDetailsServiceIT.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/security/SecurityUtilsUnitTest.java',
                     renameTo: generator => `${generator.javaDir}security/SecurityUtilsUnitTest.java`,
-                    useBluePrint: true
-                }
-            ]
-        }
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     serverJavaServiceTest: [
         {
@@ -767,20 +767,20 @@ const serverFiles = {
                 {
                     file: 'package/service/mapper/UserMapperIT.java',
                     renameTo: generator => `${generator.javaDir}service/mapper/UserMapperIT.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/service/MailServiceIT.java',
                     renameTo: generator => `${generator.javaDir}service/MailServiceIT.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/service/UserServiceIT.java',
                     renameTo: generator => `${generator.javaDir}service/UserServiceIT.java`,
-                    useBluePrint: true
-                }
-            ]
-        }
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     serverJavaRestTest: [
         {
@@ -789,49 +789,49 @@ const serverFiles = {
                 {
                     file: 'package/web/rest/errors/ExceptionTranslatorIT.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/ExceptionTranslatorIT.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/errors/ExceptionTranslatorTestController.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/ExceptionTranslatorTestController.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/errors/TestDTO.java',
                     renameTo: generator => `${generator.javaDir}web/rest/errors/TestDTO.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/AccountResourceIT.java',
                     renameTo: generator => `${generator.javaDir}web/rest/AccountResourceIT.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/ClientForwardControllerIT.java',
                     renameTo: generator => `${generator.javaDir}web/rest/ClientForwardControllerIT.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/TestUtil.java',
                     renameTo: generator => `${generator.javaDir}web/rest/TestUtil.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/UserJWTControllerIT.java',
                     renameTo: generator => `${generator.javaDir}web/rest/UserJWTControllerIT.java`,
-                    useBluePrint: true
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/web/rest/UserResourceIT.java',
                     renameTo: generator => `${generator.javaDir}web/rest/UserResourceIT.java`,
-                    useBluePrint: true
-                }
-            ]
-        }
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     serverBuild: [
         {
-            templates: [{ file: 'checkstyle.xml', options: { interpolate: INTERPOLATE_REGEX } }]
+            templates: [{ file: 'checkstyle.xml', options: { interpolate: INTERPOLATE_REGEX } }],
         },
         {
             condition: generator => generator.buildTool === 'gradle',
@@ -848,12 +848,12 @@ const serverFiles = {
                 { file: 'gradlew', method: 'copy', noEjs: true },
                 { file: 'gradlew.bat', method: 'copy', noEjs: true },
                 { file: 'gradle/wrapper/gradle-wrapper.jar', method: 'copy', noEjs: true },
-                'gradle/wrapper/gradle-wrapper.properties'
-            ]
+                'gradle/wrapper/gradle-wrapper.properties',
+            ],
         },
         {
             condition: generator => generator.buildTool === 'gradle' && !!generator.enableSwaggerCodegen,
-            templates: ['gradle/swagger.gradle']
+            templates: ['gradle/swagger.gradle'],
         },
         {
             condition: generator => generator.buildTool === 'maven',
@@ -863,10 +863,10 @@ const serverFiles = {
                 { file: '.mvn/wrapper/maven-wrapper.jar', method: 'copy', noEjs: true, useBluePrint: true },
                 { file: '.mvn/wrapper/maven-wrapper.properties', method: 'copy', noEjs: true, useBluePrint: true },
                 { file: '.mvn/wrapper/MavenWrapperDownloader.java', method: 'copy', noEjs: true, useBluePrint: true },
-                { file: 'pom.xml', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true }
-            ]
-        }
-    ]
+                { file: 'pom.xml', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
+            ],
+        },
+    ],
 };
 
 /* eslint-disable no-template-curly-in-string */
@@ -904,7 +904,7 @@ function writeFiles() {
             if (this.buildTool === 'maven') {
                 // Add Maven dependencies here
             }
-        }
+        },
     };
 }
 
@@ -981,5 +981,5 @@ function writeFilesToDisk(files, generator, returnFiles, prefix) {
 module.exports = {
     writeFiles,
     writeFilesToDisk,
-    serverFiles
+    serverFiles,
 };
