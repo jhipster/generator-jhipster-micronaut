@@ -4,7 +4,7 @@ const EntityGenerator = require('generator-jhipster/generators/entity');
 
 module.exports = class extends EntityGenerator {
     constructor(args, opts) {
-        super(args, Object.assign({ fromBlueprint: true }, opts)); // fromBlueprint variable is important
+        super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
 
         const jhContext = (this.jhipsterContext = this.options.jhipsterContext);
 
