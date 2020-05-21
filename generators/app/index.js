@@ -5,7 +5,7 @@ const AppGenerator = require('generator-jhipster/generators/app');
 
 const prompts = require('./prompts');
 const { version } = require('../../package.json');
-const { MICRONAUT_VERSION } = require('../generator-micronaut-constants');
+const MICRONAUT_VERSION = require('../constants').versions.micronaut;
 
 module.exports = class extends AppGenerator {
     // /**

@@ -23,6 +23,7 @@ const ServerGenerator = require('generator-jhipster/generators/server');
 const constants = require('generator-jhipster/generators/generator-constants');
 const writeFiles = require('./files').writeFiles;
 const prompts = require('./prompts');
+const MN_CONSTANTS = require('../constants');
 
 module.exports = class extends ServerGenerator {
     constructor(args, opts) {
@@ -48,8 +49,13 @@ module.exports = class extends ServerGenerator {
     }
 
     get initializing() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._initializing();
+        const initFromSuper = super._initializing();
+        return {
+            ...initFromSuper,
+            setupMnConstants() {
+                this.MN_CONSTANTS = MN_CONSTANTS;
+            },
+        };
     }
 
     get prompting() {

@@ -1,3 +1,6 @@
+<%_
+const { versions } = MN_CONSTANTS;
+_%>
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -11,10 +14,6 @@
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
-        <repository>
-            <id>oss-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </repository>
         <repository>
             <id>jcenter</id>
             <url>https://jcenter.bintray.com</url>
@@ -58,24 +57,21 @@
         <profile.tls />
 
         <!-- Dependency versions -->
-        <jhipster-dependencies.version>3.0.1</jhipster-dependencies.version>
-        <!-- The hibernate version should match the one managed by
-        https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
-        <hibernate.version>5.3.9.Final</hibernate.version>
+        <jhipster-dependencies.version><%= versions.jhipsterDeps %></jhipster-dependencies.version>
+        <micronaut.version><%= versions.micronaut %></micronaut.version>
+        <micronaut-data.version><%= versions.micronautData %></micronaut-data.version>
+        <hibernate.version><%= versions.hibernate %></hibernate.version>
         <!-- The javassist version should match the one managed by
         https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
-        <javassist.version>3.23.1-GA</javassist.version>
-        <!-- The liquibase version should match the one managed by
-        https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
-        <liquibase.version>3.6.3</liquibase.version>
-        <liquibase-hibernate5.version>3.6</liquibase-hibernate5.version>
-        <!-- The hibernate version to be used to override default version of liquibase maven plugin -->
-        <hibernate-core.version>5.4.3.Final</hibernate-core.version>
-        <micronaut.version>1.3.4</micronaut.version>
-        <micronaut-data.version>1.0.2</micronaut-data.version>
-        <validation-api.version>2.0.1.Final</validation-api.version>
-        <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
-        <mapstruct.version>1.3.0.Final</mapstruct.version>
+        <javassist.version><%= versions.javassist %></javassist.version>
+        <javax-mail.version><%= versions.javaxMail %></javax-mail.version>
+        <jbcrypt.version><%= versions.jbcrypt %></jbcrypt.version>
+        <liquibase.version><%= versions.liquibase %></liquibase.version>
+        <liquibase-hibernate5.version><%= versions.liquibaseHibernate5 %></liquibase-hibernate5.version>
+        <logback.version><%= versions.logback %></logback.version>
+        <mapstruct.version><%= versions.mapstruct %></mapstruct.version>
+        <mockito.version><%= versions.mockito %></mockito.version>
+        <problem.version><%= versions.problem %></problem.version>
 
         <!-- Plugin versions -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
@@ -193,7 +189,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <version>${logback.version}</version>
         </dependency>
 <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached'].includes(cacheProvider)) { _%>
         <dependency>
@@ -208,25 +204,11 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.4.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.4.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-commons</artifactId>
-            <version>1.4.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-engine</artifactId>
-            <version>1.4.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -243,7 +225,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jcache</artifactId>
-            <version>5.4.3.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
     <%_ } _%>
 <%_ } _%>
@@ -251,17 +233,17 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
             <scope>provided</scope>
-            <version>5.4.3.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.4.3.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-envers</artifactId>
-            <version>5.4.3.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -324,7 +306,7 @@
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
-            <version>0.4</version>
+            <version>${jbcrypt.version}</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.configuration</groupId>
@@ -350,13 +332,11 @@
         <dependency>
             <groupId>io.micronaut.configuration</groupId>
             <artifactId>micronaut-micrometer-core</artifactId>
-            <version>1.2.0.BUILD-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.micronaut.configuration</groupId>
             <artifactId>micronaut-micrometer-registry-prometheus</artifactId>
-            <version>1.2.0.BUILD-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -374,12 +354,11 @@
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-views-thymeleaf</artifactId>
-            <version>1.3.1</version>
         </dependency>
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
-            <version>1.6.2</version>
+            <version>${javax-mail.version}</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.test</groupId>
@@ -389,30 +368,29 @@
         <dependency>
             <groupId>org.zalando</groupId>
             <artifactId>problem</artifactId>
-            <version>0.22.0</version>
+            <version>${problem.version}</version>
         </dependency>
         <dependency>
             <groupId>org.zalando</groupId>
             <artifactId>jackson-datatype-problem</artifactId>
-            <version>0.22.0</version>
+            <version>${problem.version}</version>
         </dependency>
         <dependency>
             <groupId>org.zalando</groupId>
             <artifactId>problem-violations</artifactId>
-            <version>0.24.0</version>
+            <version>${problem.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.0.0</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
-            <version>1.6.2</version>
+            <version>${javax-mail.version}</version>
         </dependency>
-        <!-- Spring Cloud -->
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
@@ -445,7 +423,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven-shade-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -483,11 +461,6 @@
                             <groupId>org.hibernate</groupId>
                             <artifactId>hibernate-jpamodelgen</artifactId>
                             <version>${hibernate.version}</version>
-                        </path>
-                        <path>
-                            <groupId>org.glassfish.jaxb</groupId>
-                            <artifactId>jaxb-runtime</artifactId>
-                            <version>${jaxb-runtime.version}</version>
                         </path>
                         <path>
                             <groupId>io.micronaut</groupId>
@@ -750,7 +723,7 @@
                         <dependency>
                             <groupId>org.hibernate</groupId>
                             <artifactId>hibernate-core</artifactId>
-                            <version>${hibernate-core.version}</version>
+                            <version>${hibernate.version}</version>
                         </dependency>
                         <dependency>
                             <groupId>org.javassist</groupId>
@@ -878,8 +851,6 @@
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-failsafe-plugin.version}</version>
                     <configuration>
-                        <!-- Due to spring-boot repackage, without adding this property test classes are not found
-                             See https://github.com/spring-projects/spring-boot/issues/6254 -->
                         <classesDirectory>${project.build.outputDirectory}</classesDirectory>
                         <!-- Force alphabetical order to have a reproducible build -->
                         <runOrder>alphabetical</runOrder>
@@ -1024,7 +995,6 @@
                 </dependency>
             </dependencies>
             <properties>
-                <!-- default Spring profiles -->
                 <profiles.active>dev${profile.tls}${profile.no-liquibase}</profiles.active>
             </properties>
         </profile>
@@ -1148,7 +1118,6 @@
 
             </dependencies>
             <properties>
-                <!-- default Spring profiles -->
                 <profiles.active>prod${profile.swagger}${profile.no-liquibase}</profiles.active>
             </properties>
         </profile>
