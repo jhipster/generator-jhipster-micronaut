@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-const MICRONAUT_VERSION = '1.3.0';
+const MICRONAUT_VERSION = '1.3.4';
 
 const constants = {
     MICRONAUT_VERSION,
