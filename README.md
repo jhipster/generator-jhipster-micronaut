@@ -1,4 +1,4 @@
-> ## 🛠 In active development
+> ## 🛠 Blueprint In Active Development
 > This project is a *PREVIEW* of a [Micronaut](https://micronaut.io) blueprint for [JHipster](https://jhipster.tech).
 > While we are working to create a complete experience, there are likely some gaps.
 > Please [let us know](https://github.com/jhipster/generator-jhipster-micronaut/issues) if you encounter issues.
