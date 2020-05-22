@@ -291,7 +291,7 @@ function askForServerSideOpts(meta) {
             this.rememberMeKey = getRandomHex();
         }
 
-        if (this.authenticationType === 'jwt' || this.applicationType === 'microservice') {
+        if (this.authenticationType === 'jwt' || this.applicationType === 'microservice' || this.authenticationType === 'oauth2') {
             this.jwtSecretKey = getBase64Secret(null, 64);
         }
 
