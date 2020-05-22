@@ -9,7 +9,9 @@
 # More information on JHipster configuration properties:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
-
+<%_
+const { sqlDbDrivers } = MN_CONSTANTS;
+_%>
 logging:
   level:
     ROOT: INFO
@@ -21,22 +23,31 @@ management:
     export:
       prometheus:
         enabled: false
+
+<%_ if (databaseType === 'sql') { _%>
+<%_
+    const dbUrlConfig = {
+      databaseName: baseName,
+      hostname: 'localhost'
+    };
+
+    let dbUser = 'root';
+    let dbPass = '';
+
+    if (prodDatabaseType === 'postgresql') {
+      dbUser = baseName;
+    }
+
+    const dbUrl = getJDBCUrl(prodDatabaseType, dbUrlConfig);
+
+_%>
 datasources:
   default:
     type: com.zaxxer.hikari.HikariDataSource
-<%_
-    if (prodDatabaseType === 'mysql') { _%>
-    url: "${JDBC_URL:`jdbc:mysql://localhost:3306/<%= baseName %>?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true`}"
-    driverClassName: ${JDBC_DRIVER:com.mysql.jdbc.Driver}
-<%_ } else if (prodDatabaseType === 'postgresql') { _%>
-    url: "${JDBC_URL:`jdbc:postgresql://localhost:5432/<%= baseName %>`}"
-    driverClassName: ${JDBC_DRIVER:org.postgresql.Driver}
-<%_ } else { _%>
-    url: "${JDBC_URL:`jdbc:h2:mem:<%= baseName %>;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE`}"
-    driverClassName: ${JDBC_DRIVER:org.h2.Driver}
-<%_ } _%>
-    username: ${JDBC_USER:<%= baseName %>}
-    password: ${JDBC_PASSWORD:""}
+    url: "<%-dbUrl%>"
+    username: "<%=dbUser%>"
+    password: "<%=dbPass%>"
+    driverClassName: "<%=sqlDbDrivers[prodDatabaseType]%>"
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -46,6 +57,7 @@ datasources:
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
+<%_ } _%>
 ---
 jpa:
   default:
