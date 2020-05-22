@@ -47,9 +47,6 @@ import <%= packageName %>.RedisTestContainerExtension;
 <%_ if (authenticationType === 'uaa') { _%>
 import <%= packageName %>.config.SecurityBeanOverrideConfiguration;
 <%_ } _%>
-<%_ if (authenticationType === 'oauth2') { _%>
-import <%= packageName %>.config.TestSecurityConfiguration;
-<%_ } _%>
 import <%= packageName %>.domain.<%= asEntity(entityClass) %>;
 <%_
     var imported = [];
@@ -363,7 +360,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     <%_ } else { _%>
         <%= asEntity(otherEntityNameCapitalized) %> <%= otherEntityName %>;
         <%_ if (databaseType === 'sql') { _%>
-        
+
         <%_ } else { _%>
         <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.createEntity());
         <%_ } _%>
@@ -466,7 +463,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
 
 <%- include('../../common/validate_entity_fields_template', {isUpdate: false}); -%>
     }
-    
+
     @Test
     public void get<%= entityClass %>() throws Exception {
         // Initialize the database
@@ -489,7 +486,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.NOT_FOUND.getCode());
     }
-    
+
 <%_ if (!readOnly) { _%>
     @Test
     public void update<%= entityClass %>() throws Exception {
