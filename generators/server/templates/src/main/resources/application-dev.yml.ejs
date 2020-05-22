@@ -9,13 +9,40 @@
 # More information on JHipster configuration properties:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
+<%_
+const { sqlDbDrivers } = MN_CONSTANTS;
+_%>
+<%_ if (databaseType === 'sql') { _%>
+<%_
+  const dbUrlConfig = {
+    databaseName: baseName,
+    hostname: 'localhost'
+  };
 
+  let dbUser = 'root';
+  let dbPass = '';
+
+  if (devDatabaseType === 'postgresql') {
+    dbUser = baseName;
+  }
+
+  if (devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') {
+    dbUser = baseName;
+    dbUrlConfig.databaseName = lowercaseBaseName;
+    if (devDatabaseType === 'h2Disk') {
+      dbUrlConfig.localDirectory = `./${BUILD_DIR}h2db/db`;
+    }
+  }
+
+  const dbUrl = getJDBCUrl(devDatabaseType, dbUrlConfig);
+
+_%>
 datasources:
   default:
-    url: ${JDBC_URL:`jdbc:h2:mem:<%= lowercaseBaseName %>;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE`}
-    username: ${JDBC_USER:<%= baseName %>}
-    password: ${JDBC_PASSWORD:""}
-    driverClassName: ${JDBC_DRIVER:org.h2.Driver}
+    url: "<%-dbUrl%>"
+    username: "<%=dbUser%>"
+    password: "<%=dbPass%>"
+    driverClassName: "<%=sqlDbDrivers[devDatabaseType]%>"
     poolName: Hikari
     autoCommit: false
 
@@ -51,6 +78,7 @@ jpa:
 <%_ } _%>
           use_query_cache: false
         generate_statistics: false
+<%_ } _%>
 
 logging:
   level:

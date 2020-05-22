@@ -18,6 +18,12 @@
  */
 
 module.exports = {
+    sqlDbDrivers: {
+        h2Disk: 'org.h2.Driver',
+        h2Memory: 'org.h2.Driver',
+        mysql: 'com.mysql.jdbc.Driver',
+        postgresql: 'org.postgresql.Driver',
+    },
     versions: {
         micronaut: '1.3.4',
         micronautData: '1.0.2',

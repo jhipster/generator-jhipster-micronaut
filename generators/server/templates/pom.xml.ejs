@@ -197,10 +197,20 @@ _%>
             <artifactId>cache-api</artifactId>
         </dependency>
 <%_ } _%>
+<%_
+if (devDatabaseType === 'mysql' || prodDatabaseType === 'mysql') { _%>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+<%_ } _%>
+<%_
+if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+<%_ } _%>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -989,10 +999,25 @@ _%>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <dependencies>
+                <%_
+                if (devDatabaseType === 'mysql') { _%>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                </dependency>
+                <%_ } _%>
+                <%_
+                if (devDatabaseType === 'postgresql') { _%>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                </dependency>
+                <%_ } else { _%>
                 <dependency>
                     <groupId>com.h2database</groupId>
                     <artifactId>h2</artifactId>
                 </dependency>
+                <%_ } _%>
             </dependencies>
             <properties>
                 <profiles.active>dev${profile.tls}${profile.no-liquibase}</profiles.active>
