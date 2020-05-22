@@ -8,13 +8,21 @@ datasources:
 
 jpa:
   default:
-    packages-to-scan: 
+    packages-to-scan:
       - <%=packageName%>.domain
       - <%=packageName%>.repository
     properties:
       hibernate:
         hbm2ddl:
             auto: create-drop
+
+micronaut:
+  security:
+    enabled: true
+<%_ if (authenticationType === 'oauth2') { _%>
+    oauth2:
+      enabled: false
+<%_ } _%>
 
 jhipster:
   clientApp:
@@ -31,13 +39,6 @@ jhipster:
   mail:
     from: test@localhost
     base-url: http://127.0.0.1:8080
-  security:
-    authentication:
-      jwt:
-        # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-        base64-secret: <%= jwtSecretKey %>
-        # Token is valid 24 hours
-        token-validity-in-seconds: 86400
   metrics:
     logs: # Reports metrics in the logs
       enabled: true
