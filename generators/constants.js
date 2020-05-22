@@ -17,10 +17,21 @@
  * limitations under the License.
  */
 
-const MICRONAUT_VERSION = '1.3.4';
+module.exports = {
+    versions: {
+        micronaut: '1.3.4',
+        micronautData: '1.0.2',
 
-const constants = {
-    MICRONAUT_VERSION,
+        hibernate: '5.4.10.Final',
+        javassist: '3.24.0-GA', // Should match Hibernate deps
+        javaxMail: '1.6.2',
+        jbcrypt: '0.4',
+        jhipsterDeps: '3.4.0',
+        liquibase: '3.6.3',
+        liquibaseHibernate5: '3.6',
+        logback: '1.2.3',
+        mapstruct: '1.3.1.Final',
+        mockito: '3.0.0',
+        problem: '0.24.0',
+    },
 };
-
-module.exports = constants;

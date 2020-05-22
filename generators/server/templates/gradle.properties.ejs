@@ -1,3 +1,6 @@
+<%_
+const { versions } = MN_CONSTANTS;
+_%>
 <%#
  Copyright 2013-2020 the original author or authors from the JHipster project.
 
@@ -25,14 +28,19 @@ npm_version=<%= NPM_VERSION %>
 yarn_version=<%= YARN_VERSION %>
 
 # Dependency versions
-jhipster_dependencies_version=3.4.0
-micronaut_version=1.3.4
-micronaut_data_version=1.0.2
+jhipster_dependencies_version=<%=versions.jhipsterDeps%>
+micronaut_version=<%=versions.micronaut%>
+micronaut_data_version=<%=versions.micronautData%>
 # The hibernate version should match the one managed by Micronaut data
 # https://mvnrepository.com/artifact/io.micronaut.data/micronaut-data-hibernate-jpa/1.0.1
-hibernate_version=5.4.12.Final
-mapstruct_version=1.3.1.Final
+hibernate_version=<%=versions.hibernate%>
+mapstruct_version=<%=versions.mapstruct%>
 archunit_junit5_version=0.13.1
+logback_version=<%=versions.logback%>
+mockito_version=<%=versions.mockito%>
+jbcrypt_version=<%=versions.jbcrypt%>
+javax_mail_version=<%=versions.javaxMail%>
+problem_version=<%=versions.problem%>
 <%_ if (searchEngine === 'elasticsearch') { _%>
 log4j2_mock_version=0.0.2
 <%_ } _%>
@@ -44,7 +52,7 @@ caffeine_version=2.8.1
 typesafe_config_version=1.4.0
 <%_ } _%>
 
-liquibase_hibernate5_version=3.6
+liquibase_hibernate5_version=<%=versions.liquibaseHibernate5%>
 liquibaseTaskPrefix=liquibase
 
 <%_ if (databaseType === 'sql' || authenticationType === 'uaa') { _%>
