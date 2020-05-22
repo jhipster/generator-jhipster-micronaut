@@ -233,7 +233,6 @@ repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     //jhipster-needle-gradle-repositories - JHipster will add additional repositories
 }
 
@@ -263,7 +262,7 @@ dependencies {
         exclude group: "org.springframework.boot", module: "spring-boot-starter-web"
     }
     implementation "javax.annotation:javax.annotation-api"
-    implementation "ch.qos.logback:logback-classic:1.2.3"
+    implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.dropwizard.metrics:metrics-core"
     implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "net.logstash.logback:logstash-logback-encoder"
@@ -361,26 +360,25 @@ dependencies {
 <%_ } _%>
     implementation "io.micronaut:micronaut-views-thymeleaf"
 
-    implementation "org.mindrot:jbcrypt:0.4"
+    implementation "org.mindrot:jbcrypt:$jbcrypt_version"
 
     implementation "io.micronaut.configuration:micronaut-liquibase"
     implementation "io.micronaut.configuration:micronaut-jdbc-hikari"
     implementation "io.micronaut.configuration:micronaut-jmx"
-    implementation "io.micronaut.configuration:micronaut-micrometer-core" //1.2.0.BUILD-SNAPSHOT
-    implementation "io.micronaut.configuration:micronaut-micrometer-registry-prometheus" //1.2.0.BUILD-SNAPSHOT
+    implementation "io.micronaut.configuration:micronaut-micrometer-core"
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-prometheus"
     implementation "io.micronaut.data:micronaut-data-hibernate-jpa:$micronaut_data_version"
     implementation "io.micronaut.data:micronaut-data-jdbc:$micronaut_data_version"
 
-    implementation "javax.mail:javax.mail-api:1.6.2"
-    implementation "com.sun.mail:javax.mail:1.6.2"
-    implementation "org.zalando:problem:0.24.0"
-    implementation "org.zalando:problem-violations:0.24.0"
-    implementation "org.zalando:jackson-datatype-problem:0.24.0"
+    implementation "javax.mail:javax.mail-api:$javax_mail_version"
+    implementation "com.sun.mail:javax.mail:$javax_mail_version"
+    implementation "org.zalando:problem:$problem_version"
+    implementation "org.zalando:problem-violations:$problem_version"
+    implementation "org.zalando:jackson-datatype-problem:$problem_version"
     <%_ if (searchEngine === 'elasticsearch') { _%>
 
     // log4j2-mock needed to create embedded elasticsearch instance with SLF4J
-    runtimeOnly "de.dentrassi.elasticsearch:log4j2-mock:${log4j2_mock_version}"
-    // end of Spring Data Jest dependencies
+    runtimeOnly "de.dentrassi.elasticsearch:log4j2-mock:$log4j2_mock_version"
     <%_ } _%>
     <%_ if (['mongodb', 'cassandra', 'couchbase'].includes(databaseType)) { _%>
 
@@ -430,16 +428,13 @@ dependencies {
 
     <%_ } _%>
 
-    <%_ if (websocket === 'spring-websocket') { _%>
-
-    <%_ } _%>
     <%_ if (authenticationType === 'oauth2') { _%>
 
     <%_ } _%>
 
     <%_ if (authenticationType === 'uaa') { _%>
 
-    <% if (databaseType === 'sql') { %>implementation<% } else { %>runtimeOnly<% } %> "org.glassfish.jaxb:jaxb-runtime:${jaxb_runtime_version}"
+    <% if (databaseType === 'sql') { %>implementation<% } else { %>runtimeOnly<% } %> "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
     <%_ } _%>
     <%_ if (databaseType === 'mongodb') { _%>
     implementation "com.github.mongobee:mongobee"
@@ -474,26 +469,24 @@ dependencies {
     liquibaseRuntime "com.github.sabomichal:liquibase-mssql"
     <%_ } _%>
     implementation "org.mapstruct:mapstruct:${mapstruct_version}"
-    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstruct_version}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstruct_version"
     <%_ if (databaseType === 'sql') { _%>
-    annotationProcessor "org.hibernate:hibernate-jpamodelgen:${hibernate_version}"
-    annotationProcessor "org.glassfish.jaxb:jaxb-runtime:${jaxb_runtime_version}"
+    annotationProcessor "org.hibernate:hibernate-jpamodelgen:$hibernate_version"
+    annotationProcessor "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
     <%_ } _%>
 
     // Micronaut test deps
     testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronaut_version")
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testAnnotationProcessor "io.micronaut.data:micronaut-data-processor:$micronaut_data_version"
-    testAnnotationProcessor "org.glassfish.jaxb:jaxb-runtime:${jaxb_runtime_version}"
+    testAnnotationProcessor "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
     testImplementation platform("io.micronaut:micronaut-bom:$micronaut_version")
     testImplementation "io.micronaut.test:micronaut-test-junit5"
 
-    testImplementation "org.junit.jupiter:junit-jupiter-engine:5.4.0"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.4.0"
-    testImplementation "org.junit.platform:junit-platform-commons:1.4.0"
-    testImplementation "org.junit.platform:junit-platform-engine:1.4.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine"
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
     testImplementation "org.assertj:assertj-core"
-    testImplementation "org.mockito:mockito-core:3.0.0"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
 
     testImplementation "com.tngtech.archunit:archunit-junit5-api:${archunit_junit5_version}"
     testRuntimeOnly "com.tngtech.archunit:archunit-junit5-engine:${archunit_junit5_version}"
