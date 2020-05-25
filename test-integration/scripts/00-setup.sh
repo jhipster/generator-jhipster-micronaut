@@ -2,7 +2,7 @@
 
 set -ex
 
-echo "Creating output folder"
+echo "Creating output folder..."
 
 mkdir -p sample-output
 

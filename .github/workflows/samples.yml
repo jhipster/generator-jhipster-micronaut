@@ -37,8 +37,10 @@ jobs:
                 os: [ubuntu-latest]
                 app-type:
                     - just-maven
+                    - just-gradle
                 include:
                     - app-type: just-maven
+                    - app-type: just-gradle
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
