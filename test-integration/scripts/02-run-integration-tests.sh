@@ -2,8 +2,16 @@
 
 set -ex
 
-echo "Running integration tests for $1..."
-
 cd ./sample-output/$1
+buildTool=`cat .yo-rc.json | jq -r '.["generator-jhipster"]'.buildTool`
 
-./mvnw clean integration-test
+echo "Running $buildToold integration tests for $1..."
+
+if [ "$buildTool" == "maven" ]; then
+    ./mvnw clean integration-test
+else
+    ./gradlew clean test integrationTest
+fi
+
+
+
