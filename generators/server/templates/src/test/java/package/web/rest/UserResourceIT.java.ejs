@@ -109,6 +109,11 @@ public class UserResourceIT {
             }
     }
 
+    @AfterAll
+    public void cleanupTest() {
+        userRepository.deleteAll();
+    }
+
     @BeforeEach
     public void setup() {
         cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).invalidateAll();
