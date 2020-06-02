@@ -19,6 +19,8 @@
 
 name: Verify Sample Projects
 on: [push, pull_request]
+env:
+    JHI_E2E_HEADLESS: true
 jobs:
     generator-jhipster-micronaut:
         name: verify samples
@@ -29,18 +31,16 @@ jobs:
             !contains(github.event.pull_request.title, '[skip ci]') &&
             !contains(github.event.pull_request.title, '[ci skip]') &&
             (github.event.pull_request.draft == false || !contains(github.event.pull_request.labels.*.name, 'pr: skip-ci'))
-        timeout-minutes: 20
+        timeout-minutes: 30
         strategy:
             fail-fast: false
             matrix:
                 node_version: [12.16.1]
                 os: [ubuntu-latest]
                 app-type:
-                    - just-maven
-                    - just-gradle
+                    - gradle-jwt-react
                 include:
-                    - app-type: just-maven
-                    - app-type: just-gradle
+                    - app-type: gradle-jwt-react
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
@@ -55,5 +55,17 @@ jobs:
               run: ./test-integration/scripts/00-setup.sh
             - name: 'Generate Project'
               run: ./test-integration/scripts/01-generate-project.sh ${{ matrix.app-type }}
-            - name: 'Run Integration Tests'
-              run: ./test-integration/scripts/02-run-integration-tests.sh ${{ matrix.app-type }}
+            - name: 'Apply Fixes'
+              run: ./test-integration/scripts/02-apply-fixes.sh ${{ matrix.app-type }}
+            - name: 'Start Dependency Containers'
+              run: ./test-integration/scripts/03-dep-containers.sh ${{ matrix.app-type }}
+            - name: 'Run Server Tests'
+              run: ./test-integration/scripts/04-server-tests.sh ${{ matrix.app-type }}
+            - name: 'Run Client Tests'
+              run: ./test-integration/scripts/05-client-tests.sh ${{ matrix.app-type }}
+            - name: 'Build App'
+              run: ./test-integration/scripts/06-build-app.sh ${{ matrix.app-type }}
+            - name: 'Start App'
+              run: ./test-integration/scripts/07-start-app.sh ${{ matrix.app-type }}
+            - name: 'E2E Tests'
+              run: ./test-integration/scripts/08-e2e-tests.sh ${{ matrix.app-type }}
