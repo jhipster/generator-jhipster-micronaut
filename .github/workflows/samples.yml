@@ -39,8 +39,10 @@ jobs:
                 os: [ubuntu-latest]
                 app-type:
                     - gradle-jwt-react
+                    - mvn-no-client
                 include:
                     - app-type: gradle-jwt-react
+                    - app-type: mvn-no-client
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
