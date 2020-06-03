@@ -1,9 +1,0 @@
-${AnsiColor.BRIGHT_BLUE}███╗   ███╗${AnsiColor.GREEN}██╗  ██╗██╗██████╗ ███████╗████████╗███████╗██████╗ 
-${AnsiColor.BRIGHT_BLUE}████╗ ████║${AnsiColor.GREEN}██║  ██║██║██╔══██╗██╔════╝╚══██╔══╝██╔════╝██╔══██╗
-${AnsiColor.BRIGHT_BLUE}██╔████╔██║${AnsiColor.GREEN}███████║██║██████╔╝███████╗   ██║   █████╗  ██████╔╝
-${AnsiColor.BRIGHT_BLUE}██║╚██╔╝██║${AnsiColor.GREEN}██╔══██║██║██╔═══╝ ╚════██║   ██║   ██╔══╝  ██╔══██╗
-${AnsiColor.BRIGHT_BLUE}██║ ╚═╝ ██║${AnsiColor.GREEN}██║  ██║██║██║     ███████║   ██║   ███████╗██║  ██║
-${AnsiColor.BRIGHT_BLUE}╚═╝     ╚═╝${AnsiColor.GREEN}╚═╝  ╚═╝╚═╝╚═╝     ╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
-                                                               
-${AnsiColor.BRIGHT_BLUE}:: JHipster 🤓  :: Running Micronaut version 1.3.0
-:: http://www.jhipster.tech ::${AnsiColor.DEFAULT}

@@ -159,18 +159,6 @@ const serverFiles = {
     ],
     serverResources: [
         {
-            path: SERVER_MAIN_RES_DIR,
-            templates: [
-                {
-                    file: 'banner.txt',
-                    method: 'copy',
-                    noEjs: true,
-                    renameTo: () => 'banner.txt',
-                    useBluePrint: true,
-                },
-            ],
-        },
-        {
             condition: generator => generator.devDatabaseType === 'h2Disk' || generator.devDatabaseType === 'h2Memory',
             path: SERVER_MAIN_RES_DIR,
             templates: [{ file: 'h2.server.properties', renameTo: () => '.h2.server.properties' }],
