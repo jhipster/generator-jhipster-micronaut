@@ -28,12 +28,11 @@
   },
   "dependencies": {
     "chalk": "4.0.0",
-    "cheerio": "1.0.0-rc.2",
     "commander": "4.1.1",
     "didyoumean": "1.2.1",
     "ejs": "3.1.2",
     "faker": "4.1.0",
-    "generator-jhipster": "6.9.0",
+    "generator-jhipster": "6.9.1",
     "glob": "7.1.6",
     "insight": "0.10.3",
     "js-yaml": "3.13.1",
