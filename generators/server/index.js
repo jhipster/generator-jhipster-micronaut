@@ -21,6 +21,7 @@ const chalk = require('chalk');
 const os = require('os');
 const ServerGenerator = require('generator-jhipster/generators/server');
 const constants = require('generator-jhipster/generators/generator-constants');
+const { getBase64Secret } = require('generator-jhipster/generators/utils');
 const writeFiles = require('./files').writeFiles;
 const prompts = require('./prompts');
 const MN_CONSTANTS = require('../constants');
@@ -98,8 +99,19 @@ module.exports = class extends ServerGenerator {
     }
 
     get default() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._default();
+        const defaultFromSuper = super._default();
+
+        return {
+            ...defaultFromSuper,
+            verifyJwtConfig() {
+                if (
+                    (!this.jwtSecretKey && !this.configOptions.jwtSecretKey && this.authenticationType === 'jwt') ||
+                    this.authenticationType === 'oauth2'
+                ) {
+                    this.jwtSecretKey = getBase64Secret(null, 64);
+                }
+            },
+        };
     }
 
     get writing() {
