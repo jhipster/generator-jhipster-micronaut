@@ -3,12 +3,27 @@
 > While we are working to create a complete experience, there are likely some gaps.
 > Please [let us know](https://github.com/jhipster/generator-jhipster-micronaut/issues) if you encounter issues.
 >
-> Currently you need to follow the directions in the [contributing guide](https://github.com/jhipster/generator-jhipster-micronaut/blob/master/CONTRIBUTING.md) to build this generator locally in order to use it.
 
 # Greetings, Micronaut Hipster!
 
+![Tests](https://github.com/jhipster/generator-jhipster-micronaut/workflows/Generator%20Lint%20/%20Tests/badge.svg)
+![Sample Projects](https://github.com/jhipster/generator-jhipster-micronaut/workflows/Verify%20Sample%20Projects/badge.svg)
+
 This project generates a Micronaut based JHipster application 😎.
 It is based on JHipster Blueprint 🔵, and intends to replace the Spring Boot portions of the server with [Micronaut](https://micronaut.io) equivalents.
+
+## Installation and Usage
+
+1. Install MHipster
+    + `npm install -g generator-jhipster-micronaut`
+2. Create a new folder for your application
+3. Start MHipster
+    + `mhipster`
+
+Alternatively, if you already have JHipster installed, you can use this blueprint with:
+```
+$ jhipster --blueprints micronaut
+```
 
 ## Currently supported options
 * Monolith projects
