@@ -48,6 +48,7 @@ plugins {
     id "org.liquibase.gradle"
     <%_ } _%>
     id "org.sonarqube"
+    id "com.github.johnrengelman.shadow"
     //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
@@ -219,6 +220,10 @@ liquibase {
     runList = project.ext.runList
 }
 <%_ } _%>
+
+shadowJar {
+    mergeServiceFiles()
+}
 
 gitProperties {
     failOnNoGitDirectory = false
