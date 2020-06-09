@@ -25,7 +25,7 @@ module.exports = {
         postgresql: 'org.postgresql.Driver',
     },
     versions: {
-        micronaut: '1.3.5',
+        micronaut: '1.3.6',
         micronautData: '1.0.2',
 
         hibernate: '5.4.10.Final',
