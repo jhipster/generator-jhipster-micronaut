@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
+const fs = require('fs')
 const HerokuGenerator = require('generator-jhipster/generators/heroku');
 const constants = require('generator-jhipster/generators/generator-constants');
 
@@ -59,7 +60,7 @@ module.exports = class extends HerokuGenerator {
             addHerokuDependencies() {
                 // Nothing to do here right now
             },
-        }
+        };
         return Object.assign(phaseFromJHipster, jhipsterMicronautDefaultPhaseSteps);
     }
 
