@@ -38,15 +38,13 @@ if [[ "$testFrameworks" == *"protractor"* ]]; then
     appName=`jdlVal "./$1.jdl" "baseName"`
     serverPort=`jdlVal "./$1.jdl" "serverPort"`
 
-    if [ "$buildTool" == "maven" ]; then
-        java -jar target/$appName-0.0.1-SNAPSHOT.jar &
-    else
-        # So it seems that the gradle assemble task does not produce a runnable jar
-        cd build/distributions
-        unzip $appName-0.0.1-SNAPSHOT.zip
-        $appName-0.0.1-SNAPSHOT/bin/$appName &
-        cd ../..
+    jarFile="target/$appName-0.0.1-SNAPSHOT.jar"
+
+    if [ "$buildTool" == "gradle" ]; then
+        jarFile="build/libs/$appName-0.0.1-SNAPSHOT-all.jar"
     fi
+
+    java -jar "$jarFile" &
 
     sleep 10
 
