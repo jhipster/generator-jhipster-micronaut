@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
-const fs = require('fs')
+const fs = require('fs');
 const HerokuGenerator = require('generator-jhipster/generators/heroku');
 const constants = require('generator-jhipster/generators/generator-constants');
 
