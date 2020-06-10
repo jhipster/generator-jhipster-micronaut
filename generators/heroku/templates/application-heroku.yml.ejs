@@ -28,7 +28,19 @@
 # https://docs.micronaut.io/latest/guide/configurationreference.html
 # ===================================================================
 
-
+<%_ if (useOkta) { _%>
+micronaut:
+  security:
+    enabled: true
+    oauth2:
+      enabled: true
+      clients:
+        oidc:
+          client-secret: ${OKTA_OAUTH2_CLIENT_SECRET_WEB}
+          client-id: ${OKTA_OAUTH2_CLIENT_ID_WEB}
+          openid:
+            issuer: ${OKTA_OAUTH2_ISSUER}
+<%_ } _%>
 
 datasources:
   default:

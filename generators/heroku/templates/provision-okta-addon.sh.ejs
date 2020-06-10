@@ -21,7 +21,7 @@ get_apps() {
 }
 
 add_redirect_url() {
-    REDIRECT_URL="${1//\"/}login/oauth2/code/oidc"
+    REDIRECT_URL="${1//\"/}oauth2/callback/oidc"
     jq '.settings.oauthClient.redirect_uris += ["'"${REDIRECT_URL}"'"]' app1.json >app1-mod.json
     jq '.settings.oauthClient.redirect_uris += ["'"${REDIRECT_URL}"'"]' app2.json >app2-mod.json
 
