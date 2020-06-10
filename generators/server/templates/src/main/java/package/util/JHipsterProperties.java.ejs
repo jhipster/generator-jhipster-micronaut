@@ -161,12 +161,17 @@ public class JHipsterProperties {
     public static class Cache {
 
         private final Hazelcast hazelcast = new Hazelcast();
+        private final Caffeine caffeine = new Caffeine();
         private final Ehcache ehcache = new Ehcache();
         private final Infinispan infinispan = new Infinispan();
         private final Memcached memcached = new Memcached();
 
         public Hazelcast getHazelcast() {
             return hazelcast;
+        }
+
+        public Caffeine getCaffeine() {
+            return caffeine;
         }
 
         public Ehcache getEhcache() {
@@ -335,6 +340,29 @@ public class JHipsterProperties {
                 public void setMaxEntries(long maxEntries) {
                     this.maxEntries = maxEntries;
                 }
+            }
+        }
+
+        @ConfigurationProperties("caffeine")
+        public static class Caffeine {
+
+            private int timeToLiveSeconds = 3600;
+            private long maxEntries = 100;
+
+            public int getTimeToLiveSeconds() {
+                return timeToLiveSeconds;
+            }
+
+            public void setTimeToLiveSeconds(int timeToLiveSeconds) {
+                this.timeToLiveSeconds = timeToLiveSeconds;
+            }
+
+            public long getMaxEntries() {
+                return maxEntries;
+            }
+
+            public void setMaxEntries(long maxEntries) {
+                this.maxEntries = maxEntries;
             }
         }
 

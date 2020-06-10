@@ -240,6 +240,10 @@ function askForServerSideOpts(meta) {
                     name: 'Yes, with the Ehcache implementation (local cache, for a single node)',
                 },
                 {
+                    value: 'caffeine',
+                    name: 'Yes, with the Caffeine implementation (local cache, for a single node)',
+                },
+                {
                     value: 'no',
                     name: 'No - Warning, when using an SQL database, this will disable the Hibernate 2nd level cache!',
                 },
