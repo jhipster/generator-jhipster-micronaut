@@ -47,6 +47,8 @@ public class <%= mainClass %> {
         List<String> environments;
         if (System.getenv("MICRONAUT_ENVIRONMENTS") != null) {
             environments = Arrays.asList(System.getenv("MICRONAUT_ENVIRONMENTS").split(","));
+        } else if (System.getProperty("micronaut.environments") != null) {
+            environments = Arrays.asList(System.getProperty("micronaut.environments").split(","));
         } else {
             environments = DefaultProfileUtil.getDefaultEnvironments();
         }
