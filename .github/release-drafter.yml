@@ -1,0 +1,15 @@
+template: |
+    # What's Changed
+    $CHANGES
+categories:
+  - title: 💎 Features & Enhancements
+    labels: 
+      - enhancement 💎
+      - Auth 🔐
+      - Database 💾
+  - title: 🐞 Bug Fixes
+    label: bug 🐞
+  - title: 📝 Documentation
+    label: documentation 📝
+  - title: 📦 Dependency updates
+    label: dependencies
