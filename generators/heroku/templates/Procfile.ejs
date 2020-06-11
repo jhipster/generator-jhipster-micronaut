@@ -16,7 +16,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-web: java $JAVA_OPTS <% if (applicationType === 'gateway' || dynoSize === 'Free') { %>-Xmx256m<% } %> -jar <% if (buildTool === 'maven') { %>target<% } %><% if (buildTool === 'gradle') { %>build/libs<% } %>/*.jar --spring.profiles.active=prod,heroku<% if (buildTool == 'maven' && herokuDeployType == 'git') { %>,no-liquibase<% } %> --micronaut.server.port=$PORT
+web: java $JAVA_OPTS -Dmicronaut.environments=prod,heroku <% if (applicationType === 'gateway' || dynoSize === 'Free') { %>-Xmx128m<% } %> -jar <% if (buildTool === 'maven') { %>target<% } %><% if (buildTool === 'gradle') { %>build/libs<% } %>/*-all.jar<% if (buildTool == 'maven' && herokuDeployType == 'git') { %>,no-liquibase<% } %> --micronaut.server.port=$PORT
 <%_ if (buildTool == 'maven' && herokuDeployType == 'git' && (prodDatabaseType === 'postgresql' || prodDatabaseType === 'mysql' || prodDatabaseType === 'mariadb')) { _%>
 release: cp -R src/main/resources/config config && ./mvnw -ntp liquibase:update -Pprod,heroku
 <%_ } _%>

@@ -1,8 +1,11 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const fs = require('fs');
+const ChildProcess = require('child_process');
 const HerokuGenerator = require('generator-jhipster/generators/heroku');
 const constants = require('generator-jhipster/generators/generator-constants');
+
+const execCmd = util.promisify(ChildProcess.exec);
 
 module.exports = class extends HerokuGenerator {
     constructor(args, opts) {
@@ -18,7 +21,47 @@ module.exports = class extends HerokuGenerator {
     }
 
     get initializing() {
-        return super._initializing();
+        return {
+            validateFromCli() {
+                this.checkInvocationFromCLI();
+            },
+
+            async checkInstallation() {
+                try {
+                    await execCmd('heroku --version');
+                } catch (err) {
+                    this.log.error("You don't have the Heroku CLI installed. Download it from https://cli.heroku.com/");
+                }
+            },
+
+
+            initializing() {
+                this.log(chalk.bold('Heroku configuration is starting'));
+                const configuration = this.getAllJhipsterConfig(this, true);
+                this.env.options.appPath = configuration.get('appPath') || constants.CLIENT_MAIN_SRC_DIR;
+                this.baseName = configuration.get('baseName');
+                this.packageName = configuration.get('packageName');
+                this.packageFolder = configuration.get('packageFolder');
+                this.cacheProvider = configuration.get('cacheProvider') || configuration.get('hibernateCache') || 'no';
+                this.enableHibernateCache = configuration.get('enableHibernateCache') && !['no', 'memcached'].includes(this.cacheProvider);
+                this.databaseType = configuration.get('databaseType');
+                this.prodDatabaseType = configuration.get('prodDatabaseType');
+                this.searchEngine = configuration.get('searchEngine');
+                this.angularAppName = this.getAngularAppName();
+                this.buildTool = configuration.get('buildTool');
+                this.applicationType = configuration.get('applicationType');
+                this.reactive = configuration.get('reactive') || false;
+                this.serviceDiscoveryType = configuration.get('serviceDiscoveryType');
+                this.authenticationType = configuration.get('authenticationType');
+                this.herokuAppName = configuration.get('herokuAppName');
+                this.dynoSize = 'Free';
+                this.herokuDeployType = configuration.get('herokuDeployType');
+                this.herokuJavaVersion = configuration.get('herokuJavaVersion');
+                this.useOkta = configuration.get('useOkta');
+                this.oktaAdminLogin = configuration.get('oktaAdminLogin');
+                this.oktaAdminPassword = configuration.get('oktaAdminPassword');
+            },
+        }
     }
 
     get prompting() {
@@ -39,7 +82,6 @@ module.exports = class extends HerokuGenerator {
                 const done = this.async();
                 this.log(chalk.bold('\nCreating Heroku deployment files'));
 
-                // this.template('bootstrap-heroku.yml.ejs', `${constants.SERVER_MAIN_RES_DIR}/config/bootstrap-heroku.yml`);
                 this.template('application-heroku.yml.ejs', `${constants.SERVER_MAIN_RES_DIR}/application-heroku.yml`);
                 this.template('Procfile.ejs', 'Procfile');
                 this.template('system.properties.ejs', 'system.properties');
