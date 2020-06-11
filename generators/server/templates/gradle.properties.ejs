@@ -28,14 +28,14 @@ npm_version=<%= NPM_VERSION %>
 yarn_version=<%= YARN_VERSION %>
 
 # Dependency versions
-jhipster_dependencies_version=<%=versions.jhipsterDeps%>
+jhipster_dependencies_version=<%= JHIPSTER_DEPENDENCIES_VERSION %>
 micronaut_version=<%=versions.micronaut%>
 micronaut_data_version=<%=versions.micronautData%>
 # The hibernate version should match the one managed by Micronaut data
 # https://mvnrepository.com/artifact/io.micronaut.data/micronaut-data-hibernate-jpa/1.0.1
 hibernate_version=<%=versions.hibernate%>
 mapstruct_version=<%=versions.mapstruct%>
-archunit_junit5_version=0.13.1
+archunit_junit5_version=<%=versions.archunit%>
 logback_version=<%=versions.logback%>
 mockito_version=<%=versions.mockito%>
 jbcrypt_version=<%=versions.jbcrypt%>
@@ -48,7 +48,7 @@ log4j2_mock_version=0.0.2
 jackson_databind_nullable_version=<%= JACKSON_DATABIND_NULLABLE_VERSION %>
 <%_ } _%>
 <%_ if (cacheProvider === 'caffeine') { _%>
-caffeine_version=2.8.4
+caffeine_version=<%=versions.caffeine%>
 typesafe_config_version=1.4.0
 <%_ } _%>
 
