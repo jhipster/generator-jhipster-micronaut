@@ -33,6 +33,7 @@ $ jhipster --blueprints micronaut
   * PostgreSQL
   * H2
 * Ehcache
+* Caffeine Cache
 * Maven or Gradle Build System
 * Angular or React Client
 * Protractor Tests
