@@ -739,7 +739,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                                 <SPRING_OUTPUT_ANSI_ENABLED>ALWAYS</SPRING_OUTPUT_ANSI_ENABLED>
                                 <JHIPSTER_SLEEP>0</JHIPSTER_SLEEP>
                             </environment>
-                            <useCurrentTimestamp>true</useCurrentTimestamp>
+                            <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
                         </container>
                         <extraDirectories>
                             <paths><%= MAIN_DIR %>jib</paths>
