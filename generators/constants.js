@@ -40,6 +40,6 @@ module.exports = {
         mockito: '3.1.0',
         problem: '0.24.0',
         caffeine: '2.8.4',
-        archunit: '0.14.1'
+        archunit: '0.14.1',
     },
 };
