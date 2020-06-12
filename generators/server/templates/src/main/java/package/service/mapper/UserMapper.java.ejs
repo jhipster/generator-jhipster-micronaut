@@ -69,7 +69,7 @@ public class UserMapper {
         return authorities;
     }
 
-    public User userFromId(Long id) {
+    public User userFromId(<% if (authenticationType === 'oauth2') { %>String<% } else { %>Long<% } %> id) {
         if (id == null) {
             return null;
         }

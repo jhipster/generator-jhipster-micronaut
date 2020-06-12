@@ -21,7 +21,9 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
+<%_ if (authenticationType !== 'oauth2') { _%>
 import io.micronaut.security.authentication.providers.PasswordEncoder;
+<%_ } _%>
 import io.micronaut.test.annotation.MicronautTest;
 import io.micronaut.test.annotation.MockBean;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -49,7 +51,9 @@ public class AccountResourceIT {
     @Inject UserRepository userRepository;
     @Inject AuthorityRepository authorityRepository;
     @Inject UserService userService;
+    <%_ if (authenticationType !== 'oauth2') { _%>
     @Inject PasswordEncoder passwordEncoder;
+    <%_ } _%>
     @Inject MailService mailService;
     @Inject @Client("/") RxHttpClient client;
 
@@ -67,6 +71,7 @@ public class AccountResourceIT {
     public void setup() {
         doNothing().when(mailService).sendActivationEmail(any());
     }
+    <%_ if (authenticationType !== 'oauth2') { _%>
 
     @Test
     public void testNonAuthenticatedUser()  {
@@ -76,6 +81,7 @@ public class AccountResourceIT {
 
         assertThat(ex.getResponse().status().getCode()).isEqualTo(HttpStatus.NOT_FOUND.getCode());
     }
+    <%_ } _%>
 
     @Test
     public void testGetExistingAccount()  {
@@ -115,7 +121,7 @@ public class AccountResourceIT {
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.getCode());
     }
 
-
+    <%_ if (authenticationType !== 'oauth2') { _%>
     @Test
     public void testRegisterValid()  {
         ManagedUserVM validUser = new ManagedUserVM();
@@ -408,4 +414,5 @@ public class AccountResourceIT {
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.OK.getCode());
         verify(userService, times(1)).requestPasswordReset(anyString());
     }
+    <%_ } _%>
 }

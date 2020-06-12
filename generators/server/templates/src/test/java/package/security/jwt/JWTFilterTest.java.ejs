@@ -1,7 +1,9 @@
 package <%=packageName%>.security.jwt;
 
 import <%=packageName%>.security.AuthoritiesConstants;
+<%_ if (authenticationType !== 'oauth2') { _%>
 import <%=packageName%>.security.DatabaseAuthenticationProvider;
+<%_ } _%>
 
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Property;
@@ -93,7 +95,9 @@ public class JWTFilterTest {
         }
     }
 
+    <%_ if (authenticationType !== 'oauth2') { _%>
     @Replaces(DatabaseAuthenticationProvider.class)
+    <%_ } _%>
     @Requires(property = "spec.name", value = "JWTFilterTest")
     @Singleton
     static class MockAuthenticationProvider implements AuthenticationProvider {

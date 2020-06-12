@@ -37,19 +37,25 @@ public class UserService {
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
+    <%_ if (authenticationType !== 'oauth2') { _%>
 
     private final PasswordEncoder passwordEncoder;
+    <%_ } _%>
 
     private final AuthorityRepository authorityRepository;
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    public UserService(UserRepository userRepository<% if (authenticationType !== 'oauth2') { %>, PasswordEncoder passwordEncoder<% } %>, AuthorityRepository authorityRepository, CacheManager cacheManager) {
         this.userRepository = userRepository;
+        <%_ if (authenticationType !== 'oauth2') { _%>
         this.passwordEncoder = passwordEncoder;
+        <%_ } _%>
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
     }
+
+<%_ if (authenticationType !== 'oauth2') { _%>
 
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
@@ -166,29 +172,6 @@ public class UserService {
     }
 
     /**
-     * Update basic information (first name, last name, email, language) for the current user.
-     *
-     * @param firstName first name of user.
-     * @param lastName  last name of user.
-     * @param email     email id of user.
-     * @param langKey   language key.
-     * @param imageUrl  image URL of user.
-     */
-    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
-        SecurityUtils.getCurrentUserLogin()
-            .flatMap(userRepository::findOneByLogin)
-            .ifPresent(user -> {
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setEmail(email.toLowerCase());
-                user.setLangKey(langKey);
-                user.setImageUrl(imageUrl);
-                this.clearUserCaches(user);
-                log.debug("Changed Information for User: {}", user);
-            });
-    }
-
-    /**
      * Update all information for a specific user, and return the modified user.
      *
      * @param userDTO user to update.
@@ -246,6 +229,30 @@ public class UserService {
                 log.debug("Changed password for User: {}", user);
             });
     }
+<%_ } // authenticationType !== 'oauth2' _%>
+
+    /**
+     * Update basic information (first name, last name, email, language) for the current user.
+     *
+     * @param firstName first name of user.
+     * @param lastName  last name of user.
+     * @param email     email id of user.
+     * @param langKey   language key.
+     * @param imageUrl  image URL of user.
+     */
+    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
+        SecurityUtils.getCurrentUserLogin()
+            .flatMap(userRepository::findOneByLogin)
+            .ifPresent(user -> {
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setEmail(email.toLowerCase());
+                user.setLangKey(langKey);
+                user.setImageUrl(imageUrl);
+                this.clearUserCaches(user);
+                log.debug("Changed Information for User: {}", user);
+            });
+    }
 
     @ReadOnly
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
@@ -259,7 +266,7 @@ public class UserService {
     }
 
     @ReadOnly
-    public Optional<User> getUserWithAuthorities(Long id) {
+    public Optional<User> getUserWithAuthorities(<% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %> id) {
         return userRepository.findOneById(id);
     }
 
@@ -268,6 +275,7 @@ public class UserService {
         return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin);
     }
 
+    <%_ if (authenticationType !== 'oauth2') { _%>
     /**
      * Not activated users should be automatically deleted after 3 days.
      * <p>
@@ -283,6 +291,7 @@ public class UserService {
                 this.clearUserCaches(user);
             });
     }
+    <%_ } _%>
 
     /**
      * Gets a list of all the authorities.

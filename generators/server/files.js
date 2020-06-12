@@ -434,16 +434,6 @@ const serverFiles = {
                     useBluePrint: true,
                 },
                 {
-                    file: 'package/security/BcryptPasswordEncoder.java',
-                    renameTo: generator => `${generator.javaDir}security/BcryptPasswordEncoder.java`,
-                    useBluePrint: true,
-                },
-                {
-                    file: 'package/security/DatabaseAuthenticationProvider.java',
-                    renameTo: generator => `${generator.javaDir}security/DatabaseAuthenticationProvider.java`,
-                    useBluePrint: true,
-                },
-                {
                     file: 'package/security/Logout.java',
                     renameTo: generator => `${generator.javaDir}security/Logout.java`,
                     useBluePrint: true,
@@ -487,6 +477,22 @@ const serverFiles = {
                 {
                     file: 'package/security/KeycloakEndSessionEndpoint.java',
                     renameTo: generator => `${generator.javaDir}security/KeycloakEndSessionEndpoint.java`,
+                    useBluePrint: true,
+                },
+            ],
+        },
+        {
+            condition: generator => generator.authenticationType !== 'oauth2',
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/security/BcryptPasswordEncoder.java',
+                    renameTo: generator => `${generator.javaDir}security/BcryptPasswordEncoder.java`,
+                    useBluePrint: true,
+                },
+                {
+                    file: 'package/security/DatabaseAuthenticationProvider.java',
+                    renameTo: generator => `${generator.javaDir}security/DatabaseAuthenticationProvider.java`,
                     useBluePrint: true,
                 },
             ],
@@ -679,6 +685,12 @@ const serverFiles = {
                     renameTo: generator => `${generator.javaDir}web/rest/package-info.java`,
                     useBluePrint: true,
                 },
+            ],
+        },
+        {
+            condition: generator => generator.authenticationType !== 'oauth2',
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
                 {
                     file: 'package/web/rest/UserResource.java',
                     renameTo: generator => `${generator.javaDir}web/rest/UserResource.java`,
@@ -736,13 +748,19 @@ const serverFiles = {
                     useBluePrint: true,
                 },
                 {
-                    file: 'package/security/DomainUserDetailsServiceIT.java',
-                    renameTo: generator => `${generator.javaDir}security/DomainUserDetailsServiceIT.java`,
-                    useBluePrint: true,
-                },
-                {
                     file: 'package/security/SecurityUtilsUnitTest.java',
                     renameTo: generator => `${generator.javaDir}security/SecurityUtilsUnitTest.java`,
+                    useBluePrint: true,
+                },
+            ],
+        },
+        {
+            condition: generator => generator.authenticationType !== 'oauth2',
+            path: SERVER_TEST_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/security/DomainUserDetailsServiceIT.java',
+                    renameTo: generator => `${generator.javaDir}security/DomainUserDetailsServiceIT.java`,
                     useBluePrint: true,
                 },
             ],
@@ -804,6 +822,12 @@ const serverFiles = {
                     renameTo: generator => `${generator.javaDir}web/rest/TestUtil.java`,
                     useBluePrint: true,
                 },
+            ],
+        },
+        {
+            condition: generator => generator.authenticationType !== 'oauth2',
+            path: SERVER_TEST_SRC_DIR,
+            templates: [
                 {
                     file: 'package/web/rest/UserJWTControllerIT.java',
                     renameTo: generator => `${generator.javaDir}web/rest/UserJWTControllerIT.java`,
