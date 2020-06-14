@@ -183,7 +183,7 @@ will generate few files:
 ./gradlew openApiGenerate
 ```
     <%_ } _%>
-Then implements the generated delegate classes with `@Service` classes.
+Then implements the generated delegate classes with `@Singleton` classes.
 
 To edit the `api.yml` definition file, you can use a tool such as [Swagger-Editor](). Start a local instance of the swagger-editor using docker by running: `docker-compose -f src/main/docker/swagger-editor.yml up -d`. The editor will then be reachable at [http://localhost:7742](http://localhost:7742).
 

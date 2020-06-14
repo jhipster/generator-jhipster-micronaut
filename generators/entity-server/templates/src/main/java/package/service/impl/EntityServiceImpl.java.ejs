@@ -64,12 +64,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 <%_ if (pagination !== 'no' || fieldsContainOwnerManyToMany === true) { _%>
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
 <%_ } _%>
-import org.springframework.stereotype.Service;
+import javax.inject.Singleton;
 <%_ if (databaseType === 'sql') { _%>
-import org.springframework.transaction.annotation.Transactional;
+import javax.transaction.Transactional;
+import io.micronaut.transaction.annotation.ReadOnly;
 <%_ } _%>
 <%_ if (reactiveRepositories) { _%>
 import reactor.core.publisher.Flux;
@@ -99,7 +100,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 /**
  * Service Implementation for managing {@link <%= asEntity(entityClass) %>}.
  */
-@Service<% if (databaseType === 'sql') { %>
+@Singleton<% if (databaseType === 'sql') { %>
 @Transactional<% } %>
 public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> implements <%= entityClass %>Service<% } %> {
 
@@ -130,7 +131,8 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     @Override
     <%_ } _%>
     <%_ if (databaseType === 'sql') { _%>
-    @Transactional(readOnly = true)
+    @ReadOnly
+    @Transactional
     <%_ } _%>
     public <% if (pagination !== 'no') { %>Page<<%= instanceType %><% } else { %>List<<%= instanceType %><% } %>> findAll(<% if (pagination !== 'no') { %>Pageable pageable<% } %>) {
         log.debug("Request to get all <%= entityClassPlural %>");
@@ -177,7 +179,8 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     @Override
     <%_ } _%>
     <%_ if (databaseType === 'sql') { _%>
-    @Transactional(readOnly = true)
+    @ReadOnly
+    @Transactional
     <%_ } _%>
     public Optional<<%= instanceType %>> findOne(<%= primaryKeyType %> id) {
         log.debug("Request to get <%= entityClass %> : {}", id);<%- include('../../common/get_template', {asEntity, asDto, viaService, returnDirectly:true}); -%>
@@ -208,7 +211,8 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     @Override
     <%_ } _%>
     <%_ if (databaseType === 'sql') { _%>
-    @Transactional(readOnly = true)
+    @ReadOnly
+    @Transactional
     <%_ } _%>
     public <% if (pagination !== 'no') { %>Page<<%= instanceType %><% } else { %>List<<%= instanceType %><% } %>> search(String query<% if (pagination !== 'no') { %>, Pageable pageable<% } %>) {
         <%_ if (pagination === 'no') { _%>
