@@ -2,6 +2,7 @@
 const chalk = require('chalk');
 const fs = require('fs');
 const ChildProcess = require('child_process');
+const util = require('util');
 const HerokuGenerator = require('generator-jhipster/generators/heroku');
 const constants = require('generator-jhipster/generators/generator-constants');
 
@@ -34,7 +35,6 @@ module.exports = class extends HerokuGenerator {
                 }
             },
 
-
             initializing() {
                 this.log(chalk.bold('Heroku configuration is starting'));
                 const configuration = this.getAllJhipsterConfig(this, true);
@@ -61,7 +61,7 @@ module.exports = class extends HerokuGenerator {
                 this.oktaAdminLogin = configuration.get('oktaAdminLogin');
                 this.oktaAdminPassword = configuration.get('oktaAdminPassword');
             },
-        }
+        };
     }
 
     get prompting() {
@@ -85,7 +85,10 @@ module.exports = class extends HerokuGenerator {
                 this.template('application-heroku.yml.ejs', `${constants.SERVER_MAIN_RES_DIR}/application-heroku.yml`);
                 this.template('Procfile.ejs', 'Procfile');
                 this.template('system.properties.ejs', 'system.properties');
-                this.template('SSLEnforcingHostResolver.java.ejs', `${SERVER_MAIN_SRC_DIR}${this.packageFolder}/config/SSLEnforcingHostResolver.java`)
+                this.template(
+                    'SSLEnforcingHostResolver.java.ejs',
+                    `${constants.SERVER_MAIN_SRC_DIR}${this.packageFolder}/config/SSLEnforcingHostResolver.java`
+                );
                 if (this.buildTool === 'gradle') {
                     this.template('heroku.gradle.ejs', 'gradle/heroku.gradle');
                 }
