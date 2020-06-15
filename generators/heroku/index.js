@@ -85,6 +85,7 @@ module.exports = class extends HerokuGenerator {
                 this.template('application-heroku.yml.ejs', `${constants.SERVER_MAIN_RES_DIR}/application-heroku.yml`);
                 this.template('Procfile.ejs', 'Procfile');
                 this.template('system.properties.ejs', 'system.properties');
+                this.template('SSLEnforcingHostResolver.java.ejs', `${SERVER_MAIN_SRC_DIR}${this.packageFolder}/config/SSLEnforcingHostResolver.java`)
                 if (this.buildTool === 'gradle') {
                     this.template('heroku.gradle.ejs', 'gradle/heroku.gradle');
                 }
@@ -95,9 +96,7 @@ module.exports = class extends HerokuGenerator {
                     });
                 }
 
-                this.conflicter.resolve(err => {
-                    done();
-                });
+                done();
             },
             addHerokuDependencies() {
                 // Nothing to do here right now
