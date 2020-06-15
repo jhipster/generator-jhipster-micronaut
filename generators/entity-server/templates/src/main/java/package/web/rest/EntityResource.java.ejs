@@ -86,6 +86,7 @@ import io.micronaut.context.annotation.Value;
 <%_ if (pagination !== 'no') { _%>
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
+import io.micronaut.transaction.annotation.ReadOnly;
 <%# import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus; %>
     <%_ if (reactive) { _%>
@@ -251,7 +252,8 @@ public class <%= entityClass %>Resource {
      */
      @Get("/<%= entityApiUrl %><% if (pagination !== 'no') { _%>{?eagerload}<% } %>")
     <%_ if (databaseType === 'sql' && isUsingMapsId === true && !viaService) { _%>
-    @Transactional(readOnly = true)
+    @ReadOnly
+    @Transactional
     <%_ } _%>
 <%- include('../../common/get_all_template', {asEntity, asDto, viaService}); -%>
 
@@ -262,7 +264,8 @@ public class <%= entityClass %>Resource {
      */
     @Get(value = "/<%= entityApiUrl %>", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     <%_ if (databaseType === 'sql' && isUsingMapsId === true && !viaService) { _%>
-    @Transactional(readOnly = true)
+    @ReadOnly
+    @Transactional
     <%_ } _%>
     public Flux<<%= instanceType %>> getAll<%= entityClassPlural %>AsStream() {
         log.debug("REST request to get all <%= entityClassPlural %> as a stream");
@@ -282,7 +285,8 @@ public class <%= entityClass %>Resource {
      */
     @Get("/<%= entityApiUrl %>/{id}")
     <%_ if (databaseType === 'sql' && isUsingMapsId === true && !viaService) { _%>
-    @Transactional(readOnly = true)
+    @ReadOnly
+    @Transactional
     <%_ } _%>
     public Optional<<%= instanceType %>> get<%= entityClass %>(@PathVariable <%= primaryKeyType %> id) {
         log.debug("REST request to get <%= entityClass %> : {}", id);
