@@ -436,7 +436,7 @@ const serverFiles = {
                 {
                     file: 'package/security/PasswordEncoder.java',
                     renameTo: generator => `${generator.javaDir}security/PasswordEncoder.java`,
-                    useBluePrint: true, 
+                    useBluePrint: true,
                 },
                 {
                     file: 'package/security/BcryptPasswordEncoder.java',
