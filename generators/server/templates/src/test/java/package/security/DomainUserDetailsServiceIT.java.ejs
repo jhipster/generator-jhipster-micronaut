@@ -3,11 +3,11 @@ package <%=packageName%>.security;
 import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.domain.User;
 import <%=packageName%>.repository.UserRepository;
+import <%=packageName%>.security.PasswordEncoder;
 
 import io.micronaut.security.authentication.AuthenticationRequest;
 import io.micronaut.security.authentication.AuthenticationResponse;
 import io.micronaut.security.authentication.UserDetails;
-import io.micronaut.security.authentication.providers.PasswordEncoder;
 import io.micronaut.test.annotation.MicronautTest;
 import io.micronaut.test.annotation.MockBean;
 import io.reactivex.Flowable;
