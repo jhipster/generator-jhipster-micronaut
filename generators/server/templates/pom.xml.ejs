@@ -99,6 +99,7 @@ _%>
         <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
         <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
         <maven-exec-plugin.version>1.6.0</maven-exec-plugin.version>
+        <micronaut-plugin.version>1.0.0</micronaut-plugin.version>
 
 <%_ if (!skipClient) { _%>
         <frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
@@ -462,23 +463,13 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
     <build>
-        <defaultGoal>compile exec:exec</defaultGoal>
+        <defaultGoal>mn:run</defaultGoal>
+      
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>${maven-exec-plugin.version}</version>
-                <configuration>
-                    <executable>java</executable>
-                    <arguments>
-                        <argument>-noverify</argument>
-                        <argument>-XX:TieredStopAtLevel=1</argument>
-                        <argument>-Dcom.sun.management.jmxremote</argument>
-                        <argument>-classpath</argument>
-                        <classpath/>
-                        <argument>${exec.mainClass}</argument>
-                    </arguments>
-                </configuration>
+                <groupId>io.micronaut.build</groupId>
+                <artifactId>micronaut-maven-plugin</artifactId>
+                <version>${micronaut-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
