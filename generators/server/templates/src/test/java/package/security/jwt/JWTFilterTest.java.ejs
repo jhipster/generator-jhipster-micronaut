@@ -5,6 +5,8 @@ import <%=packageName%>.security.AuthoritiesConstants;
 import <%=packageName%>.security.DatabaseAuthenticationProvider;
 <%_ } _%>
 
+import edu.umd.cs.findbugs.annotations.Nullable;
+
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Replaces;
@@ -102,7 +104,7 @@ public class JWTFilterTest {
     @Singleton
     static class MockAuthenticationProvider implements AuthenticationProvider {
         @Override
-        public Publisher<AuthenticationResponse> authenticate(AuthenticationRequest authenticationRequest) {
+        public Publisher<AuthenticationResponse> authenticate(@Nullable HttpRequest<?> httpRequest, AuthenticationRequest<?, ?> authenticationRequest) {
             if (authenticationRequest.getIdentity().toString().equals("test-user") &&
             authenticationRequest.getSecret().toString().equals("test-password")) {
                 return Flowable.just(new UserDetails("test-user", Collections.emptyList()));

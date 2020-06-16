@@ -77,7 +77,7 @@ public class DomainUserDetailsServiceIT {
     @Test
     @Transactional
     public void assertThatUserCanBeFoundByLogin() {
-        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(new AuthenticationRequest() {
+        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(null, new AuthenticationRequest() {
             @Override
             public Object getIdentity() {
                 return userOne.getLogin();
@@ -95,7 +95,7 @@ public class DomainUserDetailsServiceIT {
     @Test
     @Transactional
     public void assertThatUserCanBeFoundByLoginIgnoreCase() {
-        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(new AuthenticationRequest() {
+        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(null, new AuthenticationRequest() {
             @Override
             public Object getIdentity() {
                 return userOne.getLogin().toUpperCase(Locale.ENGLISH);
@@ -113,7 +113,7 @@ public class DomainUserDetailsServiceIT {
     @Test
     @Transactional
     public void assertThatUserCanBeFoundByEmail() {
-        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(new AuthenticationRequest() {
+        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(null, new AuthenticationRequest() {
             @Override
             public Object getIdentity() {
                 return userTwo.getEmail();
@@ -131,7 +131,7 @@ public class DomainUserDetailsServiceIT {
     @Test
     @Transactional
     public void assertThatUserCanNotBeFoundByEmailIgnoreCase() {
-        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(new AuthenticationRequest() {
+        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(null, new AuthenticationRequest() {
             @Override
             public Object getIdentity() {
                 return userTwo.getEmail().toUpperCase(Locale.ENGLISH);
@@ -149,7 +149,7 @@ public class DomainUserDetailsServiceIT {
     @Test
     @Transactional
     public void assertThatEmailIsPrioritizedOverLogin() {
-        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(new AuthenticationRequest() {
+        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(null, new AuthenticationRequest() {
             @Override
             public Object getIdentity() {
                 return userOne.getEmail();
@@ -167,7 +167,7 @@ public class DomainUserDetailsServiceIT {
     @Test
     @Transactional
     public void assertThatUserNotActivatedExceptionIsThrownForNotActivatedUsers() {
-        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(new AuthenticationRequest() {
+        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(null, new AuthenticationRequest() {
             @Override
             public Object getIdentity() {
                 return userThree.getLogin();
