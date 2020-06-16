@@ -7,7 +7,6 @@ import io.micronaut.security.authentication.AuthenticationProvider;
 import io.micronaut.security.authentication.AuthenticationRequest;
 import io.micronaut.security.authentication.AuthenticationResponse;
 import io.micronaut.security.authentication.UserDetails;
-import io.micronaut.security.authentication.providers.PasswordEncoder;
 import io.micronaut.validation.validator.constraints.EmailValidator;
 import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
@@ -32,7 +31,7 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
     }
 
     @Override
-    public Publisher<AuthenticationResponse> authenticate(AuthenticationRequest authenticationRequest) {
+    public Publisher<AuthenticationResponse> authenticate(@Nullable HttpRequest<?> httpRequest, AuthenticationRequest<?, ?> authenticationRequest) {
         String username = authenticationRequest.getIdentity().toString();
 
         log.debug("Authenticating {}", username);

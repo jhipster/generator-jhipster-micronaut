@@ -347,9 +347,13 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.micronaut</groupId>
+            <groupId>io.micronaut.security</groupId>
+            <artifactId>micronaut-security</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.security</groupId>
             <artifactId>micronaut-security-jwt</artifactId>
-            <version><%=versions.micronautSecurityJwt%></version>
             <scope>compile</scope>
         </dependency>
 <%_ if (authenticationType == 'oauth2') { _%>
@@ -365,15 +369,13 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <version>${jbcrypt.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.micronaut.configuration</groupId>
+            <groupId>io.micronaut.liquibase</groupId>
             <artifactId>micronaut-liquibase</artifactId>
-            <version><%=versions.micronautLiquibaseConfiguration%></version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.micronaut.configuration</groupId>
+            <groupId>io.micronaut.sql</groupId>
             <artifactId>micronaut-jdbc-hikari</artifactId>
-            <version><%=versions.micronautHikariConfiguration%></version>
             <scope>runtime</scope>
         </dependency>
 
@@ -383,21 +385,18 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.micronaut.configuration</groupId>
+            <groupId>io.micronaut.jmx</groupId>
             <artifactId>micronaut-jmx</artifactId>
-            <version><%=versions.micronautJmxConfiguration%></version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.micronaut.configuration</groupId>
+            <groupId>io.micronaut.micrometer</groupId>
             <artifactId>micronaut-micrometer-core</artifactId>
-            <version><%=versions.micronautMicrometerConfiguration%></version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.micronaut.configuration</groupId>
+            <groupId>io.micronaut.micrometer</groupId>
             <artifactId>micronaut-micrometer-registry-prometheus</artifactId>
-            <version><%=versions.micronautMicrometerConfiguration%></version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -413,9 +412,8 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.micronaut</groupId>
+            <groupId>io.micronaut.views</groupId>
             <artifactId>micronaut-views-thymeleaf</artifactId>
-            <version><%=versions.micronautThymeleaf%></version>
         </dependency>
         <dependency>
             <groupId>javax.mail</groupId>

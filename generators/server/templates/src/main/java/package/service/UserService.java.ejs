@@ -10,12 +10,12 @@ import <%=packageName%>.security.SecurityUtils;
 import <%=packageName%>.service.dto.UserDTO;
 import <%=packageName%>.service.util.RandomUtil;
 import <%=packageName%>.web.rest.errors.*;
+import <%=packageName%>.security.PasswordEncoder;
 
 import io.micronaut.cache.CacheManager;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.scheduling.annotation.Scheduled;
-import io.micronaut.security.authentication.providers.PasswordEncoder;
 import io.micronaut.transaction.annotation.ReadOnly;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
