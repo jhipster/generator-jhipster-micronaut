@@ -28,6 +28,13 @@ module.exports = {
         micronaut: '2.0.0.RC1',
         micronautData: '1.1.0.RC3',
 
+        micronautLiquibaseConfiguration: '1.3.0',
+        micronautHikariConfiguration: '2.2.6',
+        micronautJmxConfiguration: '1.2.0',
+        micronautMicrometerConfiguration: '1.3.1',
+        micronautThymeleaf: '1.3.2',
+        micronautSecurityJwt: '1.4.0',
+
         hibernate: '5.4.10.Final',
         javassist: '3.24.0-GA', // Should match Hibernate deps
         javaxMail: '1.6.2',
