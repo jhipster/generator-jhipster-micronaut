@@ -9,6 +9,10 @@
 ![Tests](https://github.com/jhipster/generator-jhipster-micronaut/workflows/Generator%20Lint%20/%20Tests/badge.svg)
 ![Sample Projects](https://github.com/jhipster/generator-jhipster-micronaut/workflows/Verify%20Sample%20Projects/badge.svg)
 
+<img src="https://raw.githubusercontent.com/jhipster/jhipster-artwork/master/family/jhipster_family_member_4.png" alt="JHipster Micronaut Family Member" 
+width=200
+style="max-width:50%;">
+
 This project generates a Micronaut based JHipster application 😎.
 It is based on JHipster Blueprint 🔵, and intends to replace the Spring Boot portions of the server with [Micronaut](https://micronaut.io) equivalents.
 
