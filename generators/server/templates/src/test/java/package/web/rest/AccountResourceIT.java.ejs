@@ -7,7 +7,9 @@ import <%=packageName%>.domain.User;
 import <%=packageName%>.repository.AuthorityRepository;
 import <%=packageName%>.repository.UserRepository;
 import <%=packageName%>.security.AuthoritiesConstants;
+<%_ if (authenticationType !== 'oauth2') { _%>
 import <%=packageName%>.security.PasswordEncoder;
+<%_ } _%>
 import <%=packageName%>.service.MailService;
 import <%=packageName%>.service.UserService;
 import <%=packageName%>.service.dto.PasswordChangeDTO;

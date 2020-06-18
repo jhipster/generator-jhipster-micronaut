@@ -359,7 +359,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         </dependency>
 <%_ if (authenticationType == 'oauth2') { _%>
         <dependency>
-            <groupId>io.micronaut.configuration</groupId>
+            <groupId>io.micronaut.security</groupId>
             <artifactId>micronaut-security-oauth2</artifactId>
             <scope>compile</scope>
         </dependency>

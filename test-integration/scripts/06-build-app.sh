@@ -13,7 +13,7 @@ buildTool=`jdlVal "./$1.jdl" "buildTool"`
 echo "Building and containerizing $1 using $buildTool..."
 
 if [ "$buildTool" == "maven" ]; then
-    ./mvnw package -Pdev jib:dockerBuild
+    ./mvnw -ntp package -Pdev jib:dockerBuild
 else
     ./gradlew -Pdev build jibDockerBuild
 fi
