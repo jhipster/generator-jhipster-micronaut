@@ -10,8 +10,9 @@ import <%=packageName%>.security.SecurityUtils;
 import <%=packageName%>.service.dto.UserDTO;
 import <%=packageName%>.service.util.RandomUtil;
 import <%=packageName%>.web.rest.errors.*;
+<%_ if (authenticationType !== 'oauth2') { _%>
 import <%=packageName%>.security.PasswordEncoder;
-
+<%_ } _%>
 import io.micronaut.cache.CacheManager;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
@@ -38,7 +39,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     <%_ if (authenticationType !== 'oauth2') { _%>
-
     private final PasswordEncoder passwordEncoder;
     <%_ } _%>
 
