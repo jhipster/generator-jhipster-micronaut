@@ -25,9 +25,13 @@ module.exports = class extends EntityServerGenerator {
     constructor(args, opts) {
         super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
         if (!this.jhipsterContext) {
-            this.error(`This is a JHipster blueprint and should be used like ${chalk.yellow('mhipster')} 
+            this.error(`This is a JHipster blueprint and should be used like ${chalk.yellow('mhipster')}
                         or ${chalk.yellow('jhipster --blueprint micronaut')}`);
         }
+    }
+
+    get initializing() {
+        return super._initializing();
     }
 
     get writing() {

@@ -15,12 +15,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * A DTO representing a user, with his authorities.
+ * A DTO representing a user, with their authorities.
  */
 @Introspected
-public class UserDTO {
+public class UserDTO %> {
 
-    private Long id;
+    private <% if (authenticationType === 'oauth2') { %>String<% } else { %>Long<% } %> id;
 
     @NotBlank
     @Pattern(regexp = Constants.LOGIN_REGEX)
@@ -77,11 +77,11 @@ public class UserDTO {
             .collect(Collectors.toSet());
     }
 
-    public Long getId() {
+    public <% if (authenticationType === 'oauth2') { %>String<% } else { %>Long<% } %> getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(<% if (authenticationType === 'oauth2') { %>String<% } else { %>Long<% } %> id) {
         this.id = id;
     }
 

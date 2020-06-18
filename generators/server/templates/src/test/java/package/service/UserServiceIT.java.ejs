@@ -36,6 +36,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @Property(name = "micronaut.security.enabled", value = "false")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserServiceIT {
+    <%_ if (authenticationType === 'oauth2') { _%>
+
+    private static final String DEFAULT_ID = "id1";
+    <%_ } _%>
 
     private static final String DEFAULT_LOGIN = "johndoe";
 
@@ -64,7 +68,11 @@ public class UserServiceIT {
     public void init() {
         user = new User();
         user.setLogin(DEFAULT_LOGIN);
+        <%_ if (authenticationType !== 'oauth2') { _%>
         user.setPassword(RandomStringUtils.random(60));
+        <%_ } else { _%>
+        user.setId(DEFAULT_ID);
+        <%_ } _%>
         user.setActivated(true);
         user.setEmail(DEFAULT_EMAIL);
         user.setFirstName(DEFAULT_FIRSTNAME);
@@ -87,7 +95,7 @@ public class UserServiceIT {
     public void cleanUp() {
         userRepository.deleteAll();
     }
-
+<%_ if (authenticationType !== 'oauth2') { _%>
     @Test
     public void assertThatUserMustExistToResetPassword() {
         userRepository.saveAndFlush(user);
@@ -154,6 +162,7 @@ public class UserServiceIT {
 
         userRepository.delete(user);
     }
+<%_ } _%>
 
     @Test
     public void assertThatAnonymousUserIsNotGet() {
@@ -167,7 +176,7 @@ public class UserServiceIT {
             .noneMatch(user -> Constants.ANONYMOUS_USER.equals(user.getLogin())))
             .isTrue();
     }
-
+<%_ if (authenticationType !== 'oauth2') { _%>
     @Test
     public void testRemoveNotActivatedUsers() {
         user.setActivated(false);
@@ -338,4 +347,5 @@ public class UserServiceIT {
 
         assertFalse(user.isPresent());
     }
+<%_ } _%>
 }

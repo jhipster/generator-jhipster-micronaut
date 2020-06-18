@@ -24,7 +24,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserMapperIT {
 
     private static final String DEFAULT_LOGIN = "johndoe";
+    <%_ if (authenticationType === 'oauth2') { _%>
+    private static final String DEFAULT_ID = "id1";
+    <%_ } else { _%>
     private static final Long DEFAULT_ID = 1L;
+    <%_ } _%>
+
 
     @Inject UserMapper userMapper;
 
@@ -35,7 +40,9 @@ public class UserMapperIT {
     public void init() {
         user = new User();
         user.setLogin(DEFAULT_LOGIN);
+        <%_ if (authenticationType !== 'oauth2') { _%>
         user.setPassword(RandomStringUtils.random(60));
+        <%_ } _%>
         user.setActivated(true);
         user.setEmail("johndoe@localhost");
         user.setFirstName("john");
