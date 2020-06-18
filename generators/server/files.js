@@ -434,21 +434,6 @@ const serverFiles = {
                     useBluePrint: true,
                 },
                 {
-                    file: 'package/security/PasswordEncoder.java',
-                    renameTo: generator => `${generator.javaDir}security/PasswordEncoder.java`,
-                    useBluePrint: true,
-                },
-                {
-                    file: 'package/security/BcryptPasswordEncoder.java',
-                    renameTo: generator => `${generator.javaDir}security/BcryptPasswordEncoder.java`,
-                    useBluePrint: true,
-                },
-                {
-                    file: 'package/security/DatabaseAuthenticationProvider.java',
-                    renameTo: generator => `${generator.javaDir}security/DatabaseAuthenticationProvider.java`,
-                    useBluePrint: true,
-                },
-                {
                     file: 'package/security/Logout.java',
                     renameTo: generator => `${generator.javaDir}security/Logout.java`,
                     useBluePrint: true,
@@ -500,6 +485,11 @@ const serverFiles = {
             condition: generator => generator.authenticationType !== 'oauth2',
             path: SERVER_MAIN_SRC_DIR,
             templates: [
+                {
+                    file: 'package/security/PasswordEncoder.java',
+                    renameTo: generator => `${generator.javaDir}security/PasswordEncoder.java`,
+                    useBluePrint: true,
+                },
                 {
                     file: 'package/security/BcryptPasswordEncoder.java',
                     renameTo: generator => `${generator.javaDir}security/BcryptPasswordEncoder.java`,
