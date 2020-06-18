@@ -40,16 +40,12 @@ micronaut:
         enabled: true
   security:
     enabled: true
+    basic-auth:
+      enabled: false
 <%_ if (authenticationType === 'jwt') { _%>
     authentication: bearer
-    oauth2:
-      enabled: false
-    session:
-      enabled: false
 <%_ } else if (authenticationType === 'oauth2') { _%>
     authentication: cookie
-    session:
-      enabled: false
     oauth2:
       enabled: true
       clients:
