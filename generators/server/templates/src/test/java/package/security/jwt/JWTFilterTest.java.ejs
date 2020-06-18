@@ -50,7 +50,7 @@ public class JWTFilterTest {
 
         String username = client.retrieve(HttpRequest.GET("/api/test").bearerAuth(jwt)).blockingFirst();
 
-        assertThat(username).isEqualTo("test-user");
+        assertThat(username).isEqualTo("test-user"));
     }
 
     @Test

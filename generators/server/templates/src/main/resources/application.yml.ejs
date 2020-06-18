@@ -40,7 +40,10 @@ micronaut:
         enabled: true
   security:
     enabled: true
+<%_ if (authenticationType === 'jwt') { _%>
+    authentication: bearer
 <%_ if (authenticationType === 'oauth2') { _%>
+    authentication: cookie
     oauth2:
       enabled: true
       clients:
@@ -65,19 +68,6 @@ micronaut:
         enabled: true
         path: /api/logout
 <%_ } _%>
-    token:
-      jwt:
-        enabled: true
-<%_ if (authenticationType === 'jwt') { _%>
-        bearer:
-          enabled: true
-<%_ } _%>
-<%_ if (authenticationType === 'oauth2') { _%>
-        cookie:
-          enabled: true
-<%_ } _%>
-      basic-auth:
-        enabled: false
     intercept-url-map:
       - pattern: /
         access: isAnonymous()
