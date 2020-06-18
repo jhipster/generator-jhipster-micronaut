@@ -2,16 +2,22 @@ package <%=packageName%>.web.rest;
 
 import <%=packageName%>.config.Constants;
 import <%=packageName%>.domain.User;
+<%_ if (authenticationType !== 'oauth2') { _%>
 import <%=packageName%>.repository.UserRepository;
+<%_ } _%>
 import <%=packageName%>.security.AuthoritiesConstants;
+<%_ if (authenticationType !== 'oauth2') { _%>
 import <%=packageName%>.service.MailService;
+<%_ } _%>
 import <%=packageName%>.service.UserService;
 import <%=packageName%>.service.dto.UserDTO;
 import <%=packageName%>.util.HeaderUtil;
 import <%=packageName%>.util.PaginationUtil;
+<%_ if (authenticationType !== 'oauth2') { _%>
 import <%=packageName%>.web.rest.errors.BadRequestAlertException;
 import <%=packageName%>.web.rest.errors.EmailAlreadyUsedException;
 import <%=packageName%>.web.rest.errors.LoginAlreadyUsedException;
+<%_ } _%>
 
 import io.micronaut.context.annotation.Value;
 import io.micronaut.data.model.Page;
@@ -63,17 +69,23 @@ public class UserResource {
 
     private final UserService userService;
 
+<%_ if (authenticationType !== 'oauth2') { _%>
     private final UserRepository userRepository;
 
     private final MailService mailService;
 
     public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
-
         this.userService = userService;
         this.userRepository = userRepository;
         this.mailService = mailService;
     }
+<%_ } else { _%>
+    public UserResource(UserService userService) {
+        this.userService = userService;
+    }
+<%_ } _%>
 
+<%_ if (authenticationType !== 'oauth2') { _%>
     /**
      * {@code POST  /users}  : Creates a new user.
      * <p>
@@ -138,6 +150,7 @@ public class UserResource {
                 .headers(headers -> HeaderUtil.createAlert(headers, applicationName, "userManagement.updated", userDTO.getLogin()))
             ).orElse(HttpResponse.notFound());
     }
+<%_ } _%>
 
     /**
      * {@code GET /users} : get all users.
@@ -176,6 +189,7 @@ public class UserResource {
                 .map(UserDTO::new);
     }
 
+<%_ if (authenticationType !== 'oauth2') { _%>
     /**
      * {@code DELETE /users/:login} : delete the "login" User.
      *
@@ -189,4 +203,5 @@ public class UserResource {
         userService.deleteUser(login);
         return HttpResponse.noContent().headers(headers -> HeaderUtil.createAlert(headers, applicationName,  "userManagement.deleted", login));
     }
+<%_ } _%>
 }

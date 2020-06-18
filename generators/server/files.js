@@ -681,19 +681,13 @@ const serverFiles = {
                     useBluePrint: true,
                 },
                 {
-                    file: 'package/web/rest/package-info.java',
-                    renameTo: generator => `${generator.javaDir}web/rest/package-info.java`,
-                    useBluePrint: true,
-                },
-            ],
-        },
-        {
-            condition: generator => generator.authenticationType !== 'oauth2',
-            path: SERVER_MAIN_SRC_DIR,
-            templates: [
-                {
                     file: 'package/web/rest/UserResource.java',
                     renameTo: generator => `${generator.javaDir}web/rest/UserResource.java`,
+                    useBluePrint: true,
+                },
+                {
+                    file: 'package/web/rest/package-info.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/package-info.java`,
                     useBluePrint: true,
                 },
             ],
@@ -818,6 +812,11 @@ const serverFiles = {
                     useBluePrint: true,
                 },
                 {
+                    file: 'package/web/rest/UserResourceIT.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/UserResourceIT.java`,
+                    useBluePrint: true,
+                },
+                {
                     file: 'package/web/rest/TestUtil.java',
                     renameTo: generator => `${generator.javaDir}web/rest/TestUtil.java`,
                     useBluePrint: true,
@@ -831,11 +830,6 @@ const serverFiles = {
                 {
                     file: 'package/web/rest/UserJWTControllerIT.java',
                     renameTo: generator => `${generator.javaDir}web/rest/UserJWTControllerIT.java`,
-                    useBluePrint: true,
-                },
-                {
-                    file: 'package/web/rest/UserResourceIT.java',
-                    renameTo: generator => `${generator.javaDir}web/rest/UserResourceIT.java`,
                     useBluePrint: true,
                 },
             ],
