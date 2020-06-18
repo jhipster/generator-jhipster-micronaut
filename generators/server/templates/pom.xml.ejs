@@ -205,14 +205,14 @@ _%>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.micronaut.cache</groupId>
+            <artifactId>micronaut-cache-core</artifactId>
+        </dependency>
 <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached'].includes(cacheProvider)) { _%>
         <dependency>
             <groupId>javax.cache</groupId>
             <artifactId>cache-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.cache</groupId>
-            <artifactId>micronaut-cache-core</artifactId>
         </dependency>
 <%_ } _%>
 <%_
