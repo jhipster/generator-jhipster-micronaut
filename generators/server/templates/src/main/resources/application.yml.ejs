@@ -76,6 +76,8 @@ micronaut:
         cookie:
           enabled: true
 <%_ } _%>
+      basic-auth:
+        enabled: false
     intercept-url-map:
       - pattern: /
         access: isAnonymous()
