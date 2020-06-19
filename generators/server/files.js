@@ -746,17 +746,17 @@ const serverFiles = {
                     renameTo: generator => `${generator.javaDir}security/SecurityUtilsUnitTest.java`,
                     useBluePrint: true,
                 },
+                {
+                    file: 'package/security/jwt/JWTFilterTest.java',
+                    renameTo: generator => `${generator.javaDir}security/jwt/JWTFilterTest.java`,
+                    useBluePrint: true,
+                },
             ],
         },
         {
             condition: generator => generator.authenticationType !== 'oauth2',
             path: SERVER_TEST_SRC_DIR,
             templates: [
-                {
-                    file: 'package/security/jwt/JWTFilterTest.java',
-                    renameTo: generator => `${generator.javaDir}security/jwt/JWTFilterTest.java`,
-                    useBluePrint: true,
-                },
                 {
                     file: 'package/security/DomainUserDetailsServiceIT.java',
                     renameTo: generator => `${generator.javaDir}security/DomainUserDetailsServiceIT.java`,
