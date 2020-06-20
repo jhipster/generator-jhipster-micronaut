@@ -76,13 +76,16 @@ import <%= packageName %>.util.HeaderUtil;
 <%_ if (pagination !== 'no') { _%>
 import <%= packageName %>.util.PaginationUtil;
 <%_ } _%>
+import io.micronaut.context.annotation.Value;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.uri.UriBuilder;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import io.micronaut.context.annotation.Value;
 <%_ if (pagination !== 'no') { _%>
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
@@ -168,6 +171,7 @@ public class <%= entityClass %>Resource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @Post("/<%= entityApiUrl %>")
+    @ExecuteOn(TaskExecutors.IO)
     public HttpResponse<<%= instanceType %>> create<%= entityClass %>(<% if (validation) { %>@Valid <% } %>@Body <%= instanceType %> <%= instanceName %>) throws URISyntaxException {
         log.debug("REST request to save <%= entityClass %> : {}", <%= instanceName %>);
         if (<%= instanceName %>.getId() != null) {
@@ -207,6 +211,7 @@ public class <%= entityClass %>Resource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @Put("/<%= entityApiUrl %>")
+    @ExecuteOn(TaskExecutors.IO)
     public HttpResponse<<%= instanceType %>> update<%= entityClass %>(<% if (validation) { %>@Valid <% } %>@Body <%= instanceType %> <%= instanceName %>) throws URISyntaxException {
         log.debug("REST request to update <%= entityClass %> : {}", <%= instanceName %>);
         if (<%= instanceName %>.getId() == null) {
@@ -251,6 +256,7 @@ public class <%= entityClass %>Resource {
      * @return the {@link HttpResponse} with status {@code 200 (OK)} and the list of <%= entityInstancePlural %> in body.
      */
      @Get("/<%= entityApiUrl %><% if (pagination !== 'no') { _%>{?eagerload}<% } %>")
+     @ExecuteOn(TaskExecutors.IO)
     <%_ if (databaseType === 'sql' && isUsingMapsId === true && !viaService) { _%>
     @ReadOnly
     @Transactional
@@ -263,6 +269,7 @@ public class <%= entityClass %>Resource {
      * @return the {@link Flux} of <%= entityInstancePlural %>.
      */
     @Get(value = "/<%= entityApiUrl %>", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+    @ExecuteOn(TaskExecutors.IO)
     <%_ if (databaseType === 'sql' && isUsingMapsId === true && !viaService) { _%>
     @ReadOnly
     @Transactional
@@ -284,6 +291,7 @@ public class <%= entityClass %>Resource {
      * @return the {@link HttpResponse} with status {@code 200 (OK)} and with body the <%= instanceName %>, or with status {@code 404 (Not Found)}.
      */
     @Get("/<%= entityApiUrl %>/{id}")
+    @ExecuteOn(TaskExecutors.IO)
     <%_ if (databaseType === 'sql' && isUsingMapsId === true && !viaService) { _%>
     @ReadOnly
     @Transactional
@@ -301,6 +309,7 @@ public class <%= entityClass %>Resource {
      * @return the {@link HttpResponse} with status {@code 204 (NO_CONTENT)}.
      */
     @Delete("/<%= entityApiUrl %>/{id}")
+    @ExecuteOn(TaskExecutors.IO)
     public HttpResponse delete<%= entityClass %>(@PathVariable <%= primaryKeyType %> id) {
         log.debug("REST request to delete <%= entityClass %> : {}", id);
 <%- include('../../common/delete_template', {viaService: viaService}); -%>
