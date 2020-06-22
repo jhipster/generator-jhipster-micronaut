@@ -18,6 +18,31 @@ const clientFiles = {
                     renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4.svg`,
                 },
                 {
+                    file: 'angular/src/main/webapp/content/images/jhipster_family_member_4_head-192.png',
+                    method: 'copy',
+                    renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-192.png`,
+                },
+                {
+                    file: 'angular/src/main/webapp/content/images/jhipster_family_member_4_head-256.png',
+                    method: 'copy',
+                    renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-256.png`,
+                },
+                {
+                    file: 'angular/src/main/webapp/content/images/jhipster_family_member_4_head-384.png',
+                    method: 'copy',
+                    renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-384.png`,
+                },
+                {
+                    file: 'angular/src/main/webapp/content/images/jhipster_family_member_4_head-512.png',
+                    method: 'copy',
+                    renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-512.png`,
+                },
+                {
+                    file: 'angular/src/main/webapp/manifest.webapp',
+                    method: 'copy',
+                    renameTo: () => `${MAIN_SRC_DIR}manifest.webapp`,
+                },
+                {
                     file: 'angular/home/home.scss',
                     method: 'copy',
                     renameTo: () => `${ANGULAR_DIR}home/home.scss`,
@@ -171,6 +196,31 @@ const clientFiles = {
                     file: 'react/src/main/webapp/content/images/jhipster_family_member_4.svg',
                     method: 'copy',
                     renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4.svg`,
+                },
+                {
+                    file: 'react/src/main/webapp/content/images/jhipster_family_member_4_head-192.png',
+                    method: 'copy',
+                    renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-192.png`,
+                },
+                {
+                    file: 'react/src/main/webapp/content/images/jhipster_family_member_4_head-256.png',
+                    method: 'copy',
+                    renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-256.png`,
+                },
+                {
+                    file: 'react/src/main/webapp/content/images/jhipster_family_member_4_head-384.png',
+                    method: 'copy',
+                    renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-384.png`,
+                },
+                {
+                    file: 'react/src/main/webapp/content/images/jhipster_family_member_4_head-512.png',
+                    method: 'copy',
+                    renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-512.png`,
+                },
+                {
+                    file: 'react/src/main/webapp/manifest.webapp',
+                    method: 'copy',
+                    renameTo: () => `${MAIN_SRC_DIR}manifest.webapp`,
                 },
                 {
                     file: 'react/home/home.scss',
