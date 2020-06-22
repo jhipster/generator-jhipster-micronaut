@@ -15,7 +15,7 @@ const clientFiles = {
                 {
                     file: 'angular/src/main/webapp/content/images/jhipster_family_member_4.svg',
                     method: 'copy',
-                    renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4.svg`
+                    renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4.svg`,
                 },
                 {
                     file: 'angular/home/home.scss',
@@ -170,7 +170,7 @@ const clientFiles = {
                 {
                     file: 'react/src/main/webapp/content/images/jhipster_family_member_4.svg',
                     method: 'copy',
-                    renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4.svg`
+                    renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4.svg`,
                 },
                 {
                     file: 'react/home/home.scss',
