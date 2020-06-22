@@ -81,7 +81,7 @@ _%>
         <mapstruct.version><%= versions.mapstruct %></mapstruct.version>
         <mockito.version><%= versions.mockito %></mockito.version>
         <problem.version><%= versions.problem %></problem.version>
-
+        <jackson.version><%= versions.jackson %></jackson.version>
 <%_ if (cacheProvider === 'caffeine') { _%>
         <caffeine.version><%= versions.caffeine %></caffeine.version>
         <typesafe.version>1.4.0</typesafe.version>
@@ -120,6 +120,13 @@ _%>
 
     <dependencyManagement>
         <dependencies>
+             <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
             <dependency>
                 <groupId>io.github.jhipster</groupId>
                 <artifactId>jhipster-dependencies</artifactId>
