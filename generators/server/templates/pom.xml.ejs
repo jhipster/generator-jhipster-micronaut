@@ -405,12 +405,24 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <artifactId>micronaut-data-hibernate-jpa</artifactId>
             <version>${micronaut-data.version}</version>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.micronaut</groupId>
+                    <artifactId>micronaut-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.micronaut.data</groupId>
             <artifactId>micronaut-data-jdbc</artifactId>
             <version>${micronaut-data.version}</version>
             <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.micronaut</groupId>
+                    <artifactId>micronaut-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.micronaut.views</groupId>

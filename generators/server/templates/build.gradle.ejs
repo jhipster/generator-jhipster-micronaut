@@ -386,8 +386,12 @@ dependencies {
     implementation "io.micronaut.micrometer:micronaut-micrometer-core"
     implementation "io.micronaut.micrometer:micronaut-micrometer-registry-prometheus"
     implementation "io.micronaut.data:micronaut-data-runtime:$micronaut_data_version"
-    implementation "io.micronaut.data:micronaut-data-hibernate-jpa:$micronaut_data_version"
-    implementation "io.micronaut.data:micronaut-data-jdbc:$micronaut_data_version"
+    implementation ("io.micronaut.data:micronaut-data-hibernate-jpa:$micronaut_data_version") {
+        exclude group: 'io.micronaut', module: 'micronaut-jdbc'
+    }
+    implementation("io.micronaut.data:micronaut-data-jdbc:$micronaut_data_version") {
+        exclude group: 'io.micronaut', module: 'micronaut-jdbc'
+    }
 
     implementation "javax.mail:javax.mail-api:$javax_mail_version"
     implementation "com.sun.mail:javax.mail:$javax_mail_version"
