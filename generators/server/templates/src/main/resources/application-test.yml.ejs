@@ -6,6 +6,13 @@ datasources:
     poolName: Hikari
     autoCommit: false
 
+liquibase:
+  datasources:
+    default:
+      async: false
+      change-log: classpath:config/liquibase/master.xml
+      contexts: dev
+
 jpa:
   default:
     packages-to-scan:
