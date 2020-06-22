@@ -4,9 +4,11 @@ import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.repository.timezone.DateTimeWrapper;
 import <%=packageName%>.repository.timezone.DateTimeWrapperRepository;
 
+import io.micronaut.context.annotation.Value;
 import io.micronaut.data.jdbc.runtime.JdbcOperations;
 import io.micronaut.test.annotation.MicronautTest;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
@@ -24,11 +26,15 @@ import static org.assertj.core.api.Assertions.fail;
 /**
  * Integration tests for the UTC Hibernate configuration.
  */
-@MicronautTest(application = <%= mainClass %>.class)
+@MicronautTest(application = <%= mainClass %>.class, environments = {"test"})
+@Disabled("Just temporary for testing")
 public class HibernateTimeZoneIT {
 
     @Inject DateTimeWrapperRepository dateTimeWrapperRepository;
     @Inject JdbcOperations jdbcOperations;
+
+    @Value("${jpa.default.hibernate.jdbc.time_zone:UTC}")
+    private String zoneId;
 
     private DateTimeWrapper dateTimeWrapper;
     private DateTimeFormatter dateTimeFormatter;
@@ -48,11 +54,11 @@ public class HibernateTimeZoneIT {
 
         dateTimeFormatter = DateTimeFormatter
             .ofPattern("yyyy-MM-dd HH:mm:ss.S")
-            .withZone(ZoneId.of("UTC"));
+            .withZone(ZoneId.of(zoneId));
 
         timeFormatter = DateTimeFormatter
             .ofPattern("HH:mm:ss")
-            .withZone(ZoneId.of("UTC"));
+            .withZone(ZoneId.of(zoneId));
 
         dateFormatter = DateTimeFormatter
             .ofPattern("yyyy-MM-dd");

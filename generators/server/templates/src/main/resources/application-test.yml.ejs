@@ -18,10 +18,13 @@ jpa:
     packages-to-scan:
       - <%=packageName%>.domain
       - <%=packageName%>.repository
+    database-platform: io.github.jhipster.domain.util.FixedH2Dialect
     properties:
       hibernate:
+        jdbc:
+          time_zone: UTC
         hbm2ddl:
-            auto: none
+          auto: none
 
 micronaut:
   security:
