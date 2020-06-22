@@ -29,6 +29,7 @@ module.exports = {
         micronautData: '1.1.0',
 
         hibernate: '5.4.17.Final',
+        jackson: '2.11.0',
         javassist: '3.24.0-GA', // Should match Hibernate deps
         javaxMail: '1.6.2',
         jbcrypt: '0.4',
