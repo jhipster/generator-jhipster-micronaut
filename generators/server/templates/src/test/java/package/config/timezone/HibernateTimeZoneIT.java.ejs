@@ -27,7 +27,6 @@ import static org.assertj.core.api.Assertions.fail;
  * Integration tests for the UTC Hibernate configuration.
  */
 @MicronautTest(application = <%= mainClass %>.class, environments = {"test"})
-@Disabled("Just temporary for testing")
 public class HibernateTimeZoneIT {
 
     @Inject DateTimeWrapperRepository dateTimeWrapperRepository;

@@ -11,7 +11,7 @@ liquibase:
     default:
       async: false
       change-log: classpath:config/liquibase/master.xml
-      contexts: dev
+      contexts: test
 
 jpa:
   default:
@@ -21,6 +21,10 @@ jpa:
     database-platform: io.github.jhipster.domain.util.FixedH2Dialect
     properties:
       hibernate:
+        cache:
+          use_second_level_cache: false
+        id:
+          new_generator_mappings: true
         jdbc:
           time_zone: UTC
         hbm2ddl:
