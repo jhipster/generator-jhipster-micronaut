@@ -246,6 +246,15 @@ configurations {
     providedRuntime
 }
 
+<%_ if (databaseType === 'sql') { _%>
+    // This is due to a conflict between JHipster and Micronaut Liquibase
+    // When micronaut-liquibase supports a version higher than 3.8.0
+    // this can likely be removed
+    configurations.all {
+        resolutionStrategy.force 'org.liquibase:liquibase-core:3.8.9'
+    }
+<%_ } _%>
+
 repositories {
     mavenLocal()
     mavenCentral()
