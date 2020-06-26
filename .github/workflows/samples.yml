@@ -38,11 +38,11 @@ jobs:
                 node_version: [12.16.1]
                 os: [ubuntu-latest]
                 app-type:
-                    - gradle-jwt-angular
+                    - gradle-jwt-react
                     - mvn-no-client
                     - mvn-oauth-angular
                 include:
-                    - app-type: gradle-jwt-angular
+                    - app-type: gradle-jwt-react
                     - app-type: mvn-no-client
                     - app-type: mvn-oauth-angular
         steps:

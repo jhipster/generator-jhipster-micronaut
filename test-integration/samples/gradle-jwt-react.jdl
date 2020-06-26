@@ -6,7 +6,7 @@ application {
     blueprints [generator-jhipster-micronaut]
     buildTool gradle
     cacheProvider ehcache
-    clientFramework angularX
+    clientFramework react
     clientPackageManager npm
     clientTheme cyborg
     clientThemeVariant dark
