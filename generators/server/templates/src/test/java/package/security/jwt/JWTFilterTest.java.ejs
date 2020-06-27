@@ -11,6 +11,9 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Replaces;
 import io.micronaut.context.annotation.Requires;
+<%_ if (authenticationType === 'oauth2') { _%>
+import io.micronaut.http.HttpHeaders;
+<%_ } _%>
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
@@ -37,16 +40,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @MicronautTest
 @Property(name = "spec.name", value = "JWTFilterTest")
+<%_ if (authenticationType === 'oauth2') { _%>
+@Property(name = "micronaut.http.client.follow-redirects", value = "false")
+<%_ } _%>
 public class JWTFilterTest {
 
     @Inject @Client("/") RxHttpClient client;
 
     @Test
     public void testJWTFilter() throws Exception {
+        <%_ if (authenticationType === 'oauth2') { _%>
+
+        HttpResponse<?> response = client.exchange(HttpRequest.POST("/api/authenticate", new UsernamePasswordCredentials("test-user", "test-password"))).blockingFirst();
+        HttpHeaders headers = response.getHeaders();
+
+        String jwtCookie = headers.getFirst("set-cookie").orElseThrow();
+        String jwt = jwtCookie.split("=")[1].split(";")[0];
+        <%_ } else { _%>
+
         AccessRefreshToken token = client.retrieve(HttpRequest.POST("/api/authenticate", new UsernamePasswordCredentials("test-user",
             "test-password")), AccessRefreshToken.class).blockingFirst();
 
         String jwt = token.getAccessToken();
+        <%_ } _%>
 
         String username = client.retrieve(HttpRequest.GET("/api/test").bearerAuth(jwt)).blockingFirst();
 
