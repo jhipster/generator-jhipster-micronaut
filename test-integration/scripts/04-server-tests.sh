@@ -15,7 +15,7 @@ echo "Running $buildTool server tests for $1..."
 if [ "$buildTool" == "maven" ]; then
     ./mvnw -ntp clean test integration-test
 else
-    ./gradlew clean test integrationTest -x webpack -x webpackBuildDev
+    ./gradlew test integrationTest -x webpack -x webpackBuildDev
 fi
 
 cd ../../
