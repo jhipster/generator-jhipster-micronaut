@@ -34,7 +34,7 @@ module.exports = {
         javaxMail: '1.6.2',
         jbcrypt: '0.4',
         jhipsterDeps: '3.8.0',
-        liquibase: '3.8.9',
+        liquibase: '3.8.0',
         liquibaseHibernate5: '3.8',
         logback: '1.2.3',
         mapstruct: '1.3.1.Final',

@@ -46,7 +46,7 @@ if [[ "$testFrameworks" == *"protractor"* ]]; then
 
     java -jar "$jarFile" &
 
-    sleep 10
+    sleep 20
 
     verifyAppAvailable "$serverPort"
 
