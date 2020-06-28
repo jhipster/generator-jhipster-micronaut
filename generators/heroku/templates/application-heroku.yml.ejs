@@ -28,10 +28,16 @@
 # https://docs.micronaut.io/latest/guide/configurationreference.html
 # ===================================================================
 
-<%_ if (useOkta) { _%>
+
 micronaut:
   security:
-    enabled: true
+    token:
+    jwt:
+      signatures:
+        secret:
+          generator:
+            secret: ${JWT_SECRET}
+<%_ if (useOkta) { _%>
     oauth2:
       enabled: true
       clients:
