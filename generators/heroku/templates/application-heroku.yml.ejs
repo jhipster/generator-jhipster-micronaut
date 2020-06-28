@@ -32,11 +32,11 @@
 micronaut:
   security:
     token:
-    jwt:
-      signatures:
-        secret:
-          generator:
-            secret: ${JWT_SECRET}
+      jwt:
+        signatures:
+          secret:
+            generator:
+              secret: ${JWT_SECRET}
 <%_ if (useOkta) { _%>
     oauth2:
       enabled: true
