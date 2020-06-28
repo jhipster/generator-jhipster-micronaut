@@ -1,5 +1,10 @@
 package <%=packageName%>.security;
 
+import <%=packageName%>.domain.Authority;
+import <%=packageName%>.domain.User;
+import <%=packageName%>.service.UserService;
+
+import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTParser;
 import io.micronaut.context.annotation.Requires;
@@ -28,6 +33,7 @@ public class JHipsterOpenIdUserDetailsMapper extends DefaultOpenIdUserDetailsMap
     public static final String ROLES_CLAIM = "roles";
     public static final String ROLE_PREFIX = "ROLE_";
 
+    private UserService userService;
 
     /**
     * Default constructor.
@@ -35,8 +41,28 @@ public class JHipsterOpenIdUserDetailsMapper extends DefaultOpenIdUserDetailsMap
     * @param openIdAdditionalClaimsConfiguration The additional claims configuration
     */
     public JHipsterOpenIdUserDetailsMapper(OpenIdAdditionalClaimsConfiguration openIdAdditionalClaimsConfiguration,
-                                            AuthenticationModeConfiguration authenticationModeConfiguration) {
+                                            AuthenticationModeConfiguration authenticationModeConfiguration,
+                                            UserService userService) {
         super(openIdAdditionalClaimsConfiguration, authenticationModeConfiguration);
+        this.userService = userService;
+    }
+
+    private void syncWithIdp(JWT parsedJwt, List<String> roles) throws ParseException {
+
+        User user = new User();
+        user.setId(parsedJwt.getJWTClaimsSet().getSubject());
+        user.setLogin(parsedJwt.getJWTClaimsSet().getStringClaim("preferred_username"));
+        user.setEmail(parsedJwt.getJWTClaimsSet().getStringClaim("email"));
+        user.setFirstName(parsedJwt.getJWTClaimsSet().getStringClaim("given_name"));
+        user.setLastName(parsedJwt.getJWTClaimsSet().getStringClaim("family_name"));
+
+        user.setAuthorities(roles.stream().map(it -> {
+            Authority authority = new Authority();
+            authority.setName(it);
+            return authority;
+        }).collect(Collectors.toSet()));
+
+        userService.syncUserWithIdP(user);
     }
 
     /**
@@ -49,7 +75,11 @@ public class JHipsterOpenIdUserDetailsMapper extends DefaultOpenIdUserDetailsMap
     protected List<String> getRoles(String providerName, OpenIdTokenResponse tokenResponse, OpenIdClaims openIdClaims) {
         String idToken = tokenResponse.getIdToken();
         try {
-            return extractAuthorityFromClaims(JWTParser.parse(tokenResponse.getAccessToken()).getJWTClaimsSet());
+            JWT parsedJwt = JWTParser.parse(tokenResponse.getAccessToken());
+            List<String> roles = extractAuthorityFromClaims(parsedJwt.getJWTClaimsSet());
+
+            syncWithIdp(parsedJwt, roles);
+            return roles;
         } catch (ParseException e) {
             LOG.error("JWT Parse exception processing id token: {}", idToken);
         }

@@ -55,6 +55,36 @@ public class UserService {
         this.cacheManager = cacheManager;
     }
 
+<%_ if (authenticationType == 'oauth2') { _%>
+    public User syncUserWithIdP(User user) {
+        // save authorities in to sync user roles/groups between IdP and JHipster's local database
+        Collection<String> dbAuthorities = getAuthorities();
+        Collection<String> userAuthorities =
+            user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toList());
+        for (String authority : userAuthorities) {
+            if (!dbAuthorities.contains(authority)) {
+                log.debug("Saving authority '{}' in local database", authority);
+                Authority authorityToSave = new Authority();
+                authorityToSave.setName(authority);
+                authorityRepository.save(authorityToSave);
+            }
+        }
+        // save account in to sync users between IdP and JHipster's local database
+        Optional<User> existingUser = userRepository.findOneByLogin(user.getLogin());
+        if (existingUser.isPresent()) {
+
+            log.debug("Updating user '{}' in local database", user.getLogin());
+            updateUser(user.getFirstName(), user.getLastName(), user.getEmail(),
+                user.getLangKey(), user.getImageUrl());
+
+        } else {
+            log.debug("Saving user '{}' in local database", user.getLogin());
+            userRepository.save(user);
+            this.clearUserCaches(user);
+        }
+        return user;
+    }
+<%_ } _%>
 <%_ if (authenticationType !== 'oauth2') { _%>
 
     public Optional<User> activateRegistration(String key) {

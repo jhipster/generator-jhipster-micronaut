@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const fs = require('fs');
 const ChildProcess = require('child_process');
 const util = require('util');
+const os = require('os');
 const HerokuGenerator = require('generator-jhipster/generators/heroku');
 const constants = require('generator-jhipster/generators/generator-constants');
 const { getBase64Secret } = require('generator-jhipster/generators/utils');
@@ -20,6 +21,32 @@ module.exports = class extends HerokuGenerator {
         }
 
         this.configOptions = jhContext.configOptions || {};
+    }
+
+    /**
+     * build a generated application.
+     *
+     * @param {String} buildTool - maven | gradle
+     * @param {String} profile - dev | prod
+     * @param {Boolean} buildWar - build a war instead of a jar
+     * @param {Function} cb - callback when build is complete
+     * @returns {object} the command line and its result
+     */
+    buildApplication(buildTool, profile, buildWar, cb) {
+        let buildCmd = 'mvnw -ntp verify -B';
+
+        if (buildTool === 'gradle') {
+            buildCmd = 'gradlew shadowJar';
+        }
+
+        if (os.platform() !== 'win32') {
+            buildCmd = `./${buildCmd}`;
+        }
+        buildCmd += ` -P${profile}`;
+        return {
+            stdout: ChildProcess.exec(buildCmd, { maxBuffer: 1024 * 10000 }, cb).stdout,
+            buildCmd,
+        };
     }
 
     get initializing() {
@@ -120,7 +147,7 @@ module.exports = class extends HerokuGenerator {
                 child.stdout.on('data', data => {
                     this.log(data.toString());
                 });
-            }
+            },
         };
         return Object.assign(phaseFromJHipster, jhipsterMicronautDefaultPhaseSteps);
     }
