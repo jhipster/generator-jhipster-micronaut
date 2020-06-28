@@ -486,6 +486,11 @@ const serverFiles = {
             path: SERVER_MAIN_SRC_DIR,
             templates: [
                 {
+                    file: 'package/security/PasswordEncoder.java',
+                    renameTo: generator => `${generator.javaDir}security/PasswordEncoder.java`,
+                    useBluePrint: true,
+                },
+                {
                     file: 'package/security/BcryptPasswordEncoder.java',
                     renameTo: generator => `${generator.javaDir}security/BcryptPasswordEncoder.java`,
                     useBluePrint: true,
@@ -737,13 +742,13 @@ const serverFiles = {
             path: SERVER_TEST_SRC_DIR,
             templates: [
                 {
-                    file: 'package/security/jwt/JWTFilterTest.java',
-                    renameTo: generator => `${generator.javaDir}security/jwt/JWTFilterTest.java`,
+                    file: 'package/security/SecurityUtilsUnitTest.java',
+                    renameTo: generator => `${generator.javaDir}security/SecurityUtilsUnitTest.java`,
                     useBluePrint: true,
                 },
                 {
-                    file: 'package/security/SecurityUtilsUnitTest.java',
-                    renameTo: generator => `${generator.javaDir}security/SecurityUtilsUnitTest.java`,
+                    file: 'package/security/jwt/JWTFilterTest.java',
+                    renameTo: generator => `${generator.javaDir}security/jwt/JWTFilterTest.java`,
                     useBluePrint: true,
                 },
             ],

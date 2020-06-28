@@ -13,9 +13,9 @@ buildTool=`jdlVal "./$1.jdl" "buildTool"`
 echo "Running $buildTool server tests for $1..."
 
 if [ "$buildTool" == "maven" ]; then
-    ./mvnw clean test integration-test
+    ./mvnw -ntp clean test integration-test
 else
-    ./gradlew clean test integrationTest -x webpack -x webpackBuildDev --stacktrace --info
+    ./gradlew test integrationTest -x webpack -x webpackBuildDev
 fi
 
 cd ../../

@@ -25,16 +25,17 @@ module.exports = {
         postgresql: 'org.postgresql.Driver',
     },
     versions: {
-        micronaut: '1.3.6',
-        micronautData: '1.0.2',
+        micronaut: '2.0.0',
+        micronautData: '1.1.1',
 
-        hibernate: '5.4.10.Final',
+        hibernate: '5.4.17.Final',
+        jackson: '2.11.0',
         javassist: '3.24.0-GA', // Should match Hibernate deps
         javaxMail: '1.6.2',
         jbcrypt: '0.4',
         jhipsterDeps: '3.8.0',
-        liquibase: '3.6.3',
-        liquibaseHibernate5: '3.6',
+        liquibase: '3.8.0',
+        liquibaseHibernate5: '3.8',
         logback: '1.2.3',
         mapstruct: '1.3.1.Final',
         mockito: '3.1.0',

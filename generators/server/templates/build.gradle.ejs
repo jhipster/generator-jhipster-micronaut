@@ -118,6 +118,18 @@ defaultTasks "run"
 
 mainClassName = "<%= packageName %>.<%= mainClass %>"
 
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+    options.compilerArgs.addAll([
+        '-parameters',
+        // enables incremental compilation
+        '-Amicronaut.processing.incremental=true',
+        '-Amicronaut.processing.annotations=<%= packageName %>.*',
+        "-Amicronaut.processing.group=$project.group",
+        "-Amicronaut.processing.module=$project.name",
+    ])
+}
+
 test {
     useJUnitPlatform()
     exclude "**/*IT*", "**/*IntTest*"
@@ -234,6 +246,15 @@ configurations {
     providedRuntime
 }
 
+<%_ if (databaseType === 'sql') { _%>
+    // This is due to a conflict between JHipster and Micronaut Liquibase
+    // When micronaut-liquibase supports a version higher than 3.8.0
+    // this can likely be removed
+    configurations.all {
+        resolutionStrategy.force 'org.liquibase:liquibase-core:3.8.9'
+    }
+<%_ } _%>
+
 repositories {
     mavenLocal()
     mavenCentral()
@@ -311,6 +332,7 @@ dependencies {
     implementation "org.hibernate:hibernate-jcache"
         <%_ } _%>
     <%_ } _%>
+    implementation "io.micronaut.cache:micronaut-cache-core:$micronaut_version"
     <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'redis'].includes(cacheProvider) || applicationType === 'gateway') { _%>
     implementation "javax.cache:cache-api"
     <%_ } _%>
@@ -332,6 +354,7 @@ dependencies {
     <%_ } _%>
     <%_ if (cacheProvider === 'ehcache') { _%>
     implementation "org.ehcache:ehcache"
+    implementation "io.micronaut.cache:micronaut-cache-ehcache"
         <%_ if (enableHibernateCache) { _%>
     implementation "org.hibernate:hibernate-jcache"
         <%_ } _%>
@@ -340,6 +363,7 @@ dependencies {
     implementation "com.github.ben-manes.caffeine:caffeine:${caffeine_version}"
     implementation "com.github.ben-manes.caffeine:jcache:${caffeine_version}"
     implementation "com.typesafe:config:${typesafe_config_version}"
+    implementation "io.micronaut.cache:micronaut-cache-caffeine"
         <%_ if (enableHibernateCache) { _%>
     implementation "org.hibernate:hibernate-jcache"
         <%_ } _%>
@@ -359,22 +383,26 @@ dependencies {
     implementation "io.micronaut:micronaut-http-client:$micronaut_version"
     implementation "io.micronaut:micronaut-http-server-netty:$micronaut_version"
     implementation "io.micronaut:micronaut-management:$micronaut_version"
-    implementation "io.micronaut:micronaut-security-jwt"
+    implementation "io.micronaut.security:micronaut-security-jwt"
 <%_ if (authenticationType == 'oauth2') { _%>
-    implementation "io.micronaut.configuration:micronaut-security-oauth2"
+    implementation "io.micronaut.security:micronaut-security-oauth2"
 <%_ } _%>
-    implementation "io.micronaut:micronaut-views-thymeleaf"
+    implementation "io.micronaut.views:micronaut-views-thymeleaf"
 
     implementation "org.mindrot:jbcrypt:$jbcrypt_version"
 
-    implementation "io.micronaut.configuration:micronaut-liquibase"
-    implementation "io.micronaut.configuration:micronaut-jdbc-hikari"
-    implementation "io.micronaut.configuration:micronaut-jmx"
-    implementation "io.micronaut.configuration:micronaut-micrometer-core"
-    implementation "io.micronaut.configuration:micronaut-micrometer-registry-prometheus"
+    implementation "io.micronaut.liquibase:micronaut-liquibase"
+    implementation "io.micronaut.sql:micronaut-jdbc-hikari"
+    implementation "io.micronaut.jmx:micronaut-jmx"
+    implementation "io.micronaut.micrometer:micronaut-micrometer-core"
+    implementation "io.micronaut.micrometer:micronaut-micrometer-registry-prometheus"
     implementation "io.micronaut.data:micronaut-data-runtime:$micronaut_data_version"
-    implementation "io.micronaut.data:micronaut-data-hibernate-jpa:$micronaut_data_version"
-    implementation "io.micronaut.data:micronaut-data-jdbc:$micronaut_data_version"
+    implementation ("io.micronaut.data:micronaut-data-hibernate-jpa:$micronaut_data_version") {
+        exclude group: 'io.micronaut', module: 'micronaut-jdbc'
+    }
+    implementation("io.micronaut.data:micronaut-data-jdbc:$micronaut_data_version") {
+        exclude group: 'io.micronaut', module: 'micronaut-jdbc'
+    }
 
     implementation "javax.mail:javax.mail-api:$javax_mail_version"
     implementation "com.sun.mail:javax.mail:$javax_mail_version"
