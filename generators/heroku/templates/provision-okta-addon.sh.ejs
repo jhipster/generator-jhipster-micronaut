@@ -11,13 +11,19 @@ get_app_url() {
 }
 
 get_apps() {
-    curl -s --location --request GET "${1}/api/v1/apps" \
+    curl -s --location --request GET "${1}/api/v1/apps?q=SPA" \
         --header "Accept: application/json" \
         --header "Content-Type: application/json" \
         --header "Authorization: SSWS ${2}" >apps.json
 
     jq '.[0]' apps.json >app1.json
-    jq '.[1]' apps.json >app2.json
+
+    curl -s --location --request GET "${1}/api/v1/apps?q=Web" \
+        --header "Accept: application/json" \
+        --header "Content-Type: application/json" \
+        --header "Authorization: SSWS ${2}" >apps.json
+
+    jq '.[0]' apps.json >app2.json
 }
 
 add_redirect_url() {
