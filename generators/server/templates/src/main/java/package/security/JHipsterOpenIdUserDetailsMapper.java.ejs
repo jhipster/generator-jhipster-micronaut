@@ -47,22 +47,26 @@ public class JHipsterOpenIdUserDetailsMapper extends DefaultOpenIdUserDetailsMap
         this.userService = userService;
     }
 
-    private void syncWithIdp(JWT parsedJwt, List<String> roles) throws ParseException {
+    private void syncWithIdp(JWT parsedJwt, List<String> roles) {
+        
+        try {
+            User user = new User();
+            user.setId(parsedJwt.getJWTClaimsSet().getSubject());
+            user.setLogin(parsedJwt.getJWTClaimsSet().getStringClaim("preferred_username"));
+            user.setEmail(parsedJwt.getJWTClaimsSet().getStringClaim("email"));
+            user.setFirstName(parsedJwt.getJWTClaimsSet().getStringClaim("given_name"));
+            user.setLastName(parsedJwt.getJWTClaimsSet().getStringClaim("family_name"));
 
-        User user = new User();
-        user.setId(parsedJwt.getJWTClaimsSet().getSubject());
-        user.setLogin(parsedJwt.getJWTClaimsSet().getStringClaim("preferred_username"));
-        user.setEmail(parsedJwt.getJWTClaimsSet().getStringClaim("email"));
-        user.setFirstName(parsedJwt.getJWTClaimsSet().getStringClaim("given_name"));
-        user.setLastName(parsedJwt.getJWTClaimsSet().getStringClaim("family_name"));
+            user.setAuthorities(roles.stream().map(it -> {
+                Authority authority = new Authority();
+                authority.setName(it);
+                return authority;
+            }).collect(Collectors.toSet()));
 
-        user.setAuthorities(roles.stream().map(it -> {
-            Authority authority = new Authority();
-            authority.setName(it);
-            return authority;
-        }).collect(Collectors.toSet()));
-
-        userService.syncUserWithIdP(user);
+            userService.syncUserWithIdP(user);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to sync user with idp.", e);
+        }
     }
 
     /**
@@ -73,18 +77,27 @@ public class JHipsterOpenIdUserDetailsMapper extends DefaultOpenIdUserDetailsMap
     */
     @Override
     protected List<String> getRoles(String providerName, OpenIdTokenResponse tokenResponse, OpenIdClaims openIdClaims) {
-        String idToken = tokenResponse.getIdToken();
+        JWT parsedJwt = null;
+        List<String> roles = new ArrayList<>();
         try {
-            JWT parsedJwt = JWTParser.parse(tokenResponse.getAccessToken());
-            List<String> roles = extractAuthorityFromClaims(parsedJwt.getJWTClaimsSet());
-
-            syncWithIdp(parsedJwt, roles);
-            return roles;
-        } catch (ParseException e) {
-            LOG.error("JWT Parse exception processing id token: {}", idToken);
+            parsedJwt = JWTParser.parse(tokenResponse.getAccessToken());
+            roles.addAll(extractAuthorityFromClaims(parsedJwt.getJWTClaimsSet()));
+        } catch (Exception e) {
+            LOG.error("JWT Parse exception processing access token: {}", tokenResponse.getAccessToken());
         }
 
-        return Collections.emptyList();
+        try {
+            parsedJwt = JWTParser.parse(tokenResponse.getIdToken());
+            roles.addAll(extractAuthorityFromClaims(parsedJwt.getJWTClaimsSet()));
+        } catch (Exception e) {
+            LOG.error("JWT Parse exception processing id token: {}", tokenResponse.getIdToken());
+        }
+
+        if (parsedJwt != null) {
+            syncWithIdp(parsedJwt, roles);
+        }
+
+        return roles;
     }
 
     public static List<String> extractAuthorityFromClaims(JWTClaimsSet claimsSet) {
