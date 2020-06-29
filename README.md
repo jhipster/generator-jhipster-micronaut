@@ -41,6 +41,7 @@ $ jhipster --blueprints micronaut
 * Maven or Gradle Build System
 * Angular or React Client
 * Protractor Tests
+* Heroku Deployment
 
 ## ❤️ for community
 

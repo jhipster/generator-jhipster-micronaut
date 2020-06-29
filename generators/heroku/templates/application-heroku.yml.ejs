@@ -46,6 +46,8 @@ micronaut:
           client-id: ${OKTA_OAUTH2_CLIENT_ID_WEB}
           openid:
             issuer: ${OKTA_OAUTH2_ISSUER}
+            end-session:
+              enabled: true
 <%_ } _%>
 
 datasources:
