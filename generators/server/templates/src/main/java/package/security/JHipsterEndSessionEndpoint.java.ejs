@@ -25,14 +25,15 @@ import java.util.Map;
 import java.util.Optional;
 
 @Named("oidc")
-public class KeycloakEndSessionEndpoint extends AbstractEndSessionRequest {
-    private static final Logger LOG = LoggerFactory.getLogger(KeycloakEndSessionEndpoint.class);
+public class JHipsterEndSessionEndpoint extends AbstractEndSessionRequest {
+    private static final Logger LOG = LoggerFactory.getLogger(JHipsterEndSessionEndpoint.class);
 
     private static final String PARAM_REDIRECT_URI = "redirect_uri";
     private static final String PARAM_ID_TOKEN_HINT = "id_token_hint";
+    private static final String PARAM_POST_LOGOUT_REDIRECT_URI = "post_logout_redirect_uri";
     private static final String PARAMETERS_KEY = "parameters";
 
-    public KeycloakEndSessionEndpoint(EndSessionCallbackUrlBuilder endSessionCallbackUrlBuilder,
+    public JHipsterEndSessionEndpoint(EndSessionCallbackUrlBuilder endSessionCallbackUrlBuilder,
                                         OauthClientConfiguration clientConfiguration,
                                         @Named("oidc") OpenIdProviderMetadata providerMetadata) {
         super(endSessionCallbackUrlBuilder, clientConfiguration, () -> providerMetadata);
@@ -51,11 +52,15 @@ public class KeycloakEndSessionEndpoint extends AbstractEndSessionRequest {
 
     @Override
     protected Map<String, Object> getArguments(HttpRequest<?> originating, Authentication authentication) {
-
-        Optional<String> idToken = parseIdToken(authentication);
         Map<String, Object> arguments = new HashMap<>();
-        idToken.ifPresent(token -> arguments.put(PARAM_ID_TOKEN_HINT, token));
-        arguments.put(PARAM_REDIRECT_URI, getRedirectUri(originating));
+        // if Keycloak, logoutUrl has protocol/openid-connect in it
+        if (getRedirectUri(originating).contains("/protocol")) {
+            arguments.put(PARAM_REDIRECT_URI, getRedirectUri(originating));
+        } else {
+            Optional<String> idToken = parseIdToken(authentication);
+            arguments.put(PARAM_POST_LOGOUT_REDIRECT_URI, getRedirectUri(originating));
+            idToken.ifPresent(token -> arguments.put(PARAM_ID_TOKEN_HINT, token));
+        }
         return arguments;
     }
 

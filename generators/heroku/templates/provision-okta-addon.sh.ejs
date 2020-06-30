@@ -31,8 +31,9 @@ add_redirect_url() {
     jq '.settings.oauthClient.redirect_uris += ["'"${REDIRECT_URL}"'"]' app1.json >app1-mod.json
     jq '.settings.oauthClient.redirect_uris += ["'"${REDIRECT_URL}"'"]' app2.json >app2-mod.json
 
-    jq '.settings.oauthClient.post_logout_redirect_uris += ["'"${1//\"/logout}"'"]' app1-mod.json >app1.json
-    jq '.settings.oauthClient.post_logout_redirect_uris += ["'"${1//\"/logout}"'"]' app2-mod.json >app2.json
+    POST_LOGOUT_REDIRECT_URL="${1//\"/}logout"
+    jq '.settings.oauthClient.post_logout_redirect_uris += ["'"${POST_LOGOUT_REDIRECT_URL}"'"]' app1-mod.json >app1.json
+    jq '.settings.oauthClient.post_logout_redirect_uris += ["'"${POST_LOGOUT_REDIRECT_URL}"'"]' app2-mod.json >app2.json
 }
 
 update_apps() {
