@@ -2,6 +2,7 @@
 
 echo "Moving around eslint configs..."
 mv .eslintrc.json backup.eslintrc.json
+mv .yo-rc.json backup.yo-rc.json
 
 if [ "$GITHUB_ACTIONS" == "true" ]; then
     echo "Detected within GitHub actions..."
