@@ -1,4 +1,4 @@
-/* eslint-disable consistent-return */
+/* eslint-disable consistent-return,max-classes-per-file */
 const chalk = require('chalk');
 const fs = require('fs');
 const ChildProcess = require('child_process');
@@ -11,7 +11,7 @@ const { getBase64Secret } = require('generator-jhipster/generators/utils');
 const execCmd = util.promisify(ChildProcess.exec);
 
 const HerokuGeneratorOverride = class extends HerokuGenerator {
-   /**
+    /**
      * build a generated application.
      *
      * @param {String} buildTool - maven | gradle
@@ -36,7 +36,7 @@ const HerokuGeneratorOverride = class extends HerokuGenerator {
             buildCmd,
         };
     }
- }
+};
 module.exports = class extends HerokuGeneratorOverride {
     constructor(args, opts) {
         super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
