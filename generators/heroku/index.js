@@ -10,20 +10,8 @@ const { getBase64Secret } = require('generator-jhipster/generators/utils');
 
 const execCmd = util.promisify(ChildProcess.exec);
 
-module.exports = class extends HerokuGenerator {
-    constructor(args, opts) {
-        super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
-
-        const jhContext = (this.jhipsterContext = this.options.jhipsterContext);
-
-        if (!jhContext) {
-            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint micronaut')}`);
-        }
-
-        this.configOptions = jhContext.configOptions || {};
-    }
-
-    /**
+const HerokuGeneratorOverride = class extends HerokuGenerator {
+   /**
      * build a generated application.
      *
      * @param {String} buildTool - maven | gradle
@@ -47,6 +35,19 @@ module.exports = class extends HerokuGenerator {
             stdout: ChildProcess.exec(buildCmd, { maxBuffer: 1024 * 10000 }, cb).stdout,
             buildCmd,
         };
+    }
+ }
+module.exports = class extends HerokuGeneratorOverride {
+    constructor(args, opts) {
+        super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
+
+        const jhContext = (this.jhipsterContext = this.options.jhipsterContext);
+
+        if (!jhContext) {
+            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint micronaut')}`);
+        }
+
+        this.configOptions = jhContext.configOptions || {};
     }
 
     get initializing() {
