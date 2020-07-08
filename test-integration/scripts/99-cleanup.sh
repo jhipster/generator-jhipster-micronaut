@@ -3,7 +3,6 @@
 set -ex
 
 mv backup.eslintrc.json .eslintrc.json
-mv backup.yo-rc.json .yo-rc.json
 
 rm -rf ./sample-output/
 
