@@ -475,8 +475,8 @@ const serverFiles = {
                     useBluePrint: true,
                 },
                 {
-                    file: 'package/security/KeycloakEndSessionEndpoint.java',
-                    renameTo: generator => `${generator.javaDir}security/KeycloakEndSessionEndpoint.java`,
+                    file: 'package/security/JHipsterEndSessionEndpoint.java',
+                    renameTo: generator => `${generator.javaDir}security/JHipsterEndSessionEndpoint.java`,
                     useBluePrint: true,
                 },
             ],

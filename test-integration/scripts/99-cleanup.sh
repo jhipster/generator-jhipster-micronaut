@@ -3,6 +3,7 @@
 set -ex
 
 mv backup.eslintrc.json .eslintrc.json
+
 rm -rf ./sample-output/
 
 SCRIPT_FOLDER=`dirname "$0"`
