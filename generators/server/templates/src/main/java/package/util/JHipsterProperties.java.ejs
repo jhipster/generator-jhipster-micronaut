@@ -165,6 +165,7 @@ public class JHipsterProperties {
         private final Ehcache ehcache = new Ehcache();
         private final Infinispan infinispan = new Infinispan();
         private final Memcached memcached = new Memcached();
+        private final Redis redis = new Redis();
 
         public Hazelcast getHazelcast() {
             return hazelcast;
@@ -184,6 +185,10 @@ public class JHipsterProperties {
 
         public Memcached getMemcached() {
             return memcached;
+        }
+
+        public Redis getRedis() {
+            return redis;
         }
 
         @ConfigurationProperties("memcached")
@@ -444,6 +449,83 @@ public class JHipsterProperties {
                 public void setUrl(String url) {
                     this.url = url;
                 }
+            }
+        }
+
+        @ConfigurationProperties("redis")
+        public static class Redis {
+            private String[] server;
+            private int expiration;
+            private boolean cluster;
+            private int connectionPoolSize;
+            private int connectionMinimumIdleSize;
+            private int subscriptionConnectionPoolSize;
+            private int subscriptionConnectionMinimumIdleSize;
+
+            public Redis() {
+                this.server = io.github.jhipster.config.JHipsterDefaults.Cache.Redis.server;
+                this.expiration = 300;
+                this.cluster = false;
+                this.connectionPoolSize = 64;
+                this.connectionMinimumIdleSize = 24;
+                this.subscriptionConnectionPoolSize = 50;
+                this.subscriptionConnectionMinimumIdleSize = 1;
+            }
+
+            public String[] getServer() {
+                return server;
+            }
+
+            public void setServer(String[] server) {
+                this.server = server;
+            }
+
+            public int getExpiration() {
+                return expiration;
+            }
+
+            public void setExpiration(int expiration) {
+                this.expiration = expiration;
+            }
+
+            public boolean isCluster() {
+                return cluster;
+            }
+
+            public void setCluster(boolean cluster) {
+                this.cluster = cluster;
+            }
+
+            public int getConnectionPoolSize() {
+                return connectionPoolSize;
+            }
+
+            public void setConnectionPoolSize(int connectionPoolSize) {
+                this.connectionPoolSize = connectionPoolSize;
+            }
+
+            public int getConnectionMinimumIdleSize() {
+                return connectionMinimumIdleSize;
+            }
+
+            public void setConnectionMinimumIdleSize(int connectionMinimumIdleSize) {
+                this.connectionMinimumIdleSize = connectionMinimumIdleSize;
+            }
+
+            public int getSubscriptionConnectionPoolSize() {
+                return subscriptionConnectionPoolSize;
+            }
+
+            public void setSubscriptionConnectionPoolSize(int subscriptionConnectionPoolSize) {
+                this.subscriptionConnectionPoolSize = subscriptionConnectionPoolSize;
+            }
+
+            public int getSubscriptionConnectionMinimumIdleSize() {
+                return subscriptionConnectionMinimumIdleSize;
+            }
+
+            public void setSubscriptionConnectionMinimumIdleSize(int subscriptionConnectionMinimumIdleSize) {
+                this.subscriptionConnectionMinimumIdleSize = subscriptionConnectionMinimumIdleSize;
             }
         }
     }

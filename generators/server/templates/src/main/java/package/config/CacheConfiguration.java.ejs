@@ -48,7 +48,7 @@ public class CacheConfiguration {
                 ResourcePoolsBuilder.heap(ehcache.getMaxEntries()))
                 .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(ehcache.getTimeToLiveSeconds())))
                 .build());
-        <%_ } else { _%>
+        <%_ } else if (cacheProvider === 'caffeine') { _%>
         JHipsterProperties.Cache.Caffeine caffeine = jHipsterProperties.getCache().getCaffeine();
             
         CaffeineConfiguration<Object, Object> caffeineConfiguration = new CaffeineConfiguration<>();
@@ -56,6 +56,8 @@ public class CacheConfiguration {
         caffeineConfiguration.setExpireAfterWrite(OptionalLong.of(TimeUnit.SECONDS.toNanos(caffeine.getTimeToLiveSeconds())));
         caffeineConfiguration.setStatisticsEnabled(true);
         jcacheConfiguration = caffeineConfiguration;
+        <%_ } else if (cacheProvider === 'redis') { _%>
+            
         <%_ } _%>
     }
 

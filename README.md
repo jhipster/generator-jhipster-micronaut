@@ -38,6 +38,7 @@ $ jhipster --blueprints micronaut
   * H2
 * Ehcache
 * Caffeine Cache
+* Redis Cache
 * Maven or Gradle Build System
 * Angular or React Client
 * Protractor Tests
