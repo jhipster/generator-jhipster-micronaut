@@ -18,6 +18,7 @@
 -%>
 package <%= packageName %>.service.dto;
 
+import io.micronaut.core.annotation.Introspected;
 <%_
 let { importApiModelProperty, importJsonIgnore, importJsonIgnoreProperties, importSet, uniqueEnums } = _processJavaEntityImports(fields, relationships);
 _%>
@@ -69,6 +70,7 @@ import <%= packageName %>.domain.enumeration.<%= element %>;
 <%_ if (typeof javadoc !== 'undefined') { _%>
 @ApiModel(description = "<%- formatAsApiDescription(javadoc) %>")
 <%_ } _%>
+@Introspected
 public class <%= asDto(entityClass) %> implements Serializable {
 
     private <%= primaryKeyType %> id;
