@@ -51,15 +51,15 @@ micronaut:
 <%_ } _%>
 
 <%_ if (cacheProvider === 'redis') { _%> 
-  jhipster:
-    cache:
-      redis:
-          server: ${REDIS_URL}
-          cluster: false
-          connectionPoolSize: 3
-          connectionMinimumIdleSize: 1
-          subscriptionConnectionPoolSize: 3 
-  <%_ } _%>
+jhipster:
+  cache:
+    redis:
+      server: ${REDIS_URL}
+      cluster: false
+      connectionPoolSize: 3
+      connectionMinimumIdleSize: 1
+      subscriptionConnectionPoolSize: 3 
+<%_ } _%>
 
 datasources:
   default:
