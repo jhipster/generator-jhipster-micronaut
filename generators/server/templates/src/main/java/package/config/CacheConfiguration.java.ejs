@@ -2,7 +2,6 @@ package <%=packageName%>.config;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.Duration;
 import java.util.Properties;
 
 import <%=packageName%>.util.JHipsterProperties;
@@ -13,15 +12,19 @@ import io.micronaut.context.annotation.Factory;
 import org.ehcache.config.builders.*;
 import org.ehcache.jsr107.Eh107Configuration;
 import org.ehcache.jsr107.EhcacheCachingProvider;
+    <%_ if (enableHibernateCache) { _%>
+import org.hibernate.cache.jcache.ConfigSettings;
+    <%_ } _%>
 <%_ } _%>  
-
 <%_ if (cacheProvider === 'caffeine') { _%>
 import com.github.benmanes.caffeine.jcache.spi.CaffeineCachingProvider;
 import com.github.benmanes.caffeine.jcache.configuration.CaffeineConfiguration;
 import java.util.OptionalLong;
 import java.util.concurrent.TimeUnit;
+    <%_ if (enableHibernateCache) { _%>
+import org.hibernate.cache.jcache.ConfigSettings;
+    <%_ } _%>
 <%_ } _%>
-
 <%_ if (cacheProvider === 'redis') { _%>
 import org.redisson.Redisson;
 import org.redisson.config.ClusterServersConfig;
@@ -30,9 +33,6 @@ import org.redisson.config.SingleServerConfig;
 import org.redisson.jcache.configuration.RedissonConfiguration;
 <%_ } _%>
 
-<%_ if (enableHibernateCache) { _%>
-import org.hibernate.cache.jcache.ConfigSettings;
-<%_ } _%>
 import javax.cache.CacheManager;
 <%_ if (cacheProvider === 'redis') { _%>
 import javax.cache.Caching;
@@ -42,7 +42,6 @@ import javax.cache.expiry.Duration;
 <%_ } _%>
 import javax.inject.Singleton;
 <%_ if (cacheProvider === 'redis') { _%>
-import java.net.URI;
 import java.util.concurrent.TimeUnit;
 <%_ } _%>
 
