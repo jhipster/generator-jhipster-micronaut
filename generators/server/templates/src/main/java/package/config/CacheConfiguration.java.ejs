@@ -9,6 +9,7 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Factory;
 
 <%_ if (cacheProvider === 'ehcache') { _%>
+import java.time.Duration;
 import org.ehcache.config.builders.*;
 import org.ehcache.jsr107.Eh107Configuration;
 import org.ehcache.jsr107.EhcacheCachingProvider;
