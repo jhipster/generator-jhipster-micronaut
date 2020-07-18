@@ -59,6 +59,12 @@ const clientFiles = {
                     method: 'processJs',
                     renameTo: () => `${ANGULAR_DIR}core/login/login.service.ts`,
                 },
+                // profiles response returns a hyphenated key
+                {
+                    file: 'angular/src/main/webapp/app/profiles/profile-service.ts',
+                    method: 'processJs',
+                    renameTo: () => `${ANGULAR_DIR}profiles/profile-service.ts`,
+                },
                 // custom auth since we don't return same props expected
                 {
                     file: 'angular/src/main/webapp/app/core/auth/auth-jwt.service.ts',
