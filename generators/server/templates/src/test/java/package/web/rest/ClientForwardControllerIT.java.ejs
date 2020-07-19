@@ -18,7 +18,9 @@ import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 import io.micronaut.test.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
-
+<%_ if (cacheProvider === 'redis') { _%>
+import org.junit.jupiter.api.extension.ExtendWith;
+<%_ } _%>
 import javax.inject.Inject;
 
 import static org.assertj.core.api.Assertions.assertThat;

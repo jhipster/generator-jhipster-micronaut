@@ -386,6 +386,7 @@ const serverFiles = {
                 {
                     file: 'package/RedisTestContainerExtension.java',
                     renameTo: generator => `${generator.testDir}RedisTestContainerExtension.java`,
+                    useBluePrint: true,
                 },
             ],
         },

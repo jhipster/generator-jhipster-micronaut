@@ -17,7 +17,9 @@ import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.security.token.jwt.render.AccessRefreshToken;
 import io.micronaut.test.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
-
+<%_ if (cacheProvider === 'redis') { _%>
+import org.junit.jupiter.api.extension.ExtendWith;
+<%_ } _%>
 import javax.inject.Inject;
 
 import java.util.List;

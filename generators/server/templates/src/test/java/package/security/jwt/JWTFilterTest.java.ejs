@@ -33,6 +33,9 @@ import io.micronaut.security.token.jwt.render.AccessRefreshToken;
 import io.micronaut.test.annotation.MicronautTest;
 import io.reactivex.Flowable;
 import org.junit.jupiter.api.Test;
+<%_ if (cacheProvider === 'redis') { _%>
+import org.junit.jupiter.api.extension.ExtendWith;
+<%_ } _%>
 import org.reactivestreams.Publisher;
 
 import javax.inject.Inject;

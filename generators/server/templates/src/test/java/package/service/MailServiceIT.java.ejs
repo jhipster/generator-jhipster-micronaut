@@ -6,6 +6,9 @@ import io.micronaut.context.annotation.Property;
 import io.micronaut.test.annotation.MicronautTest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.TestInstance;
+<%_ if (cacheProvider === 'redis') { _%>
+import org.junit.jupiter.api.extension.ExtendWith;
+<%_ } _%>
 
 /**
  * Integration tests for {@link MailService}.

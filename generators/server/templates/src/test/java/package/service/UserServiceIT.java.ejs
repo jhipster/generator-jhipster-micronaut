@@ -19,6 +19,9 @@ import io.micronaut.data.model.Pageable;
 import io.micronaut.test.annotation.MicronautTest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
+<%_ if (cacheProvider === 'redis') { _%>
+import org.junit.jupiter.api.extension.ExtendWith;
+<%_ } _%>
 
 import javax.inject.Inject;
 import java.time.Instant;

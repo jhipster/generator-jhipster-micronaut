@@ -27,6 +27,9 @@ import io.micronaut.test.annotation.MicronautTest;
 import io.micronaut.test.annotation.MockBean;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
+<%_ if (cacheProvider === 'redis') { _%>
+import org.junit.jupiter.api.extension.ExtendWith;
+<%_ } _%>
 import org.mockito.Mockito;
 
 import javax.inject.Inject;
