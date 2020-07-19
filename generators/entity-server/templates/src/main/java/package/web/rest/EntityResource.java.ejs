@@ -113,9 +113,6 @@ import org.springframework.http.HttpStatus; %>
 import reactor.core.publisher.Flux;
 <%_ } _%>
 import javax.annotation.Nullable;
-<%_ if (validation) { _%>
-import javax.validation.Valid;
-<%_ } _%>
 import java.net.URI;
 import java.net.URISyntaxException;
 <%_ if (pagination === 'no' && dto === 'mapstruct' && !viaService && fieldsContainNoOwnerOneToOne === true) { _%>
@@ -172,7 +169,7 @@ public class <%= entityClass %>Resource {
      */
     @Post("/<%= entityApiUrl %>")
     @ExecuteOn(TaskExecutors.IO)
-    public HttpResponse<<%= instanceType %>> create<%= entityClass %>(<% if (validation) { %>@Valid <% } %>@Body <%= instanceType %> <%= instanceName %>) throws URISyntaxException {
+    public HttpResponse<<%= instanceType %>> create<%= entityClass %>(@Body <%= instanceType %> <%= instanceName %>) throws URISyntaxException {
         log.debug("REST request to save <%= entityClass %> : {}", <%= instanceName %>);
         if (<%= instanceName %>.getId() != null) {
             throw new BadRequestAlertException("A new <%= entityInstance %> cannot already have an ID", ENTITY_NAME, "idexists");
@@ -212,7 +209,7 @@ public class <%= entityClass %>Resource {
      */
     @Put("/<%= entityApiUrl %>")
     @ExecuteOn(TaskExecutors.IO)
-    public HttpResponse<<%= instanceType %>> update<%= entityClass %>(<% if (validation) { %>@Valid <% } %>@Body <%= instanceType %> <%= instanceName %>) throws URISyntaxException {
+    public HttpResponse<<%= instanceType %>> update<%= entityClass %>(@Body <%= instanceType %> <%= instanceName %>) throws URISyntaxException {
         log.debug("REST request to update <%= entityClass %> : {}", <%= instanceName %>);
         if (<%= instanceName %>.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
