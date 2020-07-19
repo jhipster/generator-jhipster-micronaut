@@ -1,5 +1,8 @@
 package <%=packageName%>.config;
 
+<%_ if (cacheProvider === 'redis') { _%>
+import <%= packageName %>.RedisTestContainerExtension;
+<%_ } _%>
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpRequest;
@@ -13,6 +16,9 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+<%_ if (cacheProvider === 'redis') { _%>
+@ExtendWith(RedisTestContainerExtension.class)
+<%_ } _%>
 public class CorsTest {
 
     @Test

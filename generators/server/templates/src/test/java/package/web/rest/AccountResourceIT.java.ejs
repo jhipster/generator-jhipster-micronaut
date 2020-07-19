@@ -1,5 +1,8 @@
 package <%=packageName%>.web.rest;
 
+<%_ if (cacheProvider === 'redis') { _%>
+import <%= packageName %>.RedisTestContainerExtension;
+<%_ } _%>
 import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.config.Constants;
 import <%=packageName%>.domain.Authority;
@@ -44,6 +47,9 @@ import static org.mockito.Mockito.*;
 /**
  * Integration tests for the {@link AccountResource} REST controller.
  */
+<%_ if (cacheProvider === 'redis') { _%>
+@ExtendWith(RedisTestContainerExtension.class)
+<%_ } _%>
 @MicronautTest(application = <%= mainClass %>.class, transactional = false)
 @Property(name = "micronaut.security.enabled", value = "false")
 public class AccountResourceIT {

@@ -110,6 +110,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Integration tests for the {@Link <%= entityClass %>Resource} REST controller.
  */
+<%_ if (cacheProvider === 'redis') { _%>
+@ExtendWith(RedisTestContainerExtension.class)
+<%_ } _%>
 @MicronautTest(transactional = false)
 @Property(name = "micronaut.security.enabled", value = "false")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

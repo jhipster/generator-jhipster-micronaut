@@ -1,5 +1,7 @@
 package <%=packageName%>.security;
-
+<%_ if (cacheProvider === 'redis') { _%>
+import <%= packageName %>.RedisTestContainerExtension;
+<%_ } _%>
 import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.domain.User;
 import <%=packageName%>.repository.UserRepository;
@@ -22,6 +24,9 @@ import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+<%_ if (cacheProvider === 'redis') { _%>
+@ExtendWith(RedisTestContainerExtension.class)
+<%_ } _%>
 @MicronautTest(application = <%= mainClass %>.class)
 @Transactional
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

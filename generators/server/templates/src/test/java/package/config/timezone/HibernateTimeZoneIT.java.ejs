@@ -1,5 +1,8 @@
 package <%=packageName%>.config.timezone;
 
+<%_ if (cacheProvider === 'redis') { _%>
+import <%= packageName %>.RedisTestContainerExtension;
+<%_ } _%>
 import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.repository.timezone.DateTimeWrapper;
 import <%=packageName%>.repository.timezone.DateTimeWrapperRepository;
@@ -25,6 +28,9 @@ import static org.assertj.core.api.Assertions.fail;
 /**
  * Integration tests for the UTC Hibernate configuration.
  */
+<%_ if (cacheProvider === 'redis') { _%>
+@ExtendWith(RedisTestContainerExtension.class)
+<%_ } _%>
 @MicronautTest(application = <%= mainClass %>.class, environments = {"test"})
 public class HibernateTimeZoneIT {
 
