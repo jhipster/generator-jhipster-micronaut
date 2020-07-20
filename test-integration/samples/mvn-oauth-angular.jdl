@@ -19,7 +19,7 @@ application {
     enableSwaggerCodegen false
     enableTranslation true
     jhiPrefix jhi
-    jhipsterVersion "6.10.0"
+    jhipsterVersion "6.10.1"
     languages [en]
     messageBroker false
     nativeLanguage en
