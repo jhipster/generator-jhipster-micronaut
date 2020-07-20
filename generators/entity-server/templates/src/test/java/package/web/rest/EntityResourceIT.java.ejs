@@ -98,6 +98,11 @@ import java.util.List;
 import java.util.UUID;
 <%_ } _%>
 
+<%_ if (dto === 'mapstruct') { _%>
+import <%= packageName %>.service.dto.<%= asDto(entityClass) %>;
+import <%= packageName %>.service.mapper.<%= entityClass %>Mapper;
+<%_ } _%>
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -287,6 +292,10 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     private static final <%= fieldType %> <%= updatedValueName %> = <%= fieldType %>.<%= enumValue2 %>;
     <%_ } } _%>
 
+    <%_ if (dto === 'mapstruct') { _%>
+    @Inject
+    private <%= entityClass %>Mapper <%= entityInstance %>Mapper;
+    <%_ } _%>
     @Inject
     private <%= entityClass %>Repository <%= entityInstance %>Repository;
     <%_ if (isUsingMapsId === true && ( dto !== 'mapstruct' && service === 'no')) { _%>
