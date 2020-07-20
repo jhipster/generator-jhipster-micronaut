@@ -23,6 +23,8 @@ const fs = require('fs');
 const utils = require('generator-jhipster/generators/utils');
 const constants = require('generator-jhipster/generators/generator-constants');
 
+const NeedleServerChacheMn = require('./needle-server-cache-mn');
+
 /* Use customized randexp */
 const randexp = utils.RandexpWithFaker;
 
@@ -388,8 +390,10 @@ function writeFiles() {
                     this.addChangelogToLiquibase(`${this.changelogDate}_added_entity_${this.entityClass}`);
                 }
 
+                const serverCacheMn = new NeedleServerChacheMn(this);
+
                 if (['ehcache', 'caffeine', 'infinispan', 'redis'].includes(this.cacheProvider) && this.enableHibernateCache) {
-                    this.addEntityToCache(
+                    serverCacheMn.addEntityToCache(
                         this.asEntity(this.entityClass),
                         this.relationships,
                         this.packageName,
