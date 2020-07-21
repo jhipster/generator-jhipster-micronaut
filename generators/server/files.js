@@ -458,6 +458,11 @@ const serverFiles = {
                     renameTo: generator => `${generator.javaDir}security/UserNotActivatedException.java`,
                     useBluePrint: true,
                 },
+                {
+                    file: 'package/security/SecurityHeaderFilter.java',
+                    renameTo: generator => `${generator.javaDir}security/SecurityHeaderFilter.java`,
+                    useBluePrint: true,
+                },
             ],
         },
         {
@@ -749,6 +754,11 @@ const serverFiles = {
                 {
                     file: 'package/security/jwt/JWTFilterTest.java',
                     renameTo: generator => `${generator.javaDir}security/jwt/JWTFilterTest.java`,
+                    useBluePrint: true,
+                },
+                {
+                    file: 'package/security/SecurityHeaderFilterTest.java',
+                    renameTo: generator => `${generator.javaDir}security/SecurityHeaderFilterTest.java`,
                     useBluePrint: true,
                 },
             ],
