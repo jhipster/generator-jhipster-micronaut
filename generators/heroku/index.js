@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return,max-classes-per-file */
 const chalk = require('chalk');
+const _ = require('lodash');
 const fs = require('fs');
 const ChildProcess = require('child_process');
 const util = require('util');
@@ -69,6 +70,7 @@ module.exports = class extends HerokuGeneratorOverride {
                 const configuration = this.getAllJhipsterConfig(this, true);
                 this.env.options.appPath = configuration.get('appPath') || constants.CLIENT_MAIN_SRC_DIR;
                 this.baseName = configuration.get('baseName');
+                this.dasherizedBaseName = _.kebabCase(this.baseName);
                 this.packageName = configuration.get('packageName');
                 this.packageFolder = configuration.get('packageFolder');
                 this.cacheProvider = configuration.get('cacheProvider') || configuration.get('hibernateCache') || 'no';
