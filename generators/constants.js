@@ -25,11 +25,11 @@ module.exports = {
         postgresql: 'org.postgresql.Driver',
     },
     versions: {
-        micronaut: '2.0.0',
-        micronautData: '1.1.1',
+        micronaut: '2.0.1',
+        micronautData: '1.1.3',
 
         hibernate: '5.4.17.Final',
-        jackson: '2.11.0',
+        jackson: '2.11.1',
         javassist: '3.24.0-GA', // Should match Hibernate deps
         javaxMail: '1.6.2',
         jbcrypt: '0.4',

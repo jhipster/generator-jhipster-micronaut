@@ -332,7 +332,7 @@ dependencies {
     implementation "org.hibernate:hibernate-jcache"
         <%_ } _%>
     <%_ } _%>
-    implementation "io.micronaut.cache:micronaut-cache-core:$micronaut_version"
+    implementation "io.micronaut.cache:micronaut-cache-core"
     <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'redis'].includes(cacheProvider) || applicationType === 'gateway') { _%>
     implementation "javax.cache:cache-api"
     <%_ } _%>
