@@ -119,6 +119,10 @@ module.exports = class extends HerokuGeneratorOverride {
                     'SSLEnforcingHostResolver.java.ejs',
                     `${constants.SERVER_MAIN_SRC_DIR}${this.packageFolder}/config/SSLEnforcingHostResolver.java`
                 );
+                this.template(
+                    'StrictTransportSecurityHeaderFilter.java.ejs',
+                    `${constants.SERVER_MAIN_SRC_DIR}${this.packageFolder}/security/StrictTransportSecurityHeaderFilter.java`
+                );
                 if (this.buildTool === 'gradle') {
                     this.template('heroku.gradle.ejs', 'gradle/heroku.gradle');
                 }
