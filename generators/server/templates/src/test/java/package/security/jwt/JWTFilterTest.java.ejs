@@ -1,5 +1,8 @@
 package <%=packageName%>.security.jwt;
 
+<%_ if (cacheProvider === 'redis') { _%>
+import <%= packageName %>.RedisTestContainerExtension;
+<%_ } _%>
 import <%=packageName%>.security.AuthoritiesConstants;
 <%_ if (authenticationType !== 'oauth2') { _%>
 import <%=packageName%>.security.DatabaseAuthenticationProvider;
@@ -30,6 +33,9 @@ import io.micronaut.security.token.jwt.render.AccessRefreshToken;
 import io.micronaut.test.annotation.MicronautTest;
 import io.reactivex.Flowable;
 import org.junit.jupiter.api.Test;
+<%_ if (cacheProvider === 'redis') { _%>
+import org.junit.jupiter.api.extension.ExtendWith;
+<%_ } _%>
 import org.reactivestreams.Publisher;
 
 import javax.inject.Inject;
@@ -38,6 +44,9 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+<%_ if (cacheProvider === 'redis') { _%>
+@ExtendWith(RedisTestContainerExtension.class)
+<%_ } _%>
 @MicronautTest
 @Property(name = "spec.name", value = "JWTFilterTest")
 <%_ if (authenticationType === 'oauth2') { _%>

@@ -1,5 +1,8 @@
 package <%=packageName%>.config;
 
+<%_ if (cacheProvider === 'redis') { _%>
+import <%= packageName %>.RedisTestContainerExtension;
+<%_ } _%>
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpRequest;
@@ -8,11 +11,17 @@ import io.micronaut.http.client.BlockingHttpClient;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.runtime.server.EmbeddedServer;
 import org.junit.jupiter.api.Test;
+<%_ if (cacheProvider === 'redis') { _%>
+import org.junit.jupiter.api.extension.ExtendWith;
+<%_ } _%>
 
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+<%_ if (cacheProvider === 'redis') { _%>
+@ExtendWith(RedisTestContainerExtension.class)
+<%_ } _%>
 public class CorsTest {
 
     @Test

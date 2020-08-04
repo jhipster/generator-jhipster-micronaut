@@ -5,10 +5,10 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 @ConfigurationProperties("jhipster")
 public class JHipsterProperties {
 
-    private final Cache cache;
-    private final Mail mail;
-    private final Logging logging;
-    private final Metrics metrics;
+    private Cache cache;
+    private Mail mail;
+    private Logging logging;
+    private Metrics metrics;
 
     public JHipsterProperties(Cache cache, Mail mail, Logging logging, Metrics metrics) {
         this.cache = cache;
@@ -33,13 +33,27 @@ public class JHipsterProperties {
         return metrics;
     }
 
+    public void setCache(Cache cache) {
+        this.cache = cache;
+    }
+
+    public void setMail(Mail mail) {
+        this.mail = mail;
+    }
+
+    public void setLogging(Logging logging) {
+        this.logging = logging;
+    }
+
+    public void setMetrics(Metrics metrics) {
+        this.metrics = metrics;
+    }
+
+
     @ConfigurationProperties("logging")
     public static class Logging {
         private boolean useJsonFormat = false;
-        private final Logstash logstash = new Logstash();
-
-        public Logging() {
-        }
+        private Logstash logstash = new Logstash();
 
         public boolean isUseJsonFormat() {
             return this.useJsonFormat;
@@ -51,6 +65,10 @@ public class JHipsterProperties {
 
         public Logstash getLogstash() {
             return this.logstash;
+        }
+
+        public void setLogstash(Logstash logstash) {
+            this.logstash = logstash;
         }
 
         @ConfigurationProperties("logstash")
@@ -97,10 +115,14 @@ public class JHipsterProperties {
 
     @ConfigurationProperties("metrics")
     public static class Metrics {
-        private final Logs logs = new Logs();
+        private Logs logs = new Logs();
 
         public Logs getLogs() {
             return this.logs;
+        }
+
+        public void setLogs(Logs logs) {
+            this.logs = logs;
         }
 
         @ConfigurationProperties("logs")
@@ -160,11 +182,12 @@ public class JHipsterProperties {
     @ConfigurationProperties("cache")
     public static class Cache {
 
-        private final Hazelcast hazelcast = new Hazelcast();
-        private final Caffeine caffeine = new Caffeine();
-        private final Ehcache ehcache = new Ehcache();
-        private final Infinispan infinispan = new Infinispan();
-        private final Memcached memcached = new Memcached();
+        private Hazelcast hazelcast = new Hazelcast();
+        private Caffeine caffeine = new Caffeine();
+        private Ehcache ehcache = new Ehcache();
+        private Infinispan infinispan = new Infinispan();
+        private Memcached memcached = new Memcached();
+        private Redis redis = new Redis();
 
         public Hazelcast getHazelcast() {
             return hazelcast;
@@ -184,6 +207,34 @@ public class JHipsterProperties {
 
         public Memcached getMemcached() {
             return memcached;
+        }
+
+        public Redis getRedis() {
+            return redis;
+        }
+
+        public void setHazelcast(Hazelcast hazelcast) {
+            this.hazelcast = hazelcast;
+        }
+
+        public void setCaffeine(Caffeine caffeine) {
+            this.caffeine = caffeine;
+        }
+
+        public void setEhcache(Ehcache ehcache) {
+            this.ehcache = ehcache;
+        }
+
+        public void setInfinispan(Infinispan infinispan) {
+            this.infinispan = infinispan;
+        }
+
+        public void setMemcached(Memcached memcached) {
+            this.memcached = memcached;
+        }
+
+        public void setRedis(Redis redis) {
+            this.redis = redis;
         }
 
         @ConfigurationProperties("memcached")
@@ -322,9 +373,6 @@ public class JHipsterProperties {
                 private long timeToLiveSeconds = 60L;
                 private long maxEntries = 100L;
 
-                public Local() {
-                }
-
                 public long getTimeToLiveSeconds() {
                     return this.timeToLiveSeconds;
                 }
@@ -444,6 +492,83 @@ public class JHipsterProperties {
                 public void setUrl(String url) {
                     this.url = url;
                 }
+            }
+        }
+
+        @ConfigurationProperties("redis")
+        public static class Redis {
+            private String[] server;
+            private int expiration;
+            private boolean cluster;
+            private int connectionPoolSize;
+            private int connectionMinimumIdleSize;
+            private int subscriptionConnectionPoolSize;
+            private int subscriptionConnectionMinimumIdleSize;
+
+            public Redis() {
+                this.server = io.github.jhipster.config.JHipsterDefaults.Cache.Redis.server;
+                this.expiration = 300;
+                this.cluster = false;
+                this.connectionPoolSize = 64;
+                this.connectionMinimumIdleSize = 24;
+                this.subscriptionConnectionPoolSize = 50;
+                this.subscriptionConnectionMinimumIdleSize = 1;
+            }
+
+            public String[] getServer() {
+                return server;
+            }
+
+            public void setServer(String[] server) {
+                this.server = server;
+            }
+
+            public int getExpiration() {
+                return expiration;
+            }
+
+            public void setExpiration(int expiration) {
+                this.expiration = expiration;
+            }
+
+            public boolean isCluster() {
+                return cluster;
+            }
+
+            public void setCluster(boolean cluster) {
+                this.cluster = cluster;
+            }
+
+            public int getConnectionPoolSize() {
+                return connectionPoolSize;
+            }
+
+            public void setConnectionPoolSize(int connectionPoolSize) {
+                this.connectionPoolSize = connectionPoolSize;
+            }
+
+            public int getConnectionMinimumIdleSize() {
+                return connectionMinimumIdleSize;
+            }
+
+            public void setConnectionMinimumIdleSize(int connectionMinimumIdleSize) {
+                this.connectionMinimumIdleSize = connectionMinimumIdleSize;
+            }
+
+            public int getSubscriptionConnectionPoolSize() {
+                return subscriptionConnectionPoolSize;
+            }
+
+            public void setSubscriptionConnectionPoolSize(int subscriptionConnectionPoolSize) {
+                this.subscriptionConnectionPoolSize = subscriptionConnectionPoolSize;
+            }
+
+            public int getSubscriptionConnectionMinimumIdleSize() {
+                return subscriptionConnectionMinimumIdleSize;
+            }
+
+            public void setSubscriptionConnectionMinimumIdleSize(int subscriptionConnectionMinimumIdleSize) {
+                this.subscriptionConnectionMinimumIdleSize = subscriptionConnectionMinimumIdleSize;
             }
         }
     }

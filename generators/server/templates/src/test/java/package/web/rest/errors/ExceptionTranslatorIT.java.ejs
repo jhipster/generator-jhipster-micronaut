@@ -1,5 +1,8 @@
 package <%=packageName%>.web.rest.errors;
 
+<%_ if (cacheProvider === 'redis') { _%>
+import <%= packageName %>.RedisTestContainerExtension;
+<%_ } _%>
 import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.web.rest.errors.handlers.ProblemHandler;
 import io.micronaut.core.type.Argument;
@@ -12,6 +15,9 @@ import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.test.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
+<%_ if (cacheProvider === 'redis') { _%>
+import org.junit.jupiter.api.extension.ExtendWith;
+<%_ } _%>
 import org.zalando.problem.Problem;
 
 import javax.inject.Inject;
@@ -24,6 +30,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Integration tests exception conditions.
  */
+<%_ if (cacheProvider === 'redis') { _%>
+@ExtendWith(RedisTestContainerExtension.class)
+<%_ } _%>
 @MicronautTest(application = <%= mainClass %>.class)
 public class ExceptionTranslatorIT {
 

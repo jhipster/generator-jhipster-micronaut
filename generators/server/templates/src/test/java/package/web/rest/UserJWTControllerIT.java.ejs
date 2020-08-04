@@ -1,5 +1,8 @@
 package <%=packageName%>.web.rest;
 
+<%_ if (cacheProvider === 'redis') { _%>
+import <%= packageName %>.RedisTestContainerExtension;
+<%_ } _%>
 import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.domain.User;
 import <%=packageName%>.repository.UserRepository;
@@ -14,7 +17,9 @@ import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.security.token.jwt.render.AccessRefreshToken;
 import io.micronaut.test.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
-
+<%_ if (cacheProvider === 'redis') { _%>
+import org.junit.jupiter.api.extension.ExtendWith;
+<%_ } _%>
 import javax.inject.Inject;
 
 import java.util.List;
@@ -24,6 +29,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Integration tests for the {@link io.micronaut.security.endpoints.LoginController} REST controller.
  */
+<%_ if (cacheProvider === 'redis') { _%>
+@ExtendWith(RedisTestContainerExtension.class)
+<%_ } _%>
 @MicronautTest(application = <%= mainClass %>.class, transactional = false)
 public class UserJWTControllerIT {
 

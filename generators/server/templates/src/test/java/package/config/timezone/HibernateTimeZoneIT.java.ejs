@@ -1,5 +1,8 @@
 package <%=packageName%>.config.timezone;
 
+<%_ if (cacheProvider === 'redis') { _%>
+import <%= packageName %>.RedisTestContainerExtension;
+<%_ } _%>
 import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.repository.timezone.DateTimeWrapper;
 import <%=packageName%>.repository.timezone.DateTimeWrapperRepository;
@@ -9,6 +12,9 @@ import io.micronaut.data.jdbc.runtime.JdbcOperations;
 import io.micronaut.test.annotation.MicronautTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+<%_ if (cacheProvider === 'redis') { _%>
+import org.junit.jupiter.api.extension.ExtendWith;
+<%_ } _%>
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -25,6 +31,9 @@ import static org.assertj.core.api.Assertions.fail;
 /**
  * Integration tests for the UTC Hibernate configuration.
  */
+<%_ if (cacheProvider === 'redis') { _%>
+@ExtendWith(RedisTestContainerExtension.class)
+<%_ } _%>
 @MicronautTest(application = <%= mainClass %>.class, environments = {"test"})
 public class HibernateTimeZoneIT {
 

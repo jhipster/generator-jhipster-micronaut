@@ -1,5 +1,8 @@
 package <%=packageName%>.web.rest;
 
+<%_ if (cacheProvider === 'redis') { _%>
+import <%= packageName %>.RedisTestContainerExtension;
+<%_ } _%>
 import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.config.Constants;
 import <%=packageName%>.domain.Authority;
@@ -30,6 +33,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+<%_ if (cacheProvider === 'redis') { _%>
+import org.junit.jupiter.api.extension.ExtendWith;
+<%_ } _%>
 
 import javax.inject.Inject;
 import java.util.Collections;
@@ -44,6 +50,9 @@ import static org.mockito.Mockito.*;
 /**
  * Integration tests for the {@link AccountResource} REST controller.
  */
+<%_ if (cacheProvider === 'redis') { _%>
+@ExtendWith(RedisTestContainerExtension.class)
+<%_ } _%>
 @MicronautTest(application = <%= mainClass %>.class, transactional = false)
 @Property(name = "micronaut.security.enabled", value = "false")
 public class AccountResourceIT {

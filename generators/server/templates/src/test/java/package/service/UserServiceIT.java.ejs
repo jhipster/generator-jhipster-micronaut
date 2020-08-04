@@ -1,5 +1,7 @@
 package <%=packageName%>.service;
-
+<%_ if (cacheProvider === 'redis') { _%>
+import <%= packageName %>.RedisTestContainerExtension;
+<%_ } _%>
 import <%=packageName%>.config.Constants;
 import <%=packageName%>.domain.Authority;
 import <%=packageName%>.domain.User;
@@ -17,6 +19,9 @@ import io.micronaut.data.model.Pageable;
 import io.micronaut.test.annotation.MicronautTest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
+<%_ if (cacheProvider === 'redis') { _%>
+import org.junit.jupiter.api.extension.ExtendWith;
+<%_ } _%>
 
 import javax.inject.Inject;
 import java.time.Instant;
@@ -32,6 +37,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 /**
  * Integration tests for {@link UserService}.
  */
+<%_ if (cacheProvider === 'redis') { _%>
+@ExtendWith(RedisTestContainerExtension.class)
+<%_ } _%>
 @MicronautTest(transactional = false)
 @Property(name = "micronaut.security.enabled", value = "false")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

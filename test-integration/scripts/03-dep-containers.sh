@@ -11,6 +11,12 @@ cd ./sample-output/$1
 testFrameworks=`jdlVal "./$1.jdl" "testFrameworks"`
 authType=`jdlVal "./$1.jdl" "authenticationType"`
 devDb=`jdlVal "./$1.jdl" "devDatabaseType"`
+cacheProvider=`jdlVal "./$1.jdl" "cacheProvider"`
+
+if [[ "$cacheProvider" == "redis" ]]; then
+    docker-compose -f src/main/docker/redis.yml pull
+    docker-compose -f src/main/docker/redis.yml up -d
+fi
 
 if [[ "$testFrameworks" == *"protractor"* ]]; then
     if [ "$authType" == "oauth2" ]; then

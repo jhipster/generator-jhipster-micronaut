@@ -1,36 +1,36 @@
 application {
   config {
     applicationType monolith
-    authenticationType oauth2
+    authenticationType jwt
     baseName jhipster
     blueprints [generator-jhipster-micronaut]
-    buildTool gradle
-    cacheProvider ehcache
+    buildTool maven
+    cacheProvider redis
     clientFramework angularX
     clientPackageManager npm
-    clientTheme litera
-    clientThemeVariant primary
-    creationTimestamp 1591144151372
+    clientTheme cyborg
+    clientThemeVariant dark
+    creationTimestamp 1590870527345
     databaseType sql
-    devDatabaseType postgresql
+    devDatabaseType mysql
     dtoSuffix DTO
     embeddableLaunchScript false
-    enableHibernateCache false
+    enableHibernateCache true
     enableSwaggerCodegen false
     enableTranslation true
     jhiPrefix jhi
     jhipsterVersion "6.10.1"
-    languages [en]
+    languages [en, al, ar-ly, hy]
     messageBroker false
     nativeLanguage en
     packageName com.mycompany.myapp
-    prodDatabaseType postgresql
+    prodDatabaseType mysql
     searchEngine false
     serverPort 8080
     serviceDiscoveryType false
     skipClient false
     skipServer false
-    skipUserManagement true
+    skipUserManagement false
     testFrameworks [protractor]
     useSass true
     websocket false

@@ -379,6 +379,17 @@ const serverFiles = {
                 },
             ],
         },
+        {
+            condition: generator => generator.cacheProvider === 'redis',
+            path: SERVER_TEST_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/RedisTestContainerExtension.java',
+                    renameTo: generator => `${generator.testDir}RedisTestContainerExtension.java`,
+                    useBluePrint: true,
+                },
+            ],
+        },
     ],
     serverJavaDomain: [
         {

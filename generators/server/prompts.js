@@ -244,6 +244,10 @@ function askForServerSideOpts(meta) {
                     name: 'Yes, with the Caffeine implementation (local cache, for a single node)',
                 },
                 {
+                    value: 'redis',
+                    name: 'Yes, with the Redis implementation',
+                },
+                {
                     value: 'no',
                     name: 'No - Warning, when using an SQL database, this will disable the Hibernate 2nd level cache!',
                 },
