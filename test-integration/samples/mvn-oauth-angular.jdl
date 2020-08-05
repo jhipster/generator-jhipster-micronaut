@@ -2,7 +2,7 @@ application {
   config {
     applicationType monolith
     authenticationType oauth2
-    baseName jhipster
+    baseName space
     blueprints [generator-jhipster-micronaut]
     buildTool maven
     cacheProvider ehcache
@@ -10,7 +10,7 @@ application {
     clientPackageManager npm
     clientTheme litera
     clientThemeVariant primary
-    creationTimestamp 1591144151372
+    creationTimestamp 1596598800266
     databaseType sql
     devDatabaseType postgresql
     dtoSuffix DTO
@@ -20,10 +20,10 @@ application {
     enableTranslation true
     jhiPrefix jhi
     jhipsterVersion "6.10.1"
-    languages [en]
+    languages [en, fr]
     messageBroker false
     nativeLanguage en
-    packageName com.mycompany.myapp
+    packageName org.jhipster.space
     prodDatabaseType postgresql
     searchEngine false
     serverPort 8080
@@ -36,29 +36,28 @@ application {
     websocket false
   }
 
-  entities BankAccount, Label, Operation
+  entities Mission, SpaceEvent
 }
 
-entity BankAccount {
+entity Mission {
   name String required,
-  balance BigDecimal required
+  description String
 }
-entity Label {
-  label String required minlength(3)
+entity SpaceEvent {
+  name String required,
+  date LocalDate required,
+  description TextBlob required,
+  photo ImageBlob required,
+  type EventType required
 }
-entity Operation {
-  date Instant required,
-  description String,
-  amount BigDecimal required
-}
-relationship OneToMany {
-  BankAccount{operation} to Operation{bankAccount(name)}
-}
-relationship ManyToOne {
-  BankAccount{user(login)} to User
-}
-relationship ManyToMany {
-  Operation{label(label)} to Label{operation}
+enum EventType {
+  Launch,
+  Landing
 }
 
-paginate Operation with infinite-scroll
+relationship OneToOne {
+  SpaceEvent{mission(name)} to Mission
+}
+
+paginate Mission with pagination
+paginate SpaceEvent with infinite-scroll
