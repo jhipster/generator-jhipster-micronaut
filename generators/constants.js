@@ -18,11 +18,23 @@
  */
 
 module.exports = {
-    sqlDbDrivers: {
-        h2Disk: 'org.h2.Driver',
-        h2Memory: 'org.h2.Driver',
-        mysql: 'com.mysql.jdbc.Driver',
-        postgresql: 'org.postgresql.Driver',
+    sqlDb: {
+        h2Disk: {
+            driver: 'org.h2.Driver',
+            dialect: 'io.github.jhipster.domain.util.FixedH2Dialect',
+        },
+        h2Memory: {
+            driver: 'org.h2.Driver',
+            dialect: 'io.github.jhipster.domain.util.FixedH2Dialect',
+        },
+        mysql: {
+            driver: 'com.mysql.jdbc.Driver',
+            dialect: 'org.hibernate.dialect.MySQL5InnoDBDialect',
+        },
+        postgresql: {
+            driver: 'org.postgresql.Driver',
+            dialect: 'io.github.jhipster.domain.util.FixedPostgreSQL10Dialect',
+        },
     },
     versions: {
         micronaut: '2.0.1',

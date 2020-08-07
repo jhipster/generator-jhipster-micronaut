@@ -10,10 +10,12 @@
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 <%_
-const { sqlDbDrivers } = MN_CONSTANTS;
+const { sqlDb } = MN_CONSTANTS;
 _%>
 <%_ if (databaseType === 'sql') { _%>
 <%_
+  const dbInfo = sqlDb[devDatabaseType];
+
   const dbUrlConfig = {
     databaseName: baseName,
     hostname: 'localhost'
@@ -42,7 +44,7 @@ datasources:
     url: "<%-dbUrl%>"
     username: "<%=dbUser%>"
     password: "<%=dbPass%>"
-    driverClassName: "<%=sqlDbDrivers[devDatabaseType]%>"
+    driverClassName: "<%=dbInfo.driver%>"
     poolName: Hikari
     autoCommit: false
 
@@ -55,29 +57,25 @@ liquibase:
 
 jpa:
   default:
-    packages-to-scan: <%=packageName%>.domain
+    packages-to-scan:
+      - <%=packageName%>.domain
+      - <%=packageName%>.repository
+    show-sql: false
     properties:
-      hibernate:
+      hibernate.dialect: "<%=dbInfo.dialect%>"
 <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached'].includes(cacheProvider)) { _%>
-        javax:
-          cache:
-            missing_cache_strategy: create
+      hibernate.javax.cache.missing_cache_strategy: create
 <%_ } _%>
-        hbm2ddl:
-          auto: none
-        show_sql: true
-        id:
-          new_generator_mappings: true
-        connection:
-          provider_disables_autocommit: true
-        cache:
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.connection.autocommit: false
 <%_ if (enableHibernateCache) { _%>
-          use_second_level_cache: true
+      hibernate.cache.use_second_level_cache: true
 <%_ } else { _%>
-          use_second_level_cache: false
+      hibernate.cache.use_second_level_cache: false
 <%_ } _%>
-          use_query_cache: false
-        generate_statistics: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
 <%_ } _%>
 
 logging:
