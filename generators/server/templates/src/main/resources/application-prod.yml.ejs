@@ -131,7 +131,7 @@ micronaut:
           secret:
             generator:
               # As this is the PRODUCTION configuration, you must securely supply the application with a secret.
-              # secret:
+              secret: <%= jwtSecretKey %>
               base64: true
               jws-algorithm: HS512
 
