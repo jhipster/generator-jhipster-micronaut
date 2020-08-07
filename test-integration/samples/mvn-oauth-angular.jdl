@@ -12,7 +12,7 @@ application {
     clientThemeVariant primary
     creationTimestamp 1596598800266
     databaseType sql
-    devDatabaseType h2Disk
+    devDatabaseType postgresql
     dtoSuffix DTO
     embeddableLaunchScript false
     enableHibernateCache false
