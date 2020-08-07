@@ -44,7 +44,7 @@ _%>
 datasources:
   default:
     type: com.zaxxer.hikari.HikariDataSource
-    url: "<%-dbUrl%>"
+    url: ${JDBC_URL:`<%-dbUrl%>`}
     username: "<%=dbUser%>"
     password: "<%=dbPass%>"
     driverClassName: "<%=sqlDbDrivers[prodDatabaseType]%>"
