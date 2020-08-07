@@ -44,7 +44,7 @@ _%>
 datasources:
   default:
     type: com.zaxxer.hikari.HikariDataSource
-    url: "<%-dbUrl%>"
+    url: ${JDBC_URL:`<%-dbUrl%>`}
     username: "<%=dbUser%>"
     password: "<%=dbPass%>"
     driverClassName: "<%=sqlDbDrivers[prodDatabaseType]%>"
@@ -131,7 +131,7 @@ micronaut:
           secret:
             generator:
               # As this is the PRODUCTION configuration, you must securely supply the application with a secret.
-              # secret:
+              secret: <%= jwtSecretKey %>
               base64: true
               jws-algorithm: HS512
 
