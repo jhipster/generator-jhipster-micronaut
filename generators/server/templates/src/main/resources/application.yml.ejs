@@ -73,6 +73,8 @@ micronaut:
     intercept-url-map:
       - pattern: /
         access: isAnonymous()
+      - pattern: /manifest.webapp
+        access: isAnonymous()
       - pattern: /app/**/*.*
         access: isAnonymous()
       - pattern: /i18n/**

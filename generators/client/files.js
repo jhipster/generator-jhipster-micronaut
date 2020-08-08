@@ -39,7 +39,6 @@ const clientFiles = {
                 },
                 {
                     file: 'angular/src/main/webapp/manifest.webapp',
-                    method: 'copy',
                     renameTo: () => `${MAIN_SRC_DIR}manifest.webapp`,
                 },
                 {
@@ -225,7 +224,6 @@ const clientFiles = {
                 },
                 {
                     file: 'react/src/main/webapp/manifest.webapp',
-                    method: 'copy',
                     renameTo: () => `${MAIN_SRC_DIR}manifest.webapp`,
                 },
                 {
