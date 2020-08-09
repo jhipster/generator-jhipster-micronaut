@@ -34,7 +34,7 @@ public class SecurityHeaderFilter extends OncePerRequestHttpServerFilter {
         response.header(X_CONTENT_TYPE_OPTIONS_HEADER, "nosniff");
         response.header(X_XSS_PROTECTION_HEADER, "1; mode=block");
         response.header(REFERRER_POLICY_HEADER, "strict-origin-when-cross-origin");
-        response.header(FEATURE_POLICY_HEADER, "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; fullscreen 'self'; payment 'none'");
+        response.header(FEATURE_POLICY_HEADER, "geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'self'; payment 'none'");
         <%_ if (clientTheme !== 'none') { _%>
         response.header(CONTENT_SECURITY_POLICY_HEADER, "default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:");
         <%_ } else { _%>

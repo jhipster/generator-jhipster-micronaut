@@ -20,7 +20,7 @@ class SecurityHeaderFilterTest {
         assertThat(response.header("X-Content-Type-Options")).isEqualTo("nosniff");
         assertThat(response.header("X-XSS-Protection")).isEqualTo("1; mode=block");
         assertThat(response.header("Referrer-Policy")).isEqualTo("strict-origin-when-cross-origin");
-        assertThat(response.header("Feature-Policy")).isEqualTo("geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; fullscreen 'self'; payment 'none'");
+        assertThat(response.header("Feature-Policy")).isEqualTo("geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; fullscreen 'self'; payment 'none'");
         <%_ if (clientTheme !== 'none') { _%>
         assertThat(response.header("Content-Security-Policy")).isEqualTo("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com data:");
         <%_ } else { _%>
