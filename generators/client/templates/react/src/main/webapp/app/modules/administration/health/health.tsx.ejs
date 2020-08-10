@@ -56,7 +56,11 @@ export const HealthPage = (props: IHealthPageProps) => {
 
   return (
     <div>
-      <h2 id="health-page-heading">Health Checks</h2>
+      <h2 id="health-page-heading">
+        <Translate contentKey="health.title">
+          Health Checks
+        </Translate>
+      </h2>
       <p>
         <Button onClick={getSystemHealth} color={isFetching ? 'btn btn-danger' : 'btn btn-primary'}
           disabled={isFetching}>
@@ -72,15 +76,31 @@ export const HealthPage = (props: IHealthPageProps) => {
           <Table bordered aria-describedby="health-page-heading">
             <thead>
             <tr>
-              <th>Service Name</th>
-              <th>Status</th>
-              <th>Details</th>
+              <th>
+                <Translate contentKey="health.table.service">
+                  Service Name
+                </Translate>
+              </th>
+              <th>
+                <Translate contentKey="health.table.status">
+                  Status
+                </Translate>
+              </th>
+              <th>
+                <Translate contentKey="health.details.details">
+                  Details
+                </Translate>
+              </th>
             </tr>
             </thead>
             <tbody>
             {data.details ? Object.keys(data.details).map((configPropKey, configPropIndex) =>
             <tr key={configPropIndex}>
-              <td>{configPropKey}</td>
+              <td>
+                <Translate contentKey={`health.indicator.${configPropKey}`}>
+                  {configPropKey}
+                </Translate>
+              </td>
               <td>
                 <Badge
                         color={data.details[configPropKey] ? data.details[configPropKey].status !== 'UP' ? 'danger' : 'success' : null}>{data.status}</Badge>
