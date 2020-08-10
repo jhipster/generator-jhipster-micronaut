@@ -19,6 +19,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+<%_ if (databaseType === 'sql') { _%>
+import { map } from 'rxjs/operators';
+<%_ } _%>
 
 import { SERVER_API_URL } from 'app/app.constants';
 
@@ -46,6 +49,7 @@ export type HealthKey =
     <%_ } _%>
     <%_ if (databaseType === 'sql') { _%>
     | 'jdbc'
+    | 'db'
     <%_ } else if (databaseType === 'mongodb') { _%>
     | 'mongo'
     <%_ } else if (databaseType === 'cassandra') { _%>
@@ -72,7 +76,30 @@ export interface HealthDetails {
 export class HealthService {
     constructor(private http: HttpClient) {}
 
+<%_ if (databaseType === 'sql') { _%>
     checkHealth(): Observable<Health> {
-        return this.http.get<Health>(SERVER_API_URL + 'management/health');
+      const nameTranslationMap = {
+        jdbc: 'db'
+      };
+
+      return this.http.get<Health>(SERVER_API_URL + 'management/health').pipe(
+        map((response: Health) => {
+          const mappedDetails = {};
+
+          Object.keys(response.details).forEach(key => {
+            const mappedKey = nameTranslationMap[key] ? nameTranslationMap[key] : key;
+            mappedDetails[mappedKey] = response.details[key];
+          });
+
+          response.details = mappedDetails;
+
+          return response;
+        })
+      );
     }
+<%_ } else { _%>
+    checkHealth(): Observable<Health> {
+      return this.http.get<Health>(SERVER_API_URL + 'management/health');
+    }
+<%_ } _%>
 }
