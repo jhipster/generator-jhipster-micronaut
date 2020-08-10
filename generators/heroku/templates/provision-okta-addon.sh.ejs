@@ -78,10 +78,26 @@ add_groups() {
         }'
 }
 
-add_admin_to_group() {
+add_admin_to_admin_group() {
     ADMIN_EMAIL=$(heroku config:get OKTA_ADMIN_EMAIL)
 
     GROUP_ID=$(curl -s --location --request GET "${1}/api/v1/groups?q=ROLE_ADMIN" \
+        --header "Authorization: SSWS ${2}" | jq '.[0].id')
+
+    USER_ID=$(curl -s --location --request GET "${1}/api/v1/users?q=${ADMIN_EMAIL}" \
+        --header "Accept: application/json" \
+        --header "Content-Type: application/json" \
+        --header "Authorization: SSWS ${2}" | jq '.[0].id')
+
+    curl -s --location --request PUT "${1}/api/v1/groups/${GROUP_ID//\"/}/users/${USER_ID//\"/}" \
+        --header "Authorization: SSWS ${2}" \
+        --data-raw ''
+}
+
+add_admin_to_user_group() {
+    ADMIN_EMAIL=$(heroku config:get OKTA_ADMIN_EMAIL)
+
+    GROUP_ID=$(curl -s --location --request GET "${1}/api/v1/groups?q=ROLE_USER" \
         --header "Authorization: SSWS ${2}" | jq '.[0].id')
 
     USER_ID=$(curl -s --location --request GET "${1}/api/v1/users?q=${ADMIN_EMAIL}" \
@@ -116,7 +132,10 @@ add_groups_claim() {
 
 add_admin_user() {
 
-    GROUP_ID=$(curl -s --location --request GET "${1}/api/v1/groups?q=ROLE_ADMIN" \
+    ADMIN_GROUP_ID=$(curl -s --location --request GET "${1}/api/v1/groups?q=ROLE_ADMIN" \
+        --header "Authorization: SSWS ${2}" | jq '.[0].id')
+
+    USER_GROUP_ID=$(curl -s --location --request GET "${1}/api/v1/groups?q=ROLE_USER" \
         --header "Authorization: SSWS ${2}" | jq '.[0].id')
 
     # Create user with provided initial password
@@ -137,7 +156,11 @@ add_admin_user() {
           }
         }' | jq '.id')
 
-    curl -s --location --request PUT "${1}/api/v1/groups/${GROUP_ID//\"/}/users/${USER_ID//\"/}" \
+    curl -s --location --request PUT "${1}/api/v1/groups/${ADMIN_GROUP_ID//\"/}/users/${USER_ID//\"/}" \
+        --header "Authorization: SSWS ${2}" \
+        --data-raw ''
+
+    curl -s --location --request PUT "${1}/api/v1/groups/${USER_GROUP_ID//\"/}/users/${USER_ID//\"/}" \
         --header "Authorization: SSWS ${2}" \
         --data-raw ''
 
@@ -206,7 +229,8 @@ main() {
     add_groups "${OKTA_URL}" "${OKTA_TOKEN}"
 
     # Add the automatically provisioned HEROKU ADMIN to the ROLE_ADMIN group
-    add_admin_to_group "${OKTA_URL}" "${OKTA_TOKEN}"
+    add_admin_to_admin_group "${OKTA_URL}" "${OKTA_TOKEN}"
+    add_admin_to_user_group "${OKTA_URL}" "${OKTA_TOKEN}"
 
     # Add the groups claim, see https://www.jhipster.tech/security/#okta
     add_groups_claim "${OKTA_URL}" "${OKTA_TOKEN}"
