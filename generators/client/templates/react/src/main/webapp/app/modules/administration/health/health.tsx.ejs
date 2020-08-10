@@ -54,6 +54,21 @@ export const HealthPage = (props: IHealthPageProps) => {
   const {health, isFetching} = props;
   const data = health ?? {};
 
+  const nameMap = {
+    jdbc: 'db'
+  };
+
+  if (data.details) {
+    const mappedDetails = {};
+
+    Object.keys(data.details).forEach(key => {
+      const mappedKey = nameMap[key] ? nameMap[key] : key;
+      mappedDetails[mappedKey] = data.details[key];
+    });
+
+    data.details = mappedDetails;
+  }
+
   return (
     <div>
       <h2 id="health-page-heading">
