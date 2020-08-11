@@ -7,7 +7,6 @@ const util = require('util');
 const os = require('os');
 const HerokuGenerator = require('generator-jhipster/generators/heroku');
 const constants = require('generator-jhipster/generators/generator-constants');
-const { getBase64Secret } = require('generator-jhipster/generators/utils');
 
 const execCmd = util.promisify(ChildProcess.exec);
 
@@ -139,7 +138,7 @@ module.exports = class extends HerokuGeneratorOverride {
             },
             addHerokuDependencies() {
                 // Nothing to do here right now
-            }
+            },
         };
         return Object.assign(phaseFromJHipster, jhipsterMicronautDefaultPhaseSteps);
     }
