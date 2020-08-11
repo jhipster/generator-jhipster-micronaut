@@ -32,14 +32,8 @@
 micronaut:
   server:
     port: ${PORT:8080}
-  security:
-    token:
-      jwt:
-        signatures:
-          secret:
-            generator:
-              secret: ${JWT_SECRET}
 <%_ if (useOkta) { _%>
+  security:
     oauth2:
       enabled: true
       clients:
