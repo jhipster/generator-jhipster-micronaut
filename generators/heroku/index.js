@@ -139,24 +139,7 @@ module.exports = class extends HerokuGeneratorOverride {
             },
             addHerokuDependencies() {
                 // Nothing to do here right now
-            },
-            addJwtSecretEnvironmentVariable() {
-                const done = this.async();
-                const jwtSecret = getBase64Secret(null, 64);
-                const setJwtSecretCommand = `heroku config:set JWT_SECRET=${jwtSecret} --app ${this.herokuAppName}`;
-
-                const child = ChildProcess.exec(setJwtSecretCommand, (err, stdout, stderr) => {
-                    if (err) {
-                        this.abort = true;
-                        this.log.error(err);
-                    }
-                    done();
-                });
-
-                child.stdout.on('data', data => {
-                    this.log(data.toString());
-                });
-            },
+            }
         };
         return Object.assign(phaseFromJHipster, jhipsterMicronautDefaultPhaseSteps);
     }
