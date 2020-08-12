@@ -97,7 +97,7 @@ _%>
         <maven-idea-plugin.version>2.2.1</maven-idea-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
-        <maven-shade-plugin.version>3.1.0</maven-shade-plugin.version>
+        <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
         <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
         <maven-exec-plugin.version>1.6.0</maven-exec-plugin.version>
         <micronaut-plugin.version>1.0.0</micronaut-plugin.version>
@@ -105,7 +105,7 @@ _%>
 <%_ if (!skipClient) { _%>
         <frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
 <%_ } _%>
-        <git-commit-id-plugin.version>4.0.0</git-commit-id-plugin.version>
+        <git-commit-id-plugin.version>4.0.2</git-commit-id-plugin.version>
         <jacoco-maven-plugin.version><%= JACOCO_VERSION %></jacoco-maven-plugin.version>
         <jib-maven-plugin.version><%= JIB_VERSION %></jib-maven-plugin.version>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
@@ -1013,9 +1013,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         <profile>
             <id>webpack</id>
             <activation>
-                <file>
-                    <missing>${basedir}/target/classes/static/app/main.bundle.js</missing>
-                </file>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <dependencies>
     <%_ if (devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') { _%>
