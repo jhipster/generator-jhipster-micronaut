@@ -1,6 +1,6 @@
 {
   "name": "generator-jhipster-micronaut",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "A Micronaut application generator for JHipster",
   "keywords": [
     "jhipster",
