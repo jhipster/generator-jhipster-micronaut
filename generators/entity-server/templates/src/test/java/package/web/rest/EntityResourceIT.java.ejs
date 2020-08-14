@@ -36,6 +36,11 @@ for (idx in relationships) {
         break;
     }
 }
+
+const usesDto = dto === 'mapstruct';
+const httpEntityClass = usesDto ? asDto(entityClass) : entityClass;
+const httpEntityInstance = usesDto ? asDto(entityInstance) : entityInstance;
+
 _%>
 <%_ if (databaseType === 'cassandra') { _%>
 import <%= packageName %>.AbstractCassandraTest;
@@ -101,7 +106,7 @@ import java.util.List;
 import java.util.UUID;
 <%_ } _%>
 
-<%_ if (dto === 'mapstruct') { _%>
+<%_ if (usesDto) { _%>
 import <%= packageName %>.service.dto.<%= asDto(entityClass) %>;
 import <%= packageName %>.service.mapper.<%= entityClass %>Mapper;
 <%_ } _%>
@@ -298,7 +303,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     private static final <%= fieldType %> <%= updatedValueName %> = <%= fieldType %>.<%= enumValue2 %>;
     <%_ } } _%>
 
-    <%_ if (dto === 'mapstruct') { _%>
+    <%_ if (usesDto) { _%>
     @Inject
     private <%= entityClass %>Mapper <%= entityInstance %>Mapper;
     <%_ } _%>
@@ -400,8 +405,12 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     public void create<%= entityClass %>() throws Exception {
         int databaseSizeBeforeCreate = <%= entityInstance %>Repository.findAll().size();
 
+        <%_ if (usesDto) { _%>
+        <%= asDto(entityClass) %> <%= asDto(entityInstance) %> = <%= entityInstance %>Mapper.toDto(<%= asEntity(entityInstance) %>);
+        <%_ } _%>
+
         // Create the <%= entityClass %>
-        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.POST("/api/<%= entityApiUrl %>", <%= asEntity(entityInstance) %>), <%= entityClass %>.class).blockingFirst();
+        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.POST("/api/<%= entityApiUrl %>", <%= httpEntityInstance %>), <%= httpEntityClass %>.class).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.CREATED.getCode());
 
@@ -418,13 +427,14 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
 
         // Create the <%= entityClass %> with an existing ID
         <%= asEntity(entityInstance) %>.setId(<% if (databaseType === 'sql' && hasOauthUser === true) { %>UUID.randomUUID().toString()<% } else if (databaseType === 'sql') { %>1L<% } else if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>"existing_id"<% } else if (databaseType === 'cassandra') { %>UUID.randomUUID()<% } %>);
-        <%_ if (dto === 'mapstruct') { _%>
+        <%_ if (usesDto) { _%>
         <%= asDto(entityClass) %> <%= asDto(entityInstance) %> = <%= entityInstance %>Mapper.toDto(<%= asEntity(entityInstance) %>);
         <%_ } _%>
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.POST("/api/<%= entityApiUrl %>", <%= asEntity(entityInstance) %>), <%= entityClass %>.class)
-            .onErrorReturn(t -> (HttpResponse<<%= entityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        @SuppressWarnings("unchecked")
+        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.POST("/api/<%= entityApiUrl %>", <%= httpEntityInstance %>), <%= httpEntityClass %>.class)
+            .onErrorReturn(t -> (HttpResponse<<%= httpEntityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
@@ -450,11 +460,12 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         // set the field null
         <%= asEntity(entityInstance) %>.set<%= fields[idx].fieldInJavaBeanMethod %>(null);
 
-        // Create the <%= entityClass %>, which fails.<% if (dto === 'mapstruct') { %>
+        // Create the <%= entityClass %>, which fails.<% if (usesDto) { %>
         <%= asDto(entityClass) %> <%= asDto(entityInstance) %> = <%= entityInstance %>Mapper.toDto(<%= asEntity(entityInstance) %>);<% } %>
 
-        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.POST("/api/<%= entityApiUrl %>", <%= asEntity(entityInstance) %>), <%= entityClass %>.class)
-            .onErrorReturn(t -> (HttpResponse<<%= entityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        @SuppressWarnings("unchecked")
+        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.POST("/api/<%= entityApiUrl %>", <%= httpEntityInstance %>), <%= httpEntityClass %>.class)
+            .onErrorReturn(t -> (HttpResponse<<%= httpEntityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
@@ -473,8 +484,8 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
 
         // Get the <%= entityInstance %>List w/ all the <%= entityInstancePlural %>
-        List<<%= entityClass %>> <%= entityInstancePlural %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>?eagerload=true"), Argument.listOf(<%= entityClass %>.class)).blockingFirst();
-        <%= asEntity(entityClass) %> test<%= entityClass %> = <%= entityInstancePlural %>.get(0);
+        List<<%= httpEntityClass %>> <%= entityInstancePlural %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>?eagerload=true"), Argument.listOf(<%= httpEntityClass %>.class)).blockingFirst();
+        <%= httpEntityClass %> test<%= entityClass %> = <%= entityInstancePlural %>.get(0);
 
 <%- include('../../common/validate_entity_fields_template', {isUpdate: false}); -%>
     }
@@ -488,7 +499,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
 
         // Get the <%= entityInstance %>
-        <%= entityClass %> test<%= entityClass %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>/" + this.<%= asEntity(entityInstance) %>.getId()), <%= entityClass %>.class).blockingFirst();
+        <%= httpEntityClass %> test<%= entityClass %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>/" + <%= entityInstance %>.getId()), <%= httpEntityClass %>.class).blockingFirst();
 
 <%- include('../../common/validate_entity_fields_template', {isUpdate: false}); -%>
     }
@@ -496,8 +507,9 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     @Test
     public void getNonExisting<%= entityClass %>() throws Exception {
         // Get the <%= entityInstance %>
-        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.GET("/api/<%= entityApiUrl %>/"+ Long.MAX_VALUE), <%= entityClass %>.class)
-            .onErrorReturn(t -> (HttpResponse<<%= entityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        @SuppressWarnings("unchecked")
+        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.GET("/api/<%= entityApiUrl %>/"+ Long.MAX_VALUE), <%= httpEntityClass %>.class)
+            .onErrorReturn(t -> (HttpResponse<<%= httpEntityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.NOT_FOUND.getCode());
     }
@@ -536,12 +548,13 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
                 <%_ } _%>
             <%_ } _%>
         <%_ } _%>
-        <%_ if (dto === 'mapstruct') { _%>
-        <%= asDto(entityClass) %> <%= asDto(entityInstance) %> = <%= entityInstance %>Mapper.toDto(updated<%= asEntity(entityClass) %>);
+        <%_ if (usesDto) { _%>
+        <%= asDto(entityClass) %> updated<%= asDto(entityClass) %> = <%= entityInstance %>Mapper.toDto(updated<%= asEntity(entityClass) %>);
         <%_ } _%>
 
-        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>", updated<%= entityClass %>), <%= entityClass %>.class)
-            .onErrorReturn(t -> (HttpResponse<<%= entityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        @SuppressWarnings("unchecked")
+        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>", updated<%= httpEntityClass %>), <%= httpEntityClass %>.class)
+            .onErrorReturn(t -> (HttpResponse<<%= httpEntityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.OK.getCode());
 
@@ -556,12 +569,13 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     public void updateNonExisting<%= entityClass %>() throws Exception {
         int databaseSizeBeforeUpdate = <%= entityInstance %>Repository.findAll().size();
 
-        // Create the <%= entityClass %><% if (dto === 'mapstruct') { %>
+        // Create the <%= entityClass %><% if (usesDto) { %>
         <%= asDto(entityClass) %> <%= asDto(entityInstance) %> = <%= entityInstance %>Mapper.toDto(<%= asEntity(entityInstance) %>);<% } %>
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>", <%= asEntity(entityInstance) %>), <%= entityClass %>.class)
-            .onErrorReturn(t -> (HttpResponse<<%= entityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        @SuppressWarnings("unchecked")
+        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>", <%= httpEntityInstance %>), <%= httpEntityClass %>.class)
+            .onErrorReturn(t -> (HttpResponse<<%= httpEntityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
@@ -590,10 +604,13 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         int databaseSizeBeforeDelete = <%= entityInstance %>Repository.findAll().size();
 
         // Delete the <%= entityInstance %>
-        HttpResponse<<%= entityClass %>> response = client.exchange(HttpRequest.DELETE("/api/<%= entityApiUrl %>/"+ <%= asEntity(entityInstance) %>.getId()), <%= entityClass %>.class)
-            .onErrorReturn(t -> (HttpResponse<<%= entityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        @SuppressWarnings("unchecked")
+        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.DELETE("/api/<%= entityApiUrl %>/"+ <%= entityInstance %>.getId()), <%= httpEntityClass %>.class)
+            .onErrorReturn(t -> (HttpResponse<<%= httpEntityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
-        // Validate the database is now empty
+        assertThat(response.status().getCode()).isEqualTo(HttpStatus.NO_CONTENT.getCode());
+
+            // Validate the database is now empty
         List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
         assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeDelete - 1);
         <%_ if (searchEngine === 'elasticsearch') { _%>
