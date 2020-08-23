@@ -1,3 +1,6 @@
+<%_
+const usesCache = cacheProvider !== 'no';
+_%>
 package <%=packageName%>.service;
 
 import <%=packageName%>.config.Constants;
@@ -13,7 +16,9 @@ import <%=packageName%>.web.rest.errors.*;
 <%_ if (authenticationType !== 'oauth2') { _%>
 import <%=packageName%>.security.PasswordEncoder;
 <%_ } _%>
+<%_ if (usesCache) { _%>
 import io.micronaut.cache.CacheManager;
+<%_ } _%>
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.scheduling.annotation.Scheduled;
@@ -44,15 +49,19 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
+    <%_ if (usesCache) { _%>
     private final CacheManager cacheManager;
+    <%_ } _%>
 
-    public UserService(UserRepository userRepository<% if (authenticationType !== 'oauth2') { %>, PasswordEncoder passwordEncoder<% } %>, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    public UserService(UserRepository userRepository<% if (authenticationType !== 'oauth2') { %>, PasswordEncoder passwordEncoder<% } %>, AuthorityRepository authorityRepository<% if (usesCache) { %>, CacheManager cacheManager<% } %>) {
         this.userRepository = userRepository;
         <%_ if (authenticationType !== 'oauth2') { _%>
         this.passwordEncoder = passwordEncoder;
         <%_ } _%>
         this.authorityRepository = authorityRepository;
+        <%_ if (usesCache) { _%>
         this.cacheManager = cacheManager;
+        <%_ } _%>
     }
 
 <%_ if (authenticationType == 'oauth2') { _%>
@@ -80,7 +89,9 @@ public class UserService {
         } else {
             log.debug("Saving user '{}' in local database", user.getLogin());
             userRepository.save(user);
+            <%_ if (usesCache) { _%>
             this.clearUserCaches(user);
+            <%_ } _%>
         }
         return user;
     }
@@ -94,7 +105,9 @@ public class UserService {
                 // activate given user for the registration key.
                 user.setActivated(true);
                 user.setActivationKey(null);
+                <%_ if (usesCache) { _%>
                 this.clearUserCaches(user);
+                <%_ } _%>
                 log.debug("Activated user: {}", user);
                 return user;
             });
@@ -108,7 +121,9 @@ public class UserService {
                 user.setPassword(passwordEncoder.encode(newPassword));
                 user.setResetKey(null);
                 user.setResetDate(null);
+                <%_ if (usesCache) { _%>
                 this.clearUserCaches(user);
+                <%_ } _%>
                 return user;
             });
     }
@@ -119,7 +134,9 @@ public class UserService {
             .map(user -> {
                 user.setResetKey(RandomUtil.generateResetKey());
                 user.setResetDate(Instant.now());
+                <%_ if (usesCache) { _%>
                 this.clearUserCaches(user);
+                <%_ } _%>
                 return user;
             });
     }
@@ -155,7 +172,9 @@ public class UserService {
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
+        <%_ if (usesCache) { _%>
         this.clearUserCaches(newUser);
+        <%_ } _%>
         log.debug("Created Information for User: {}", newUser);
         return newUser;
     }
@@ -166,7 +185,9 @@ public class UserService {
         }
         userRepository.delete(existingUser);
         userRepository.flush();
+        <%_ if (usesCache) { _%>
         this.clearUserCaches(existingUser);
+        <%_ } _%>
         return true;
     }
 
@@ -196,7 +217,9 @@ public class UserService {
             user.setAuthorities(authorities);
         }
         userRepository.save(user);
+        <%_ if (usesCache) { _%>
         this.clearUserCaches(user);
+        <%_ } _%>
         log.debug("Created Information for User: {}", user);
         return user;
     }
@@ -213,7 +236,9 @@ public class UserService {
             .filter(Optional::isPresent)
             .map(Optional::get)
             .map(user -> {
+                <%_ if (usesCache) { _%>
                 this.clearUserCaches(user);
+                <%_ } _%>
                 user.setLogin(userDTO.getLogin().toLowerCase());
                 user.setFirstName(userDTO.getFirstName());
                 user.setLastName(userDTO.getLastName());
@@ -229,7 +254,9 @@ public class UserService {
                     .map(Optional::get)
                     .forEach(managedAuthorities::add);
                 user = userRepository.save(user);
+                <%_ if (usesCache) { _%>
                 this.clearUserCaches(user);
+                <%_ } _%>
                 log.debug("Changed Information for User: {}", user);
                 return user;
             })
@@ -239,7 +266,9 @@ public class UserService {
     public void deleteUser(String login) {
         userRepository.findOneByLogin(login).ifPresent(user -> {
             userRepository.delete(user);
+            <%_ if (usesCache) { _%>
             this.clearUserCaches(user);
+            <%_ } _%>
             log.debug("Deleted User: {}", user);
         });
     }
@@ -255,7 +284,9 @@ public class UserService {
                 String encryptedPassword = passwordEncoder.encode(newPassword);
                 user.setPassword(encryptedPassword);
                 user = userRepository.mergeAndSave(user);
+                <%_ if (usesCache) { _%>
                 this.clearUserCaches(user);
+                <%_ } _%>
                 log.debug("Changed password for User: {}", user);
             });
     }
@@ -279,7 +310,9 @@ public class UserService {
                 user.setEmail(email.toLowerCase());
                 user.setLangKey(langKey);
                 user.setImageUrl(imageUrl);
+                <%_ if (usesCache) { _%>
                 this.clearUserCaches(user);
+                <%_ } _%>
                 log.debug("Changed Information for User: {}", user);
             });
     }
@@ -318,7 +351,9 @@ public class UserService {
             .forEach(user -> {
                 log.debug("Deleting not activated user {}", user.getLogin());
                 userRepository.delete(user);
+                <%_ if (usesCache) { _%>
                 this.clearUserCaches(user);
+                <%_ } _%>
             });
     }
     <%_ } _%>
@@ -331,12 +366,14 @@ public class UserService {
         return authorityRepository.findAll().stream()
             .map(Authority::getName).collect(Collectors.toList());
     }
+    <%_ if (usesCache) { _%>
 
     private void clearUserCaches(User user) {
         Objects.requireNonNull(
             cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).invalidate(user.getLogin());
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).invalidate(user.getEmail());
     }
+    <%_ } _%>
 
     public Optional<String> getCurrentUserLogin() {
         return SecurityUtils.getCurrentUserLogin();
