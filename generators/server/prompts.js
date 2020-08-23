@@ -318,7 +318,7 @@ function askForServerSideOpts(meta) {
             this.serverPort = '8080';
         }
         this.cacheProvider = !reactive ? props.cacheProvider : 'no';
-        this.enableHibernateCache = props.enableHibernateCache;
+        this.enableHibernateCache = props.cacheProvider === 'no' ? false : props.enableHibernateCache;
         this.databaseType = props.databaseType;
         this.devDatabaseType = props.devDatabaseType;
         this.prodDatabaseType = props.prodDatabaseType;
