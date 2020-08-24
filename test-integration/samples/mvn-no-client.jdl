@@ -14,7 +14,7 @@ application {
     devDatabaseType h2Memory
     dtoSuffix DTO
     embeddableLaunchScript false
-    enableHibernateCache true
+    enableHibernateCache false
     enableSwaggerCodegen false
     enableTranslation true
     jhiPrefix jhi

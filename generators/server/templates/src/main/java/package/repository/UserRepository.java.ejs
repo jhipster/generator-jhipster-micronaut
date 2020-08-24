@@ -1,7 +1,12 @@
+<%_
+const usesCache = cacheProvider !== 'no';
+_%>
 package <%=packageName%>.repository;
 
 import <%=packageName%>.domain.User;
+<%_ if (usesCache) { _%>
 import io.micronaut.cache.annotation.Cacheable;
+<%_ } _%>
 import io.micronaut.data.annotation.Id;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.annotation.EntityGraph;
@@ -22,10 +27,11 @@ import java.time.Instant;
 public abstract class UserRepository implements JpaRepository<User, <% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %>> {
 
     private EntityManager entityManager;
-
+<%_ if (usesCache) { _%>
     public static String USERS_BY_LOGIN_CACHE = "usersByLogin";
 
     public static String USERS_BY_EMAIL_CACHE = "usersByEmail";
+<%_ } _%>
     <% if (authenticationType !== 'oauth2') { %>
 
     public abstract Optional<User> findOneByActivationKey(String activationKey);
@@ -41,11 +47,15 @@ public abstract class UserRepository implements JpaRepository<User, <% if (authe
     public abstract Optional<User> findOneById(<% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %> id);
 
     @EntityGraph(attributePaths = "authorities")
+<%_ if (usesCache) { _%>
     @Cacheable(cacheNames = "usersByLogin")
+<%_ } _%>
     public abstract Optional<User> findOneByLogin(String login);
 
     @EntityGraph(attributePaths = "authorities")
+<%_ if (usesCache) { _%>
     @Cacheable(cacheNames = "usersByEmail")
+<%_ } _%>
     public abstract Optional<User> findOneByEmail(String email);
 
     public abstract Page<User> findAllByLoginNot(String login, Pageable pageable);
