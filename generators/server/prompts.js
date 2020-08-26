@@ -48,6 +48,10 @@ function askForServerSideOpts(meta) {
             value: 'postgresql',
             name: 'PostgreSQL',
         },
+        {
+            value: 'mariadb',
+            name: 'MariaDB',
+        },
     ];
 
     if (applicationType !== 'monolith') {

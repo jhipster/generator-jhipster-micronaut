@@ -27,6 +27,9 @@ _%>
   if (devDatabaseType === 'postgresql') {
     dbUser = baseName;
   }
+  if (devDatabaseType === 'mariadb') {
+    dbPass = 'password';
+  }
 
   if (devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') {
     dbUser = baseName;

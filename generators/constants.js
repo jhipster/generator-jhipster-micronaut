@@ -31,6 +31,10 @@ module.exports = {
             driver: 'com.mysql.jdbc.Driver',
             dialect: 'org.hibernate.dialect.MySQL5InnoDBDialect',
         },
+        mariadb: {
+            driver: 'org.mariadb.jdbc.Driver',
+            dialect: 'org.hibernate.dialect.MariaDB103Dialect',
+        },
         postgresql: {
             driver: 'org.postgresql.Driver',
             dialect: 'io.github.jhipster.domain.util.FixedPostgreSQL10Dialect',

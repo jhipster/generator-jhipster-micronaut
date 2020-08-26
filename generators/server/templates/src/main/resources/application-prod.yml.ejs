@@ -38,6 +38,9 @@ management:
     if (prodDatabaseType === 'postgresql') {
       dbUser = baseName;
     }
+    if (prodDatabaseType === 'mariadb') {
+        dbPass = 'password';
+    }
 
     const dbUrl = getJDBCUrl(prodDatabaseType, dbUrlConfig);
 

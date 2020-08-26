@@ -34,6 +34,7 @@ $ jhipster --blueprints micronaut
 * JWT or OAuth 2.0 Authentication
 * SQL Database Support
   * MySQL
+  * MariaDB
   * PostgreSQL
   * H2
 * Ehcache

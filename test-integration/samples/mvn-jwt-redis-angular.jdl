@@ -12,7 +12,7 @@ application {
     clientThemeVariant dark
     creationTimestamp 1590870527345
     databaseType sql
-    devDatabaseType mysql
+    devDatabaseType mariadb
     dtoSuffix DTO
     embeddableLaunchScript false
     enableHibernateCache true
@@ -24,7 +24,7 @@ application {
     messageBroker false
     nativeLanguage en
     packageName com.mycompany.myapp
-    prodDatabaseType mysql
+    prodDatabaseType mariadb
     searchEngine false
     serverPort 8080
     serviceDiscoveryType false
