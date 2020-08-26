@@ -230,6 +230,12 @@ if (devDatabaseType === 'mysql' || prodDatabaseType === 'mysql') { _%>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 <%_ } _%>
+<%_ if (devDatabaseType === 'mariadb' || prodDatabaseType === 'mariadb') { _%>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+        </dependency>
+<%_ } _%>
 <%_
 if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         <dependency>
@@ -1102,6 +1108,13 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                 </dependency>
                 <%_ } _%>
                 <%_
+                if (devDatabaseType === 'mariadb') { _%>
+                <dependency>
+                    <groupId>org.mariadb.jdbc</groupId>
+                    <artifactId>mariadb-java-client</artifactId>
+                </dependency>
+                <%_ } _%>
+                <%_
                 if (devDatabaseType === 'postgresql') { _%>
                 <dependency>
                     <groupId>org.postgresql</groupId>
@@ -1226,6 +1239,13 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                 <dependency>
                     <groupId>mysql</groupId>
                     <artifactId>mysql-connector-java</artifactId>
+                </dependency>
+                <%_ } _%>
+                <%_
+                if (devDatabaseType === 'mariadb') { _%>
+                <dependency>
+                    <groupId>org.mariadb.jdbc</groupId>
+                    <artifactId>mariadb-java-client</artifactId>
                 </dependency>
                 <%_ } _%>
                 <%_

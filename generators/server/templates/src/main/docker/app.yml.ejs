@@ -23,11 +23,12 @@ services:
         environment:
             - _JAVA_OPTIONS=-Xmx512m -Xms256m
             - MICRONAUT_ENVIRONMENTS=prod
-        <%_ if (prodDatabaseType === 'postgresql') { _%>
-            - JDBC_URL=jdbc:postgresql://<%= baseName.toLowerCase() %>-postgresql:5432/<%= baseName %>
+        <%_ if (databaseType === 'sql') {
+            const databaseName = ['mysql', 'mariadb'].includes(prodDatabaseType) ? baseName.toLowerCase() : baseName;
+        _%>
+            - JDBC_URL=<%- getJDBCUrl(prodDatabaseType, { hostname: `${baseName.toLowerCase()}-${prodDatabaseType}`, databaseName: databaseName }) %>
         <%_ } _%>
-        <%_ if (prodDatabaseType === 'mysql') { _%>
-            - JDBC_URL=jdbc:mysql://<%= baseName.toLowerCase() %>-mysql:3306/<%= baseName.toLowerCase() %>?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false&createDatabaseIfNotExist=true
+        <%_ if (['mysql', 'mariadb'].includes(prodDatabaseType)) { _%>
             - JDBC_PASSWORD=password
         <%_ } _%>
         <%_ if (authenticationType === 'oauth2') { _%>
@@ -61,16 +62,11 @@ services:
             - <%= serverPort %>:<%= serverPort %>
         <%_ } _%>
     <%_
-    if (prodDatabaseType === 'mysql') { _%>
-    <%= baseName.toLowerCase() %>-mysql:
+    if (databaseType === 'sql') { _%>
+    <%= baseName.toLowerCase() %>-<%= prodDatabaseType %>:
         extends:
-            file: mysql.yml
-            service: <%= baseName.toLowerCase() %>-mysql
-    <%_ } else if (prodDatabaseType === 'postgresql') { _%>
-    <%= baseName.toLowerCase() %>-postgresql:
-        extends:
-            file: postgresql.yml
-            service: <%= baseName.toLowerCase() %>-postgresql
+            file: <%= prodDatabaseType %>.yml
+            service: <%= baseName.toLowerCase() %>-<%= prodDatabaseType %>
     <%_ } _%>
     <%_ if (serviceDiscoveryType === 'consul') { _%>
     consul:
