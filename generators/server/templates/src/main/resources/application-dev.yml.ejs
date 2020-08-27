@@ -35,7 +35,7 @@ _%>
     dbUser = baseName;
     dbUrlConfig.databaseName = lowercaseBaseName;
     if (devDatabaseType === 'h2Disk') {
-      dbUrlConfig.localDirectory = './h2db/db';
+      dbUrlConfig.localDirectory = `${BUILD_DIR}/h2db/db`;
     }
   }
 
