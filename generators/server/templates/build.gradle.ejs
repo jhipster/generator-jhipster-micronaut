@@ -272,6 +272,10 @@ dependencies {
 
     annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut:micronaut-validation"
+    <%_ if (useNativeImage) { _%>
+    compileOnly("org.graalvm.nativeimage:svm")
+    annotationProcessor("io.micronaut:micronaut-graal")
+    <%_ } _%>
     <%_ if (databaseType === 'sql') { _%>
     annotationProcessor "io.micronaut.data:micronaut-data-processor:$micronaut_data_version"
     <%_ } _%>
