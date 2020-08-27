@@ -539,7 +539,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                     <imageName><%= dasherizedBaseName %></imageName>
                     <buildArgs>
                         -H:Name=<%= dasherizedBaseName %>
-                        -H:Class=${exec.mainClass}
+                        -H:Class=<%=packageName%>.<%=mainClass%>
                         -H:+TraceClassInitialization
                         -H:+ReportExceptionStackTraces
                         --no-fallback
