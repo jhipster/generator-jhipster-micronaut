@@ -292,7 +292,6 @@ dependencies {
     implementation "javax.annotation:javax.annotation-api"
     implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.dropwizard.metrics:metrics-core"
-    implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "net.logstash.logback:logstash-logback-encoder"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-hppc"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
@@ -396,6 +395,8 @@ dependencies {
     implementation "io.micronaut.liquibase:micronaut-liquibase"
     implementation "io.micronaut.sql:micronaut-jdbc-hikari"
     implementation "io.micronaut.jmx:micronaut-jmx"
+
+    implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "io.micronaut.micrometer:micronaut-micrometer-core"
     implementation "io.micronaut.micrometer:micronaut-micrometer-registry-prometheus"
     implementation "io.micronaut.data:micronaut-data-runtime:$micronaut_data_version"
