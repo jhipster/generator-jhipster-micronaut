@@ -222,6 +222,12 @@ _%>
             <groupId>javax.cache</groupId>
             <artifactId>cache-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.graalvm.nativeimage</groupId>
+            <artifactId>svm</artifactId>
+            <scope>compile</scope>
+            <version>20.1.0</version>
+        </dependency>
 <%_ } _%>
 <%_
 if (devDatabaseType === 'mysql' || prodDatabaseType === 'mysql') { _%>
@@ -523,38 +529,6 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                 <version>${micronaut-plugin.version}</version>
             </plugin>
             <plugin>
-                <groupId>org.graalvm.nativeimage</groupId>
-                <artifactId>native-image-maven-plugin</artifactId>
-                <version>20.2.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>native-image</goal>
-                        </goals>
-                        <phase>package</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <skip>false</skip>
-                    <imageName><%= dasherizedBaseName %></imageName>
-                    <buildArgs>
-                        -H:Name=<%= dasherizedBaseName %>
-                        -H:Class=<%=packageName%>.<%=mainClass%>
-                        -H:+TraceClassInitialization
-                        -H:+ReportExceptionStackTraces
-                        --no-fallback
-                        --no-server
-                        --static
-                        --report-unsupported-elements-at-runtime
-                        --initialize-at-build-time=sun.awt.AWTAccessor
-                        --initialize-at-build-time=sun.awt.SunToolkit
-                        --initialize-at-build-time=java.awt.Toolkit
-                        --initialize-at-build-time=java.awt.EventQueue
-                        --initialize-at-build-time=sun.awt.AppContext
-                    </buildArgs>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>${maven-shade-plugin.version}</version>
@@ -597,13 +571,11 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                             <artifactId>hibernate-jpamodelgen</artifactId>
                             <version>${hibernate.version}</version>
                         </path>
-                        <%_ if (useNativeImage) { _%>
                         <path>
                             <groupId>io.micronaut</groupId>
                             <artifactId>micronaut-graal</artifactId>
                             <version>${micronaut.version}</version>
                         </path>
-                        <%_ } _%>
                         <path>
                             <groupId>io.micronaut</groupId>
                             <artifactId>micronaut-inject-java</artifactId>
@@ -808,48 +780,6 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                         </execution>
                     </executions>
                 </plugin>
-                <%_ if (useNativeImage) { _%>
-                <plugin>
-                    <groupId>com.google.cloud.tools</groupId>
-                    <artifactId>jib-maven-plugin</artifactId>
-                        <dependencies>
-                            <dependency>
-                                <groupId>com.google.cloud.tools</groupId>
-                                <artifactId>jib-native-image-extension-maven</artifactId>
-                                <version>0.1.0</version>
-                            </dependency>
-                        </dependencies>
-                        <configuration>
-                            <from>
-                                <image>frolvlad/alpine-glibc</image>
-                            </from>
-                            <to>
-                                <image><%= lowercaseBaseName %>:latest</image>
-                            </to>
-                            <container>
-                                <entrypoint>
-                                    <shell>/app/<%= lowercaseBaseName %></shell>
-                                </entrypoint>
-                                <ports>
-                                    <port>8080</port>
-                                </ports>
-                                <environment>
-                                    <JHIPSTER_SLEEP>0</JHIPSTER_SLEEP>
-                                </environment>
-                                <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
-                            </container>
-                            <pluginExtensions>
-                                <pluginExtension>
-                                    <properties>
-                                        <imageName><%= lowercaseBaseName %></imageName>
-                                    </properties>
-                                    <implementation>com.google.cloud.tools.jib.maven.extension.nativeimage.JibNativeImageExtension</implementation>
-                                </pluginExtension>
-                            </pluginExtensions>
-                        </configuration>
-                </plugin>
-                <%_ } _%>
-                <%_ if (useNativeImage === false) { _%>
                 <plugin>
                     <groupId>com.google.cloud.tools</groupId>
                     <artifactId>jib-maven-plugin</artifactId>
@@ -887,7 +817,6 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                         </extraDirectories>
                     </configuration>
                 </plugin>
-                <%_ } _%>
                 <plugin>
                     <groupId>org.liquibase</groupId>
                     <artifactId>liquibase-maven-plugin</artifactId>

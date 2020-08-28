@@ -863,7 +863,17 @@ const serverFiles = {
     ],
     serverBuild: [
         {
-            templates: [{ file: 'checkstyle.xml', options: { interpolate: INTERPOLATE_REGEX } }],
+            templates: [
+                { file: 'checkstyle.xml', options: { interpolate: INTERPOLATE_REGEX } },
+                { file: 'Dockerfile', useBluePrint: true },
+                { file: 'docker-build.sh', useBluePrint: true },
+                {
+                    file: 'native-image.properties',
+                    renameTo: generator =>
+                        `src/main/resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/native-image.properties`,
+                    useBluePrint: true,
+                },
+            ],
         },
         {
             condition: generator => generator.buildTool === 'gradle',

@@ -283,12 +283,6 @@ function askForServerSideOpts(meta) {
             ],
             default: 'maven',
         },
-        {
-            type: 'confirm',
-            name: 'useNativeImage',
-            message: 'Would you like to use native image? (Only Java 8 or 11)',
-            default: false,
-        },
     ];
 
     if (meta) return prompts; // eslint-disable-line consistent-return
@@ -329,7 +323,6 @@ function askForServerSideOpts(meta) {
         }
         this.cacheProvider = !reactive ? props.cacheProvider : 'no';
         this.enableHibernateCache = props.cacheProvider === 'no' ? false : props.enableHibernateCache;
-        this.useNativeImage = props.useNativeImage;
         this.databaseType = props.databaseType;
         this.devDatabaseType = props.devDatabaseType;
         this.prodDatabaseType = props.prodDatabaseType;
