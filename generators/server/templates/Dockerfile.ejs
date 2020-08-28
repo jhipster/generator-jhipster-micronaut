@@ -1,0 +1,18 @@
+FROM oracle/graalvm-ce:20.1.0-java11 as graalvm
+RUN gu install native-image
+
+COPY . /home/app/myapp
+WORKDIR /home/app/myapp
+
+<% if (buildTool === 'maven') { %>
+RUN native-image --no-server -cp target/*.jar
+<% } %>
+<% if (buildTool === 'gradle') { %>
+RUN native-image --no-server -cp build/libs/*.jar
+<% } %>
+
+FROM frolvlad/alpine-glibc
+RUN apk update && apk add libstdc++
+EXPOSE 8080
+COPY --from=graalvm /home/app/myapp/myapp /app/myapp
+ENTRYPOINT ["/app/myapp"]
