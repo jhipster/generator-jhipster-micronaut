@@ -8,11 +8,11 @@ WORKDIR /home/app/myapp
 RUN native-image --no-server -cp target/*.jar
 <% } %>
 <% if (buildTool === 'gradle') { %>
-RUN native-image --no-server -cp build/libs/*.jar
+RUN native-image --no-server -cp build/libs/*-all.jar
 <% } %>
 
 FROM frolvlad/alpine-glibc
 RUN apk update && apk add libstdc++
 EXPOSE 8080
-COPY --from=graalvm /home/app/myapp/myapp /app/myapp
-ENTRYPOINT ["/app/myapp"]
+COPY --from=graalvm /home/app/myapp/<%= dasherizedBaseName %> /app/<%= dasherizedBaseName %>
+ENTRYPOINT ["/app/<%= dasherizedBaseName %>"]

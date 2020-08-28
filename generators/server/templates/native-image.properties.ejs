@@ -1,14 +1,15 @@
 Args = -H:Name=<%= dasherizedBaseName %> \
-       -H:Class=<%=packageName%>.<%=mainClass%> \
-       -H:--no-server
-       -H:+TraceClassInitialization
-       -H:+ReportExceptionStackTraces
-       --no-fallback
-       --no-server
-       --static
-       --report-unsupported-elements-at-runtime
-       --initialize-at-build-time=sun.awt.AWTAccessor
-       --initialize-at-build-time=sun.awt.SunToolkit
-       --initialize-at-build-time=java.awt.Toolkit
-       --initialize-at-build-time=java.awt.EventQueue
-       --initialize-at-build-time=sun.awt.AppContext
+        -H:Class=<%=packageName%>.<%=mainClass%> \
+        --no-fallback \
+        --report-unsupported-elements-at-runtime \
+        --no-server
+
+#       -H:+TraceClassInitialization \
+#       -H:+ReportExceptionStackTraces \
+#       --static \
+#       --report-unsupported-elements-at-runtime \
+#       --initialize-at-build-time=sun.awt.AWTAccessor \
+#       --initialize-at-build-time=sun.awt.SunToolkit \
+#       --initialize-at-build-time=java.awt.Toolkit \
+#       --initialize-at-build-time=java.awt.EventQueue \
+#       --initialize-at-build-time=sun.awt.AppContext
