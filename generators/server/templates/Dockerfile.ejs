@@ -5,10 +5,10 @@ COPY . /home/app/myapp
 WORKDIR /home/app/myapp
 
 <% if (buildTool === 'maven') { %>
-RUN native-image --no-server -cp target/*.jar
+RUN native-image -cp target/*.jar
 <% } %>
 <% if (buildTool === 'gradle') { %>
-RUN native-image --no-server -cp build/libs/*-all.jar
+RUN native-image -cp build/libs/*-all.jar
 <% } %>
 
 FROM frolvlad/alpine-glibc
