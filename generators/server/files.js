@@ -873,6 +873,18 @@ const serverFiles = {
                         `src/main/resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/native-image.properties`,
                     useBluePrint: true,
                 },
+                {
+                    file: 'resources.json',
+                    renameTo: generator =>
+                        `src/main/resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/resources.json`,
+                    useBluePrint: true,
+                },
+                {
+                    file: 'reflect.json',
+                    renameTo: generator =>
+                        `src/main/resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/reflect.json`,
+                    useBluePrint: true,
+                },
             ],
         },
         {
