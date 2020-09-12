@@ -74,7 +74,9 @@ _%>
         https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
         <javassist.version><%= versions.javassist %></javassist.version>
         <javax-mail.version><%= versions.javaxMail %></javax-mail.version>
+        <%_ if (!skipUserManagement) { _%>
         <jbcrypt.version><%= versions.jbcrypt %></jbcrypt.version>
+        <%_ } _%>
         <liquibase.version><%= versions.liquibase %></liquibase.version>
         <liquibase-hibernate5.version><%= versions.liquibaseHibernate5 %></liquibase-hibernate5.version>
         <logback.version><%= versions.logback %></logback.version>
@@ -408,11 +410,13 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <scope>compile</scope>
         </dependency>
 <%_ } _%>
+<%_ if (!skipUserManagement) { _%>
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>${jbcrypt.version}</version>
         </dependency>
+<%_ } _%>
         <dependency>
             <groupId>io.micronaut.liquibase</groupId>
             <artifactId>micronaut-liquibase</artifactId>

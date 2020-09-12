@@ -38,7 +38,9 @@ mapstruct_version=<%=versions.mapstruct%>
 archunit_junit5_version=<%=versions.archunit%>
 logback_version=<%=versions.logback%>
 mockito_version=<%=versions.mockito%>
+<%_ if (!skipUserManagement) { _%>
 jbcrypt_version=<%=versions.jbcrypt%>
+<%_ } _%>
 javax_mail_version=<%=versions.javaxMail%>
 simplejavamail_version=<%= versions.simplejavamail %>
 problem_version=<%=versions.problem%>

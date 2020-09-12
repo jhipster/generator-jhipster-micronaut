@@ -397,7 +397,9 @@ dependencies {
 <%_ } _%>
     implementation "io.micronaut.views:micronaut-views-thymeleaf"
 
+<%_ if (!skipUserManagement) { _%>
     implementation "org.mindrot:jbcrypt:$jbcrypt_version"
+<%_ } _%>
 
     compileOnly("org.graalvm.nativeimage:svm")
 
