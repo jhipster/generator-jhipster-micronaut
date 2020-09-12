@@ -476,6 +476,12 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <groupId>io.micronaut.views</groupId>
             <artifactId>micronaut-views-thymeleaf</artifactId>
         </dependency>
+<%_ if (serviceDiscoveryType === 'eureka' || serviceDiscoveryType === 'consul') { _%>
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-discovery-client</artifactId>
+        </dependency>
+<%_ } _%>
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>

@@ -16,6 +16,10 @@
 micronaut:
   application:
     name: <%= baseName %>
+<%_ if (serviceDiscoveryType === 'consul') { _%>
+    instance:
+      id: ${random.shortuuid}
+<%_ } _%>
   router:
     static-resources:
       client:
@@ -145,6 +149,14 @@ jpa:
           time_zone: UTC
         ddl-auto: none
         physical_naming_strategy: <%=packageName%>.config.SnakeCasePhysicalNamingStrategy
+
+<%_ if (serviceDiscoveryType === 'consul') { _%>
+consul:
+  client:
+    registration:
+      enabled: true
+    defaultZone: "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}"
+<%_ } _%>
 
 # Properties to be exposed on the /info management endpoint
 info:

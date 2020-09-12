@@ -85,28 +85,27 @@ function askForServerSideOpts(meta) {
             default: 'com.mycompany.myapp',
             store: true,
         },
-        // TODO enable it when we allow other apps than monoliths
-        // {
-        //     when: response => applicationType === 'gateway' || applicationType === 'microservice' || applicationType === 'uaa',
-        //     type: 'list',
-        //     name: 'serviceDiscoveryType',
-        //     message: 'Which service discovery server do you want to use?',
-        //     choices: [
-        //         {
-        //             value: 'eureka',
-        //             name: 'JHipster Registry (uses Eureka, provides Spring Cloud Config support and monitoring dashboards)'
-        //         },
-        //         {
-        //             value: 'consul',
-        //             name: 'Consul'
-        //         },
-        //         {
-        //             value: false,
-        //             name: 'No service discovery'
-        //         }
-        //     ],
-        //     default: 'eureka'
-        // },
+        {
+            when: () => applicationType === 'gateway' || applicationType === 'microservice' || applicationType === 'uaa',
+            type: 'list',
+            name: 'serviceDiscoveryType',
+            message: 'Which service discovery server do you want to use?',
+            choices: [
+                {
+                    value: 'eureka',
+                    name: 'JHipster Registry (uses Eureka, provides Spring Cloud Config support and monitoring dashboards)',
+                },
+                {
+                    value: 'consul',
+                    name: 'Consul',
+                },
+                {
+                    value: false,
+                    name: 'No service discovery',
+                },
+            ],
+            default: 'eureka',
+        },
         // {
         //     when: applicationType === 'monolith',
         //     type: 'list',

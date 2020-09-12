@@ -415,6 +415,9 @@ dependencies {
     implementation("io.micronaut.data:micronaut-data-jdbc:$micronaut_data_version") {
         exclude group: 'io.micronaut', module: 'micronaut-jdbc'
     }
+<%_ if (serviceDiscoveryType === 'eureka' || serviceDiscoveryType === 'consul') { _%>
+    implementation "io.micronaut:micronaut-discovery-client"
+<%_ } _%>
 
     implementation "javax.mail:javax.mail-api:$javax_mail_version"
     implementation "com.sun.mail:javax.mail:$javax_mail_version"

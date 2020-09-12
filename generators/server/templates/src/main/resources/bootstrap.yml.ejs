@@ -1,0 +1,27 @@
+# ===================================================================
+# Micronaut Distributed Configuration bootstrap <% if (serviceDiscoveryType === 'consul') { %>with Consul <% } %>
+# ===================================================================
+micronaut:
+  application:
+    name: <%= baseName %>
+  config-client:
+    enabled: true
+
+<%_ if (serviceDiscoveryType === 'consul') { _%>
+consul:
+  client:
+    defaultZone: "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}"
+<%_ } _%>
+
+<%_ if (serviceDiscoveryType === 'eureka') { _%>
+jhipster:
+  registry:
+    password: admin
+
+spring:
+  cloud:
+    config:
+      enabled: true
+        uri: http://admin:${jhipster.registry.password}@localhost:8761/config
+        label: master # toggle to switch to a different version of the configuration as stored in git
+<%_ } _%>
