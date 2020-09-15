@@ -3,6 +3,7 @@ Args = -H:Name=<%= dasherizedBaseName %> \
         --no-fallback \
         -H:+TraceClassInitialization \
         -H:+ReportExceptionStackTraces \
+        -H:IncludeResourceBundles=liquibase/i18n/liquibase-core \
         -H:ReflectionConfigurationResources=${.}/reflect.json \
         -H:ResourceConfigurationFiles=src/main/resources/${.}/resources.json
 
