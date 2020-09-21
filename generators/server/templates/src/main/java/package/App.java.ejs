@@ -13,6 +13,9 @@ import io.micronaut.runtime.server.EmbeddedServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+<%_ if (devDatabaseType === 'h2Memory' || devDatabaseType === 'h2Disk') { _%>
+import java.lang.reflect.Method;
+<%_ } _%>
 import java.util.*;
 
 public class <%= mainClass %> {
@@ -61,6 +64,13 @@ public class <%= mainClass %> {
         checkProfiles(context.getEnvironment());
 
         logApplicationStartup(context);
+
+        <%_ if (devDatabaseType === 'h2Memory' || devDatabaseType === 'h2Disk') { _%>
+        if (environments.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
+            startH2WebConsole();
+        }
+        <%_ } _%>
+
     }
 
     private static void logApplicationStartup(ApplicationContext context) {
@@ -84,4 +94,20 @@ public class <%= mainClass %> {
             serverPort,
             context.getEnvironment().getActiveNames());
     }
+
+    <%_ if (devDatabaseType === 'h2Memory' || devDatabaseType === 'h2Disk') { _%>
+    private static void startH2WebConsole() {
+        try {
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            Class<?> serverClass = Class.forName("org.h2.tools.Server", true, loader);
+            Method createWebServer = serverClass.getMethod("createWebServer", String[].class);
+            Method start = serverClass.getMethod("start");
+
+            Object server = createWebServer.invoke(null, new Object[]{new String[]{"-properties", "src/main/resources/"}});
+            start.invoke(server);
+        } catch (Exception  e) {
+            log.trace("Unable to start H2 console.", e);
+        }
+    }
+    <%_ } _%>
 }
