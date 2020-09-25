@@ -41,7 +41,7 @@ module.exports = {
         },
     },
     versions: {
-        micronaut: '2.0.1',
+        micronaut: '2.0.3',
         micronautData: '1.1.3',
 
         hibernate: '5.4.17.Final',
@@ -58,5 +58,6 @@ module.exports = {
         problem: '0.24.0',
         caffeine: '2.8.4',
         archunit: '0.14.1',
+        simplejavamail: '6.4.3',
     },
 };

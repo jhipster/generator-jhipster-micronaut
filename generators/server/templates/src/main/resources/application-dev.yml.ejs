@@ -34,8 +34,11 @@ _%>
   if (devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') {
     dbUser = baseName;
     dbUrlConfig.databaseName = lowercaseBaseName;
-    if (devDatabaseType === 'h2Disk') {
-      dbUrlConfig.localDirectory = './h2db/db';
+    if (devDatabaseType === 'h2Disk' && buildTool === 'gradle') {
+      dbUrlConfig.localDirectory = `./${BUILD_DIR}/h2db/db`;
+    }
+    if (devDatabaseType === 'h2Disk' && buildTool === 'maven') {
+      dbUrlConfig.localDirectory = `./h2db/db`;
     }
   }
 
@@ -58,6 +61,12 @@ liquibase:
       change-log: classpath:config/liquibase/master.xml
       contexts: dev,faker
 
+mail:
+  host: localhost
+  port: 25
+  # username:
+  # password:
+  
 jpa:
   default:
     packages-to-scan:

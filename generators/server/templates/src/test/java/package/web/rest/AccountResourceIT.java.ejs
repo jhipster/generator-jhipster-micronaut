@@ -12,8 +12,8 @@ import <%=packageName%>.repository.UserRepository;
 import <%=packageName%>.security.AuthoritiesConstants;
 <%_ if (authenticationType !== 'oauth2') { _%>
 import <%=packageName%>.security.PasswordEncoder;
-<%_ } _%>
 import <%=packageName%>.service.MailService;
+<%_ } _%>
 import <%=packageName%>.service.UserService;
 import <%=packageName%>.service.dto.PasswordChangeDTO;
 import <%=packageName%>.service.dto.UserDTO;
@@ -62,8 +62,8 @@ public class AccountResourceIT {
     @Inject UserService userService;
     <%_ if (authenticationType !== 'oauth2') { _%>
     @Inject PasswordEncoder passwordEncoder;
-    <%_ } _%>
     @Inject MailService mailService;
+    <%_ } _%>
     @Inject @Client("/") RxHttpClient client;
 
     @MockBean(UserService.class)
@@ -71,16 +71,17 @@ public class AccountResourceIT {
         return mock(UserService.class);
     }
 
+    <%_ if (authenticationType !== 'oauth2') { _%>
     @MockBean(MailService.class)
     MailService mailService() {
         return mock(MailService.class);
     }
 
+ 
     @BeforeEach
     public void setup() {
         doNothing().when(mailService).sendActivationEmail(any());
     }
-    <%_ if (authenticationType !== 'oauth2') { _%>
 
     @Test
     public void testNonAuthenticatedUser()  {
