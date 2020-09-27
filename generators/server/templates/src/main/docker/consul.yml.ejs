@@ -34,6 +34,8 @@ services:
             - INIT_SLEEP_SECONDS=5
             - CONSUL_URL=consul
             - CONSUL_PORT=8500
+            - ENABLE_SPRING=true
+            - ENABLE_MICRONAUT=true
             # Uncomment to load configuration into Consul from a Git repository
             # as configured in central-server-config/git2consul.json
             # Also set SPRING_CLOUD_CONSUL_CONFIG_FORMAT=files on your apps

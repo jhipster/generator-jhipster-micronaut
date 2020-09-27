@@ -11,6 +11,8 @@ micronaut:
 consul:
   client:
     defaultZone: "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}"
+    config:
+      format: YAML
 <%_ } _%>
 
 <%_ if (serviceDiscoveryType === 'eureka') { _%>
