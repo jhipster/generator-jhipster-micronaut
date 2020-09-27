@@ -117,7 +117,7 @@ micronaut:
         signatures:
           secret:
             generator:
-              secret: <%= jwtSecretKey %>
+              secret: ${jhipster.security.authentication.jwt.base64-secret:<%= jwtSecretKey %>}
               base64: true
               jws-algorithm: HS512
 

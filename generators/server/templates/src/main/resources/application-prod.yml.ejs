@@ -135,7 +135,7 @@ micronaut:
           secret:
             generator:
               # As this is the PRODUCTION configuration, you must securely supply the application with a secret.
-              secret: <%= jwtSecretKey %>
+              secret: ${jhipster.security.authentication.jwt.base64-secret:<%= jwtSecretKey %>}
               base64: true
               jws-algorithm: HS512
 
