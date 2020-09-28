@@ -29,7 +29,7 @@
     "bootstrap": "4.4.1",
     "bootswatch": "4.3.1",
     "loaders.css": "0.1.2",
-    "lodash": "4.17.15",
+    "lodash": "4.17.20",
     "moment": "2.24.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
