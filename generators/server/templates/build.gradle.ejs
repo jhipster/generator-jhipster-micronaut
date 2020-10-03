@@ -28,12 +28,12 @@ buildscript {
 }
 
 plugins {
+    id "io.micronaut.application"
     id "java"
     id "maven-publish"
     id "idea"
     id "jacoco"
     id "application"
-    id "com.google.cloud.tools.jib"
     id "com.gorylenko.gradle-git-properties"
     <%_ if (enableSwaggerCodegen) { _%>
     id "org.openapi.generator"
@@ -41,15 +41,21 @@ plugins {
     <%_ if (!skipClient) { _%>
     id "com.github.node-gradle.node"
     <%_ } _%>
-    id "net.ltgt.apt-eclipse"
-    id "net.ltgt.apt-idea"
-    id "net.ltgt.apt"
     <%_ if (databaseType === 'sql') { _%>
     id "org.liquibase.gradle"
     <%_ } _%>
     id "org.sonarqube"
     id "com.github.johnrengelman.shadow"
     //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
+}
+
+micronaut {
+    runtime "netty"
+    testRuntime "junit5"
+    processing {
+        incremental true
+        annotations "example.mn.*"
+    }
 }
 
 group = "<%= packageName %>"
@@ -63,6 +69,7 @@ assert System.properties["java.specification.version"] == "1.8" || "11" || "12" 
 
 apply from: "gradle/docker.gradle"
 apply from: "gradle/sonar.gradle"
+
 <%_ if (enableSwaggerCodegen) { _%>
 apply from: "gradle/swagger.gradle"
 <%_ } _%>
@@ -392,6 +399,8 @@ dependencies {
 
     implementation "org.mindrot:jbcrypt:$jbcrypt_version"
 
+    compileOnly("org.graalvm.nativeimage:svm")
+
     implementation "io.micronaut.liquibase:micronaut-liquibase"
     implementation "io.micronaut.sql:micronaut-jdbc-hikari"
     implementation "io.micronaut.jmx:micronaut-jmx"
@@ -560,6 +569,7 @@ if (project.hasProperty("gae")) {
 
 task cleanResources(type: Delete) {
     delete "build/resources"
+    delete "build/layers"
 }
 
 wrapper {
