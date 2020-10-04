@@ -54,7 +54,7 @@ micronaut {
     testRuntime "junit5"
     processing {
         incremental true
-        annotations "example.mn.*"
+        annotations "<%= packageName %>.*"
     }
 }
 
