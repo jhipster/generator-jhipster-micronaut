@@ -273,8 +273,8 @@ dependencies {
     // import JHipster dependencies BOM
     if (!project.hasProperty("gae")) {
         implementation platform("io.github.jhipster:jhipster-dependencies:${jhipster_dependencies_version}")
-        annotationProcessor platform("io.micronaut:micronaut-bom:${micronaut_version}")
-        implementation platform("io.micronaut:micronaut-bom:${micronaut_version}")
+        annotationProcessor platform("io.micronaut:micronaut-bom:${micronautVersion}")
+        implementation platform("io.micronaut:micronaut-bom:${micronautVersion}")
     }
 
     annotationProcessor "io.micronaut:micronaut-inject-java"
@@ -385,12 +385,12 @@ dependencies {
     liquibaseRuntime sourceSets.main.compileClasspath
     <%_ } _%>
 
-    implementation "io.micronaut:micronaut-inject:$micronaut_version"
-    implementation "io.micronaut:micronaut-validation:$micronaut_version"
-    implementation "io.micronaut:micronaut-runtime:$micronaut_version"
-    implementation "io.micronaut:micronaut-http-client:$micronaut_version"
-    implementation "io.micronaut:micronaut-http-server-netty:$micronaut_version"
-    implementation "io.micronaut:micronaut-management:$micronaut_version"
+    implementation "io.micronaut:micronaut-inject:$micronautVersion"
+    implementation "io.micronaut:micronaut-validation:$micronautVersion"
+    implementation "io.micronaut:micronaut-runtime:$micronautVersion"
+    implementation "io.micronaut:micronaut-http-client:$micronautVersion"
+    implementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
+    implementation "io.micronaut:micronaut-management:$micronautVersion"
     implementation "io.micronaut.security:micronaut-security-jwt"
 <%_ if (authenticationType == 'oauth2') { _%>
     implementation "io.micronaut.security:micronaut-security-oauth2"
@@ -520,11 +520,11 @@ dependencies {
     <%_ } _%>
 
     // Micronaut test deps
-    testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronaut_version")
+    testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testAnnotationProcessor "io.micronaut.data:micronaut-data-processor:$micronaut_data_version"
     testAnnotationProcessor "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
-    testImplementation platform("io.micronaut:micronaut-bom:$micronaut_version")
+    testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     testImplementation "io.micronaut.test:micronaut-test-junit5"
 
     testImplementation "org.junit.jupiter:junit-jupiter-engine"
