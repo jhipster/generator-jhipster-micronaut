@@ -284,7 +284,7 @@ To achieve this, first build a docker image of your app by running:
     <% if (buildTool === 'maven') { %>./mvnw -Pprod verify jib:dockerBuild<% } %><% if (buildTool === 'gradle') { %>../gradlew clean assemble dockerBuild -Pprod<% } %>
     <% if (buildTool === 'gradle') { %>
     Gradle uses official [micronaut-gradle-plugin](https://github.com/micronaut-projects/micronaut-gradle-plugin) for Docker image generation.
-    <% } %><% if (buildTool === 'gradle') { %>
+    <% } %><% if (buildTool === 'maven') { %>
     Maven uses [jib](https://cloud.google.com/blog/products/gcp/introducing-jib-build-java-docker-images-better) for Docker image generation.
     <% } %>
 Then run:
