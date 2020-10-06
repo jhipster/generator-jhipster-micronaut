@@ -28,12 +28,12 @@ buildscript {
 }
 
 plugins {
+    id "io.micronaut.application"
     id "java"
     id "maven-publish"
     id "idea"
     id "jacoco"
     id "application"
-    id "com.google.cloud.tools.jib"
     id "com.gorylenko.gradle-git-properties"
     <%_ if (enableSwaggerCodegen) { _%>
     id "org.openapi.generator"
@@ -41,15 +41,21 @@ plugins {
     <%_ if (!skipClient) { _%>
     id "com.github.node-gradle.node"
     <%_ } _%>
-    id "net.ltgt.apt-eclipse"
-    id "net.ltgt.apt-idea"
-    id "net.ltgt.apt"
     <%_ if (databaseType === 'sql') { _%>
     id "org.liquibase.gradle"
     <%_ } _%>
     id "org.sonarqube"
     id "com.github.johnrengelman.shadow"
     //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
+}
+
+micronaut {
+    runtime "netty"
+    testRuntime "junit5"
+    processing {
+        incremental true
+        annotations "<%= packageName %>.*"
+    }
 }
 
 group = "<%= packageName %>"
@@ -63,6 +69,7 @@ assert System.properties["java.specification.version"] == "1.8" || "11" || "12" 
 
 apply from: "gradle/docker.gradle"
 apply from: "gradle/sonar.gradle"
+
 <%_ if (enableSwaggerCodegen) { _%>
 apply from: "gradle/swagger.gradle"
 <%_ } _%>
@@ -266,8 +273,8 @@ dependencies {
     // import JHipster dependencies BOM
     if (!project.hasProperty("gae")) {
         implementation platform("io.github.jhipster:jhipster-dependencies:${jhipster_dependencies_version}")
-        annotationProcessor platform("io.micronaut:micronaut-bom:${micronaut_version}")
-        implementation platform("io.micronaut:micronaut-bom:${micronaut_version}")
+        annotationProcessor platform("io.micronaut:micronaut-bom:${micronautVersion}")
+        implementation platform("io.micronaut:micronaut-bom:${micronautVersion}")
     }
 
     annotationProcessor "io.micronaut:micronaut-inject-java"
@@ -378,12 +385,12 @@ dependencies {
     liquibaseRuntime sourceSets.main.compileClasspath
     <%_ } _%>
 
-    implementation "io.micronaut:micronaut-inject:$micronaut_version"
-    implementation "io.micronaut:micronaut-validation:$micronaut_version"
-    implementation "io.micronaut:micronaut-runtime:$micronaut_version"
-    implementation "io.micronaut:micronaut-http-client:$micronaut_version"
-    implementation "io.micronaut:micronaut-http-server-netty:$micronaut_version"
-    implementation "io.micronaut:micronaut-management:$micronaut_version"
+    implementation "io.micronaut:micronaut-inject:$micronautVersion"
+    implementation "io.micronaut:micronaut-validation:$micronautVersion"
+    implementation "io.micronaut:micronaut-runtime:$micronautVersion"
+    implementation "io.micronaut:micronaut-http-client:$micronautVersion"
+    implementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
+    implementation "io.micronaut:micronaut-management:$micronautVersion"
     implementation "io.micronaut.security:micronaut-security-jwt"
 <%_ if (authenticationType == 'oauth2') { _%>
     implementation "io.micronaut.security:micronaut-security-oauth2"
@@ -391,6 +398,8 @@ dependencies {
     implementation "io.micronaut.views:micronaut-views-thymeleaf"
 
     implementation "org.mindrot:jbcrypt:$jbcrypt_version"
+
+    compileOnly("org.graalvm.nativeimage:svm")
 
     implementation "io.micronaut.liquibase:micronaut-liquibase"
     implementation "io.micronaut.sql:micronaut-jdbc-hikari"
@@ -511,11 +520,11 @@ dependencies {
     <%_ } _%>
 
     // Micronaut test deps
-    testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronaut_version")
+    testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testAnnotationProcessor "io.micronaut.data:micronaut-data-processor:$micronaut_data_version"
     testAnnotationProcessor "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
-    testImplementation platform("io.micronaut:micronaut-bom:$micronaut_version")
+    testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     testImplementation "io.micronaut.test:micronaut-test-junit5"
 
     testImplementation "org.junit.jupiter:junit-jupiter-engine"
@@ -560,6 +569,7 @@ if (project.hasProperty("gae")) {
 
 task cleanResources(type: Delete) {
     delete "build/resources"
+    delete "build/layers"
 }
 
 wrapper {

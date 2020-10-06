@@ -19,7 +19,7 @@
 
 pluginManagement {
      plugins {
-          id 'com.google.cloud.tools.jib' version "${jib_plugin_version}"
+          id "io.micronaut.application" version "${micronaut_plugin_version}"
           id 'com.gorylenko.gradle-git-properties' version "${git_properties_plugin_version}"
           <%_ if (enableSwaggerCodegen) { _%>
           id "org.openapi.generator" version "${openapi_plugin_version}"
@@ -31,9 +31,6 @@ pluginManagement {
           id 'org.liquibase.gradle' version "${liquibase_plugin_version}"
           <%_ } _%>
           id 'org.sonarqube' version "${sonarqube_plugin_version}"
-          id 'net.ltgt.apt-eclipse' version "${apt_plugin_version}"
-          id 'net.ltgt.apt-idea' version "${apt_plugin_version}"
-          id 'net.ltgt.apt' version "${apt_plugin_version}"
           id 'com.github.johnrengelman.shadow' version "${shadow_plugin_version}"
      }
 }

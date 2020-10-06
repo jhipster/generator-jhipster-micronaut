@@ -872,7 +872,7 @@ const serverFiles = {
                 { file: 'settings.gradle', useBluePrint: true },
                 { file: 'gradle.properties', useBluePrint: true },
                 'gradle/sonar.gradle',
-                'gradle/docker.gradle',
+                { file: 'gradle/docker.gradle', useBluePrint: true },
                 { file: 'gradle/profile_dev.gradle', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
                 { file: 'gradle/profile_prod.gradle', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
                 'gradle/war.gradle',

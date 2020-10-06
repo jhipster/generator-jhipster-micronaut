@@ -15,7 +15,7 @@ echo "Building and containerizing $1 using $buildTool..."
 if [ "$buildTool" == "maven" ]; then
     ./mvnw -ntp package -Pdev jib:dockerBuild -DskipTests
 else
-    ./gradlew -Pdev shadowJar jibDockerBuild
+    ./gradlew -Pdev shadowJar dockerBuild
 fi
 
 cd ../../
