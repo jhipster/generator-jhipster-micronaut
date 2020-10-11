@@ -6,6 +6,15 @@ datasources:
     poolName: Hikari
     autoCommit: false
 
+<%_ if (serviceDiscoveryType === 'consul') { _%>
+consul:
+  client:
+    registration:
+      enabled: false
+    config:
+      enabled: false
+
+<%_ } _%>
 liquibase:
   datasources:
     default:

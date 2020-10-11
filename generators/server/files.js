@@ -124,7 +124,6 @@ const serverFiles = {
                 { file: 'config/git2consul.json', method: 'copy' },
                 {
                     file: 'config/consul-config/application.yml',
-                    method: 'copy',
                     useBluePrint: true,
                     renameTo: () => 'central-server-config/application.yml',
                 },
