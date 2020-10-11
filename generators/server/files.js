@@ -465,6 +465,26 @@ const serverFiles = {
             ],
         },
     ],
+    serverJavaOpenApi: [
+        {
+            templates: [
+                {
+                    file: 'openapi.properties',
+                    useBluePrint: true,
+                },
+            ],
+        },
+        {
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/web/rest/SwaggerResource.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/SwaggerResource.java`,
+                    useBluePrint: true,
+                },
+            ],
+        },
+    ],
     serverJavaSecurity: [
         {
             path: SERVER_MAIN_SRC_DIR,

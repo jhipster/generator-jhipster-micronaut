@@ -69,6 +69,7 @@ _%>
         <jhipster-dependencies.version><%= JHIPSTER_DEPENDENCIES_VERSION %></jhipster-dependencies.version>
         <micronaut.version><%= versions.micronaut %></micronaut.version>
         <micronaut-data.version><%= versions.micronautData %></micronaut-data.version>
+        <micronaut-openapi.version><%= versions.micronautOpenApi %></micronaut-openapi.version>
         <hibernate.version><%= versions.hibernate %></hibernate.version>
         <!-- The javassist version should match the one managed by
         https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
@@ -150,6 +151,11 @@ _%>
 
     <dependencies>
         <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version><%= versions.swaggerAnnotations %></version>
+        </dependency>
+        <dependency>
             <groupId>io.github.jhipster</groupId>
             <artifactId>jhipster-framework</artifactId>
             <exclusions>
@@ -191,6 +197,10 @@ _%>
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-jaxb-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -594,6 +604,11 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                             <groupId>io.micronaut.data</groupId>
                             <artifactId>micronaut-data-processor</artifactId>
                             <version>${micronaut-data.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut.openapi</groupId>
+                            <artifactId>micronaut-openapi</artifactId>
+                            <version>${micronaut-openapi.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

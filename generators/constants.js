@@ -43,6 +43,7 @@ module.exports = {
     versions: {
         micronaut: '2.1.0',
         micronautData: '2.0.0',
+        micronautOpenApi: '2.1.0',
 
         hibernate: '5.4.17.Final',
         jackson: '2.11.1',
@@ -54,6 +55,7 @@ module.exports = {
         liquibaseHibernate5: '3.8',
         logback: '1.2.3',
         mapstruct: '1.3.1.Final',
+        swaggerAnnotations: '2.1.2',
         mockito: '3.1.0',
         problem: '0.24.0',
         caffeine: '2.8.4',

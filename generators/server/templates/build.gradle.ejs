@@ -282,6 +282,7 @@ dependencies {
     <%_ if (databaseType === 'sql') { _%>
     annotationProcessor "io.micronaut.data:micronaut-data-processor:$micronaut_data_version"
     <%_ } _%>
+    annotationProcessor "io.micronaut.openapi:micronaut-openapi:$micronaut_openapi_version"
 
     // Use ", version: jhipster_dependencies_version, changing: true" if you want
     // to use a SNAPSHOT release instead of a stable release
@@ -297,6 +298,7 @@ dependencies {
     implementation "org.simplejavamail:simple-java-mail:$simplejavamail_version"
     implementation "javax.annotation:javax.annotation-api"
     implementation "ch.qos.logback:logback-classic:$logback_version"
+    implementation "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
     implementation "io.dropwizard.metrics:metrics-core"
     implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "net.logstash.logback:logstash-logback-encoder"
@@ -307,6 +309,7 @@ dependencies {
     <%_ } _%>
     implementation "com.fasterxml.jackson.core:jackson-annotations"
     implementation "com.fasterxml.jackson.module:jackson-module-jaxb-annotations"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml"
     implementation "com.fasterxml.jackson.core:jackson-databind"
     <%_ if (applicationType === 'gateway' && authenticationType === 'uaa') { _%>
     implementation "org.apache.httpcomponents:httpclient"
