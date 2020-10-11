@@ -53,13 +53,22 @@ micronaut:
 <%_ if (authenticationType === 'jwt') { _%>
     authentication: bearer
 <%_ } else if (authenticationType === 'oauth2') { _%>
+    <%_ if (applicationType === 'microservice') { _%>
+    authentication: idtoken
+    <%_ } else { _%>
     authentication: cookie
+    <%_ } _%>
     oauth2:
       enabled: true
       clients:
         oidc:
+          <%_ if (applicationType === 'microservice') { _%>
+          client-secret: internal
+          client-id: internal
+          <%_ } else { _%>
           client-secret: web_app
           client-id: web_app
+          <%_ } _%>
           openid:
             issuer: http://localhost:9080/auth/realms/jhipster
       login-uri: /oauth2/authorization{/provider}
