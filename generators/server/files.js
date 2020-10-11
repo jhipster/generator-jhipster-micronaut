@@ -227,7 +227,8 @@ const serverFiles = {
             ],
         },
         {
-            condition: generator => generator.databaseType === 'sql' && !generator.skipUserManagement,
+            condition: generator =>
+                generator.databaseType === 'sql' && (!generator.skipUserManagement || generator.authenticationType === 'oauth2'),
             path: SERVER_MAIN_RES_DIR,
             templates: [
                 {
@@ -421,7 +422,7 @@ const serverFiles = {
             ],
         },
         {
-            condition: generator => !generator.skipUserManagement,
+            condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
             path: SERVER_MAIN_SRC_DIR,
             templates: [
                 {
@@ -449,7 +450,7 @@ const serverFiles = {
             ],
         },
         {
-            condition: generator => !generator.skipUserManagement,
+            condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
             path: SERVER_MAIN_SRC_DIR,
             templates: [
                 {
@@ -517,7 +518,7 @@ const serverFiles = {
             ],
         },
         {
-            condition: generator => !generator.skipUserManagement,
+            condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
             path: SERVER_MAIN_SRC_DIR,
             templates: [
                 {
@@ -611,11 +612,6 @@ const serverFiles = {
                     useBluePrint: true,
                 },
                 {
-                    file: 'package/service/dto/UserDTO.java',
-                    renameTo: generator => `${generator.javaDir}service/dto/UserDTO.java`,
-                    useBluePrint: true,
-                },
-                {
                     file: 'package/service/mapper/UserMapper.java',
                     renameTo: generator => `${generator.javaDir}service/mapper/UserMapper.java`,
                     useBluePrint: true,
@@ -628,6 +624,17 @@ const serverFiles = {
                 {
                     file: 'package/service/MailService.java',
                     renameTo: generator => `${generator.javaDir}service/MailService.java`,
+                    useBluePrint: true,
+                },
+            ],
+        },
+        {
+            condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/service/dto/UserDTO.java',
+                    renameTo: generator => `${generator.javaDir}service/dto/UserDTO.java`,
                     useBluePrint: true,
                 },
                 {
@@ -768,11 +775,6 @@ const serverFiles = {
                 },
                 // Base rest pkg
                 {
-                    file: 'package/web/rest/AccountResource.java',
-                    renameTo: generator => `${generator.javaDir}web/rest/AccountResource.java`,
-                    useBluePrint: true,
-                },
-                {
                     file: 'package/web/rest/ClientForwardController.java',
                     renameTo: generator => `${generator.javaDir}web/rest/ClientForwardController.java`,
                     useBluePrint: true,
@@ -780,6 +782,18 @@ const serverFiles = {
                 {
                     file: 'package/web/rest/UserResource.java',
                     renameTo: generator => `${generator.javaDir}web/rest/UserResource.java`,
+                    useBluePrint: true,
+                },
+            ],
+        },
+        {
+            condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
+            path: SERVER_MAIN_SRC_DIR,
+            templates: [
+                // Base rest pkg
+                {
+                    file: 'package/web/rest/AccountResource.java',
+                    renameTo: generator => `${generator.javaDir}web/rest/AccountResource.java`,
                     useBluePrint: true,
                 },
             ],
@@ -876,7 +890,7 @@ const serverFiles = {
     ],
     serverJavaServiceTest: [
         {
-            condition: generator => !shouldSkipUserManagement(generator),
+            condition: generator => !generator.skipUserManagement,
             path: SERVER_TEST_SRC_DIR,
             templates: [
                 {
@@ -889,6 +903,12 @@ const serverFiles = {
                     renameTo: generator => `${generator.javaDir}service/MailServiceIT.java`,
                     useBluePrint: true,
                 },
+            ],
+        },
+        {
+            condition: generator => !shouldSkipUserManagement(generator),
+            path: SERVER_TEST_SRC_DIR,
+            templates: [
                 {
                     file: 'package/service/UserServiceIT.java',
                     renameTo: generator => `${generator.javaDir}service/UserServiceIT.java`,
