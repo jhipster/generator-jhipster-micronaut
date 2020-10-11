@@ -12,10 +12,16 @@ testFrameworks=`jdlVal "./$1.jdl" "testFrameworks"`
 authType=`jdlVal "./$1.jdl" "authenticationType"`
 devDb=`jdlVal "./$1.jdl" "devDatabaseType"`
 cacheProvider=`jdlVal "./$1.jdl" "cacheProvider"`
+serviceDiscoveryType=`jdlVal "./$1.jdl" "serviceDiscoveryType"`
 
 if [[ "$cacheProvider" == "redis" ]]; then
     docker-compose -f src/main/docker/redis.yml pull
     docker-compose -f src/main/docker/redis.yml up -d
+fi
+
+if [[ "$serviceDiscoveryType" == "consul" ]]; then
+    docker-compose -f src/main/docker/consul.yml pull
+    docker-compose -f src/main/docker/consul.yml up -d
 fi
 
 if [[ "$testFrameworks" == *"protractor"* ]]; then

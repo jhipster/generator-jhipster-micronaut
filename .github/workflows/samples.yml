@@ -44,6 +44,7 @@ jobs:
                     - mvn-no-client
                     - mvn-oauth-angular
                     - gradle-oauth-angular
+                    - mvn-ms-consul-jwt
                 include:
                     - app-type: gradle-jwt-react
                     - app-type: mvn-jwt-angular
@@ -51,6 +52,7 @@ jobs:
                     - app-type: mvn-no-client
                     - app-type: mvn-oauth-angular
                     - app-type: gradle-oauth-angular
+                    - app-type: mvn-ms-consul-jwt
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
