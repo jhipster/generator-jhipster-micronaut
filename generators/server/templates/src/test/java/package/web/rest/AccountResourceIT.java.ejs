@@ -27,7 +27,7 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
-import io.micronaut.test.annotation.MicronautTest;
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.test.annotation.MockBean;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.assertj.core.api.Assertions;
@@ -77,7 +77,7 @@ public class AccountResourceIT {
         return mock(MailService.class);
     }
 
- 
+
     @BeforeEach
     public void setup() {
         doNothing().when(mailService).sendActivationEmail(any());
