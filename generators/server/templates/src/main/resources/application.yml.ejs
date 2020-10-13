@@ -16,7 +16,7 @@
 micronaut:
   application:
     name: <%= baseName %>
-<%_ if (serviceDiscoveryType === 'consul') { _%>
+<%_ if (serviceDiscoveryType === 'consul' || serviceDiscoveryType === 'eureka') { _%>
     instance:
       id: ${random.shortuuid}
 <%_ } _%>
@@ -169,8 +169,24 @@ consul:
     registration:
       enabled: true
     defaultZone: "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}"
-<%_ } _%>
+<%_ } else if (serviceDiscoveryType === 'eureka') { _%>
+eureka:
+  client:
+    registration:
+      enabled: true
+      instance-id: <%= baseName %>:${micronaut.application.instance.id:${random.shortuuid}}
+      app-group-name: <%= baseName %>
+      lease-info:
+        duration-in-secs: 5
+        renewal-interval-in-secs: 10
+      metadata:
+        zone: primary # This is needed for the load balancer
+        version: #project.version#
+        git-version: ${git.commit.id.describe:}
+        git-commit: ${git.commit.id.abbrev:}
+        git-branch: ${git.branch:}
 
+<%_ } _%>
 # Properties to be exposed on the /info management endpoint
 info:
   # Comma separated list of profiles that will trigger the ribbon to show

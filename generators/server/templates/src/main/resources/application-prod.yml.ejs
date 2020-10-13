@@ -18,6 +18,14 @@ logging:
     ROOT: INFO
     <%=packageName%>: INFO
     io.github.jhipster: INFO
+<%_ if (serviceDiscoveryType === 'eureka') { _%>
+
+eureka:
+  client:
+    registration:
+      prefer-ip-address: true
+    defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+<%_ } _%>
 
 management:
   metrics:

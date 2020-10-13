@@ -14,6 +14,16 @@ consul:
     config:
       enabled: false
 
+<%_ } else if (serviceDiscoveryType === 'eureka') {_%>
+eureka:
+  client:
+    registration:
+      enabled: false
+spring:
+  cloud:
+    config:
+      enabled: false
+
 <%_ } _%>
 liquibase:
   datasources:

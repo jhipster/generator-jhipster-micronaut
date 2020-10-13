@@ -30,6 +30,9 @@ public class CorsTest {
 <%_ if (serviceDiscoveryType === 'consul') { _%>
         props.put("consul.client.registration.enabled", false);
         props.put("consul.client.config.enabled", false);
+<%_ } else if (serviceDiscoveryType === 'eureka') { _%>
+        props.put("eureka.client.registration.enabled", false);
+        props.put("spring.cloud.config.enabled", false);
 <%_ } _%>
         props.put("micronaut.server.cors.enabled", true);
         props.put("micronaut.server.cors.single-header", true);
@@ -63,6 +66,9 @@ public class CorsTest {
 <%_ if (serviceDiscoveryType === 'consul') { _%>
         props.put("consul.client.registration.enabled", false);
         props.put("consul.client.config.enabled", false);
+<%_ } else if (serviceDiscoveryType === 'eureka') { _%>
+        props.put("eureka.client.registration.enabled", false);
+        props.put("spring.cloud.config.enabled", false);
 <%_ } _%>
         props.put("micronaut.server.cors.enabled", false);
         props.put("micronaut.server.cors.single-header", true);

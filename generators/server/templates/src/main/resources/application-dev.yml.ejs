@@ -53,6 +53,14 @@ datasources:
     driverClassName: "<%=dbInfo.driver%>"
     poolName: Hikari
     autoCommit: false
+<%_ if (serviceDiscoveryType === 'eureka') { _%>
+
+eureka:
+  client:
+    registration:
+      prefer-ip-address: true
+    defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+<%_ } _%>
 
 liquibase:
   datasources:
@@ -66,7 +74,7 @@ mail:
   port: 25
   # username:
   # password:
-  
+
 jpa:
   default:
     packages-to-scan:
