@@ -309,6 +309,11 @@ const serverFiles = {
             path: SERVER_MAIN_RES_DIR,
             templates: [{ file: 'bootstrap.yml', useBluePrint: true }],
         },
+        {
+            condition: generator => generator.serviceDiscoveryType,
+            path: SERVER_TEST_RES_DIR,
+            templates: [{ file: 'bootstrap-test.yml', useBluePrint: true }],
+        },
     ],
     // TODO WIP Adding files in here, will need to properly conditional and remove some in the future
     serverJavaApp: [
