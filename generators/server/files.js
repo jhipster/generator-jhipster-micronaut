@@ -183,11 +183,14 @@ const serverFiles = {
                 { file: 'logback.xml', useBluePrint: true },
                 { file: 'application.yml', useBluePrint: true },
                 { file: 'application-dev.yml', useBluePrint: true },
-                { file: 'application-test.yml', useBluePrint: true },
                 { file: 'application-tls.yml', useBluePrint: true },
                 { file: 'application-prod.yml', useBluePrint: true },
                 { file: 'i18n/messages.properties', useBluePrint: true, noEjs: true },
             ],
+        },
+        {
+            path: SERVER_TEST_RES_DIR,
+            templates: [{ file: 'application-test.yml', useBluePrint: true }],
         },
         // Emails should be fine to import from base generator, no need for useBluePrint
         {
