@@ -866,12 +866,6 @@ const serverFiles = {
             templates: [
                 { file: 'checkstyle.xml', options: { interpolate: INTERPOLATE_REGEX } },
                 {
-                    file: 'native-image.properties',
-                    renameTo: generator =>
-                        `src/main/resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/native-image.properties`,
-                    useBluePrint: true,
-                },
-                {
                     file: 'resources.json',
                     renameTo: generator =>
                         `src/main/resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/resources.json`,

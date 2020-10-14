@@ -18,7 +18,17 @@ dockerfileNative {
     args("-Xmx64m")
 }
 nativeImage {
-    args('--static')
+    args('--static',
+        '-H:Name=<%= dasherizedBaseName %>',
+        '-H:Class=<%=packageName%>.<%=mainClass%>',
+        '--no-fallback',
+        '-H:+TraceClassInitialization',
+        '-H:+ReportExceptionStackTraces',
+        '-H:IncludeResourceBundles=liquibase/i18n/liquibase-core',
+        '-H:ReflectionConfigurationResources=${.}/reflect.json',
+        '-H:ResourceConfigurationFiles=src/main/resources/${.}/resources.json'
+        //       --report-unsupported-elements-at-runtime
+    )
 }
 dockerBuildNative {
     images = ["<%= baseName %>:$project.version"]
