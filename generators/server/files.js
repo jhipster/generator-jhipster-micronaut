@@ -865,8 +865,6 @@ const serverFiles = {
         {
             templates: [
                 { file: 'checkstyle.xml', options: { interpolate: INTERPOLATE_REGEX } },
-                { file: 'Dockerfile', useBluePrint: true },
-                { file: 'docker-build.sh', useBluePrint: true },
                 {
                     file: 'native-image.properties',
                     renameTo: generator =>
