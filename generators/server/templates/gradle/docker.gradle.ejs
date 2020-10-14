@@ -1,0 +1,25 @@
+dockerfile {
+    baseImage = "openjdk:14-alpine"
+    args("-Xmx128m")
+}
+dockerBuild {
+    images = ["<%= baseName %>:$project.version"]
+}
+
+task copyIntoLayers (type: Copy) {
+    from 'build/resources/main/'
+    into 'build/layers/resources'
+}
+
+dockerBuild.dependsOn copyIntoLayers
+
+dockerfileNative {
+    baseImage = "oracle/graalvm-ce:20.2.0-java11"
+    args("-Xmx64m")
+}
+nativeImage {
+    args('--static')
+}
+dockerBuildNative {
+    images = ["<%= baseName %>:$project.version"]
+}

@@ -29,6 +29,41 @@ Alternatively, if you already have JHipster installed, you can use this blueprin
 $ jhipster --blueprints micronaut
 ```
 
+## Using Docker
+
+Download the Dockerfile:
+
+```bash
+mkdir docker
+cd docker
+wget https://github.com/jhipster/generator-jhipster-micronaut/raw/master/docker/Dockerfile
+```
+
+Build the Docker images:
+
+```bash
+docker build -t jhipster-generator-micronaut:latest .
+```
+
+Make a folder where you want to generate the Service:
+
+```bash
+mkdir service
+cd service
+```
+
+Run the generator from image to generate service:
+
+```bash
+docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut
+```
+
+Run and attach interactive shell to the generator docker container to work from inside the running container:
+
+```bash
+docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut /bin/bash
+```
+
 ## Currently supported options
 * Monolith projects
 * JWT or OAuth 2.0 Authentication
