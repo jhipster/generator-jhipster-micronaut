@@ -9,7 +9,7 @@
 ![Tests](https://github.com/jhipster/generator-jhipster-micronaut/workflows/Generator%20Lint%20/%20Tests/badge.svg)
 ![Sample Projects](https://github.com/jhipster/generator-jhipster-micronaut/workflows/Verify%20Sample%20Projects/badge.svg)
 
-<img src="https://raw.githubusercontent.com/jhipster/jhipster-artwork/master/family/jhipster_family_member_4.png" alt="JHipster Micronaut Family Member" 
+<img src="https://raw.githubusercontent.com/jhipster/jhipster-artwork/master/family/jhipster_family_member_4.png" alt="JHipster Micronaut Family Member"
 width=200
 style="max-width:50%;">
 
@@ -36,7 +36,7 @@ Download the Dockerfile:
 ```bash
 mkdir docker
 cd docker
-wget https://github.com/jhipster/generator-jhipster-micronaut/raw/master/docker/Dockerfile
+wget https://github.com/jhipster/generator-jhipster-micronaut/raw/main/docker/Dockerfile
 ```
 
 Build the Docker images:
@@ -83,4 +83,4 @@ docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut /bin
 ## ❤️ for community
 
 Interested in contributing?
-Check out our [contributing guide](https://github.com/jhipster/generator-jhipster-micronaut/blob/master/CONTRIBUTING.md) to get started.
+Check out our [contributing guide](https://github.com/jhipster/generator-jhipster-micronaut/blob/main/CONTRIBUTING.md) to get started.
