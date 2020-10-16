@@ -872,9 +872,9 @@ const serverFiles = {
                     useBluePrint: true,
                 },
                 {
-                    file: 'reflect.json',
+                    file: 'reflection.json',
                     renameTo: generator =>
-                        `src/main/resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/reflect.json`,
+                        `src/main/resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/reflection.json`,
                     useBluePrint: true,
                 },
             ],
