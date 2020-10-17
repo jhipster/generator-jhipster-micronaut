@@ -26,8 +26,8 @@ nativeImage {
         '-H:+TraceClassInitialization',
         '-H:+ReportExceptionStackTraces',
         '-H:IncludeResourceBundles=liquibase/i18n/liquibase-core',
-        '-H:ReflectionConfigurationFiles=/home/app/resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/reflection.json',
-        '-H:ResourceConfigurationFiles=/home/app/resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/resources.json',
+        '-H:ReflectionConfigurationFiles=resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/reflection.json',
+        '-H:ResourceConfigurationFiles=resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/resources.json',
         //       --report-unsupported-elements-at-runtime
     )
 }
