@@ -1,0 +1,71 @@
+package <%=packageName%>.repository;
+
+import io.micronaut.context.annotation.Factory;
+import io.micronaut.core.annotation.Internal;
+import io.micronaut.core.convert.ConversionService;
+import io.micronaut.core.convert.TypeConverter;
+import io.micronaut.data.model.Sort;
+
+import javax.inject.Singleton;
+import java.util.Optional;
+
+/**
+ * Provides converters for Micronaut Data Model to Spring Data Domain.
+ */
+@Factory
+@Internal
+public class SpringDataTypeConverters {
+
+    @Singleton
+    TypeConverter<org.springframework.data.domain.Page, io.micronaut.data.model.Page> pageConverter() {
+        return (object, targetType, context) -> Optional.of(io.micronaut.data.model.Page.of(
+            object.getContent(),
+            ConversionService.SHARED.convertRequired(object.getPageable(), io.micronaut.data.model.Pageable.class),
+            object.getTotalElements()
+        ));
+    }
+
+    @Singleton
+    TypeConverter<io.micronaut.data.model.Pageable, org.springframework.data.domain.Pageable> pageableConverter() {
+        return (object, targetType, context) -> {
+            if (object == io.micronaut.data.model.Pageable.UNPAGED) {
+                return Optional.of(org.springframework.data.domain.Pageable.unpaged());
+            }
+            return Optional.of(org.springframework.data.domain.PageRequest.of(
+                object.getNumber(),
+                object.getSize(),
+                ConversionService.SHARED.convertRequired(object.getSort(), org.springframework.data.domain.Sort.class)
+            ));
+        };
+    }
+
+    @Singleton
+    TypeConverter<io.micronaut.data.model.Sort, org.springframework.data.domain.Sort> sortConverter() {
+        return (object, targetType, context) -> {
+            if (object == Sort.UNSORTED) {
+                return Optional.of(org.springframework.data.domain.Sort.unsorted());
+            }
+            return Optional.of(org.springframework.data.domain.Sort.by(
+                object.getOrderBy().stream()
+                    .map(mnSortOrder -> ConversionService.SHARED.convertRequired(mnSortOrder, org.springframework.data.domain.Sort.Order.class))
+                    .toArray(org.springframework.data.domain.Sort.Order[]::new)
+            ));
+        };
+    }
+
+    @Singleton
+    TypeConverter<io.micronaut.data.model.Sort.Order, org.springframework.data.domain.Sort.Order> sortOrderConverter() {
+        return (object, targetType, context) -> {
+            org.springframework.data.domain.Sort.Order springOrder = org.springframework.data.domain.Sort.Order.by(object.getProperty());
+            if (object.isIgnoreCase()) {
+                springOrder = springOrder.ignoreCase();
+            }
+            if (object.isAscending()) {
+                springOrder = springOrder.with(org.springframework.data.domain.Sort.Direction.ASC);
+            } else {
+                springOrder = springOrder.with(org.springframework.data.domain.Sort.Direction.DESC);
+            }
+            return Optional.of(springOrder);
+        };
+    }
+}

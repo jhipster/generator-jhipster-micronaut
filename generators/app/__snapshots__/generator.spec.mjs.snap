@@ -164,6 +164,12 @@ Object {
   "src/main/java/com/mycompany/myapp/repository/AuthorityRepository.java": Object {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/repository/MHipsterJpaSpecificationExecutor.java": Object {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/repository/SpringDataTypeConverters.java": Object {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/repository/UserRepository.java": Object {
     "stateCleared": "modified",
   },

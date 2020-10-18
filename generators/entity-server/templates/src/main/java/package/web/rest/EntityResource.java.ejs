@@ -255,7 +255,7 @@ public class <%= entityClass %>Resource {
      <%_ } _%>
      * @return the {@link HttpResponse} with status {@code 200 (OK)} and the list of <%= entityInstancePlural %> in body.
      */
-    @Get("/<%= entityApiUrl %><% if (!jpaMetamodelFiltering && fieldsContainOwnerManyToMany) { _%>{?eagerload}<% } %>")
+    @Get("/<%= entityApiUrl %><% if (jpaMetamodelFiltering) { _%>{?criteria*}<% } else if (fieldsContainOwnerManyToMany) { _%>{?eagerload}<% } %>")
     @ExecuteOn(TaskExecutors.IO)
     <%_ if (databaseType === 'sql' && isUsingMapsId === true && !viaService) { _%>
     @ReadOnly

@@ -412,12 +412,17 @@ dependencies {
     implementation "io.micronaut.micrometer:micronaut-micrometer-core"
     implementation "io.micronaut.micrometer:micronaut-micrometer-registry-prometheus"
     implementation "io.micronaut.data:micronaut-data-runtime:$micronaut_data_version"
+<%_ if (databaseType === 'sql') { _%>
     implementation ("io.micronaut.data:micronaut-data-hibernate-jpa:$micronaut_data_version") {
         exclude group: 'io.micronaut', module: 'micronaut-jdbc'
     }
     implementation("io.micronaut.data:micronaut-data-jdbc:$micronaut_data_version") {
         exclude group: 'io.micronaut', module: 'micronaut-jdbc'
     }
+    implementation "io.micronaut.spring:micronaut-spring"
+    implementation "io.micronaut.data:micronaut-data-spring:$micronaut_data_version"
+    implementation "io.micronaut.data:micronaut-data-spring-jpa:$micronaut_data_version"
+<%_ } _%>
 <%_ if (serviceDiscoveryType === 'eureka' || serviceDiscoveryType === 'consul') { _%>
     implementation "io.micronaut.discovery:micronaut-discovery-client:$micronaut_discovery_client_version"
 <%_ } _%>
