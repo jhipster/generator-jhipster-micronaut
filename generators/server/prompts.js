@@ -54,8 +54,8 @@ function askForServerSideOpts(meta) {
         },
     ];
 
-    if (applicationType !== 'monolith') {
-        logger.error('Application should be only monolith for this blueprint');
+    if (applicationType !== 'monolith' && applicationType !== 'microservice') {
+        logger.error('Application should be only monolith or microservice for this blueprint');
         return;
     }
 
@@ -66,7 +66,7 @@ function askForServerSideOpts(meta) {
     }
     const prompts = [
         {
-            when: response => applicationType === 'gateway' || applicationType === 'microservice' || applicationType === 'uaa',
+            when: () => applicationType === 'gateway' || applicationType === 'microservice' || applicationType === 'uaa',
             type: 'input',
             name: 'serverPort',
             validate: input => (/^([0-9]*)$/.test(input) ? true : 'This is not a valid port number.'),
@@ -85,28 +85,27 @@ function askForServerSideOpts(meta) {
             default: 'com.mycompany.myapp',
             store: true,
         },
-        // TODO enable it when we allow other apps than monoliths
-        // {
-        //     when: response => applicationType === 'gateway' || applicationType === 'microservice' || applicationType === 'uaa',
-        //     type: 'list',
-        //     name: 'serviceDiscoveryType',
-        //     message: 'Which service discovery server do you want to use?',
-        //     choices: [
-        //         {
-        //             value: 'eureka',
-        //             name: 'JHipster Registry (uses Eureka, provides Spring Cloud Config support and monitoring dashboards)'
-        //         },
-        //         {
-        //             value: 'consul',
-        //             name: 'Consul'
-        //         },
-        //         {
-        //             value: false,
-        //             name: 'No service discovery'
-        //         }
-        //     ],
-        //     default: 'eureka'
-        // },
+        {
+            when: () => applicationType === 'gateway' || applicationType === 'microservice' || applicationType === 'uaa',
+            type: 'list',
+            name: 'serviceDiscoveryType',
+            message: 'Which service discovery server do you want to use?',
+            choices: [
+                {
+                    value: 'eureka',
+                    name: 'JHipster Registry (uses Eureka, provides Spring Cloud Config support and monitoring dashboards)',
+                },
+                {
+                    value: 'consul',
+                    name: 'Consul',
+                },
+                {
+                    value: false,
+                    name: 'No service discovery',
+                },
+            ],
+            default: 'eureka',
+        },
         // {
         //     when: applicationType === 'monolith',
         //     type: 'list',
@@ -143,12 +142,13 @@ function askForServerSideOpts(meta) {
                         value: 'oauth2',
                         name: 'OAuth 2.0 / OIDC Authentication (stateful, works with Keycloak and Okta)',
                     });
-                    if (['gateway', 'microservice'].includes(applicationType)) {
-                        opts.push({
-                            value: 'uaa',
-                            name: 'Authentication with JHipster UAA server (the server must be generated separately)',
-                        });
-                    }
+                    // FIXME: UAA is not yet supported
+                    // if (['gateway', 'microservice'].includes(applicationType)) {
+                    //     opts.push({
+                    //         value: 'uaa',
+                    //         name: 'Authentication with JHipster UAA server (the server must be generated separately)',
+                    //     });
+                    // }
                 }
                 return opts;
             },
@@ -179,7 +179,7 @@ function askForServerSideOpts(meta) {
                 if (!reactive) {
                     opts.push({
                         value: 'sql',
-                        name: 'SQL (H2, MySQL, PostgreSQL)',
+                        name: 'SQL (H2, MySQL, MariaDB, PostgreSQL)',
                     });
                 }
                 // TODO enable when we support these things
@@ -256,7 +256,7 @@ function askForServerSideOpts(meta) {
                     name: 'No - Warning, when using an SQL database, this will disable the Hibernate 2nd level cache!',
                 },
             ],
-            default: applicationType === 'microservice' || applicationType === 'uaa' ? 1 : 0,
+            default: applicationType === 'microservice' || applicationType === 'uaa' ? 2 : 0,
         },
         {
             when: response =>
