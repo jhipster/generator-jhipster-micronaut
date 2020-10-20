@@ -10,9 +10,11 @@ import <%=packageName%>.repository.UserRepository;
 import <%=packageName%>.security.AuthoritiesConstants;
 import <%=packageName%>.service.dto.UserDTO;
 import <%=packageName%>.service.util.RandomUtil;
+<%_ if (authenticationType !== 'oauth2') { _%>
 import <%=packageName%>.web.rest.errors.EmailAlreadyUsedException;
 import <%=packageName%>.web.rest.errors.LoginAlreadyUsedException;
 import <%=packageName%>.web.rest.vm.ManagedUserVM;
+<%_ } _%>
 import io.micronaut.context.annotation.Property;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;

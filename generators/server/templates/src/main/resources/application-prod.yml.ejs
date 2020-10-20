@@ -18,6 +18,14 @@ logging:
     ROOT: INFO
     <%=packageName%>: INFO
     io.github.jhipster: INFO
+<%_ if (serviceDiscoveryType === 'eureka') { _%>
+
+eureka:
+  client:
+    registration:
+      prefer-ip-address: true
+    defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+<%_ } _%>
 
 management:
   metrics:
@@ -124,7 +132,7 @@ thymeleaf:
 # ===================================================================
 micronaut:
   server:
-    port: 8080
+    port: <%= serverPort %>
   security:
     token:
       jwt:
@@ -135,7 +143,7 @@ micronaut:
           secret:
             generator:
               # As this is the PRODUCTION configuration, you must securely supply the application with a secret.
-              secret: <%= jwtSecretKey %>
+              secret: ${jhipster.security.authentication.jwt.base64-secret:<%= jwtSecretKey %>}
               base64: true
               jws-algorithm: HS512
 

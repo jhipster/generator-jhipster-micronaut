@@ -53,6 +53,14 @@ datasources:
     driverClassName: "<%=dbInfo.driver%>"
     poolName: Hikari
     autoCommit: false
+<%_ if (serviceDiscoveryType === 'eureka') { _%>
+
+eureka:
+  client:
+    registration:
+      prefer-ip-address: true
+    defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+<%_ } _%>
 
 liquibase:
   datasources:
@@ -66,7 +74,7 @@ mail:
   port: 25
   # username:
   # password:
-  
+
 jpa:
   default:
     packages-to-scan:
@@ -98,7 +106,7 @@ logging:
 
 micronaut:
   server:
-    port: 8080
+    port: <%= serverPort %>
     cors:
       # CORS is only enabled by default with the "dev" profile, so BrowserSync can access the API
       enabled: true
@@ -117,7 +125,7 @@ micronaut:
         signatures:
           secret:
             generator:
-              secret: <%= jwtSecretKey %>
+              secret: ${jhipster.security.authentication.jwt.base64-secret:<%= jwtSecretKey %>}
               base64: true
               jws-algorithm: HS512
 
