@@ -327,7 +327,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         </dependency>
         <dependency>
             <groupId>io.micronaut.cache</groupId>
-            <artifactId>micronaut-cache-ehcache</artifactId>
+            <artifactId>micronaut-cache-caffeine</artifactId>
         </dependency>
     <%_ if (enableHibernateCache) { _%>
         <dependency>
