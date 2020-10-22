@@ -41,7 +41,7 @@ module.exports = {
         },
     },
     versions: {
-        micronaut: '2.1.1',
+        micronaut: '2.1.2',
         micronautData: '2.1.0',
         micronautOpenApi: '2.1.1',
 
