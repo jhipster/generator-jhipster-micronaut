@@ -41,9 +41,9 @@ module.exports = {
         },
     },
     versions: {
-        micronaut: '2.1.1',
-        micronautData: '2.0.0',
-        micronautOpenApi: '2.1.0',
+        micronaut: '2.1.2',
+        micronautData: '2.1.0',
+        micronautOpenApi: '2.1.1',
 
         hibernate: '5.4.17.Final',
         jackson: '2.11.1',
