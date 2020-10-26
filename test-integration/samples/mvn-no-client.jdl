@@ -51,13 +51,13 @@ entity Operation {
   amount BigDecimal required
 }
 relationship OneToMany {
-  BankAccount{operation} to Operation{bankAccount(name)}
+  BankAccount{operation} to Operation{bankAccount(name) required}
 }
 relationship ManyToOne {
   BankAccount{user(login)} to User
 }
 relationship ManyToMany {
-  Operation{label(label)} to Label{operation}
+  Operation{label(label)} to Label{operation required}
 }
 
 paginate Operation with infinite-scroll
