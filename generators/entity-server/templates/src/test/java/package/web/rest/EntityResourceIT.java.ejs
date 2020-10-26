@@ -521,15 +521,11 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ if (databaseType === 'cassandra') { _%>
         <%= asEntity(entityInstance) %>.setId(UUID.randomUUID());
         <%_ } _%>
-<%_ if (service !== 'no' && dto !== 'mapstruct') { _%>
-        <%= entityInstance %>Service.save(<%= asEntity(entityInstance) %>);
     <%_ if (searchEngine === 'elasticsearch') { _%>
         // As the test used the service layer, reset the Elasticsearch mock repository
         reset(mock<%= entityClass %>SearchRepository);
     <%_ } _%>
-<%_ } else { _%>
         <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
-<%_ } _%>
 
         int databaseSizeBeforeUpdate = <%= entityInstance %>Repository.findAll().size();
 
@@ -595,11 +591,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ if (databaseType === 'cassandra') { _%>
         <%= asEntity(entityInstance) %>.setId(UUID.randomUUID());
         <%_ } _%>
-<%_ if (service !== 'no' && dto !== 'mapstruct') { _%>
-        <%= entityInstance %>Service.save(<%= asEntity(entityInstance) %>);
-<%_ } else { _%>
         <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
-<%_ } _%>
 
         int databaseSizeBeforeDelete = <%= entityInstance %>Repository.findAll().size();
 
