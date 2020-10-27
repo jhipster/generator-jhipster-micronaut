@@ -122,7 +122,6 @@ import <%= packageName %>.service.mapper.<%= entityClass %>Mapper;
 <%_ } _%>
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 <%_ if (databaseType === 'couchbase') { _%>
     import static <%= packageName %>.web.rest.TestUtil.mockAuthentication;
