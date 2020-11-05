@@ -73,9 +73,6 @@ datasources:
 ---
 jpa:
   default:
-    packages-to-scan:
-      - <%=packageName%>.domain
-      - <%=packageName%>.repository
     show-sql: false
     properties:
       hibernate.dialect: "<%=dbInfo.dialect%>"

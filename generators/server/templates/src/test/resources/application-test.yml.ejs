@@ -34,9 +34,6 @@ liquibase:
 
 jpa:
   default:
-    packages-to-scan:
-      - <%=packageName%>.domain
-      - <%=packageName%>.repository
     database-platform: io.github.jhipster.domain.util.FixedH2Dialect
     properties:
       hibernate:
