@@ -51,7 +51,7 @@ module.exports = class extends AppGenerator {
                 this.log(chalk.green(' _______________________________________________________________________________________________________________\n'));
                 this.log(
                     chalk.white(
-                        ` ${chalk.yellow('::')} This project is a ${chalk.yellow.bold('PREVIEW')} of a ${chalk.blue.bold('Micronaut')} blueprint for ${chalk.green.bold('JHipster')}`
+                        ` ${chalk.yellow('::')} This project is a ${chalk.blue.bold('Micronaut')} blueprint for ${chalk.green.bold('JHipster')}`
                     )
                 );
                 this.log(chalk.white(` ${chalk.yellow('::')} Please let us know if you encounter issues`));
