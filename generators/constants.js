@@ -18,6 +18,7 @@
  */
 
 module.exports = {
+    GRADLE_VERSION: '6.7',
     sqlDb: {
         h2Disk: {
             driver: 'org.h2.Driver',
@@ -41,23 +42,25 @@ module.exports = {
         },
     },
     versions: {
-        micronaut: '2.1.1',
-        micronautData: '2.0.0',
+        micronaut: '2.2.0',
+        micronautData: '2.2.0',
+        micronautOpenApi: '2.2.0',
 
-        hibernate: '5.4.17.Final',
-        jackson: '2.11.1',
+        hibernate: '5.4.23.Final',
+        jackson: '2.11.2',
         javassist: '3.24.0-GA', // Should match Hibernate deps
         javaxMail: '1.6.2',
         jbcrypt: '0.4',
         jhipsterDeps: '3.8.0',
-        liquibase: '3.8.0',
-        liquibaseHibernate5: '3.8',
+        liquibase: '4.2.0',
+        liquibaseHibernate5: '4.1.1',
         logback: '1.2.3',
         mapstruct: '1.3.1.Final',
+        swaggerAnnotations: '2.1.5',
         mockito: '3.1.0',
         problem: '0.24.0',
-        caffeine: '2.8.4',
+        caffeine: '2.8.6',
         archunit: '0.14.1',
-        simplejavamail: '6.4.3',
+        simplejavamail: '6.4.4',
     },
 };

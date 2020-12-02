@@ -31,14 +31,18 @@ yarn_version=<%= YARN_VERSION %>
 jhipster_dependencies_version=<%= JHIPSTER_DEPENDENCIES_VERSION %>
 micronautVersion=<%=versions.micronaut%>
 micronaut_data_version=<%=versions.micronautData%>
+micronaut_openapi_version=<%=versions.micronautOpenApi%>
 # The hibernate version should match the one managed by Micronaut data
 # https://mvnrepository.com/artifact/io.micronaut.data/micronaut-data-hibernate-jpa/1.0.1
 hibernate_version=<%=versions.hibernate%>
 mapstruct_version=<%=versions.mapstruct%>
 archunit_junit5_version=<%=versions.archunit%>
 logback_version=<%=versions.logback%>
+swagger_annotations_version=<%=versions.swaggerAnnotations%>
 mockito_version=<%=versions.mockito%>
+<%_ if (!skipUserManagement) { _%>
 jbcrypt_version=<%=versions.jbcrypt%>
+<%_ } _%>
 javax_mail_version=<%=versions.javaxMail%>
 simplejavamail_version=<%= versions.simplejavamail %>
 problem_version=<%=versions.problem%>

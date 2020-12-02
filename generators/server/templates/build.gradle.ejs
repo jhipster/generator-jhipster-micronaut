@@ -253,15 +253,6 @@ configurations {
     providedRuntime
 }
 
-<%_ if (databaseType === 'sql') { _%>
-    // This is due to a conflict between JHipster and Micronaut Liquibase
-    // When micronaut-liquibase supports a version higher than 3.8.0
-    // this can likely be removed
-    configurations.all {
-        resolutionStrategy.force 'org.liquibase:liquibase-core:3.8.9'
-    }
-<%_ } _%>
-
 repositories {
     mavenLocal()
     mavenCentral()
@@ -284,6 +275,7 @@ dependencies {
     <%_ if (databaseType === 'sql') { _%>
     annotationProcessor "io.micronaut.data:micronaut-data-processor:$micronaut_data_version"
     <%_ } _%>
+    annotationProcessor "io.micronaut.openapi:micronaut-openapi:$micronaut_openapi_version"
 
     // Use ", version: jhipster_dependencies_version, changing: true" if you want
     // to use a SNAPSHOT release instead of a stable release
@@ -299,6 +291,7 @@ dependencies {
     implementation "org.simplejavamail:simple-java-mail:$simplejavamail_version"
     implementation "javax.annotation:javax.annotation-api"
     implementation "ch.qos.logback:logback-classic:$logback_version"
+    implementation "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
     implementation "io.dropwizard.metrics:metrics-core"
     implementation "net.logstash.logback:logstash-logback-encoder"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-hppc"
@@ -308,6 +301,7 @@ dependencies {
     <%_ } _%>
     implementation "com.fasterxml.jackson.core:jackson-annotations"
     implementation "com.fasterxml.jackson.module:jackson-module-jaxb-annotations"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml"
     implementation "com.fasterxml.jackson.core:jackson-databind"
     <%_ if (applicationType === 'gateway' && authenticationType === 'uaa') { _%>
     implementation "org.apache.httpcomponents:httpclient"
@@ -398,7 +392,9 @@ dependencies {
 <%_ } _%>
     implementation "io.micronaut.views:micronaut-views-thymeleaf"
 
+<%_ if (!skipUserManagement) { _%>
     implementation "org.mindrot:jbcrypt:$jbcrypt_version"
+<%_ } _%>
 
     compileOnly("org.graalvm.nativeimage:svm")
 
@@ -416,6 +412,9 @@ dependencies {
     implementation("io.micronaut.data:micronaut-data-jdbc:$micronaut_data_version") {
         exclude group: 'io.micronaut', module: 'micronaut-jdbc'
     }
+<%_ if (serviceDiscoveryType === 'eureka' || serviceDiscoveryType === 'consul') { _%>
+    implementation "io.micronaut:micronaut-discovery-client"
+<%_ } _%>
 
     implementation "javax.mail:javax.mail-api:$javax_mail_version"
     implementation "com.sun.mail:javax.mail:$javax_mail_version"

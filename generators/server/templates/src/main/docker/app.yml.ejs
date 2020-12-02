@@ -34,12 +34,12 @@ services:
         <%_ if (authenticationType === 'oauth2') { _%>
             - MICRONAUT_SECURITY_OAUTH2_CLIENTS_OIDC_OPENID_ISSUER=http://keycloak:9080/auth/realms/jhipster
         <%_ if (applicationType === 'gateway' || applicationType === 'monolith') { _%>
-            - MICRONAUT_SECURITY_OAUTH2_CLIENTS_OIDC_CLIENT_SECRET=web_app
             - MICRONAUT_SECURITY_OAUTH2_CLIENTS_OIDC_CLIENT_ID=web_app
+            - MICRONAUT_SECURITY_OAUTH2_CLIENTS_OIDC_CLIENT_SECRET=web_app
         <%_ } _%>
         <%_ if (applicationType === 'microservice') { _%>
-<!--            - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_ID=internal-->
-<!--            - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET=internal-->
+            - MICRONAUT_SECURITY_OAUTH2_CLIENTS_OIDC_CLIENT_ID=internal
+            - MICRONAUT_SECURITY_OAUTH2_CLIENTS_OIDC_CLIENT_SECRET=internal
         <%_ } _%>
         <%_ } _%>
         <%_

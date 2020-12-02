@@ -1,0 +1,20 @@
+# ===================================================================
+# Micronaut Distributed Configuration bootstrap
+# ===================================================================
+<%_ if (serviceDiscoveryType === 'consul') { _%>
+consul:
+  client:
+    registration:
+      enabled: false
+    config:
+      enabled: false
+<%_ } else if (serviceDiscoveryType === 'eureka') {_%>
+eureka:
+  client:
+    registration:
+      enabled: false
+spring:
+  cloud:
+    config:
+      enabled: false
+<%_ } _%>

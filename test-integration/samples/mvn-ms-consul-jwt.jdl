@@ -1,14 +1,11 @@
 application {
   config {
-    applicationType monolith
+    applicationType microservice
     authenticationType jwt
     baseName jhipster
     blueprints [generator-jhipster-micronaut]
     buildTool maven
     cacheProvider no
-    clientFramework angularX
-    clientPackageManager npm
-    clientTheme none
     creationTimestamp 1591136652677
     databaseType sql
     devDatabaseType h2Memory
@@ -18,20 +15,18 @@ application {
     enableSwaggerCodegen false
     enableTranslation true
     jhiPrefix jhi
-    jhipsterVersion "6.10.1"
     languages [en]
     messageBroker false
     nativeLanguage en
     packageName com.mycompany.myapp
     prodDatabaseType mysql
     searchEngine false
-    serverPort 8080
-    serviceDiscoveryType false
+    serverPort 8081
+    serviceDiscoveryType consul
     skipClient true
     skipServer false
-    skipUserManagement false
+    skipUserManagement true
     testFrameworks []
-    useSass true
     websocket false
   }
 
@@ -51,13 +46,10 @@ entity Operation {
   amount BigDecimal required
 }
 relationship OneToMany {
-  BankAccount{operation} to Operation{bankAccount(name) required}
-}
-relationship ManyToOne {
-  BankAccount{user(login)} to User
+  BankAccount{operation} to Operation{bankAccount(name)}
 }
 relationship ManyToMany {
-  Operation{label(label)} to Label{operation required}
+  Operation{label(label)} to Label{operation}
 }
 
 paginate Operation with infinite-scroll

@@ -10,7 +10,7 @@ _%>
 <%_ } else if (fields[idx].fieldType.toLowerCase() === 'boolean') { _%>
         assertThat(test<%= entityClass %>.is<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= variableToComparePrefix + fields[idx].fieldNameUnderscored.toUpperCase() %>);
 <%_ } else if (fields[idx].fieldType === 'BigDecimal') { _%>
-        assertEquals(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>().compareTo(<%= variableToComparePrefix + fields[idx].fieldNameUnderscored.toUpperCase() %>), 0);
+        assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualByComparingTo(<%= variableToComparePrefix + fields[idx].fieldNameUnderscored.toUpperCase() %>);
 <%_ } else { _%>
         assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= variableToComparePrefix + fields[idx].fieldNameUnderscored.toUpperCase() %>);
 <%_ }} _%>
