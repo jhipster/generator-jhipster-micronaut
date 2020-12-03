@@ -15,7 +15,7 @@ dockerBuild.dependsOn copyIntoLayers
 dockerBuildNative.dependsOn copyIntoLayers
 
 dockerfileNative {
-    baseImage = "oracle/graalvm-ce:20.2.0-java11"
+    baseImage = "oracle/graalvm-ce:20.3.0-java11"
     args("-Xmx128m")
 }
 nativeImage {
