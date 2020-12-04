@@ -53,10 +53,8 @@ _%>
 import com.fasterxml.jackson.annotation.JsonIgnore;
 <%_ } if (importJsonIgnoreProperties === true) { _%>
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-<%_ } if (!hasDto && typeof javadoc != 'undefined') { _%>
-import io.swagger.annotations.ApiModel;
-<%_ } if (!hasDto && importApiModelProperty === true) { _%>
-import io.swagger.annotations.ApiModelProperty;
+<%_ } if (!hasDto && (typeof javadoc != 'undefined' || importApiModelProperty)) { _%>
+import io.swagger.v3.oas.annotations.media.Schema;
 <%_ } if (enableHibernateCache) { _%>
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -128,7 +126,7 @@ import static <%= packageName %>.config.Constants.ID_DELIMITER;
 <%_ } else { _%>
 <%- formatAsClassJavadoc(javadoc) %>
     <%_ if (!hasDto) { _%>
-@ApiModel(description = "<%- formatAsApiDescription(javadoc) %>")
+@Schema(description = "<%- formatAsApiDescription(javadoc) %>")
     <%_ } _%>
 <%_ } _%>
 <%_ if (databaseType === 'sql') { _%>
@@ -199,7 +197,7 @@ public class <%= asEntity(entityClass) %> implements Serializable {
     <%- include('../common/field_validators') -%>
     <%_ } _%>
     <%_ if (!hasDto && typeof fields[idx].javadoc != 'undefined') { _%>
-    @ApiModelProperty(value = "<%- formatAsApiDescription(fields[idx].javadoc) %>"<% if (required) { %>, required = true<% } %>)
+    @Schema(description = "<%- formatAsApiDescription(fields[idx].javadoc) %>"<% if (required) { %>, required = true<% } %>)
     <%_ } _%>
     <%_ if (databaseType === 'sql') {
         if (fields[idx].fieldIsEnum) { _%>
@@ -265,7 +263,7 @@ public class <%= asEntity(entityClass) %> implements Serializable {
         if (typeof relationships[idx].javadoc != 'undefined') { _%>
 <%- formatAsFieldJavadoc(relationships[idx].javadoc) %>
             <%_ if (!hasDto) { _%>
-    @ApiModelProperty(value = "<%- formatAsApiDescription(relationships[idx].javadoc) %>")
+    @Schema(description = "<%- formatAsApiDescription(relationships[idx].javadoc) %>")
             <%_ } _%>
     <%_ }
         if (relationshipType === 'one-to-many') {
