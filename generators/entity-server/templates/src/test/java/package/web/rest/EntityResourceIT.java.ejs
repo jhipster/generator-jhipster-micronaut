@@ -394,7 +394,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         // Add required entity
             <%_ if (alreadyGeneratedEntities.indexOf(otherEntityName) == -1) { _%>
     <%_ if (otherEntityName === 'user') { // TODO or other entity has no unique fields _%>
-        <%= asEntity(otherEntityNameCapitalized) %> <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.createEntity(transactionManager);
+        <%= asEntity(otherEntityNameCapitalized) %> <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.createEntity(transactionManager, em);
                 <%_ if (databaseType === 'sql' && !reactive) { _%>
         transactionManager.executeWrite(status -> {
                 em.persist(<%= otherEntityName %>);

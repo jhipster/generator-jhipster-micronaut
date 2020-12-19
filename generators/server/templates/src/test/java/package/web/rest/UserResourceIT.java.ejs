@@ -29,6 +29,10 @@ import io.micronaut.http.client.RxHttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+<%_ if (databaseType === 'sql') { _%>
+import io.micronaut.transaction.SynchronousTransactionManager;
+import io.micronaut.transaction.TransactionOperations;
+<%_ } _%>
 import io.micronaut.test.annotation.MockBean;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
@@ -38,6 +42,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import javax.inject.Inject;
+<%_ if (databaseType === 'sql' && !reactive) { _%>
+import javax.persistence.EntityManager;
+<%_ } _%>
+<%_ if (databaseType === 'sql') { _%>
+import java.sql.Connection;
+<%_ } _%>
 import java.time.Instant;
 import java.util.*;
 
@@ -86,6 +96,14 @@ public class UserResourceIT {
 
     @Inject
     AuthorityRepository authorityRepository;
+    <%_ if (databaseType === 'sql') { _%>
+
+    @Inject
+    private EntityManager em;
+
+    @Inject
+    SynchronousTransactionManager<Connection> transactionManager;
+    <%_ } _%>
 
     @Inject
     private UserMapper userMapper;
@@ -100,7 +118,7 @@ public class UserResourceIT {
 
     private User user;
 
-    public static User createEntity() {
+    public static User createEntity(<% if (databaseType === 'sql') { %>TransactionOperations<Connection> transactionManager, EntityManager em<% } %>) {
         User user = new User();
         user.setLogin(DEFAULT_LOGIN + RandomStringUtils.randomAlphabetic(5));
         <%_ if (authenticationType !== 'oauth2') { _%>
@@ -116,10 +134,22 @@ public class UserResourceIT {
         user.setLangKey(DEFAULT_LANGKEY);
         return user;
     }
+    <%_ if (databaseType === 'sql' && !reactive) { _%>
+
+    /**
+        * Delete all User entities.
+        *
+        * This is a static method, as tests for other entities might also need it,
+        * if they test an entity which requires the current entity.
+        */
+    public static void deleteAll(TransactionOperations<Connection> transactionManager, EntityManager em) {
+        TestUtil.removeAll(transactionManager, em, User.class);
+    }
+    <%_ } _%>
 
     @BeforeAll
     public void initTest() {
-        user = createEntity();
+        user = createEntity(transactionManager, em);
         user.setLogin(DEFAULT_LOGIN);
         user.setEmail(DEFAULT_EMAIL);
         userRepository.saveAndFlush(user);
@@ -150,7 +180,7 @@ public class UserResourceIT {
 
 
     private void resetDefaultUser() {
-        User reInsert = createEntity();
+        User reInsert = createEntity(transactionManager, em);
         reInsert.setLogin(DEFAULT_LOGIN);
         reInsert.setEmail(DEFAULT_EMAIL);
         userRepository.deleteById(user.getId());
