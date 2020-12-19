@@ -173,7 +173,7 @@ relationship ManyToMany {
   JobHistory{job} to Job{history},
   JobHistory{emp(firstName)} to Employee{history},
   Job{chore(title)} to Task{linkedJob(title)},
-  Bank{account} to BankAccount{bank}
+  Bank{bankAccount} to BankAccount{bank}
 }
 
 dto BankAccount, Employee, Department, Location, Country, Region, SilverBadge, GoldenBadge, Identifier with mapstruct
