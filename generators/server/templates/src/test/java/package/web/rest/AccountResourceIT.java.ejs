@@ -16,7 +16,7 @@ import <%=packageName%>.service.MailService;
 <%_ } _%>
 import <%=packageName%>.service.UserService;
 import <%=packageName%>.service.dto.PasswordChangeDTO;
-import <%=packageName%>.service.dto.UserDTO;
+import <%=packageName%>.service.dto.AdminUserDTO;
 import <%=packageName%>.web.rest.vm.ManagedUserVM;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.core.type.Argument;
@@ -110,7 +110,7 @@ public class AccountResourceIT {
         user.setAuthorities(authorities);
         when(userService.getUserWithAuthorities()).thenReturn(Optional.of(user));
 
-        UserDTO userDTO = client.retrieve(HttpRequest.GET("/api/account"), UserDTO.class).blockingFirst();
+        AdminUserDTO userDTO = client.retrieve(HttpRequest.GET("/api/account"), AdminUserDTO.class).blockingFirst();
 
         assertThat(userDTO.getLogin()).isEqualTo("test");
         assertThat(userDTO.getFirstName()).isEqualTo("john");
@@ -254,7 +254,7 @@ public class AccountResourceIT {
 
         userRepository.saveAndFlush(user);
 
-        UserDTO userDTO = new UserDTO();
+        AdminUserDTO userDTO = new AdminUserDTO();
         userDTO.setLogin("not-used");
         userDTO.setFirstName("firstname");
         userDTO.setLastName("lastname");
@@ -284,7 +284,7 @@ public class AccountResourceIT {
 
         userRepository.saveAndFlush(user);
 
-        UserDTO userDTO = new UserDTO();
+        AdminUserDTO userDTO = new AdminUserDTO();
         userDTO.setLogin("not-used");
         userDTO.setFirstName("firstname");
         userDTO.setLastName("lastname");
@@ -321,7 +321,7 @@ public class AccountResourceIT {
 
         userRepository.saveAndFlush(anotherUser);
 
-        UserDTO userDTO = new UserDTO();
+        AdminUserDTO userDTO = new AdminUserDTO();
         userDTO.setLogin("not-used");
         userDTO.setFirstName("firstname");
         userDTO.setLastName("lastname");
@@ -352,7 +352,7 @@ public class AccountResourceIT {
 
         userRepository.saveAndFlush(user);
 
-        UserDTO userDTO = new UserDTO();
+        AdminUserDTO userDTO = new AdminUserDTO();
         userDTO.setLogin("not-used");
         userDTO.setFirstName("firstname");
         userDTO.setLastName("lastname");

@@ -8,7 +8,7 @@ import <%=packageName%>.domain.User;
 import <%=packageName%>.repository.AuthorityRepository;
 import <%=packageName%>.repository.UserRepository;
 import <%=packageName%>.security.AuthoritiesConstants;
-import <%=packageName%>.service.dto.UserDTO;
+import <%=packageName%>.service.dto.AdminUserDTO;
 import <%=packageName%>.service.util.RandomUtil;
 <%_ if (authenticationType !== 'oauth2') { _%>
 import <%=packageName%>.web.rest.errors.EmailAlreadyUsedException;
@@ -181,7 +181,7 @@ public class UserServiceIT {
             userRepository.saveAndFlush(user);
         }
         final Pageable pageable = Pageable.from(0, (int) userRepository.count());
-        final Page<UserDTO> allManagedUsers = userService.getAllManagedUsers(pageable);
+        final Page<AdminUserDTO> allManagedUsers = userService.getAllManagedUsers(pageable);
         assertThat(allManagedUsers.getContent().stream()
             .noneMatch(user -> Constants.ANONYMOUS_USER.equals(user.getLogin())))
             .isTrue();
@@ -304,7 +304,7 @@ public class UserServiceIT {
         assertThat(testUser4.get().getEmail()).isEqualTo("test-register-duplicate-email@example.com");
 
         testUser4.get().setActivated(true);
-        userService.updateUser((new UserDTO(testUser4.get())));
+        userService.updateUser(new AdminUserDTO(testUser4.get()));
 
         // Register 4th (already activated) user
         Assertions.assertThrows(EmailAlreadyUsedException.class, () -> {

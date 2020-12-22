@@ -10,7 +10,7 @@ import <%=packageName%>.security.AuthoritiesConstants;
 import <%=packageName%>.service.MailService;
 <%_ } _%>
 import <%=packageName%>.service.UserService;
-import <%=packageName%>.service.dto.UserDTO;
+import <%=packageName%>.service.dto.AdminUserDTO;
 import <%=packageName%>.util.HeaderUtil;
 import <%=packageName%>.util.PaginationUtil;
 <%_ if (authenticationType !== 'oauth2') { _%>
@@ -61,7 +61,7 @@ import java.util.*;
  * <p>
  * Another option would be to have a specific JPA entity graph to handle this case.
  */
-@Controller("/api")
+@Controller("/api/admin")
 public class UserResource {
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
@@ -89,7 +89,7 @@ public class UserResource {
 
 <%_ if (authenticationType !== 'oauth2') { _%>
     /**
-     * {@code POST  /users}  : Creates a new user.
+     * {@code POST  admin/users}  : Creates a new user.
      * <p>
      * Creates a new user if the login and email are not already used, and sends an
      * mail with an activation link.
@@ -103,7 +103,7 @@ public class UserResource {
     @Post("/users")
     @Secured(AuthoritiesConstants.ADMIN)
     @ExecuteOn(TaskExecutors.IO)
-    public HttpResponse<User> createUser(@Valid @Body UserDTO userDTO) throws URISyntaxException {
+    public HttpResponse<AdminUserDTO> createUser(@Valid @Body AdminUserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
 
         if (userDTO.getId() != null) {
@@ -122,12 +122,12 @@ public class UserResource {
                         applicationName,
                         "userManagement.created",
                         newUser.getLogin()))
-                .body(newUser);
+                .body(new AdminUserDTO(newUser));
         }
     }
 
     /**
-     * {@code PUT /users} : Updates an existing User.
+     * {@code PUT admin/users} : Updates an existing User.
      *
      * @param userDTO the user to update.
      * @return the {@link HttpResponse} with status {@code 200 (OK)} and with body the updated user.
@@ -137,7 +137,7 @@ public class UserResource {
     @Put("/users")
     @Secured(AuthoritiesConstants.ADMIN)
     @ExecuteOn(TaskExecutors.IO)
-    public HttpResponse<UserDTO> updateUser(@Valid @Body UserDTO userDTO) {
+    public HttpResponse<AdminUserDTO> updateUser(@Valid @Body AdminUserDTO userDTO) {
         log.debug("REST request to update User : {}", userDTO);
         Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(userDTO.getId()))) {
@@ -147,7 +147,7 @@ public class UserResource {
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(userDTO.getId()))) {
             throw new LoginAlreadyUsedException();
         }
-        Optional<UserDTO> updatedUser = userService.updateUser(userDTO);
+        Optional<AdminUserDTO> updatedUser = userService.updateUser(userDTO);
 
         return updatedUser.map(user ->
             HttpResponse.ok(user)
@@ -157,48 +157,38 @@ public class UserResource {
 <%_ } _%>
 
     /**
-     * {@code GET /users} : get all users.
+     * {@code GET admin/users} : get all users.
      *
      * @param pageable the pagination information.
      * @return the {@link HttpResponse} with status {@code 200 (OK)} and with body all users.
      */
     @Get("/users")
     @ExecuteOn(TaskExecutors.IO)
-    public HttpResponse<List<UserDTO>> getAllUsers(HttpRequest request, Pageable pageable) {
-        final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
+    public HttpResponse<List<AdminUserDTO>> getAllUsers(HttpRequest request, Pageable pageable) {
+        log.debug("REST request to get Users for admin: {}", pageable);
+        final Page<AdminUserDTO> page = userService.getAllManagedUsers(pageable);
         return HttpResponse.ok(page.getContent()).headers(headers ->
             PaginationUtil.generatePaginationHttpHeaders(headers, UriBuilder.of(request.getPath()), page)
         );
     }
 
     /**
-     * Gets a list of all roles.
-     * @return a string list of all roles.
-     */
-    @Get("/users/authorities")
-    @Secured(AuthoritiesConstants.ADMIN)
-    @ExecuteOn(TaskExecutors.IO)
-    public List<String> getAuthorities() {
-        return userService.getAuthorities();
-    }
-
-    /**
-     * {@code GET /users/:login} : get the "login" user.
+     * {@code GET /admin/users/:login} : get the "login" user.
      *
      * @param login the login of the user to find.
      * @return the {@link HttpResponse} with status {@code 200 (OK)} and with body the "login" user, or with status {@code 404 (Not Found)}.
      */
     @Get("/users/{login:" + Constants.LOGIN_REGEX + "}")
     @ExecuteOn(TaskExecutors.IO)
-    public Optional<UserDTO> getUser(@PathVariable String login) {
+    public Optional<AdminUserDTO> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
         return userService.getUserWithAuthoritiesByLogin(login)
-                .map(UserDTO::new);
+                .map(AdminUserDTO::new);
     }
 
 <%_ if (authenticationType !== 'oauth2') { _%>
     /**
-     * {@code DELETE /users/:login} : delete the "login" User.
+     * {@code DELETE /admin/users/:login} : delete the "login" User.
      *
      * @param login the login of the user to delete.
      * @return the {@link HttpResponse} with status {@code 204 (NO_CONTENT)}.

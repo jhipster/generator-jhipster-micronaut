@@ -20,7 +20,7 @@ package <%= packageName %>.web.rest;
 
 <%_ if (authenticationType === 'oauth2') { _%>
 import <%=packageName%>.service.UserService;
-import <%=packageName%>.service.dto.UserDTO;
+import <%=packageName%>.service.dto.AdminUserDTO;
 
 import io.micronaut.http.annotation.*;
 import io.micronaut.scheduling.TaskExecutors;
@@ -59,9 +59,9 @@ public class AccountResource {
      */
     @Get("/account")
     @ExecuteOn(TaskExecutors.IO)
-    public UserDTO getAccount() {
+    public AdminUserDTO getAccount() {
         return userService.getUserWithAuthorities()
-            .map(UserDTO::new)
+            .map(AdminUserDTO::new)
             .orElseThrow(() -> new AccountResourceException("User could not be found"));
     }
 }
@@ -69,11 +69,10 @@ public class AccountResource {
 
 import <%=packageName%>.domain.User;
 import <%=packageName%>.repository.UserRepository;
-import <%=packageName%>.security.SecurityUtils;
 import <%=packageName%>.service.MailService;
 import <%=packageName%>.service.UserService;
+import <%=packageName%>.service.dto.AdminUserDTO;
 import <%=packageName%>.service.dto.PasswordChangeDTO;
-import <%=packageName%>.service.dto.UserDTO;
 import <%=packageName%>.web.rest.errors.*;
 import <%=packageName%>.web.rest.vm.KeyAndPasswordVM;
 import <%=packageName%>.web.rest.vm.ManagedUserVM;
@@ -176,9 +175,9 @@ public class AccountResource {
      */
     @Get("/account")
     @ExecuteOn(TaskExecutors.IO)
-    public UserDTO getAccount() {
+    public AdminUserDTO getAccount() {
         return userService.getUserWithAuthorities()
-            .map(UserDTO::new)
+            .map(AdminUserDTO::new)
             .orElseThrow(() -> new AccountResourceException("User could not be found"));
     }
 
@@ -191,7 +190,7 @@ public class AccountResource {
      */
     @Post("/account")
     @ExecuteOn(TaskExecutors.IO)
-    public void saveAccount(@Valid @Body UserDTO userDTO) {
+    public void saveAccount(@Valid @Body AdminUserDTO userDTO) {
         String userLogin = userService.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("Current user login not found"));
         Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userLogin))) {
