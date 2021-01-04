@@ -1,5 +1,5 @@
 <%#
-Copyright 2013-2020 the original author or authors from the JHipster project.
+Copyright 2019-2021 the original author or authors from the JHipster project.
 
     This file is part of the JHipster project, see https://www.jhipster.tech/
     for more information.
@@ -53,10 +53,10 @@ describe('Component Tests', () => {
               // GIVEN
               const body = [{ config: 'test', properties: 'test' }, { config: 'test2' }];
               spyOn(service, 'get').and.returnValue(of(body));
-      
+
               // WHEN
               comp.ngOnInit();
-      
+
               // THEN
               expect(service.get).toHaveBeenCalled();
               expect(comp.allConfiguration).toEqual(body);
