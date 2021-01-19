@@ -28,7 +28,13 @@ nativeImage {
         '-H:IncludeResourceBundles=liquibase/i18n/liquibase-core',
         '-H:ReflectionConfigurationFiles=resources/META-INF/native-image/<%=packageName%>/<%=dasherizedBaseName%>-<%=mainClass%>/reflection.json',
         '-H:ResourceConfigurationFiles=resources/META-INF/native-image/<%=packageName%>/<%=dasherizedBaseName%>-<%=mainClass%>/resources.json',
-        '--report-unsupported-elements-at-runtime'
+        '--report-unsupported-elements-at-runtime',
+        '--enable-all-security-services',
+        '-H:+AllowVMInspection',
+        '-H:+ReportUnsupportedElementsAtRuntime',
+        '-H:+JNI',
+        '-H:-SpawnIsolates'
+
     )
 }
 dockerBuildNative {
