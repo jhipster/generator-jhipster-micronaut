@@ -1,5 +1,5 @@
 <%#
- Copyright 2013-2020 the original author or authors from the JHipster project.
+ Copyright 2019-2021 the original author or authors from the JHipster project.
 
  This file is part of the JHipster project, see https://www.jhipster.tech/
  for more information.
@@ -46,7 +46,7 @@ micronaut:
               enabled: true
 <%_ } _%>
 
-<%_ if (cacheProvider === 'redis') { _%> 
+<%_ if (cacheProvider === 'redis') { _%>
 jhipster:
   cache:
     redis:
@@ -54,7 +54,7 @@ jhipster:
       cluster: false
       connectionPoolSize: 3
       connectionMinimumIdleSize: 1
-      subscriptionConnectionPoolSize: 3 
+      subscriptionConnectionPoolSize: 3
 <%_ } _%>
 
 datasources:

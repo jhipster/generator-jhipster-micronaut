@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2020 the original author or authors from the JHipster project.
+ * Copyright 2019-2021 the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see https://www.jhipster.tech/
  * for more information.
@@ -42,8 +42,8 @@ module.exports = {
         },
     },
     versions: {
-        micronaut: '2.2.0',
-        micronautData: '2.2.0',
+        micronaut: '2.2.3',
+        micronautData: '2.2.3',
         micronautOpenApi: '2.2.0',
 
         hibernate: '5.4.23.Final',

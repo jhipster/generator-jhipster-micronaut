@@ -1,5 +1,5 @@
 <%#
- Copyright 2013-2020 the original author or authors from the JHipster project.
+ Copyright 2019-2021 the original author or authors from the JHipster project.
 
  This file is part of the JHipster project, see https://www.jhipster.tech/
  for more information.
@@ -37,21 +37,21 @@ import io.micronaut.data.jpa.repository.JpaRepository;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
     <%_ if (fieldsContainOwnerManyToMany) { _%>
-// TODO what is MN equivalent? 
+// TODO what is MN equivalent?
 // import org.springframework.data.repository.query.Param;
     <%_ } _%>
 <%_ } _%>
 <%_ if (databaseType === 'mongodb') { _%>
-// TODO what is MN equivalent? 
+// TODO what is MN equivalent?
 // import org.springframework.data.mongodb.repository.Query;
 // import org.springframework.data.mongodb.repository.MongoRepository;
 <%_ } _%>
 <%_ if (databaseType === 'couchbase') { _%>
-// TODO what is MN equivalent? 
+// TODO what is MN equivalent?
 // import org.springframework.data.couchbase.core.query.Query;
 <%_ } _%>
 <%_ if (databaseType === 'cassandra') { _%>
-// TODO what is MN equivalent? 
+// TODO what is MN equivalent?
 // import org.springframework.data.cassandra.repository.CassandraRepository;
 <%_ } _%>
 <%_
@@ -86,7 +86,7 @@ import java.util.UUID;
 <%_ } _%>
 @Repository
 public abstract class <%= entityClass %>Repository implements <% if (databaseType === 'sql') { %>JpaRepository<% } %><% if (databaseType === 'mongodb') { %>MongoRepository<% } %><% if (databaseType === 'cassandra') { %>CassandraRepository<% } %><% if (databaseType === 'couchbase') { %>N1qlCouchbaseRepository<% } %><<%= asEntity(entityClass) %>, <%= primaryKeyType %>><% if (jpaMetamodelFiltering) { %>, JpaSpecificationExecutor<<%= asEntity(entityClass) %>><% } %> {
-    
+
     private final EntityManager entityManager;
 
     <%_ for (idx in relationships) {
