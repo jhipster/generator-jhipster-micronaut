@@ -1,5 +1,5 @@
 dockerfile {
-    baseImage = "openjdk:14-alpine"
+    baseImage = "openjdk:15-alpine"
     args("-Xmx128m")
 }
 dockerBuild {
@@ -14,7 +14,7 @@ task copyIntoLayers (type: Copy) {
 dockerBuild.dependsOn copyIntoLayers
 
 dockerfileNative {
-    baseImage = "oracle/graalvm-ce:20.2.0-java11"
+    baseImage = "oracle/graalvm-ce:20.3.0-java11"
     args("-Xmx64m")
 }
 nativeImage {
