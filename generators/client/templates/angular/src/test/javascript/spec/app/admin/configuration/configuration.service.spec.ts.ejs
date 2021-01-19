@@ -1,5 +1,5 @@
 <%#
-Copyright 2013-2020 the original author or authors from the JHipster project.
+Copyright 2019-2021 the original author or authors from the JHipster project.
 
     This file is part of the JHipster project, see https://www.jhipster.tech/
     for more information.
@@ -45,12 +45,12 @@ describe('Service Tests', () => {
         describe('Service methods', () => {
             it('should call correct URL', () => {
               service.get().subscribe(() => {});
-      
+
               const req = httpMock.expectOne({ method: 'GET' });
               const resourceUrl = SERVER_API_URL + 'management/configprops';
               expect(req.request.url).toEqual(resourceUrl);
             });
-      
+
             it('should get the config', () => {
               const angularConfig = {
                 contexts: {
@@ -62,7 +62,7 @@ describe('Service Tests', () => {
               service.get().subscribe((received: any) => {
                 expectedResult = received;
               });
-      
+
               const req = httpMock.expectOne({ method: 'GET' });
               req.flush(angularConfig);
               expect(expectedResult).toEqual(angularConfig); // We expect config to be a straight map
