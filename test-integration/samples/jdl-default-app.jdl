@@ -133,7 +133,9 @@ entity Region {
 
 relationship OneToOne {
   Department{location} to Location,
-  Employee{user(login)} to User with jpaDerivedIdentifier
+  Employee{user(login)} to User
+  // Employee{user(login)} to User with jpaDerivedIdentifier
+  // Please see: https://github.com/jhipster/generator-jhipster-micronaut/issues/219
 }
 
 relationship OneToMany {
