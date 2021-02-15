@@ -256,7 +256,14 @@ configurations {
 repositories {
     mavenLocal()
     mavenCentral()
-    jcenter()
+    <%_ if (JHIPSTER_DEPENDENCIES_VERSION.endsWith('-SNAPSHOT')) { _%>
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
+    <%_ } _%>
     //jhipster-needle-gradle-repositories - JHipster will add additional repositories
 }
 
