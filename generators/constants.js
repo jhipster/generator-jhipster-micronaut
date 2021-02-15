@@ -43,7 +43,7 @@ module.exports = {
         },
     },
     versions: {
-        micronaut: '2.3.0',
+        micronaut: '2.3.2',
         micronautData: '2.2.4',
         micronautOpenApi: '2.3.1',
 
