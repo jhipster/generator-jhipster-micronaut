@@ -56,6 +56,7 @@ module.exports = class extends ServerGenerator {
             setupMnConstants() {
                 this.MN_CONSTANTS = MN_CONSTANTS;
                 this.GRADLE_VERSION = MN_CONSTANTS.GRADLE_VERSION;
+                this.DOCKER_REDIS = MN_CONSTANTS.DOCKER_REDIS;
                 this.DOCKER_CONSUL_CONFIG_LOADER = 'jhipster/consul-config-loader:v0.4.1'; // overrides jhipster value until main generator is updated
             },
         };
