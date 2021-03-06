@@ -18,7 +18,7 @@
  */
 
 module.exports = {
-    GRADLE_VERSION: '6.7',
+    GRADLE_VERSION: '6.8.1',
     DOCKER_REDIS: 'redis:6.0.10',
     sqlDb: {
         h2Disk: {
@@ -43,7 +43,7 @@ module.exports = {
         },
     },
     versions: {
-        micronaut: '2.3.2',
+        micronaut: '2.3.4',
         micronautData: '2.2.4',
         micronautOpenApi: '2.3.1',
 
