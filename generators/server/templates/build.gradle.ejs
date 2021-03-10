@@ -18,7 +18,6 @@
 -%>
 buildscript {
     repositories {
-        mavenCentral()
         gradlePluginPortal()
     }
     dependencies {
@@ -586,9 +585,9 @@ wrapper {
 
 if (project.hasProperty("nodeInstall")) {
     node {
-        version = "${node_version}"
-        npmVersion = "${npm_version}"
-        yarnVersion = "${yarn_version}"
+        version = "$<%= NODE_VERSION %>"
+        npmVersion = "<%= NPM_VERSION %>"
+        yarnVersion = "<%= YARN_VERSION %>"
         download = true
     }
 }

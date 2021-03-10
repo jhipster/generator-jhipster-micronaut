@@ -18,7 +18,7 @@
  */
 
 module.exports = {
-    GRADLE_VERSION: '6.8.1',
+    GRADLE_VERSION: '6.8.3',
     DOCKER_REDIS: 'redis:6.0.10',
     sqlDb: {
         h2Disk: {
@@ -43,8 +43,8 @@ module.exports = {
         },
     },
     versions: {
-        micronaut: '2.3.4',
-        micronautData: '2.2.4',
+        micronaut: '2.4.0',
+        micronautData: '2.3.1',
         micronautOpenApi: '2.3.1',
 
         hibernate: '5.4.24.Final',
@@ -60,9 +60,9 @@ module.exports = {
         swaggerAnnotations: '2.1.6',
         mockito: '3.1.0',
         problem: '0.24.0',
-        caffeine: '2.8.8',
-        archunit: '0.14.1',
-        simplejavamail: '6.4.4',
+        caffeine: '3.0.0',
+        archunit: '0.17.0',
+        simplejavamail: '6.5.0',
         testcontainers: '1.15.2',
     },
 };
