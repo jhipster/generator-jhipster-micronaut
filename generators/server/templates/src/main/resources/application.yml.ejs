@@ -161,7 +161,6 @@ jpa:
         jdbc:
           time_zone: UTC
         ddl-auto: none
-        physical_naming_strategy: <%=packageName%>.config.SnakeCasePhysicalNamingStrategy
 
 <%_ if (serviceDiscoveryType === 'consul') { _%>
 consul:

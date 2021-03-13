@@ -382,11 +382,6 @@ const serverFiles = {
                     useBluePrint: true,
                 },
                 {
-                    file: 'package/config/SnakeCasePhysicalNamingStrategy.java',
-                    renameTo: generator => `${generator.javaDir}config/SnakeCasePhysicalNamingStrategy.java`,
-                    useBluePrint: true,
-                },
-                {
                     file: 'package/config/metric/JHipsterMetricsEndpoint.java',
                     renameTo: generator => `${generator.javaDir}config/metric/JHipsterMetricsEndpoint.java`,
                     useBluePrint: true,

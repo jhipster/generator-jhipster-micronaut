@@ -16,7 +16,7 @@ dockerBuildNative.dependsOn copyIntoLayers
 
 dockerfileNative {
     baseImage = "ghcr.io/graalvm/graalvm-ce:java11-21.0.0.2"
-    args("-Xmx64m")
+    args("-Xmx128m")
 }
 nativeImage {
     args('--static',

@@ -852,7 +852,6 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                         <defaultSchemaName></defaultSchemaName>
                         <username><%= baseName %></username>
                         <password></password>
-                        <referenceUrl>hibernate:spring:<%=packageName%>.domain?dialect=&amp;hibernate.physical_naming_strategy=<%=packageName%>.config.SnakeCasePhysicalNamingStrategy</referenceUrl>
                         <verbose>true</verbose>
                         <logging>debug</logging>
                         <contexts>!test</contexts>
