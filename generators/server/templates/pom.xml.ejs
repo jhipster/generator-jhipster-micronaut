@@ -14,10 +14,6 @@ _%>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
-        <repository>
-            <id>jcenter</id>
-            <url>https://jcenter.bintray.com</url>
-        </repository>
         <%_ if (JHIPSTER_DEPENDENCIES_VERSION.endsWith('-SNAPSHOT')) { _%>
         <repository>
             <id>ossrh-snapshots</id>
@@ -89,6 +85,7 @@ _%>
         <caffeine.version><%= versions.caffeine %></caffeine.version>
         <typesafe.version>1.4.0</typesafe.version>
 <%_ } _%>
+        <testcontainers.version><%= versions.testcontainers %></testcontainers.version>
         <!-- Plugin versions -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -103,7 +100,7 @@ _%>
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
         <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
         <maven-exec-plugin.version>1.6.0</maven-exec-plugin.version>
-        <micronaut-plugin.version>1.0.0</micronaut-plugin.version>
+        <micronaut-plugin.version>1.1.7</micronaut-plugin.version>
 
 <%_ if (!skipClient) { _%>
         <frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
@@ -306,6 +303,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
+            <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
 <%_ } _%>

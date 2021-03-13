@@ -1,6 +1,6 @@
 dockerfile {
-    baseImage = "openjdk:14-alpine"
-    args("-Xmx256m")
+    baseImage = "openjdk:15-alpine"
+    args("-Xmx128m")
 }
 dockerBuild {
     images = ["<%= baseName %>:$project.version"]
@@ -16,7 +16,7 @@ dockerBuildNative.dependsOn copyIntoLayers
 
 dockerfileNative {
     baseImage = "oracle/graalvm-ce:20.3.0-java11"
-    args("-Xmx128m")
+    args("-Xmx64m")
 }
 nativeImage {
     args('--static',

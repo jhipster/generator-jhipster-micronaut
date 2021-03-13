@@ -31,6 +31,22 @@ if (project.hasProperty("swagger")) {
     profiles += ",swagger"
 }
 
+tasks.withType(JavaExec) {
+
+    if (System.getProperty("micronaut.environments")) {
+        jvmArgs += '-Dmicronaut.environments=' + profiles + ',' + System.getProperty("micronaut.environments")
+    } else {
+        jvmArgs += '-Dmicronaut.environments=' + profiles
+    }
+    if (gradle.startParameter.continuous) {
+        systemProperties(
+            'micronaut.io.watch.restart':'true',
+            'micronaut.io.watch.enabled':'true',
+            "micronaut.io.watch.paths":"src/main"
+        )
+    }
+}
+
 <%_ if (!skipClient) { _%>
 task webpack_test(type: <%= _.upperFirst(clientPackageManager) %>Task, dependsOn: "<%= clientPackageManager %><%_ if (clientPackageManager === 'npm') { _%>Install<%_ } _%>") {
     args = ["run", "webpack:test"]

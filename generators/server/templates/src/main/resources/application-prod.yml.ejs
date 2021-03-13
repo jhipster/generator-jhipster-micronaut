@@ -13,8 +13,8 @@
 const { sqlDb } = MN_CONSTANTS;
 const dbInfo = sqlDb[prodDatabaseType];
 _%>
-logging:
-  level:
+logger:
+  levels:
     ROOT: INFO
     <%=packageName%>: INFO
     io.github.jhipster: INFO

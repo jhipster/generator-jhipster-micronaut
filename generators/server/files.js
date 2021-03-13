@@ -394,8 +394,7 @@ const serverFiles = {
             ],
         },
         {
-            condition: generator =>
-                ['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(generator.cacheProvider),
+            condition: generator => ['ehcache', 'caffeine', 'redis'].includes(generator.cacheProvider),
             path: SERVER_MAIN_SRC_DIR,
             templates: [
                 {

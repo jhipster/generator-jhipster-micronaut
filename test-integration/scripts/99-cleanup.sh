@@ -4,8 +4,6 @@ set -ex
 
 mv backup.eslintrc.json .eslintrc.json
 
-rm -rf ./sample-output/
-
 SCRIPT_FOLDER=`dirname "$0"`
 UTIL_FOLDER="$SCRIPT_FOLDER/util"
 
@@ -20,5 +18,6 @@ else
     echo "Protractor is not being used in this sample"
 fi
 
-cd ../../
+cd ..
 
+rm -rf ./sample-output/

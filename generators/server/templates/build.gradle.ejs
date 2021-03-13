@@ -18,7 +18,6 @@
 -%>
 buildscript {
     repositories {
-        mavenLocal()
         mavenCentral()
         gradlePluginPortal()
     }
@@ -256,7 +255,14 @@ configurations {
 repositories {
     mavenLocal()
     mavenCentral()
-    jcenter()
+    <%_ if (JHIPSTER_DEPENDENCIES_VERSION.endsWith('-SNAPSHOT')) { _%>
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
+    <%_ } _%>
     //jhipster-needle-gradle-repositories - JHipster will add additional repositories
 }
 
@@ -334,6 +340,7 @@ dependencies {
         <%_ if (enableHibernateCache) { _%>
     implementation "org.hibernate:hibernate-jcache"
         <%_ } _%>
+    testImplementation "org.testcontainers:testcontainers:$testcontainers_version"
     <%_ } _%>
     <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'redis'].includes(cacheProvider) || applicationType === 'gateway') { _%>
     implementation "io.micronaut.cache:micronaut-cache-core"
@@ -396,7 +403,7 @@ dependencies {
     implementation "org.mindrot:jbcrypt:$jbcrypt_version"
 <%_ } _%>
 
-    compileOnly("org.graalvm.nativeimage:svm")
+    compileOnly "org.graalvm.nativeimage:svm"
 
     implementation "io.micronaut.liquibase:micronaut-liquibase"
     implementation "io.micronaut.sql:micronaut-jdbc-hikari"

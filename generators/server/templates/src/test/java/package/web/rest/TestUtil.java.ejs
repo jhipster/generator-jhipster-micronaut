@@ -6,6 +6,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 <%_ if (databaseType === 'sql') { _%>
 import io.micronaut.transaction.TransactionOperations;
 <%_ } _%>
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 <%_ if (databaseType === 'sql') { _%>
 import javax.persistence.EntityManager;
@@ -29,6 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public final class TestUtil {
 
     private static final ObjectMapper mapper = createObjectMapper();
+    private static final Logger log = LoggerFactory.getLogger(TestUtil.class);
 
     private static ObjectMapper createObjectMapper() {
         ObjectMapper mapper = new ObjectMapper();
@@ -109,13 +112,17 @@ public final class TestUtil {
      * @param <T>
      */
     public static <T> void removeAll(TransactionOperations<Connection> transactionManager, EntityManager em, Class<T> clss) {
-        transactionManager.executeWrite(status -> {
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaDelete<T> query = cb.createCriteriaDelete(clss);
-            Root<T> root = query.from(clss);
-            query.where(root.isNotNull());
-            return em.createQuery(query).executeUpdate();
-        });
+        try {
+            transactionManager.executeWrite(status -> {
+                CriteriaBuilder cb = em.getCriteriaBuilder();
+                CriteriaDelete<T> query = cb.createCriteriaDelete(clss);
+                Root<T> root = query.from(clss);
+                query.where(root.isNotNull());
+                return em.createQuery(query).executeUpdate();
+            });
+        } catch (Exception e) {
+            log.warn("Failed to remove instances", e);
+        }
     }
 
 <%_ } _%>

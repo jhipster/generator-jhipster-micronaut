@@ -167,7 +167,11 @@ public class <%= entityClass %>Resource {
      * @return the {@link HttpResponse} with status {@code 201 (Created)} and with body the new <%= instanceName %>, or with status {@code 400 (Bad Request)} if the <%= entityInstance %> has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @Post("/<%= entityApiUrl %>")
+    <%_ if (entityInstance.toLowerCase() === "post") { _%>
+    @io.micronaut.http.annotation.Post("/<%= entityApiUrl %>")
+    <%_ } else { _%>
+    @Post("/<%= entityApiUrl %>") 
+    <%_ } _%>
     @ExecuteOn(TaskExecutors.IO)
     public HttpResponse<<%= instanceType %>> create<%= entityClass %>(@Body <%= instanceType %> <%= instanceName %>) throws URISyntaxException {
         log.debug("REST request to save <%= entityClass %> : {}", <%= instanceName %>);
