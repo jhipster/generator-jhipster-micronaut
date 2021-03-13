@@ -585,7 +585,7 @@ wrapper {
 
 if (project.hasProperty("nodeInstall")) {
     node {
-        version = "$<%= NODE_VERSION %>"
+        version = "<%= NODE_VERSION %>"
         npmVersion = "<%= NPM_VERSION %>"
         yarnVersion = "<%= YARN_VERSION %>"
         download = true
