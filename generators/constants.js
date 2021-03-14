@@ -46,8 +46,9 @@ module.exports = {
         micronaut: '2.4.0',
         micronautData: '2.3.1',
         micronautOpenApi: '2.3.1',
-
-        hibernate: '5.4.29.Final',
+        // The hibernate version should match the one managed by Micronaut data
+        // https://mvnrepository.com/artifact/io.micronaut.data/micronaut-data-hibernate-jpa
+        hibernate: '5.4.24.Final',
         jackson: '2.12.2',
         javassist: '3.27.0-GA', // Should match Hibernate deps
         javaxMail: '1.6.2',

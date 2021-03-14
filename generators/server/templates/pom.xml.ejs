@@ -66,6 +66,8 @@ _%>
         <micronaut.version><%= versions.micronaut %></micronaut.version>
         <micronaut-data.version><%= versions.micronautData %></micronaut-data.version>
         <micronaut-openapi.version><%= versions.micronautOpenApi %></micronaut-openapi.version>
+        <!-- The hibernate version should match the one managed by Micronaut data
+        https://mvnrepository.com/artifact/io.micronaut.data/micronaut-data-hibernate-jpa/${micronaut-data.version} -->
         <hibernate.version><%= versions.hibernate %></hibernate.version>
         <!-- The javassist version should match the one managed by
         https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
