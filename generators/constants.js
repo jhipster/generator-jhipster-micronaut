@@ -61,7 +61,7 @@ module.exports = {
         problem: '0.25.0',
         caffeine: '3.0.0',
         archunit: '0.17.0',
-        simplejavamail: '6.4.4',
+        simplejavamail: '6.5.0',
         testcontainers: '1.15.2',
     },
 };
