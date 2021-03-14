@@ -19,7 +19,7 @@
 
 module.exports = {
     GRADLE_VERSION: '6.8.1',
-    DOCKER_REDIS: 'redis:6.0.10',
+    DOCKER_REDIS: 'redis:6.2.1',
     sqlDb: {
         h2Disk: {
             driver: 'org.h2.Driver',
