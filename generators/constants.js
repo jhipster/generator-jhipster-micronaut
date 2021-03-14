@@ -52,7 +52,7 @@ module.exports = {
         javassist: '3.27.0-GA', // Should match Hibernate deps
         javaxMail: '1.6.2',
         jbcrypt: '0.4',
-        liquibase: '4.2.2',
+        liquibase: '4.3.1',
         liquibaseHibernate5: '4.1.1',
         logback: '1.2.3',
         mapstruct: '1.3.1.Final',
