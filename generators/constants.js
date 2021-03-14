@@ -58,7 +58,7 @@ module.exports = {
         mapstruct: '1.4.2.Final',
         swaggerAnnotations: '2.1.7',
         mockito: '3.8.0',
-        problem: '0.24.0',
+        problem: '0.25.0',
         caffeine: '2.8.8',
         archunit: '0.14.1',
         simplejavamail: '6.4.4',
