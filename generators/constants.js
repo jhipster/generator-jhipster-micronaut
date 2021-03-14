@@ -60,7 +60,7 @@ module.exports = {
         mockito: '3.8.0',
         problem: '0.25.0',
         caffeine: '3.0.0',
-        archunit: '0.14.1',
+        archunit: '0.17.0',
         simplejavamail: '6.4.4',
         testcontainers: '1.15.2',
     },
