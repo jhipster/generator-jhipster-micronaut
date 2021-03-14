@@ -57,7 +57,7 @@ module.exports = {
         logback: '1.2.3',
         mapstruct: '1.4.2.Final',
         swaggerAnnotations: '2.1.7',
-        mockito: '3.1.0',
+        mockito: '3.8.0',
         problem: '0.24.0',
         caffeine: '2.8.8',
         archunit: '0.14.1',
