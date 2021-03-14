@@ -59,7 +59,7 @@ module.exports = {
         swaggerAnnotations: '2.1.7',
         mockito: '3.8.0',
         problem: '0.25.0',
-        caffeine: '2.8.8',
+        caffeine: '3.0.0',
         archunit: '0.14.1',
         simplejavamail: '6.4.4',
         testcontainers: '1.15.2',
