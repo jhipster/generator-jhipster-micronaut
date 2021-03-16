@@ -43,7 +43,7 @@ module.exports = {
         },
     },
     versions: {
-        micronaut: '2.4.0',
+        micronaut: '2.3.4',
         micronautData: '2.3.1',
         micronautOpenApi: '2.3.1',
         // The hibernate version should match the one managed by Micronaut data
