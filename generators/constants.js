@@ -44,7 +44,7 @@ module.exports = {
     },
     versions: {
         micronaut: '2.3.4',
-        micronautData: '2.3.1',
+        micronautData: '2.2.4',
         micronautOpenApi: '2.3.1',
         // The hibernate version should match the one managed by Micronaut data
         // https://mvnrepository.com/artifact/io.micronaut.data/micronaut-data-hibernate-jpa
