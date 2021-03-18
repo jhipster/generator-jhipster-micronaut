@@ -62,3 +62,5 @@ relationship ManyToMany {
 }
 
 paginate Operation with infinite-scroll
+filter Operation
+service Operation with serviceClass

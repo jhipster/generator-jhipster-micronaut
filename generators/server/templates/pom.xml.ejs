@@ -392,6 +392,23 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <artifactId>micronaut-data-runtime</artifactId>
             <scope>compile</scope>
         </dependency>
+<%_ if (databaseType === 'sql') { _%>
+        <dependency>
+            <groupId>io.micronaut.spring</groupId>
+            <artifactId>micronaut-spring</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.data</groupId>
+            <artifactId>micronaut-data-spring</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.data</groupId>
+            <artifactId>micronaut-data-spring-jpa</artifactId>
+            <scope>compile</scope>
+        </dependency>
+<%_ } _%>
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-http-client</artifactId>

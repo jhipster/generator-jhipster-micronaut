@@ -549,7 +549,6 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         // Get the <%= entityInstance %>List w/ all the <%= entityInstancePlural %>
         List<<%= httpEntityClass %>> <%= entityInstancePlural %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>?eagerload=true"), Argument.listOf(<%= httpEntityClass %>.class)).blockingFirst();
         <%= httpEntityClass %> test<%= entityClass %> = <%= entityInstancePlural %>.get(0);
-
 <%- include('../../common/validate_entity_fields_template', {isUpdate: false}); -%>
     }
 
@@ -563,7 +562,6 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
 
         // Get the <%= entityInstance %>
         <%= httpEntityClass %> test<%= entityClass %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>/" + <%= entityInstance %>.getId()), <%= httpEntityClass %>.class).blockingFirst();
-
 <%- include('../../common/validate_entity_fields_template', {isUpdate: false}); -%>
     }
 
@@ -673,6 +671,235 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         // Validate the <%= entityClass %> in Elasticsearch
         verify(mock<%= entityClass %>SearchRepository, times(1)).deleteById(<%= asEntity(entityInstance) %>.getId());
         <%_ } _%>
+    }
+<%_ } _%>
+
+<%_ if (jpaMetamodelFiltering) {  %>
+
+    @Test
+    void get<%= entityClassPlural %>ByIdFiltering() {
+        // Initialize the database
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+
+        Long id = <%= asEntity(entityInstance) %>.getId();
+
+        default<%= entityClass %>ShouldBeFound("id.equals=" + id);
+        default<%= entityClass %>ShouldNotBeFound("id.notEquals=" + id);
+
+        default<%= entityClass %>ShouldBeFound("id.greaterThanOrEqual=" + id);
+        default<%= entityClass %>ShouldNotBeFound("id.greaterThan=" + id);
+
+        default<%= entityClass %>ShouldBeFound("id.lessThanOrEqual=" + id);
+        default<%= entityClass %>ShouldNotBeFound("id.lessThan=" + id);
+    }
+
+<%_
+        fields.forEach((searchBy) => {
+            // we can't filter by all the fields.
+            if (isFilterableType(searchBy.fieldType)) {
+                 _%>
+
+    @Test
+    void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsEqualToSomething() {
+        // Initialize the database
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> equals to <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>
+        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.equals=" + <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> equals to <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>
+        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.equals=" + <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
+    }
+
+    @Test
+    void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsNotEqualToSomething() {
+        // Initialize the database
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> not equals to <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>
+        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.notEquals=" + <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> not equals to <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>
+        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.notEquals=" + <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
+    }
+
+    @Test
+    void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsInShouldWork() {
+        // Initialize the database
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> in <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %> or <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>
+        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.in=" + <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %> + "&<%= searchBy.fieldName %>.in=" + <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> equals to <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>
+        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.in=" + <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
+    }
+
+    @Test
+    void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsNullOrNotNull() {
+        // Initialize the database
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is not null
+        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.specified=true");
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is null
+        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.specified=false");
+    }
+<%_
+            }
+            if (searchBy.fieldType === 'String') {
+                _%>
+                @Test
+    void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>ContainsSomething() {
+        // Initialize the database
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> contains <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>
+        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.contains=" + <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> contains <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>
+        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.contains=" + <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
+    }
+
+    @Test
+    void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>NotContainsSomething() {
+        // Initialize the database
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> does not contain <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>
+        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.doesNotContain=" + <%= 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> does not contain <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>
+        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.doesNotContain=" + <%= 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase() %>);
+    }
+
+<%_
+            }
+            // the range criteria
+            if (['BigDecimal', 'Byte', 'Double', 'Duration', 'Float', 'Short',
+                 'Integer', 'Long', 'LocalDate', 'ZonedDateTime'].includes(searchBy.fieldType)) {
+              var defaultValue = 'DEFAULT_' + searchBy.fieldNameUnderscored.toUpperCase();
+              var biggerValue = 'UPDATED_' + searchBy.fieldNameUnderscored.toUpperCase();
+              var smallerValue = 'SMALLER_' + searchBy.fieldNameUnderscored.toUpperCase();
+              if (searchBy.fieldValidate === true && searchBy.fieldValidateRules.includes('max')) {
+                  // if maximum is specified the updated variable is smaller than the default one!
+                  if (searchBy.fieldType === 'BigDecimal') {
+                      biggerValue = '(' + defaultValue + '.add(BigDecimal.ONE))';
+                  } else if (['Duration', 'LocalDate', 'ZonedDateTime'].includes(searchBy.fieldType)) {
+                      biggerValue = '(' + defaultValue + '.plus(1, ChronoUnit.DAYS))';
+                  } else {
+                      biggerValue = '(' + defaultValue + ' + 1)';
+                  }
+              }
+            _%>
+
+    @Test
+    void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsGreaterThanOrEqualToSomething() {
+        // Initialize the database
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is greater than or equal to <%= defaultValue %>
+        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.greaterThanOrEqual=" + <%= defaultValue %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is greater than or equal to <%= biggerValue %>
+        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.greaterThanOrEqual=" + <%= biggerValue %>);
+    }
+
+    @Test
+    void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsLessThanOrEqualToSomething() {
+        // Initialize the database
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is less than or equal to <%= defaultValue %>
+        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.lessThanOrEqual=" + <%= defaultValue %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is less than or equal to <%= smallerValue %>
+        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.lessThanOrEqual=" + <%= smallerValue %>);
+    }
+
+    @Test
+    void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsLessThanSomething() {
+        // Initialize the database
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is less than <%= defaultValue %>
+        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.lessThan=" + <%= defaultValue %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is less than <%= biggerValue %>
+        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.lessThan=" + <%= biggerValue %>);
+    }
+
+    @Test
+    void getAll<%= entityClassPlural %>By<%= searchBy.fieldInJavaBeanMethod %>IsGreaterThanSomething() {
+        // Initialize the database
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is greater than <%= defaultValue %>
+        default<%= entityClass %>ShouldNotBeFound("<%= searchBy.fieldName %>.greaterThan=" + <%= defaultValue %>);
+
+        // Get all the <%= entityInstance %>List where <%= searchBy.fieldName %> is greater than <%= smallerValue %>
+        default<%= entityClass %>ShouldBeFound("<%= searchBy.fieldName %>.greaterThan=" + <%= smallerValue %>);
+    }
+
+<%_         } _%>
+<%_     }); _%>
+<%_ relationships.forEach((relationship) => { _%>
+
+    @Test
+    void getAll<%= entityClassPlural %>By<%= relationship.relationshipNameCapitalized %>IsEqualToSomething() {
+        <%_ if ((relationship.relationshipValidate === true && relationship.relationshipType === 'one-to-one') || relationship.useJPADerivedIdentifier === true) { _%>
+        // Get already existing entity
+        <%= asEntity(relationship.otherEntityNameCapitalized) %> <%= relationship.relationshipFieldName %> = <%= asEntity(entityInstance) %>.get<%= relationship.relationshipNameCapitalized %>();
+        <%_ } else { _%>
+        // Initialize the database
+        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
+        <%= asEntity(relationship.otherEntityNameCapitalized) %> <%= relationship.relationshipFieldName %> = <%= relationship.otherEntityNameCapitalized %>ResourceIT.createEntity(transactionManager, em);
+        em.persist(<%= relationship.relationshipFieldName %>);
+        em.flush();
+            <%_ if (relationship.relationshipType === 'many-to-many' || relationship.relationshipType === 'one-to-many') { _%>
+        <%= asEntity(entityInstance) %>.add<%= relationship.relationshipNameCapitalized %>(<%= relationship.relationshipFieldName %>);
+            <%_ } else { _%>
+        <%= asEntity(entityInstance) %>.set<%= relationship.relationshipNameCapitalized %>(<%= relationship.relationshipFieldName %>);
+            <%_     if (relationship.ownerSide === false) { _%>
+        <%= relationship.relationshipFieldName %>.set<%= relationship.otherEntityRelationshipNameCapitalized %>(<%= asEntity(entityInstance) %>);
+            <%_     } _%>
+            <%_ } _%>
+        <%_ } _%>
+        <%= entityInstance %>Repository.saveAndFlush(<%= asEntity(entityInstance) %>);
+        <% if (authenticationType === 'oauth2' && relationship.otherEntityName === 'user') { _%>String<%_ } else { _%>Long<% } %> <%= relationship.relationshipFieldName %>Id = <%= relationship.relationshipFieldName %>.getId();
+
+        // Get all the <%= entityInstance %>List where <%= relationship.relationshipFieldName %> equals to <%= relationship.relationshipFieldName %>Id
+        default<%= entityClass %>ShouldBeFound("<%= relationship.relationshipFieldName %>Id.equals=" + <%= relationship.relationshipFieldName %>Id);
+
+        // Get all the <%= entityInstance %>List where <%= relationship.relationshipFieldName %> equals to <%= relationship.relationshipFieldName %>Id + 1
+        default<%= entityClass %>ShouldNotBeFound("<%= relationship.relationshipFieldName %>Id.equals=" + (<%= relationship.relationshipFieldName %>Id + 1));
+    }
+
+<%_ }); _%>
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void default<%= entityClass %>ShouldBeFound(String filter) {
+        List<<%= httpEntityClass %>> <%= entityInstancePlural %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>?" + filter), Argument.listOf(<%= httpEntityClass %>.class)).blockingFirst();
+        <%= httpEntityClass %> test<%= entityClass %> = <%= entityInstancePlural %>.get(0);
+<%- include('../../common/validate_entity_fields_template', {isUpdate: false}); -%>
+
+        // Check, that the count call also returns 1
+        Long count = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>/count?" + filter), Long.class).blockingFirst();
+        assertThat(count).isEqualTo(1L);
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void default<%= entityClass %>ShouldNotBeFound(String filter) {
+        List<<%= httpEntityClass %>> <%= entityInstancePlural %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>?" + filter), Argument.listOf(<%= httpEntityClass %>.class)).blockingFirst();
+        assertThat(<%= entityInstancePlural %>).isEmpty();
+
+        // Check, that the count call also returns 0
+        Long count = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>/count?" + filter), Long.class).blockingFirst();
+        assertThat(count).isZero();
     }
 <%_ } _%>
 

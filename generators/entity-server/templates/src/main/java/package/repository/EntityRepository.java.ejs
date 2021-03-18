@@ -33,6 +33,9 @@ import io.micronaut.data.annotation.Query;
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.repository.JpaRepository;
 
+<%_ if (jpaMetamodelFiltering) { _%>
+import <%= packageName %>.repository.MHipsterJpaSpecificationExecutor;
+<%_ } _%>
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -85,7 +88,7 @@ import java.util.UUID;
 @SuppressWarnings("unused")
 <%_ } _%>
 @Repository
-public abstract class <%= entityClass %>Repository implements <% if (databaseType === 'sql') { %>JpaRepository<% } %><% if (databaseType === 'mongodb') { %>MongoRepository<% } %><% if (databaseType === 'cassandra') { %>CassandraRepository<% } %><% if (databaseType === 'couchbase') { %>N1qlCouchbaseRepository<% } %><<%= asEntity(entityClass) %>, <%= primaryKeyType %>><% if (jpaMetamodelFiltering) { %>, JpaSpecificationExecutor<<%= asEntity(entityClass) %>><% } %> {
+public abstract class <%= entityClass %>Repository implements <% if (databaseType === 'sql') { %>JpaRepository<% } %><% if (databaseType === 'mongodb') { %>MongoRepository<% } %><% if (databaseType === 'cassandra') { %>CassandraRepository<% } %><% if (databaseType === 'couchbase') { %>N1qlCouchbaseRepository<% } %><<%= asEntity(entityClass) %>, <%= primaryKeyType %>><% if (jpaMetamodelFiltering) { %>, MHipsterJpaSpecificationExecutor<<%= asEntity(entityClass) %>><% } %> {
 
     private final EntityManager entityManager;
 
@@ -128,7 +131,6 @@ public abstract class <%= entityClass %>Repository implements <% if (databaseTyp
         this.entityManager = entityManager;
     }
 
-    @Transactional
     public <%= entityClass %> mergeAndSave(<%= entityClass %> <%= entityInstance %>) {
         <%= entityInstance %> = entityManager.merge(<%= entityInstance %>);
         return save(<%= entityInstance %>);
