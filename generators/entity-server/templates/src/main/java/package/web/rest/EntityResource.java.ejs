@@ -170,7 +170,7 @@ public class <%= entityClass %>Resource {
     <%_ if (entityInstance.toLowerCase() === "post") { _%>
     @io.micronaut.http.annotation.Post("/<%= entityApiUrl %>")
     <%_ } else { _%>
-    @Post("/<%= entityApiUrl %>") 
+    @Post("/<%= entityApiUrl %>")
     <%_ } _%>
     @ExecuteOn(TaskExecutors.IO)
     public HttpResponse<<%= instanceType %>> create<%= entityClass %>(@Body <%= instanceType %> <%= instanceName %>) throws URISyntaxException {
@@ -194,7 +194,7 @@ public class <%= entityClass %>Resource {
         <%_ if (databaseType === 'cassandra') { _%>
         <%= instanceName %>.setId(UUID.randomUUID());
         <%_ } _%>
-<%- include('../../common/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: false, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: true}); -%>
+<%- include('../../common/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: false, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: true, isUpdate: false}); -%>
         URI location = new URI("/api/<%= entityApiUrl %>/" + result.getId());
         return HttpResponse.created(result).headers(headers -> {
             headers.location(location);
@@ -231,7 +231,7 @@ public class <%= entityClass %>Resource {
         }
             <%_ } _%>
         <%_ } _%>
-<%- include('../../common/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: false, isUsingMapsId: false, mapsIdAssoc: mapsIdAssoc}); -%>
+<%- include('../../common/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: false, isUsingMapsId: false, mapsIdAssoc: mapsIdAssoc, isUpdate: true}); -%>
         return HttpResponse.ok(result).headers(headers ->
             HeaderUtil.createEntityUpdateAlert(headers, applicationName, <%= enableTranslation %>, ENTITY_NAME, <%= instanceName %>.getId().toString()));
     }
