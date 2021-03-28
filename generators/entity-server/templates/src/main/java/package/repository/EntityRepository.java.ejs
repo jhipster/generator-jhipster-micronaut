@@ -34,8 +34,6 @@ import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.repository.JpaRepository;
 
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
     <%_ if (fieldsContainOwnerManyToMany) { _%>
 // TODO what is MN equivalent?
 // import org.springframework.data.repository.query.Param;
@@ -87,8 +85,6 @@ import java.util.UUID;
 @Repository
 public abstract class <%= entityClass %>Repository implements <% if (databaseType === 'sql') { %>JpaRepository<% } %><% if (databaseType === 'mongodb') { %>MongoRepository<% } %><% if (databaseType === 'cassandra') { %>CassandraRepository<% } %><% if (databaseType === 'couchbase') { %>N1qlCouchbaseRepository<% } %><<%= asEntity(entityClass) %>, <%= primaryKeyType %>><% if (jpaMetamodelFiltering) { %>, JpaSpecificationExecutor<<%= asEntity(entityClass) %>><% } %> {
 
-    private final EntityManager entityManager;
-
     <%_ for (idx in relationships) {
         if (relationships[idx].relationshipType === 'many-to-one' && relationships[idx].otherEntityName === 'user' && databaseType === 'sql') { _%>
 
@@ -123,15 +119,4 @@ public abstract class <%= entityClass %>Repository implements <% if (databaseTyp
     public abstract Optional<<%= asEntity(entityClass) %>> findOneWithEagerRelationships(<%= primaryKeyType %> id);
     <%_ }
     } _%>
-
-    public <%= entityClass %>Repository(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
-    @Transactional
-    public <%= entityClass %> mergeAndSave(<%= entityClass %> <%= entityInstance %>) {
-        <%= entityInstance %> = entityManager.merge(<%= entityInstance %>);
-        return save(<%= entityInstance %>);
-    }
-
 }
