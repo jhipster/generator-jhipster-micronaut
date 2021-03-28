@@ -14,8 +14,6 @@ import io.micronaut.data.jpa.repository.JpaRepository;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.time.Instant;
@@ -24,9 +22,8 @@ import java.time.Instant;
  * Micronaut Data JPA repository for the {@link User} entity.
  */
 @Repository
-public abstract class UserRepository implements JpaRepository<User, <% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %>> {
+public interface UserRepository extends JpaRepository<User, <% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %>> {
 
-    private EntityManager entityManager;
 <%_ if (usesCache) { _%>
     public static String USERS_BY_LOGIN_CACHE = "usersByLogin";
 
@@ -34,41 +31,31 @@ public abstract class UserRepository implements JpaRepository<User, <% if (authe
 <%_ } _%>
     <% if (authenticationType !== 'oauth2') { %>
 
-    public abstract Optional<User> findOneByActivationKey(String activationKey);
+    public Optional<User> findOneByActivationKey(String activationKey);
 
-    public abstract List<User> findAllByActivatedFalseAndCreatedDateBefore(Instant dateTime);
+    public List<User> findAllByActivatedFalseAndCreatedDateBefore(Instant dateTime);
 
-    public abstract Optional<User> findOneByResetKey(String resetKey);
+    public Optional<User> findOneByResetKey(String resetKey);
     <% } %>
 
-    public abstract Optional<User> findOneByEmailIgnoreCase(String email);
+    public Optional<User> findOneByEmailIgnoreCase(String email);
 
     @EntityGraph(attributePaths = "authorities")
-    public abstract Optional<User> findOneById(<% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %> id);
+    public Optional<User> findOneById(<% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %> id);
 
     @EntityGraph(attributePaths = "authorities")
 <%_ if (usesCache) { _%>
     @Cacheable(cacheNames = "usersByLogin")
 <%_ } _%>
-    public abstract Optional<User> findOneByLogin(String login);
+    public Optional<User> findOneByLogin(String login);
 
     @EntityGraph(attributePaths = "authorities")
 <%_ if (usesCache) { _%>
     @Cacheable(cacheNames = "usersByEmail")
 <%_ } _%>
-    public abstract Optional<User> findOneByEmail(String email);
+    public Optional<User> findOneByEmail(String email);
 
-    public abstract Page<User> findAllByLoginNot(String login, Pageable pageable);
+    public Page<User> findAllByLoginNot(String login, Pageable pageable);
 
-    public abstract void update(@Id <% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %> id, Instant createdDate);
-
-    public UserRepository(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
-    @Transactional
-    public User mergeAndSave(User user) {
-        user = entityManager.merge(user);
-        return save(user);
-    }
+    public void update(@Id <% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %> id, Instant createdDate);
 }
