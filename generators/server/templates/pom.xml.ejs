@@ -66,6 +66,8 @@ _%>
         <micronaut.version><%= versions.micronaut %></micronaut.version>
         <micronaut-data.version><%= versions.micronautData %></micronaut-data.version>
         <micronaut-openapi.version><%= versions.micronautOpenApi %></micronaut-openapi.version>
+        <!-- The hibernate version should match the one managed by Micronaut data
+        https://mvnrepository.com/artifact/io.micronaut.data/micronaut-data-hibernate-jpa/${micronaut-data.version} -->
         <hibernate.version><%= versions.hibernate %></hibernate.version>
         <!-- The javassist version should match the one managed by
         https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
@@ -83,34 +85,32 @@ _%>
         <jackson.version><%= versions.jackson %></jackson.version>
 <%_ if (cacheProvider === 'caffeine') { _%>
         <caffeine.version><%= versions.caffeine %></caffeine.version>
-        <typesafe.version>1.4.0</typesafe.version>
+        <typesafe.version>1.4.1</typesafe.version>
 <%_ } _%>
         <testcontainers.version><%= versions.testcontainers %></testcontainers.version>
         <!-- Plugin versions -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
         <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-        <!-- We can't go to 3.0.0-M2 as it has a regression. See https://issues.apache.org/jira/browse/MENFORCER-306 -->
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-        <maven-failsafe-plugin.version>3.0.0-M3</maven-failsafe-plugin.version>
+        <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
         <maven-idea-plugin.version>2.2.1</maven-idea-plugin.version>
-        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
+        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
-        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
-        <maven-exec-plugin.version>1.6.0</maven-exec-plugin.version>
-        <micronaut-plugin.version>1.1.7</micronaut-plugin.version>
+        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+        <micronaut-maven-plugin.version>1.1.7</micronaut-maven-plugin.version>
 
 <%_ if (!skipClient) { _%>
-        <frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
+        <frontend-maven-plugin.version>1.11.2</frontend-maven-plugin.version>
 <%_ } _%>
-        <git-commit-id-plugin.version>4.0.2</git-commit-id-plugin.version>
+        <git-commit-id-plugin.version>4.0.3</git-commit-id-plugin.version>
         <jacoco-maven-plugin.version><%= JACOCO_VERSION %></jacoco-maven-plugin.version>
         <jib-maven-plugin.version><%= JIB_VERSION %></jib-maven-plugin.version>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
-        <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>3.8.0.2131</sonar-maven-plugin.version>
         <jacoco.reportFolder>${project.build.directory}/jacoco</jacoco.reportFolder>
         <jacoco.utReportFile>${jacoco.reportFolder}/test.exec</jacoco.utReportFile>
         <jacoco.itReportFile>${jacoco.reportFolder}/integrationTest.exec</jacoco.itReportFile>
@@ -129,7 +129,7 @@ _%>
                 <type>pom</type>
             </dependency>
             <dependency>
-                <groupId>io.github.jhipster</groupId>
+                <groupId>tech.jhipster</groupId>
                 <artifactId>jhipster-dependencies</artifactId>
                 <version>${jhipster-dependencies.version}</version>
                 <type>pom</type>
@@ -153,7 +153,7 @@ _%>
             <version><%= versions.swaggerAnnotations %></version>
         </dependency>
         <dependency>
-            <groupId>io.github.jhipster</groupId>
+            <groupId>tech.jhipster</groupId>
             <artifactId>jhipster-framework</artifactId>
             <exclusions>
                 <exclusion>
@@ -544,7 +544,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <plugin>
                 <groupId>io.micronaut.build</groupId>
                 <artifactId>micronaut-maven-plugin</artifactId>
-                <version>${micronaut-plugin.version}</version>
+                <version>${micronaut-maven-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -859,7 +859,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                     </configuration>
                     <dependencies>
                         <dependency>
-                            <groupId>io.github.jhipster</groupId>
+                            <groupId>tech.jhipster</groupId>
                             <artifactId>jhipster-framework</artifactId>
                             <version>${jhipster-dependencies.version}</version>
                         </dependency>

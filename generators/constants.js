@@ -19,15 +19,15 @@
 
 module.exports = {
     GRADLE_VERSION: '6.8.1',
-    DOCKER_REDIS: 'redis:6.0.10',
+    DOCKER_REDIS: 'redis:6.2.1',
     sqlDb: {
         h2Disk: {
             driver: 'org.h2.Driver',
-            dialect: 'io.github.jhipster.domain.util.FixedH2Dialect',
+            dialect: 'tech.jhipster.domain.util.FixedH2Dialect',
         },
         h2Memory: {
             driver: 'org.h2.Driver',
-            dialect: 'io.github.jhipster.domain.util.FixedH2Dialect',
+            dialect: 'tech.jhipster.domain.util.FixedH2Dialect',
         },
         mysql: {
             driver: 'com.mysql.jdbc.Driver',
@@ -39,30 +39,30 @@ module.exports = {
         },
         postgresql: {
             driver: 'org.postgresql.Driver',
-            dialect: 'io.github.jhipster.domain.util.FixedPostgreSQL10Dialect',
+            dialect: 'tech.jhipster.domain.util.FixedPostgreSQL10Dialect',
         },
     },
     versions: {
         micronaut: '2.3.4',
         micronautData: '2.2.4',
         micronautOpenApi: '2.3.1',
-
+        // The hibernate version should match the one managed by Micronaut data
+        // https://mvnrepository.com/artifact/io.micronaut.data/micronaut-data-hibernate-jpa
         hibernate: '5.4.24.Final',
-        jackson: '2.11.2',
+        jackson: '2.12.2',
         javassist: '3.27.0-GA', // Should match Hibernate deps
         javaxMail: '1.6.2',
         jbcrypt: '0.4',
-        jhipsterDeps: '3.8.0',
-        liquibase: '4.2.2',
-        liquibaseHibernate5: '4.1.1',
+        liquibase: '4.3.1',
+        liquibaseHibernate5: '4.3.1',
         logback: '1.2.3',
         mapstruct: '1.3.1.Final',
-        swaggerAnnotations: '2.1.6',
-        mockito: '3.1.0',
-        problem: '0.24.0',
-        caffeine: '2.8.8',
-        archunit: '0.14.1',
-        simplejavamail: '6.4.4',
+        swaggerAnnotations: '2.1.7',
+        mockito: '3.8.0',
+        problem: '0.25.0',
+        caffeine: '3.0.0',
+        archunit: '0.17.0',
+        simplejavamail: '6.5.0',
         testcontainers: '1.15.2',
     },
 };
