@@ -283,7 +283,7 @@ public class UserService {
                 }
                 String encryptedPassword = passwordEncoder.encode(newPassword);
                 user.setPassword(encryptedPassword);
-                user = userRepository.mergeAndSave(user);
+                user = userRepository.update(user);
                 <%_ if (usesCache) { _%>
                 this.clearUserCaches(user);
                 <%_ } _%>

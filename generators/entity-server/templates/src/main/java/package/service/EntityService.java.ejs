@@ -59,6 +59,14 @@ public interface <%= entityClass %>Service {
     <%= instanceType %> save(<%= instanceType %> <%= instanceName %>);
 
     /**
+     * Update a <%= entityInstance %>.
+     *
+     * @param <%= instanceName %> the entity to save.
+     * @return the persisted entity.
+     */
+    <%= instanceType %> update(<%= instanceType %> <%= instanceName %>);
+
+    /**
      * Get all the <%= entityInstancePlural %>.
      *<% if (pagination !== 'no') { %>
      * @param pageable the pagination information.<% } %>

@@ -118,7 +118,21 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     <%_ } _%>
     public <%= instanceType %> save(<%= instanceType %> <%= instanceName %>) {
         log.debug("Request to save <%= entityClass %> : {}", <%= instanceName %>);
-<%- include('../../common/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: true, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: false}); -%>
+<%- include('../../common/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: true, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: false, isUpdate: false}); -%>
+    }
+
+    /**
+     * Update a <%= entityInstance %>.
+     *
+     * @param <%= instanceName %> the entity to update.
+     * @return the persisted entity.
+     */
+    <%_ if (service === 'serviceImpl') { _%>
+    @Override
+    <%_ } _%>
+    public <%= instanceType %> update(<%= instanceType %> <%= instanceName %>) {
+        log.debug("Request to update <%= entityClass %> : {}", <%= instanceName %>);
+<%- include('../../common/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: true, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: false, isUpdate: true}); -%>
     }
 
     /**
