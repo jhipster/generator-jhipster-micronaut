@@ -43,12 +43,12 @@ module.exports = {
         },
     },
     versions: {
-        micronaut: '2.3.4',
-        micronautData: '2.2.4',
+        micronaut: '2.4.2',
+        micronautData: '2.3.1',
         micronautOpenApi: '2.3.1',
 
         hibernate: '5.4.24.Final',
-        jackson: '2.11.2',
+        jackson: '2.12.2',
         javassist: '3.27.0-GA', // Should match Hibernate deps
         javaxMail: '1.6.2',
         jbcrypt: '0.4',
@@ -58,7 +58,7 @@ module.exports = {
         logback: '1.2.3',
         mapstruct: '1.3.1.Final',
         swaggerAnnotations: '2.1.6',
-        mockito: '3.1.0',
+        mockito: '3.6.28',
         problem: '0.24.0',
         caffeine: '2.8.8',
         archunit: '0.14.1',

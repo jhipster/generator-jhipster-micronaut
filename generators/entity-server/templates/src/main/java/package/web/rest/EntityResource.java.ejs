@@ -77,6 +77,7 @@ import <%= packageName %>.util.HeaderUtil;
 import <%= packageName %>.util.PaginationUtil;
 <%_ } _%>
 import io.micronaut.context.annotation.Value;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
@@ -112,7 +113,6 @@ import org.springframework.http.HttpStatus; %>
 <%_ if (reactiveRepositories) { _%>
 import reactor.core.publisher.Flux;
 <%_ } _%>
-import javax.annotation.Nullable;
 import java.net.URI;
 import java.net.URISyntaxException;
 <%_ if (pagination === 'no' && dto === 'mapstruct' && !viaService && fieldsContainNoOwnerOneToOne === true) { _%>
