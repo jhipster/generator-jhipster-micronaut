@@ -67,6 +67,7 @@ docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut /bin
 ## Currently supported options
 * Monolith projects
 * Microservice projects
+  * [OAuth does not work with Eureka Service Discovery (yet)](https://github.com/micronaut-projects/micronaut-core/issues/5208)
 * JWT or OAuth 2.0 Authentication
 * SQL Database Support
   * MySQL
@@ -80,6 +81,13 @@ docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut /bin
 * Angular or React Client
 * Protractor Tests
 * Heroku Deployment
+
+## Compatibility 
+
+| micronaut blueprint       | micronaut     | jhipster  |
+| -------------             |-------------  | -----     |
+| 1.0.0 (not yet released)  | 2.4.2         | 6.10.5    |
+| 0.8.0                     | 2.3.0         | 6.10.5    |
 
 ## ❤️ for community
 
