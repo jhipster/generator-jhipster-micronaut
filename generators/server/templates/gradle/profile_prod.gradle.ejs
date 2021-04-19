@@ -59,14 +59,6 @@ task webpack(type: <%= _.upperFirst(clientPackageManager) %>Task, dependsOn: "<%
 <%_ } _%>
 
 <%_ if (!skipClient) { _%>
-task webpackBuildDev(type: NpmTask, dependsOn: 'npmInstall') {
-    inputs.dir("src/main/webapp/")
-    inputs.files(fileTree('src/main/webapp/'))
-    outputs.dir("build/www/")
-    outputs.file("build/www/app/main.bundle.js")
-    args = ["run", "webpack:build"]
-}
-
 task copyIntoStatic (type: Copy) {
     from 'build/www/'
     into 'build/resources/main/static'
@@ -98,10 +90,6 @@ processResources {
 <%_ if (!skipClient) { _%>
 test.dependsOn webpack_test
 processResources.dependsOn webpack
-
-processResources.dependsOn webpackBuildDev
-copyIntoStatic.dependsOn processResources
-assemble.dependsOn copyIntoStatic
 
 npmInstall.onlyIf { shouldWebpackRun() == true }
 

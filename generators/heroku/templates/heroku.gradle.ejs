@@ -22,20 +22,23 @@ heroku {
   appName = "<%= herokuAppName %>"
   buildpacks = ["heroku/jvm"]
 }
-<%_ if (herokuDeployType === 'git') { _%>
-
 // Task stage is used by Heroku, see also
 // https://devcenter.heroku.com/articles/deploying-gradle-apps-on-heroku
 // and GRADLE_TASK configuration variable.
-task stage(dependsOn: "shadowJar") {
+task stage(dependsOn: "assemble") {
 }
 
 gradle.taskGraph.whenReady {taskGraph ->
     taskGraph.afterTask() {task ->
-        if (task.getName().equals("stage") && System.getenv("DYNO") != null) {
-            delete "node_modules"
+        if (task.getName().equals("stage")) {
+            if (System.getenv("DYNO") != null) {
+                delete "node_modules"
+            }
             delete fileTree(dir: "build/libs", exclude: "*.jar")
+            delete fileTree(dir: "build/libs", exclude: "*-all.jar")
+            delete fileTree(dir: "build/tmp")
+            delete fileTree(dir: "build/distributions")
+            delete fileTree(dir: "build/layers")
         }
     }
 }
-<%_ } _%>

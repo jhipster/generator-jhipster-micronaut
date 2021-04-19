@@ -24,7 +24,7 @@ const HerokuGeneratorOverride = class extends HerokuGenerator {
         let buildCmd = 'mvnw -ntp verify -B';
 
         if (buildTool === 'gradle') {
-            buildCmd = 'gradlew shadowJar';
+            buildCmd = 'gradlew stage -PnodeInstall';
         }
 
         if (os.platform() !== 'win32') {
