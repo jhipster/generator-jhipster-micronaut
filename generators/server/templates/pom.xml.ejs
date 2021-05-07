@@ -812,7 +812,10 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                             <image><%= DOCKER_JAVA_JRE %></image>
                         </from>
                         <to>
-                            <image><%= lowercaseBaseName %>:latest</image>
+                            <image><%= lowercaseBaseName %>:${project.version}</image>
+                            <tags>
+                                <tag>latest</tag>
+                            </tags>
                         </to>
                         <container>
                             <entrypoint>
