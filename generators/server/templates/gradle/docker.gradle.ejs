@@ -3,7 +3,7 @@ dockerfile {
     args("-Xmx128m")
 }
 dockerBuild {
-    images = ["<%= baseName %>:$project.version", "<%= baseName %>:latest]
+    images = ["<%= baseName %>:$project.version", "<%= baseName %>:latest"]
 }
 
 task copyIntoLayers (type: Copy) {
