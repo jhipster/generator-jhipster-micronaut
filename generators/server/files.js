@@ -382,11 +382,6 @@ const serverFiles = {
                     useBluePrint: true,
                 },
                 {
-                    file: 'package/config/SnakeCasePhysicalNamingStrategy.java',
-                    renameTo: generator => `${generator.javaDir}config/SnakeCasePhysicalNamingStrategy.java`,
-                    useBluePrint: true,
-                },
-                {
                     file: 'package/config/metric/JHipsterMetricsEndpoint.java',
                     renameTo: generator => `${generator.javaDir}config/metric/JHipsterMetricsEndpoint.java`,
                     useBluePrint: true,
@@ -990,7 +985,21 @@ const serverFiles = {
     ],
     serverBuild: [
         {
-            templates: [{ file: 'checkstyle.xml', options: { interpolate: INTERPOLATE_REGEX } }],
+            templates: [
+                { file: 'checkstyle.xml', options: { interpolate: INTERPOLATE_REGEX } },
+                {
+                    file: 'resources.json',
+                    renameTo: generator =>
+                        `src/main/resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/resources.json`,
+                    useBluePrint: true,
+                },
+                {
+                    file: 'reflection.json',
+                    renameTo: generator =>
+                        `src/main/resources/META-INF/native-image/${generator.packageName}/${generator.dasherizedBaseName}-${generator.mainClass}/reflection.json`,
+                    useBluePrint: true,
+                },
+            ],
         },
         {
             condition: generator => generator.buildTool === 'gradle',

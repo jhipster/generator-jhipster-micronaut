@@ -12,13 +12,29 @@ task copyIntoLayers (type: Copy) {
 }
 
 dockerBuild.dependsOn copyIntoLayers
+dockerBuildNative.dependsOn copyIntoLayers
 
 dockerfileNative {
-    baseImage = "oracle/graalvm-ce:20.3.0-java11"
-    args("-Xmx64m")
+    baseImage = "ghcr.io/graalvm/graalvm-ce:java11-21.0.0.2"
+    args("-Xmx128m")
 }
 nativeImage {
-    args('--static')
+    args('--static',
+        '-H:Name=<%= dasherizedBaseName %>',
+        '-H:Class=<%=packageName%>.<%=mainClass%>',
+        '--no-fallback',
+        '-H:+ReportExceptionStackTraces',
+        '-H:IncludeResourceBundles=liquibase/i18n/liquibase-core',
+        '-H:ReflectionConfigurationFiles=resources/META-INF/native-image/<%=packageName%>/<%=dasherizedBaseName%>-<%=mainClass%>/reflection.json',
+        '-H:ResourceConfigurationFiles=resources/META-INF/native-image/<%=packageName%>/<%=dasherizedBaseName%>-<%=mainClass%>/resources.json',
+        '--report-unsupported-elements-at-runtime',
+        '--enable-all-security-services',
+        '-H:+AllowVMInspection',
+        '-H:+ReportUnsupportedElementsAtRuntime',
+        '-H:+JNI',
+        '-H:-SpawnIsolates'
+
+    )
 }
 dockerBuildNative {
     images = ["<%= baseName %>:$project.version", "<%= baseName %>:latest"]
