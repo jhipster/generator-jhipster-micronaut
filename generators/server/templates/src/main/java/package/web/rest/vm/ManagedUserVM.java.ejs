@@ -1,15 +1,15 @@
 package <%=packageName%>.web.rest.vm;
 
-import <%=packageName%>.service.dto.UserDTO;
+import <%=packageName%>.service.dto.AdminUserDTO;
 import io.micronaut.core.annotation.Introspected;
 
 import javax.validation.constraints.Size;
 
 /**
- * View Model extending the UserDTO, which is meant to be used in the user management UI.
+ * View Model extending the AdminUserDTO, which is meant to be used in the user management UI.
  */
 @Introspected
-public class ManagedUserVM extends UserDTO {
+public class ManagedUserVM extends AdminUserDTO {
 
     public static final int PASSWORD_MIN_LENGTH = 4;
 

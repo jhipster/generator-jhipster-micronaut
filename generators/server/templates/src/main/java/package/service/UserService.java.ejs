@@ -10,6 +10,7 @@ import <%=packageName%>.repository.AuthorityRepository;
 import <%=packageName%>.repository.UserRepository;
 import <%=packageName%>.security.AuthoritiesConstants;
 import <%=packageName%>.security.SecurityUtils;
+import <%=packageName%>.service.dto.AdminUserDTO;
 import <%=packageName%>.service.dto.UserDTO;
 import <%=packageName%>.service.util.RandomUtil;
 import <%=packageName%>.web.rest.errors.*;
@@ -141,7 +142,7 @@ public class UserService {
             });
     }
 
-    public User registerUser(UserDTO userDTO, String password) {
+    public User registerUser(AdminUserDTO userDTO, String password) {
         userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).ifPresent(existingUser -> {
             boolean removed = removeNonActivatedUser(existingUser);
             if (!removed) {
@@ -191,7 +192,7 @@ public class UserService {
         return true;
     }
 
-    public User createUser(UserDTO userDTO) {
+    public User createUser(AdminUserDTO userDTO) {
         User user = new User();
         user.setLogin(userDTO.getLogin().toLowerCase());
         user.setFirstName(userDTO.getFirstName());
@@ -230,7 +231,7 @@ public class UserService {
      * @param userDTO user to update.
      * @return updated user.
      */
-    public Optional<UserDTO> updateUser(UserDTO userDTO) {
+    public Optional<AdminUserDTO> updateUser(AdminUserDTO userDTO) {
         return Optional.of(userRepository
             .findById(userDTO.getId()))
             .filter(Optional::isPresent)
@@ -260,7 +261,7 @@ public class UserService {
                 log.debug("Changed Information for User: {}", user);
                 return user;
             })
-            .map(UserDTO::new);
+            .map(AdminUserDTO::new);
     }
 
     public void deleteUser(String login) {
@@ -318,7 +319,13 @@ public class UserService {
     }
 
     @ReadOnly
-    public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
+    public Page<AdminUserDTO> getAllManagedUsers(Pageable pageable) {
+        Page<User> userPage = userRepository.findAllByLoginNot(Constants.ANONYMOUS_USER, pageable);
+        return Page.of(userPage.getContent().stream().map(AdminUserDTO::new).collect(Collectors.toList()), pageable, userPage.getTotalSize());
+    }
+
+    @ReadOnly
+    public Page<UserDTO> getAllPublicUsers(Pageable pageable) {
         Page<User> userPage = userRepository.findAllByLoginNot(Constants.ANONYMOUS_USER, pageable);
         return Page.of(userPage.getContent().stream().map(UserDTO::new).collect(Collectors.toList()), pageable, userPage.getTotalSize());
     }

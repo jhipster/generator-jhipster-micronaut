@@ -92,6 +92,7 @@ module.exports = class extends ServerGenerator {
                 // Make dist dir available in templates
                 this.BUILD_DIR = this.getBuildDirectoryForBuildTool(this.buildTool);
                 this.CLIENT_DIST_DIR = this.getResourceBuildDirectoryForBuildTool(this.configOptions.buildTool) + constants.CLIENT_DIST_DIR;
+                this.userPkType = this.authenticationType === 'oauth2' ? 'String' : 'Long';
             },
         };
     }

@@ -1,0 +1,63 @@
+package <%=packageName%>.web.rest;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import <%=packageName%>.service.UserService;
+import <%=packageName%>.service.dto.UserDTO;
+import <%=packageName%>.util.PaginationUtil;
+
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
+import io.micronaut.http.HttpRequest;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.uri.UriBuilder;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
+
+
+/**
+ * REST controller for providing public informations about users and roles.
+ */
+@Controller("/api")
+public class PublicUserResource {
+
+    private final Logger log = LoggerFactory.getLogger(PublicUserResource.class);
+
+    private final UserService userService;
+
+    public PublicUserResource(UserService userService) {
+        this.userService = userService;
+    }
+
+    /**
+     * {@code GET /users} : get all users.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link HttpResponse} with status {@code 200 (OK)} and with body all users.
+     */
+    @Get("/users")
+    @ExecuteOn(TaskExecutors.IO)
+    public HttpResponse<List<UserDTO>> getAllUsers(HttpRequest request, Pageable pageable) {
+        log.debug("REST request to get Users: {}", pageable);
+        final Page<UserDTO> page = userService.getAllPublicUsers(pageable);
+        return HttpResponse.ok(page.getContent()).headers(headers ->
+            PaginationUtil.generatePaginationHttpHeaders(headers, UriBuilder.of(request.getPath()), page)
+        );
+    }
+
+    /**
+     * Gets a list of all roles.
+     * @return a string list of all roles.
+     */
+    @Get("/authorities")
+    @ExecuteOn(TaskExecutors.IO)
+    public List<String> getAuthorities() {
+        return userService.getAuthorities();
+    }
+
+}

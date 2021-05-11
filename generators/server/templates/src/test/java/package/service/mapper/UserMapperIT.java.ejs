@@ -4,6 +4,7 @@ import <%= packageName %>.RedisTestContainerExtension;
 <%_ } _%>
 import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.domain.User;
+import <%=packageName%>.service.dto.AdminUserDTO;
 import <%=packageName%>.service.dto.UserDTO;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -41,7 +42,7 @@ public class UserMapperIT {
     @Inject UserMapper userMapper;
 
     private User user;
-    private UserDTO userDto;
+    private AdminUserDTO userDto;
 
     @BeforeEach
     public void init() {
@@ -57,7 +58,7 @@ public class UserMapperIT {
         user.setImageUrl("image_url");
         user.setLangKey("en");
 
-        userDto = new UserDTO(user);
+        userDto = new AdminUserDTO(user);
     }
 
     @Test
@@ -74,7 +75,7 @@ public class UserMapperIT {
 
     @Test
     public void userDTOsToUsersShouldMapOnlyNonNullUsers() {
-        List<UserDTO> usersDto = new ArrayList<>();
+        List<AdminUserDTO> usersDto = new ArrayList<>();
         usersDto.add(userDto);
         usersDto.add(null);
 
@@ -90,7 +91,7 @@ public class UserMapperIT {
         authoritiesAsString.add("ADMIN");
         userDto.setAuthorities(authoritiesAsString);
 
-        List<UserDTO> usersDto = new ArrayList<>();
+        List<AdminUserDTO> usersDto = new ArrayList<>();
         usersDto.add(userDto);
 
         List<User> users = userMapper.userDTOsToUsers(usersDto);
@@ -106,7 +107,7 @@ public class UserMapperIT {
     public void userDTOsToUsersMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities() {
         userDto.setAuthorities(null);
 
-        List<UserDTO> usersDto = new ArrayList<>();
+        List<AdminUserDTO> usersDto = new ArrayList<>();
         usersDto.add(userDto);
 
         List<User> users = userMapper.userDTOsToUsers(usersDto);

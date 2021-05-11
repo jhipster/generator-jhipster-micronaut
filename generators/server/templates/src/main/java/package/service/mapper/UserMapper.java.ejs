@@ -2,6 +2,7 @@ package <%=packageName%>.service.mapper;
 
 import <%=packageName%>.domain.Authority;
 import <%=packageName%>.domain.User;
+import <%=packageName%>.service.dto.AdminUserDTO;
 import <%=packageName%>.service.dto.UserDTO;
 
 import javax.inject.Singleton;
@@ -28,14 +29,25 @@ public class UserMapper {
         return new UserDTO(user);
     }
 
-    public List<User> userDTOsToUsers(List<UserDTO> userDTOs) {
+    public List<AdminUserDTO> usersToAdminUserDTOs(List<User> users) {
+        return users.stream()
+            .filter(Objects::nonNull)
+            .map(this::userToAdminUserDTO)
+            .collect(Collectors.toList());
+    }
+
+    public AdminUserDTO userToAdminUserDTO(User user) {
+        return new AdminUserDTO(user);
+    }
+
+    public List<User> userDTOsToUsers(List<AdminUserDTO> userDTOs) {
         return userDTOs.stream()
             .filter(Objects::nonNull)
             .map(this::userDTOToUser)
             .collect(Collectors.toList());
     }
 
-    public User userDTOToUser(UserDTO userDTO) {
+    public User userDTOToUser(AdminUserDTO userDTO) {
         if (userDTO == null) {
             return null;
         } else {
