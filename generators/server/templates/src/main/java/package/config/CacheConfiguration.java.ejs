@@ -16,7 +16,7 @@ import org.ehcache.jsr107.EhcacheCachingProvider;
     <%_ if (enableHibernateCache) { _%>
 import org.hibernate.cache.jcache.ConfigSettings;
     <%_ } _%>
-<%_ } _%>  
+<%_ } _%>
 <%_ if (cacheProvider === 'caffeine') { _%>
 import com.github.benmanes.caffeine.jcache.spi.CaffeineCachingProvider;
 import com.github.benmanes.caffeine.jcache.configuration.CaffeineConfiguration;
@@ -63,7 +63,7 @@ public class CacheConfiguration {
                 .build());
         <%_ } else if (cacheProvider === 'caffeine') { _%>
         JHipsterProperties.Cache.Caffeine caffeine = jHipsterProperties.getCache().getCaffeine();
-            
+
         CaffeineConfiguration<Object, Object> caffeineConfiguration = new CaffeineConfiguration<>();
         caffeineConfiguration.setMaximumSize(OptionalLong.of(caffeine.getMaxEntries()));
         caffeineConfiguration.setExpireAfterWrite(OptionalLong.of(TimeUnit.SECONDS.toNanos(caffeine.getTimeToLiveSeconds())));
@@ -73,7 +73,7 @@ public class CacheConfiguration {
         MutableConfiguration<Object, Object> jcacheConfig = new MutableConfiguration<>();
 
         URI redisUri = URI.create(jHipsterProperties.getCache().getRedis().getServer()[0]);
-    
+
         Config config = new Config();
         if (jHipsterProperties.getCache().getRedis().isCluster()) {
             ClusterServersConfig clusterServersConfig = config
@@ -82,7 +82,7 @@ public class CacheConfiguration {
                 .setMasterConnectionMinimumIdleSize(jHipsterProperties.getCache().getRedis().getConnectionMinimumIdleSize())
                 .setSubscriptionConnectionPoolSize(jHipsterProperties.getCache().getRedis().getSubscriptionConnectionPoolSize())
                 .addNodeAddress(jHipsterProperties.getCache().getRedis().getServer());
-    
+
             if (redisUri.getUserInfo() != null) {
                 clusterServersConfig.setPassword(redisUri.getUserInfo().substring(redisUri.getUserInfo().indexOf(':') + 1));
             }
@@ -93,7 +93,7 @@ public class CacheConfiguration {
                 .setConnectionMinimumIdleSize(jHipsterProperties.getCache().getRedis().getConnectionMinimumIdleSize())
                 .setSubscriptionConnectionPoolSize(jHipsterProperties.getCache().getRedis().getSubscriptionConnectionPoolSize())
                 .setAddress(jHipsterProperties.getCache().getRedis().getServer()[0]);
-    
+
             if (redisUri.getUserInfo() != null) {
                 singleServerConfig.setPassword(redisUri.getUserInfo().substring(redisUri.getUserInfo().indexOf(':') + 1));
             }
@@ -123,6 +123,7 @@ public class CacheConfiguration {
         <%_ if (!skipUserManagement || (authenticationType === 'oauth2' && databaseType !== 'no')) { _%>
         createCache(cm, <%=packageName%>.repository.UserRepository.USERS_BY_LOGIN_CACHE);
         createCache(cm, <%=packageName%>.repository.UserRepository.USERS_BY_EMAIL_CACHE);
+        createCache(cm, <%=packageName%>.repository.UserRepository.USERS_BY_EMAIL_OR_LOGIN_CACHE);
           <%_ if (enableHibernateCache) { _%>
         createCache(cm, <%=packageName%>.domain.User.class.getName());
         createCache(cm, <%=packageName%>.domain.Authority.class.getName());
