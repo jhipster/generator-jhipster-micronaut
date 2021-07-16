@@ -26,8 +26,8 @@ public interface UserRepository extends JpaRepository<User, <% if (authenticatio
 
 <%_ if (usesCache) { _%>
     public static String USERS_BY_LOGIN_CACHE = "usersByLogin";
-
     public static String USERS_BY_EMAIL_CACHE = "usersByEmail";
+    public static String USERS_BY_EMAIL_OR_LOGIN_CACHE = "usersByEmailOrLogin";
 <%_ } _%>
     <% if (authenticationType !== 'oauth2') { %>
 
@@ -54,6 +54,12 @@ public interface UserRepository extends JpaRepository<User, <% if (authenticatio
     @Cacheable(cacheNames = "usersByEmail")
 <%_ } _%>
     public Optional<User> findOneByEmail(String email);
+
+    @EntityGraph(attributePaths = "authorities")
+<%_ if (usesCache) { _%>
+    @Cacheable(cacheNames = "usersByEmailOrLogin")
+<%_ } _%>
+    public Optional<User> findOneByEmailEqualsOrLoginEquals(String email, String login);
 
     public Page<User> findAllByLoginNot(String login, Pageable pageable);
 
