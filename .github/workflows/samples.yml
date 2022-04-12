@@ -20,68 +20,68 @@
 name: Verify Sample Projects
 on: [push, pull_request]
 env:
-    JHI_E2E_HEADLESS: true
+  JHI_E2E_HEADLESS: true
 jobs:
-    samples:
-        name: ${{ matrix.app-type }}
-        runs-on: ${{ matrix.os }}
-        if: >-
-            !contains(github.event.head_commit.message, '[ci skip]') &&
-            !contains(github.event.head_commit.message, '[skip ci]') &&
-            !contains(github.event.pull_request.title, '[skip ci]') &&
-            !contains(github.event.pull_request.title, '[ci skip]') &&
-            (github.event.pull_request.draft == false || !contains(github.event.pull_request.labels.*.name, 'pr: skip-ci'))
-        timeout-minutes: 30
-        strategy:
-            fail-fast: false
-            matrix:
-                node_version: [14.16.0]
-                os: [ubuntu-latest]
-                app-type:
-                    - gradle-jwt-react
-                    - mvn-jwt-angular
-                    - mvn-jwt-redis-angular
-                    - mvn-no-client
-                    - mvn-oauth-angular
-                    - gradle-oauth-angular
-                    - mvn-ms-consul-jwt
-                    - gradle-ms-eureka-oauth
-                    - jdl-default-app
-                include:
-                    - app-type: gradle-jwt-react
-                    - app-type: mvn-jwt-angular
-                    - app-type: mvn-jwt-redis-angular
-                    - app-type: mvn-no-client
-                    - app-type: mvn-oauth-angular
-                    - app-type: gradle-oauth-angular
-                    - app-type: mvn-ms-consul-jwt
-                    - app-type: gradle-ms-eureka-oauth
-                    - app-type: jdl-default-app
-        steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-node@v1
-              with:
-                  node-version: ${{ matrix.node_version }}
-            - uses: actions/setup-java@v1
-              with:
-                  java-version: '11.x'
-            - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
-              shell: bash
-            - name: 'Setup'
-              run: ./test-integration/scripts/00-setup.sh
-            - name: 'Generate Project'
-              run: ./test-integration/scripts/01-generate-project.sh ${{ matrix.app-type }}
-            - name: 'Apply Fixes'
-              run: ./test-integration/scripts/02-apply-fixes.sh ${{ matrix.app-type }}
-            - name: 'Start Dependency Containers'
-              run: ./test-integration/scripts/03-dep-containers.sh ${{ matrix.app-type }}
-            - name: 'Run Server Tests'
-              run: ./test-integration/scripts/04-server-tests.sh ${{ matrix.app-type }}
-            - name: 'Run Client Tests'
-              run: ./test-integration/scripts/05-client-tests.sh ${{ matrix.app-type }}
-            - name: 'Build App'
-              run: ./test-integration/scripts/06-build-app.sh ${{ matrix.app-type }}
-            - name: 'Start App'
-              run: ./test-integration/scripts/07-start-app.sh ${{ matrix.app-type }}
-            - name: 'E2E Tests'
-              run: ./test-integration/scripts/08-e2e-tests.sh ${{ matrix.app-type }}
+  samples:
+    name: ${{ matrix.app-type }}
+    runs-on: ${{ matrix.os }}
+    if: >-
+      !contains(github.event.head_commit.message, '[ci skip]') &&
+      !contains(github.event.head_commit.message, '[skip ci]') &&
+      !contains(github.event.pull_request.title, '[skip ci]') &&
+      !contains(github.event.pull_request.title, '[ci skip]') &&
+      (github.event.pull_request.draft == false || !contains(github.event.pull_request.labels.*.name, 'pr: skip-ci'))
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        node_version: [14.16.0]
+        os: [ubuntu-latest]
+        app-type:
+          - gradle-jwt-react
+          - mvn-jwt-angular
+          - mvn-jwt-redis-angular
+          - mvn-no-client
+          - mvn-oauth-angular
+          - gradle-oauth-angular
+          - mvn-ms-consul-jwt
+          - gradle-ms-eureka-oauth
+          - jdl-default-app
+        include:
+          - app-type: gradle-jwt-react
+          - app-type: mvn-jwt-angular
+          - app-type: mvn-jwt-redis-angular
+          - app-type: mvn-no-client
+          - app-type: mvn-oauth-angular
+          - app-type: gradle-oauth-angular
+          - app-type: mvn-ms-consul-jwt
+          - app-type: gradle-ms-eureka-oauth
+          - app-type: jdl-default-app
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11.x'
+      - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
+        shell: bash
+      - name: 'Setup'
+        run: ./test-integration/scripts/00-setup.sh
+      - name: 'Generate Project'
+        run: ./test-integration/scripts/01-generate-project.sh ${{ matrix.app-type }}
+      - name: 'Apply Fixes'
+        run: ./test-integration/scripts/02-apply-fixes.sh ${{ matrix.app-type }}
+      - name: 'Start Dependency Containers'
+        run: ./test-integration/scripts/03-dep-containers.sh ${{ matrix.app-type }}
+      - name: 'Run Server Tests'
+        run: ./test-integration/scripts/04-server-tests.sh ${{ matrix.app-type }}
+      - name: 'Run Client Tests'
+        run: ./test-integration/scripts/05-client-tests.sh ${{ matrix.app-type }}
+      - name: 'Build App'
+        run: ./test-integration/scripts/06-build-app.sh ${{ matrix.app-type }}
+      - name: 'Start App'
+        run: ./test-integration/scripts/07-start-app.sh ${{ matrix.app-type }}
+      - name: 'E2E Tests'
+        run: ./test-integration/scripts/08-e2e-tests.sh ${{ matrix.app-type }}
