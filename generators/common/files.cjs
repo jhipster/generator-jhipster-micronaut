@@ -1,25 +1,25 @@
 const commonFiles = {
-    global: [
+  global: [
+    {
+      templates: [
+        'README.md',
         {
-            templates: [
-                'README.md',
-                {
-                    file: 'gitignore',
-                    renameTo: () => '.gitignore',
-                },
-            ],
+          file: 'gitignore',
+          renameTo: () => '.gitignore',
         },
-    ],
+      ],
+    },
+  ],
 };
 
 function writeFiles() {
-    return {
-        overrideFiles() {
-            this.writeFilesToDisk(commonFiles, this, false);
-        },
-    };
+  return {
+    overrideFiles() {
+      this.writeFilesToDisk(commonFiles, this, false);
+    },
+  };
 }
 
 module.exports = {
-    writeFiles,
+  writeFiles,
 };

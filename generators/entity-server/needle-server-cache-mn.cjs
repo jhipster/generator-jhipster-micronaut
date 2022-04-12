@@ -23,15 +23,15 @@ const constants = require('generator-jhipster/generators/generator-constants');
 const SERVER_MAIN_SRC_DIR = constants.SERVER_MAIN_SRC_DIR;
 
 module.exports = class extends needleServerCache {
-    addEntryToCache(entry, packageFolder, cacheProvider) {
-        const errorMessage = chalk.yellow(`\nUnable to add ${entry} to CacheConfiguration.java file.`);
-        const cachePath = `${SERVER_MAIN_SRC_DIR}${packageFolder}/config/CacheConfiguration.java`;
+  addEntryToCache(entry, packageFolder, cacheProvider) {
+    const errorMessage = chalk.yellow(`\nUnable to add ${entry} to CacheConfiguration.java file.`);
+    const cachePath = `${SERVER_MAIN_SRC_DIR}${packageFolder}/config/CacheConfiguration.java`;
 
-        if (cacheProvider === 'ehcache' || cacheProvider === 'caffeine' || cacheProvider === 'redis') {
-            const needle = `jhipster-needle-${cacheProvider}-add-entry`;
-            const content = `createCache(cm, ${entry});`;
+    if (cacheProvider === 'ehcache' || cacheProvider === 'caffeine' || cacheProvider === 'redis') {
+      const needle = `jhipster-needle-${cacheProvider}-add-entry`;
+      const content = `createCache(cm, ${entry});`;
 
-            this._doAddBlockContentToFile(cachePath, needle, content, errorMessage);
-        }
+      this._doAddBlockContentToFile(cachePath, needle, content, errorMessage);
     }
+  }
 };

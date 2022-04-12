@@ -19,71 +19,71 @@
 const chalk = require('chalk');
 
 module.exports = {
-    askForApplicationType,
-    askForTestOpts,
+  askForApplicationType,
+  askForTestOpts,
 };
 
 function askForApplicationType(meta) {
-    if (!meta && this.existingProject) return;
+  if (!meta && this.existingProject) return;
 
-    const DEFAULT_APPTYPE = 'monolith';
+  const DEFAULT_APPTYPE = 'monolith';
 
-    const applicationTypeChoices = [
-        {
-            value: DEFAULT_APPTYPE,
-            name: 'Monolithic application (recommended for simple projects)',
-        },
-        {
-            value: 'microservice',
-            name: 'Microservice application',
-        },
-    ];
+  const applicationTypeChoices = [
+    {
+      value: DEFAULT_APPTYPE,
+      name: 'Monolithic application (recommended for simple projects)',
+    },
+    {
+      value: 'microservice',
+      name: 'Microservice application',
+    },
+  ];
 
-    const PROMPT = {
-        type: 'list',
-        name: 'applicationType',
-        message: `Which ${chalk.yellow('*type*')} of application would you like to create?`,
-        choices: applicationTypeChoices,
-        default: DEFAULT_APPTYPE,
-    };
+  const PROMPT = {
+    type: 'list',
+    name: 'applicationType',
+    message: `Which ${chalk.yellow('*type*')} of application would you like to create?`,
+    choices: applicationTypeChoices,
+    default: DEFAULT_APPTYPE,
+  };
 
-    if (meta) return PROMPT; // eslint-disable-line consistent-return
+  if (meta) return PROMPT; // eslint-disable-line consistent-return
 
-    const done = this.async();
+  const done = this.async();
 
-    this.prompt(PROMPT).then(prompt => {
-        this.applicationType = this.configOptions.applicationType = prompt.applicationType;
-        done();
-    });
+  this.prompt(PROMPT).then(prompt => {
+    this.applicationType = this.configOptions.applicationType = prompt.applicationType;
+    done();
+  });
 }
 
 function askForTestOpts(meta) {
-    if (!meta && this.existingProject) return;
+  if (!meta && this.existingProject) return;
 
-    const choices = [];
-    const defaultChoice = [];
+  const choices = [];
+  const defaultChoice = [];
 
-    if (meta || !this.skipClient) {
-        // all client side test frameworks should be added here
-        choices.push({ name: 'Protractor', value: 'protractor' });
-    } else {
-        return;
-    }
+  if (meta || !this.skipClient) {
+    // all client side test frameworks should be added here
+    choices.push({ name: 'Protractor', value: 'protractor' });
+  } else {
+    return;
+  }
 
-    const PROMPT = {
-        type: 'checkbox',
-        name: 'testFrameworks',
-        message: 'Besides JUnit and Jest, which testing frameworks would you like to use?',
-        choices,
-        default: defaultChoice,
-    };
+  const PROMPT = {
+    type: 'checkbox',
+    name: 'testFrameworks',
+    message: 'Besides JUnit and Jest, which testing frameworks would you like to use?',
+    choices,
+    default: defaultChoice,
+  };
 
-    if (meta) return PROMPT; // eslint-disable-line consistent-return
+  if (meta) return PROMPT; // eslint-disable-line consistent-return
 
-    const done = this.async();
+  const done = this.async();
 
-    this.prompt(PROMPT).then(prompt => {
-        this.testFrameworks = prompt.testFrameworks;
-        done();
-    });
+  this.prompt(PROMPT).then(prompt => {
+    this.testFrameworks = prompt.testFrameworks;
+    done();
+  });
 }
