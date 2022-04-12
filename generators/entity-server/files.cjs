@@ -409,7 +409,7 @@ function writeFiles() {
           const fieldType = field.fieldType;
           const enumInfo = {
             ...utils.getEnumInfo(field, this.clientRootFolder),
-            angularAppName: this.angularAppName,
+            frontendAppName: this.frontendAppName,
             packageName: this.packageName,
           };
           if (!this.skipServer) {

@@ -1,84 +1,110 @@
-/* eslint-disable consistent-return */
-const chalk = require('chalk');
-const EntityGenerator = require('generator-jhipster/generators/entity');
+import chalk from 'chalk';
+import EntityGenerator from 'generator-jhipster/esm/generators/entity';
+import {
+  PRIORITY_PREFIX,
+  INITIALIZING_PRIORITY,
+  PROMPTING_PRIORITY,
+  CONFIGURING_PRIORITY,
+  COMPOSING_PRIORITY,
+  LOADING_PRIORITY,
+  PREPARING_PRIORITY,
+  PREPARING_FIELDS_PRIORITY,
+  PREPARING_RELATIONSHIPS_PRIORITY,
+  DEFAULT_PRIORITY,
+  WRITING_PRIORITY,
+  POST_WRITING_PRIORITY,
+  INSTALL_PRIORITY,
+  END_PRIORITY,
+} from 'generator-jhipster/esm/priorities';
 
-module.exports = class extends EntityGenerator {
-    constructor(args, opts) {
-        super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
+export default class extends EntityGenerator {
+  constructor(args, opts, features) {
+    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
 
-        const jhContext = (this.jhipsterContext = this.options.jhipsterContext);
+    if (this.options.help) return;
 
-        if (!jhContext) {
-            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint micronaut')}`);
-        }
-
-        this.configOptions = jhContext.configOptions || {};
-        // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupEntityOptions(this, jhContext, this);
+    if (!this.options.jhipsterContext) {
+      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
     }
+  }
 
-    get initializing() {
-        /**
-         * Any method beginning with _ can be reused from the superclass `EntityGenerator`
-         *
-         * There are multiple ways to customize a phase from JHipster.
-         *
-         * 1. Let JHipster handle a phase, blueprint doesnt override anything.
-         * ```
-         *      return super._initializing();
-         * ```
-         *
-         * 2. Override the entire phase, this is when the blueprint takes control of a phase
-         * ```
-         *      return {
-         *          myCustomInitPhaseStep() {
-         *              // Do all your stuff here
-         *          },
-         *          myAnotherCustomInitPhaseStep(){
-         *              // Do all your stuff here
-         *          }
-         *      };
-         * ```
-         *
-         * 3. Partially override a phase, this is when the blueprint gets the phase from JHipster and customizes it.
-         * ```
-         *      const phaseFromJHipster = super._initializing();
-         *      const myCustomPhaseSteps = {
-         *          displayLogo() {
-         *              // override the displayLogo method from the _initializing phase of JHipster
-         *          },
-         *          myCustomInitPhaseStep() {
-         *              // Do all your stuff here
-         *          },
-         *      }
-         *      return Object.assign(phaseFromJHipster, myCustomPhaseSteps);
-         * ```
-         */
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._initializing();
-    }
+  get [INITIALIZING_PRIORITY]() {
+    return {
+      async initializingTemplateTask() {},
+      ...super._initializing(),
+    };
+  }
 
-    get prompting() {
-        const defaultPhaseFromJHipster = super._prompting();
+  get [PROMPTING_PRIORITY]() {
+    return {
+      ...super._prompting(),
+      askForFiltering: undefined,
+    };
+  }
 
-        return {
-            ...defaultPhaseFromJHipster,
-            askForFiltering: () => {},
-        };
-    }
+  get [CONFIGURING_PRIORITY]() {
+    return {
+      ...super._configuring(),
+    };
+  }
 
-    get configuring() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._configuring();
-    }
+  get [COMPOSING_PRIORITY]() {
+    return {
+      ...super._composing(),
+    };
+  }
 
-    get writing() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._writing();
-    }
+  get [LOADING_PRIORITY]() {
+    return {
+      ...super._loading(),
+    };
+  }
 
-    get install() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._install();
-    }
-};
+  get [PREPARING_PRIORITY]() {
+    return {
+      ...super._preparing(),
+    };
+  }
+
+  get [PREPARING_FIELDS_PRIORITY]() {
+    return {
+      ...super._preparingFields(),
+    };
+  }
+
+  get [PREPARING_RELATIONSHIPS_PRIORITY]() {
+    return {
+      ...super._preparingRelationships(),
+    };
+  }
+
+  get [DEFAULT_PRIORITY]() {
+    return {
+      ...super._default(),
+    };
+  }
+
+  get [WRITING_PRIORITY]() {
+    return {
+      ...super._writing(),
+    };
+  }
+
+  get [POST_WRITING_PRIORITY]() {
+    return {
+      ...super._postWriting(),
+    };
+  }
+
+  get [INSTALL_PRIORITY]() {
+    return {
+      ...super._install(),
+    };
+  }
+
+  get [END_PRIORITY]() {
+    return {
+      ...super._end(),
+    };
+  }
+}

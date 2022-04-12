@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 const mkdirp = require('mkdirp');
-const cleanup = require('generator-jhipster/generators/cleanup');
 const constants = require('generator-jhipster/generators/generator-constants');
 const baseServerFiles = require('generator-jhipster/generators/server/files').serverFiles;
 
@@ -1039,16 +1038,6 @@ function writeFiles() {
       mkdirp(SERVER_MAIN_RES_DIR);
       mkdirp(`${SERVER_TEST_SRC_DIR}/${this.testDir}`);
       this.generateKeyStore();
-    },
-
-    cleanupOldServerFiles() {
-      cleanup.cleanupOldServerFiles(
-        this,
-        `${SERVER_MAIN_SRC_DIR}/${this.javaDir}`,
-        `${SERVER_TEST_SRC_DIR}/${this.testDir}`,
-        SERVER_MAIN_RES_DIR,
-        SERVER_TEST_RES_DIR
-      );
     },
 
     writeFiles() {

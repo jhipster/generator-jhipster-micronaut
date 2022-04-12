@@ -19,25 +19,21 @@
 
 const chalk = require('chalk');
 
-const { getBase64Secret, getRandomHex } = require('generator-jhipster/generators/utils');
-const { logger } = require('generator-jhipster/cli/utils');
-
 module.exports = {
   askForModuleName,
   askForServerSideOpts,
-  askFori18n,
 };
 
-function askForModuleName() {
-  if (this.baseName) return;
+async function askForModuleName() {
+  if (this.jhipsterConfig.baseName) return undefined;
 
-  this.askModuleName(this);
+  return this.askModuleName(this);
 }
 
-function askForServerSideOpts(meta) {
-  if (!meta && this.existingProject) return;
+async function askForServerSideOpts() {
+  if (this.existingProject) return;
 
-  const applicationType = this.applicationType;
+  const { applicationType, reactive } = this.jhipsterConfig;
 
   const dbOptions = [
     {
@@ -54,25 +50,15 @@ function askForServerSideOpts(meta) {
     },
   ];
 
-  if (applicationType !== 'monolith' && applicationType !== 'microservice') {
-    logger.error('Application should be only monolith or microservice for this blueprint');
-    return;
-  }
-
-  const reactive = this.reactive;
-  let defaultPort = applicationType === 'gateway' ? '8080' : '8081';
-  if (applicationType === 'uaa') {
-    defaultPort = '9999';
-  }
   const prompts = [
     {
-      when: () => applicationType === 'gateway' || applicationType === 'microservice' || applicationType === 'uaa',
+      when: () => applicationType === 'gateway' || applicationType === 'microservice',
       type: 'input',
       name: 'serverPort',
       validate: input => (/^([0-9]*)$/.test(input) ? true : 'This is not a valid port number.'),
       message:
         'As you are running in a microservice architecture, on which port would like your server to run? It should be unique to avoid port conflicts.',
-      default: defaultPort,
+      default: applicationType === 'gateway' ? '8080' : '8081',
     },
     {
       type: 'input',
@@ -124,13 +110,13 @@ function askForServerSideOpts(meta) {
     //     default: false
     // },
     {
-      when: response =>
-        (applicationType === 'monolith' && response.serviceDiscoveryType !== 'eureka') ||
+      when: answers =>
+        (applicationType === 'monolith' && answers.serviceDiscoveryType !== 'eureka') ||
         ['gateway', 'microservice'].includes(applicationType),
       type: 'list',
       name: 'authenticationType',
       message: `Which ${chalk.yellow('*type*')} of authentication would you like to use?`,
-      choices: response => {
+      choices: () => {
         const opts = [
           {
             value: 'jwt',
@@ -155,25 +141,10 @@ function askForServerSideOpts(meta) {
       default: 0,
     },
     {
-      when: response => (applicationType === 'gateway' || applicationType === 'microservice') && response.authenticationType === 'uaa',
-      type: 'input',
-      name: 'uaaBaseName',
-      message: 'What is the folder path of your UAA application?',
-      default: '../uaa',
-      validate: input => {
-        const uaaAppData = this.getUaaAppName(input);
-
-        if (uaaAppData && uaaAppData.baseName && uaaAppData.applicationType === 'uaa') {
-          return true;
-        }
-        return `Could not find a valid JHipster UAA server in path "${input}"`;
-      },
-    },
-    {
       type: 'list',
       name: 'databaseType',
       message: `Which ${chalk.yellow('*type*')} of database would you like to use?`,
-      choices: response => {
+      choices: () => {
         const opts = [];
         if (!reactive) {
           opts.push({
@@ -207,7 +178,7 @@ function askForServerSideOpts(meta) {
       default: 0,
     },
     {
-      when: response => response.databaseType === 'sql',
+      when: answers => answers.databaseType === 'sql',
       type: 'list',
       name: 'prodDatabaseType',
       message: `Which ${chalk.yellow('*production*')} database would you like to use?`,
@@ -215,11 +186,11 @@ function askForServerSideOpts(meta) {
       default: 0,
     },
     {
-      when: response => response.databaseType === 'sql',
+      when: answers => answers.databaseType === 'sql',
       type: 'list',
       name: 'devDatabaseType',
       message: `Which ${chalk.yellow('*development*')} database would you like to use?`,
-      choices: response =>
+      choices: answers =>
         [
           {
             value: 'h2Disk',
@@ -229,7 +200,7 @@ function askForServerSideOpts(meta) {
             value: 'h2Memory',
             name: 'H2 with in-memory persistence',
           },
-        ].concat(dbOptions.find(it => it.value === response.prodDatabaseType)),
+        ].concat(dbOptions.find(it => it.value === answers.prodDatabaseType)),
       default: 0,
     },
     {
@@ -255,12 +226,12 @@ function askForServerSideOpts(meta) {
           name: 'No - Warning, when using an SQL database, this will disable the Hibernate 2nd level cache!',
         },
       ],
-      default: applicationType === 'microservice' || applicationType === 'uaa' ? 2 : 0,
+      default: applicationType === 'microservice' ? 2 : 0,
     },
     {
-      when: response =>
-        ((response.cacheProvider !== 'no' && response.cacheProvider !== 'memcached') || applicationType === 'gateway') &&
-        response.databaseType === 'sql',
+      when: answers =>
+        ((answers.cacheProvider !== 'no' && answers.cacheProvider !== 'memcached') || applicationType === 'gateway') &&
+        answers.databaseType === 'sql',
       type: 'confirm',
       name: 'enableHibernateCache',
       message: 'Do you want to use Hibernate 2nd level cache?',
@@ -284,77 +255,5 @@ function askForServerSideOpts(meta) {
     },
   ];
 
-  if (meta) return prompts; // eslint-disable-line consistent-return
-
-  const done = this.async();
-
-  this.prompt(prompts).then(props => {
-    this.serviceDiscoveryType = props.serviceDiscoveryType;
-    this.authenticationType = props.authenticationType;
-
-    // JWT authentication is mandatory with Eureka, so the JHipster Registry
-    // can control the applications
-    if (this.serviceDiscoveryType === 'eureka' && this.authenticationType !== 'uaa' && this.authenticationType !== 'oauth2') {
-      this.authenticationType = 'jwt';
-    }
-
-    if (this.authenticationType === 'session') {
-      this.rememberMeKey = getRandomHex();
-    }
-
-    if (this.authenticationType === 'jwt' || this.applicationType === 'microservice' || this.authenticationType === 'oauth2') {
-      this.jwtSecretKey = getBase64Secret(null, 64);
-    }
-
-    // user-management will be handled by UAA app, oauth expects users to be managed in IpP
-    if ((this.applicationType === 'gateway' && this.authenticationType === 'uaa') || this.authenticationType === 'oauth2') {
-      this.skipUserManagement = true;
-    }
-
-    if (this.applicationType === 'uaa') {
-      this.authenticationType = 'uaa';
-    }
-
-    this.packageName = props.packageName;
-    this.serverPort = props.serverPort;
-    if (this.serverPort === undefined) {
-      this.serverPort = '8080';
-    }
-    this.cacheProvider = !reactive ? props.cacheProvider : 'no';
-    this.enableHibernateCache = props.cacheProvider === 'no' ? false : props.enableHibernateCache;
-    this.databaseType = props.databaseType;
-    this.devDatabaseType = props.devDatabaseType;
-    this.prodDatabaseType = props.prodDatabaseType;
-    this.searchEngine = props.searchEngine;
-    this.buildTool = props.buildTool;
-    this.uaaBaseName = this.getUaaAppName(props.uaaBaseName).baseName;
-
-    if (this.databaseType === 'no') {
-      this.devDatabaseType = 'no';
-      this.prodDatabaseType = 'no';
-      this.enableHibernateCache = false;
-      if (this.authenticationType !== 'uaa') {
-        this.skipUserManagement = true;
-      }
-    } else if (this.databaseType === 'mongodb') {
-      this.devDatabaseType = 'mongodb';
-      this.prodDatabaseType = 'mongodb';
-      this.enableHibernateCache = false;
-    } else if (this.databaseType === 'couchbase') {
-      this.devDatabaseType = 'couchbase';
-      this.prodDatabaseType = 'couchbase';
-      this.enableHibernateCache = false;
-    } else if (this.databaseType === 'cassandra') {
-      this.devDatabaseType = 'cassandra';
-      this.prodDatabaseType = 'cassandra';
-      this.enableHibernateCache = false;
-    }
-    done();
-  });
-}
-
-function askFori18n() {
-  if (this.existingProject || this.configOptions.skipI18nQuestion) return;
-
-  this.aski18n(this);
+  await this.prompt(prompts, this.config);
 }

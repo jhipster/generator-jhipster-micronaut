@@ -1,151 +1,127 @@
-/**
- * Copyright 2019-2021 the original author or authors from the JHipster project.
- *
- * This file is part of the JHipster project, see https://www.jhipster.tech/
- * for more information.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/* eslint-disable consistent-return */
-const chalk = require('chalk');
-const os = require('os');
-const ServerGenerator = require('generator-jhipster/generators/server');
-const constants = require('generator-jhipster/generators/generator-constants');
-const { getBase64Secret } = require('generator-jhipster/generators/utils');
-const writeFiles = require('./files').writeFiles;
-const prompts = require('./prompts');
-const MN_CONSTANTS = require('../constants');
+import chalk from 'chalk';
+import os from 'os';
+import ServerGenerator from 'generator-jhipster/esm/generators/server';
+import {
+  PRIORITY_PREFIX,
+  INITIALIZING_PRIORITY,
+  PROMPTING_PRIORITY,
+  CONFIGURING_PRIORITY,
+  COMPOSING_PRIORITY,
+  LOADING_PRIORITY,
+  PREPARING_PRIORITY,
+  DEFAULT_PRIORITY,
+  WRITING_PRIORITY,
+  POST_WRITING_PRIORITY,
+  INSTALL_PRIORITY,
+  END_PRIORITY,
+} from 'generator-jhipster/esm/priorities';
+import { writeFiles } from './files.cjs';
+import { askForModuleName, askForServerSideOpts } from './prompts.cjs';
+import mnConstants from '../constants.cjs';
 
-module.exports = class extends ServerGenerator {
-    constructor(args, opts) {
-        super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
+export default class extends ServerGenerator {
+  constructor(args, opts, features) {
+    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
 
-        const jhContext = (this.jhipsterContext = this.options.jhipsterContext);
+    if (this.options.help) return;
 
-        if (!jhContext) {
-            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint micronaut')}`);
+    if (!this.options.jhipsterContext) {
+      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
+    }
+  }
+
+  get [INITIALIZING_PRIORITY]() {
+    return {
+      ...super._initializing(),
+    };
+  }
+
+  get [PROMPTING_PRIORITY]() {
+    return {
+      ...super._prompting(),
+      askForModuleName,
+      askForServerSideOpts,
+    };
+  }
+
+  get [CONFIGURING_PRIORITY]() {
+    return {
+      ...super._configuring(),
+      configure() {
+        const { applicationType } = this.jhipsterConfig;
+        if (applicationType !== 'monolith' && applicationType !== 'microservice') {
+          throw new Error('Application should be only monolith or microservice for this blueprint');
+        }
+      },
+    };
+  }
+
+  get [COMPOSING_PRIORITY]() {
+    return {
+      ...super._composing(),
+    };
+  }
+
+  get [LOADING_PRIORITY]() {
+    return {
+      ...super._loading(),
+    };
+  }
+
+  get [PREPARING_PRIORITY]() {
+    return {
+      ...super._preparing(),
+      setupMnConstants() {
+        this.MN_CONSTANTS = mnConstants;
+        this.GRADLE_VERSION = mnConstants.GRADLE_VERSION;
+        this.DOCKER_REDIS = mnConstants.DOCKER_REDIS;
+        this.DOCKER_CONSUL_CONFIG_LOADER = 'jhipster/consul-config-loader:v0.4.1'; // overrides jhipster value until main generator is updated
+      },
+    };
+  }
+
+  get [DEFAULT_PRIORITY]() {
+    return {
+      ...super._default(),
+    };
+  }
+
+  get [WRITING_PRIORITY]() {
+    return {
+      ...writeFiles(),
+    };
+  }
+
+  get [POST_WRITING_PRIORITY]() {
+    return {
+      ...super._postWriting(),
+    };
+  }
+
+  get [INSTALL_PRIORITY]() {
+    return {
+      ...super._install(),
+    };
+  }
+
+  get [END_PRIORITY]() {
+    return {
+      end() {
+        this.log(chalk.green.bold('\nServer application generated successfully.\n'));
+
+        let executable = 'mvnw';
+        if (this.buildTool === 'gradle') {
+          executable = 'gradlew';
         }
 
-        this.configOptions = jhContext.configOptions || {};
-
-        // Add custom options for the CLI here, For example
-        // this.option('skip-ktlint-format', {
-        //     desc: 'Indicates to skip formatting using ktlint',
-        //     type: Boolean,
-        //     defaults: false
-        // });
-
-        // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupServerOptions(this, jhContext);
-    }
-
-    get initializing() {
-        const initFromSuper = super._initializing();
-        return {
-            ...initFromSuper,
-            setupMnConstants() {
-                this.MN_CONSTANTS = MN_CONSTANTS;
-                this.GRADLE_VERSION = MN_CONSTANTS.GRADLE_VERSION;
-                this.DOCKER_REDIS = MN_CONSTANTS.DOCKER_REDIS;
-                this.DOCKER_CONSUL_CONFIG_LOADER = 'jhipster/consul-config-loader:v0.4.1'; // overrides jhipster value until main generator is updated
-            },
-        };
-    }
-
-    get prompting() {
-        // Overriding this phase to limit what's supported as we continue to add supported options
-        return {
-            askForModuleName: prompts.askForModuleName,
-            askForServerSideOpts: prompts.askForServerSideOpts,
-            askFori18n: prompts.askFori18n,
-
-            setSharedConfigOptions() {
-                this.configOptions.packageName = this.packageName;
-                this.configOptions.cacheProvider = this.cacheProvider;
-                this.configOptions.enableHibernateCache = this.enableHibernateCache;
-                this.configOptions.websocket = this.websocket;
-                this.configOptions.databaseType = this.databaseType;
-                this.configOptions.devDatabaseType = this.devDatabaseType;
-                this.configOptions.prodDatabaseType = this.prodDatabaseType;
-                this.configOptions.searchEngine = this.searchEngine;
-                this.configOptions.messageBroker = this.messageBroker;
-                this.configOptions.serviceDiscoveryType = this.serviceDiscoveryType;
-                this.configOptions.buildTool = this.buildTool;
-                this.configOptions.enableSwaggerCodegen = this.enableSwaggerCodegen;
-                this.configOptions.authenticationType = this.authenticationType;
-                const uaaBaseName = this.uaaBaseName;
-                if (uaaBaseName) {
-                    this.configOptions.uaaBaseName = this.uaaBaseName;
-                }
-                this.configOptions.serverPort = this.serverPort;
-
-                // Make dist dir available in templates
-                this.BUILD_DIR = this.getBuildDirectoryForBuildTool(this.buildTool);
-                this.CLIENT_DIST_DIR = this.getResourceBuildDirectoryForBuildTool(this.configOptions.buildTool) + constants.CLIENT_DIST_DIR;
-            },
-        };
-    }
-
-    get configuring() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._configuring();
-    }
-
-    get default() {
-        const defaultFromSuper = super._default();
-
-        return {
-            ...defaultFromSuper,
-            verifyJwtConfig() {
-                if (
-                    (!this.jwtSecretKey && !this.configOptions.jwtSecretKey && this.authenticationType === 'jwt') ||
-                    this.authenticationType === 'oauth2'
-                ) {
-                    this.jwtSecretKey = getBase64Secret(null, 64);
-                }
-            },
-        };
-    }
-
-    get writing() {
-        // Overriding the JHipster file generation with the custom Micronaut server.
-        return writeFiles();
-    }
-
-    /* get install() {
-        Add any necessary installation steps here.
-    } */
-
-    get end() {
-        return {
-            end() {
-                this.log(chalk.green.bold('\nServer application generated successfully.\n'));
-
-                let executable = 'mvnw';
-                if (this.buildTool === 'gradle') {
-                    executable = 'gradlew';
-                }
-
-                let logMsgComment = '';
-                if (os.platform() === 'win32') {
-                    logMsgComment = ` (${chalk.yellow.bold(executable)} if using Windows Command Prompt)`;
-                }
-                this.log(
-                    chalk.green(
-                        `Run your ${chalk.blue.bold('Micronaut')} application:\n ${chalk.yellow.bold(`./${executable}`)}${logMsgComment}`
-                    )
-                );
-            },
-        };
-    }
-};
+        let logMsgComment = '';
+        if (os.platform() === 'win32') {
+          logMsgComment = ` (${chalk.yellow.bold(executable)} if using Windows Command Prompt)`;
+        }
+        this.log(
+          chalk.green(`Run your ${chalk.blue.bold('Micronaut')} application:\n ${chalk.yellow.bold(`./${executable}`)}${logMsgComment}`)
+        );
+      },
+    };
+  }
+}

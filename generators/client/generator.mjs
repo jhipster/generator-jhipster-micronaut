@@ -1,57 +1,24 @@
-/* eslint-disable consistent-return */
-const chalk = require('chalk');
-const ClientGenerator = require('generator-jhipster/generators/client');
-const writeFiles = require('./files').writeFiles;
+import chalk from 'chalk';
+import ClientGenerator from 'generator-jhipster/esm/generators/client';
+import { PRIORITY_PREFIX, WRITING_PRIORITY } from 'generator-jhipster/esm/priorities';
+import { writeFiles } from './files.cjs';
 
-module.exports = class extends ClientGenerator {
-    constructor(args, opts) {
-        super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
+export default class extends ClientGenerator {
+  constructor(args, opts, features) {
+    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
 
-        const jhContext = (this.jhipsterContext = this.options.jhipsterContext);
+    if (this.options.help) return;
 
-        if (!jhContext) {
-            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
-        }
-
-        this.configOptions = jhContext.configOptions || {};
-        // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupClientOptions(this, jhContext);
+    if (!this.options.jhipsterContext) {
+      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
     }
 
-    get initializing() {
-        const initPhaseFromJHipster = super._initializing();
-        const initMicronautClientPhaseSteps = {};
-        return Object.assign(initPhaseFromJHipster, initMicronautClientPhaseSteps);
-    }
+    this.sbsBlueprint = true;
+  }
 
-    get prompting() {
-        return super._prompting();
-    }
-
-    get configuring() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._configuring();
-    }
-
-    get default() {
-        const defaultPhaseFromJHipster = super._default();
-        const defaultMicronautClientPhaseSteps = {};
-        return Object.assign(defaultPhaseFromJHipster, defaultMicronautClientPhaseSteps);
-    }
-
-    get writing() {
-        const phaseFromJHipster = super._writing();
-        const jhipsterMicronautClientPhaseSteps = writeFiles();
-        return Object.assign(phaseFromJHipster, jhipsterMicronautClientPhaseSteps);
-    }
-
-    get install() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._install();
-    }
-
-    get end() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._end();
-    }
-};
+  get [WRITING_PRIORITY]() {
+    return {
+      ...writeFiles(),
+    };
+  }
+}

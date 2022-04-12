@@ -1,146 +1,99 @@
-/* eslint-disable consistent-return */
-const chalk = require('chalk');
-const AppGenerator = require('generator-jhipster/generators/app');
-// const jhipsterPackagejs = require('generator-jhipster/package.json');
+import chalk from 'chalk';
+import AppGenerator from 'generator-jhipster/esm/generators/app';
+import {
+  PRIORITY_PREFIX,
+  INITIALIZING_PRIORITY,
+  PROMPTING_PRIORITY,
+  CONFIGURING_PRIORITY,
+  COMPOSING_PRIORITY,
+  LOADING_PRIORITY,
+  PREPARING_PRIORITY,
+  DEFAULT_PRIORITY,
+  WRITING_PRIORITY,
+  POST_WRITING_PRIORITY,
+  INSTALL_PRIORITY,
+  END_PRIORITY,
+} from 'generator-jhipster/esm/priorities';
 
-const prompts = require('./prompts');
-const { version } = require('../../package.json');
-const MICRONAUT_VERSION = require('../constants').versions.micronaut;
+import { askForApplicationType, askForTestOpts } from './prompts.cjs';
 
-module.exports = class extends AppGenerator {
-    // /**
-    //  * Override yeoman standard storage function for yo-rc.json
-    //  *  in order to save variables in generator-jhipster key.
-    //  * @return {String} The name of the root generator
-    //  */
-    // rootGeneratorName() {
-    //     return jhipsterPackagejs.name;
-    // }
+export default class extends AppGenerator {
+  constructor(args, opts, features) {
+    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
 
-    constructor(args, opts) {
-        super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
+    if (this.options.help) return;
 
-        const jhContext = (this.jhipsterContext = this.options.jhipsterContext);
-
-        if (!jhContext) {
-            this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
-        }
-
-        this.configOptions = jhContext.configOptions || {};
+    if (!this.options.jhipsterContext) {
+      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
     }
+  }
 
-    get initializing() {
-        const initPhaseFromJHipster = this._initializing();
+  get [INITIALIZING_PRIORITY]() {
+    return {
+      ...super._initializing(),
+    };
+  }
 
-        const jhipsterInitAppPhaseSteps = {
-            displayLogo() {
-                /* eslint-disable prettier/prettier */
-                /* This just isn't going to be pretty */
+  get [PROMPTING_PRIORITY]() {
+    return {
+      ...super._prompting(),
+      askForApplicationType,
+    };
+  }
 
-                this.log('\n');
-                this.log(`${chalk.blue(' ███╗   ███╗')}${chalk.green(' ██╗   ██╗ ████████╗ ███████╗   ██████╗ ████████╗ ████████╗ ███████╗')}`);
-                this.log(`${chalk.blue(' ████╗ ████║')}${chalk.green(' ██║   ██║ ╚══██╔══╝ ██╔═══██╗ ██╔════╝ ╚══██╔══╝ ██╔═════╝ ██╔═══██╗')}`);
-                this.log(`${chalk.blue(' ██╔████╔██║')}${chalk.green(' ████████║    ██║    ███████╔╝ ╚█████╗     ██║    ██████╗   ███████╔╝')}`);
-                this.log(`${chalk.blue(' ██║╚██╔╝██║')}${chalk.green(' ██╔═══██║    ██║    ██╔════╝   ╚═══██╗    ██║    ██╔═══╝   ██╔══██║')}`);
-                this.log(`${chalk.blue(' ██║ ╚═╝ ██║')}${chalk.green(' ██║   ██║ ████████╗ ██║       ██████╔╝    ██║    ████████╗ ██║  ╚██╗')}`);
-                this.log(`${chalk.blue(' ╚═╝     ╚═╝')}${chalk.green(' ╚═╝   ╚═╝ ╚═══════╝ ╚═╝       ╚═════╝     ╚═╝    ╚═══════╝ ╚═╝   ╚═╝')}\n`);
-                this.log(chalk.white.bold('                            https://www.jhipster.tech'));
-                this.log(chalk.blue.bold('                              https://micronaut.io\n'));
-                this.log(chalk.white(` Welcome to MHipster v${chalk.white.bold(version)} :: Running Micronaut v${chalk.white.bold(MICRONAUT_VERSION)}`));
-                this.log(chalk.white(' This blueprint generates your backend as a Micronaut Java project.'));
-                this.log(chalk.green(' _______________________________________________________________________________________________________________\n'));
-                this.log(
-                    chalk.white(
-                        ` ${chalk.yellow('::')} This project is a ${chalk.blue.bold('Micronaut')} blueprint for ${chalk.green.bold('JHipster')}`
-                    )
-                );
-                this.log(chalk.white(` ${chalk.yellow('::')} Please let us know if you encounter issues`));
-                this.log(chalk.yellow(` :: ${chalk.yellow.bold('https://github.com/jhipster/generator-jhipster-micronaut/issues')}`));
-                this.log(chalk.green(' _______________________________________________________________________________________________________________\n'));
-                this.log(chalk.white('  If you find MHipster useful, support and star the project at:'));
-                this.log(chalk.yellow.bold('  https://github.com/jhipster/generator-jhipster-micronaut'));
-                this.log(
-                    chalk.green(
-                        ' _______________________________________________________________________________________________________________\n'
-                    )
-                );
-            }
-        };
+  get [CONFIGURING_PRIORITY]() {
+    return {
+      ...super._configuring(),
+    };
+  }
 
-        return Object.assign(initPhaseFromJHipster, jhipsterInitAppPhaseSteps);
-    }
+  get [COMPOSING_PRIORITY]() {
+    return {
+      ...super._composing(),
+      askForTestOpts,
+      askForMoreModules: undefined,
+    };
+  }
 
-    get prompting() {
-        const defaultPhaseFromJHipster = super._prompting();
+  get [LOADING_PRIORITY]() {
+    return {
+      ...super._loading(),
+    };
+  }
 
-        return {
-            ...defaultPhaseFromJHipster,
-            askForApplicationType: prompts.askForApplicationType
-        };
-    }
+  get [PREPARING_PRIORITY]() {
+    return {
+      ...super._preparing(),
+    };
+  }
 
-    get configuring() {
-        const configuringPhaseFromJHipster = super._configuring();
+  get [DEFAULT_PRIORITY]() {
+    return {
+      ...super._default(),
+    };
+  }
 
-        const mhipsterConfigureAppPhaseSteps = {
-            composeServer() {
-                if (this.skipServer) return;
-                const options = this.options;
-                const configOptions = this.configOptions;
+  get [WRITING_PRIORITY]() {
+    return {
+      ...super._writing(),
+    };
+  }
 
-                this.composeWith(require.resolve('../server'), {
-                    ...options,
-                    configOptions,
-                    'client-hook': !this.skipClient,
-                    debug: this.isDebugEnabled
-                });
-            },
+  get [POST_WRITING_PRIORITY]() {
+    return {
+      ...super._postWriting(),
+    };
+  }
 
-            composeClient() {
-                if (this.skipClient) return;
-                const options = this.options;
-                const configOptions = this.configOptions;
+  get [INSTALL_PRIORITY]() {
+    return {
+      ...super._install(),
+    };
+  }
 
-                this.composeWith(require.resolve('../client'), {
-                    ...options,
-                    configOptions,
-                    debug: this.isDebugEnabled
-                });
-            },
-
-            composeCommon() {
-                const options = this.options;
-                const configOptions = this.configOptions;
-
-                this.composeWith(require.resolve('../common'), {
-                    ...options,
-                    'client-hook': !this.skipClient,
-                    configOptions,
-                    debug: this.isDebugEnabled
-                });
-            }
-        };
-
-        return Object.assign(configuringPhaseFromJHipster, mhipsterConfigureAppPhaseSteps);
-    }
-
-    get default() {
-        const jhipsterDefault = super._default();
-
-        return {
-            ...jhipsterDefault,
-            askForTestOpts: prompts.askForTestOpts,
-            askForMoreModules: undefined
-        };
-    }
-
-    get writing() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._writing();
-    }
-
-    get end() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._end();
-    }
-};
+  get [END_PRIORITY]() {
+    return {
+      ...super._end(),
+    };
+  }
+}

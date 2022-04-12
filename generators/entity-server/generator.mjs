@@ -1,40 +1,109 @@
-/**
- * Copyright 2019-2021 the original author or authors from the JHipster project.
- *
- * This file is part of the JHipster project, see https://www.jhipster.tech/
- * for more information.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/* eslint-disable consistent-return */
-const chalk = require('chalk');
-const EntityServerGenerator = require('generator-jhipster/generators/entity-server');
-const writeFiles = require('./files').writeFiles;
+import chalk from 'chalk';
+import EntityServerGenerator from 'generator-jhipster/esm/generators/entity-server';
+import {
+  PRIORITY_PREFIX,
+  INITIALIZING_PRIORITY,
+  PROMPTING_PRIORITY,
+  CONFIGURING_PRIORITY,
+  COMPOSING_PRIORITY,
+  LOADING_PRIORITY,
+  PREPARING_PRIORITY,
+  PREPARING_FIELDS_PRIORITY,
+  PREPARING_RELATIONSHIPS_PRIORITY,
+  DEFAULT_PRIORITY,
+  WRITING_PRIORITY,
+  POST_WRITING_PRIORITY,
+  INSTALL_PRIORITY,
+  END_PRIORITY,
+} from 'generator-jhipster/esm/priorities';
+import { writeFiles } from './files.cjs';
 
-module.exports = class extends EntityServerGenerator {
-    constructor(args, opts) {
-        super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
-        if (!this.jhipsterContext) {
-            this.error(`This is a JHipster blueprint and should be used like ${chalk.yellow('mhipster')}
-                        or ${chalk.yellow('jhipster --blueprint micronaut')}`);
-        }
-    }
+export default class extends EntityServerGenerator {
+  constructor(args, opts, features) {
+    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
 
-    get initializing() {
-        return super._initializing();
-    }
+    if (this.options.help) return;
 
-    get writing() {
-        return writeFiles();
+    if (!this.options.jhipsterContext) {
+      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
     }
-};
+  }
+
+  get [INITIALIZING_PRIORITY]() {
+    return {
+      ...super._initializing(),
+    };
+  }
+
+  get [PROMPTING_PRIORITY]() {
+    return {
+      ...super._prompting(),
+    };
+  }
+
+  get [CONFIGURING_PRIORITY]() {
+    return {
+      ...super._configuring(),
+    };
+  }
+
+  get [COMPOSING_PRIORITY]() {
+    return {
+      ...super._composing(),
+    };
+  }
+
+  get [LOADING_PRIORITY]() {
+    return {
+      ...super._loading(),
+    };
+  }
+
+  get [PREPARING_PRIORITY]() {
+    return {
+      ...super._preparing(),
+    };
+  }
+
+  get [PREPARING_FIELDS_PRIORITY]() {
+    return {
+      ...super._preparingFields(),
+    };
+  }
+
+  get [PREPARING_RELATIONSHIPS_PRIORITY]() {
+    return {
+      ...super._preparingRelationships(),
+    };
+  }
+
+  get [DEFAULT_PRIORITY]() {
+    return {
+      ...super._default(),
+    };
+  }
+
+  get [WRITING_PRIORITY]() {
+    return {
+      ...writeFiles(),
+    };
+  }
+
+  get [POST_WRITING_PRIORITY]() {
+    return {
+      ...super._postWriting(),
+    };
+  }
+
+  get [INSTALL_PRIORITY]() {
+    return {
+      ...super._install(),
+    };
+  }
+
+  get [END_PRIORITY]() {
+    return {
+      ...super._end(),
+    };
+  }
+}
