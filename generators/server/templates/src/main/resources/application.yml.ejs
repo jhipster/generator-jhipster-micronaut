@@ -90,6 +90,14 @@ micronaut:
     intercept-url-map:
       - pattern: /
         access: isAnonymous()
+      - pattern: /*.css
+        access: isAnonymous()
+      - pattern: /*.js
+        access: isAnonymous()
+      - pattern: /*.png
+        access: isAnonymous()
+      - pattern: /*.svg
+        access: isAnonymous()
       - pattern: /manifest.webapp
         access: isAnonymous()
       - pattern: /app/**/*.*
