@@ -72,7 +72,7 @@ task webpack(type: <%= _.upperFirst(clientPackageManager) %>Task) {
 
     dependsOn <%= clientPackageManager %><%_ if (clientPackageManager === 'npm') { _%>Install<%_ } _%>
 
-    args = ["run", "webpack:build"]
+    args = ["run", "webapp:build"]
     environment = [APP_VERSION: project.version]
 }
 <%_ } _%>
@@ -83,7 +83,7 @@ task webpackBuildDev(type: NpmTask, dependsOn: 'npmInstall') {
     inputs.files(fileTree('src/main/webapp/'))
     outputs.dir("build/www/")
     outputs.file("build/www/app/main.bundle.js")
-    args = ["run", "webpack:build"]
+    args = ["run", "webapp:build"]
 }
 
 task copyIntoStatic (type: Copy) {
