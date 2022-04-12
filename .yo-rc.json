@@ -1,0 +1,119 @@
+{
+  "generator-jhipster": {
+    "baseName": "micronaut",
+    "cli": true,
+    "generators": {
+      "app": {
+        "command": false,
+        "priorities": [
+          "initializing",
+          "prompting",
+          "configuring",
+          "composing",
+          "loading",
+          "preparing",
+          "default",
+          "writing",
+          "postWriting",
+          "install",
+          "end"
+        ],
+        "sbs": false,
+        "written": true
+      },
+      "client": {
+        "command": false,
+        "priorities": ["writing"],
+        "sbs": true,
+        "written": true
+      },
+      "common": {
+        "command": false,
+        "priorities": ["writing"],
+        "sbs": true,
+        "written": true
+      },
+      "entity": {
+        "command": false,
+        "priorities": [
+          "initializing",
+          "prompting",
+          "configuring",
+          "composing",
+          "loading",
+          "preparing",
+          "preparingFields",
+          "preparingRelationships",
+          "default",
+          "writing",
+          "postWriting",
+          "install",
+          "end"
+        ],
+        "sbs": false,
+        "written": true
+      },
+      "entity-server": {
+        "command": false,
+        "priorities": [
+          "initializing",
+          "prompting",
+          "configuring",
+          "composing",
+          "loading",
+          "preparing",
+          "preparingFields",
+          "preparingRelationships",
+          "default",
+          "writing",
+          "postWriting",
+          "install",
+          "end"
+        ],
+        "sbs": false,
+        "written": true
+      },
+      "heroku": {
+        "command": false,
+        "priorities": [
+          "initializing",
+          "prompting",
+          "configuring",
+          "composing",
+          "loading",
+          "preparing",
+          "default",
+          "writing",
+          "postWriting",
+          "install",
+          "end"
+        ],
+        "sbs": false,
+        "written": true
+      },
+      "server": {
+        "command": false,
+        "priorities": [
+          "initializing",
+          "prompting",
+          "configuring",
+          "composing",
+          "loading",
+          "preparing",
+          "default",
+          "writing",
+          "postWriting",
+          "install",
+          "end"
+        ],
+        "sbs": false,
+        "written": true
+      }
+    },
+    "jhipsterVersion": "7.8.1",
+    "prettierDefaultIndent": 2,
+    "projectName": "Micronaut Blueprint",
+    "skipCommitHook": true,
+    "subGenerators": ["app", "client", "common", "entity", "entity-server", "heroku", "server"]
+  }
+}
