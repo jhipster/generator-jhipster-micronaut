@@ -29,6 +29,9 @@ Object {
   "README.md": Object {
     "stateCleared": "modified",
   },
+  "README.md.jhi": Object {
+    "state": "modified",
+  },
   "package.json": Object {
     "stateCleared": "modified",
   },

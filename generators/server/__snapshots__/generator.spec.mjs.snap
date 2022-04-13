@@ -38,6 +38,9 @@ Object {
   "README.md": Object {
     "stateCleared": "modified",
   },
+  "README.md.jhi": Object {
+    "state": "modified",
+  },
   "checkstyle.xml": Object {
     "stateCleared": "modified",
   },
@@ -408,6 +411,9 @@ Object {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/web/rest/errors/TestDTO.java": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/resources/application-test.yml": Object {
     "stateCleared": "modified",
   },
   "src/test/resources/i18n/messages_en.properties": Object {

@@ -38,6 +38,9 @@ Object {
   "README.md": Object {
     "stateCleared": "modified",
   },
+  "README.md.jhi": Object {
+    "state": "modified",
+  },
   "angular.json": Object {
     "stateCleared": "modified",
   },
@@ -197,8 +200,11 @@ Object {
   "src/main/webapp/app/admin/configuration/configuration.component.ts": Object {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/admin/configuration/configuration.model.ts": Object {
+  "src/main/webapp/app/admin/configuration/configuration.filter.ts": Object {
     "stateCleared": "modified",
+  },
+  "src/main/webapp/app/admin/configuration/configuration.model.ts": Object {
+    "state": "deleted",
   },
   "src/main/webapp/app/admin/configuration/configuration.module.ts": Object {
     "stateCleared": "modified",
