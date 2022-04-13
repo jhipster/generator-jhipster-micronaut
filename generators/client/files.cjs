@@ -1,4 +1,10 @@
-const { ANGULAR_DIR, REACT_DIR, CLIENT_MAIN_SRC_DIR: MAIN_SRC_DIR, CLIENT_TEST_SRC_DIR, CLIENT_WEBPACK_DIR } = require('generator-jhipster/generators/generator-constants');
+const {
+  ANGULAR_DIR,
+  REACT_DIR,
+  CLIENT_MAIN_SRC_DIR: MAIN_SRC_DIR,
+  CLIENT_TEST_SRC_DIR,
+  CLIENT_WEBPACK_DIR,
+} = require('generator-jhipster/generators/generator-constants');
 
 const angularFiles = {
   angularMain: [
