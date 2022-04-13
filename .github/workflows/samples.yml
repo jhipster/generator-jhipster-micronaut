@@ -21,10 +21,15 @@ name: Verify Sample Projects
 on: [push, pull_request]
 env:
   JHI_E2E_HEADLESS: true
+permissions:
+  contents: read
 jobs:
   samples:
     name: ${{ matrix.app-type }}
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}/app
     if: >-
       !contains(github.event.head_commit.message, '[ci skip]') &&
       !contains(github.event.head_commit.message, '[skip ci]') &&
@@ -35,7 +40,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node_version: [16.14.2]
         os: [ubuntu-latest]
         app-type:
           - gradle-jwt-react
@@ -47,42 +51,48 @@ jobs:
           - mvn-ms-consul-jwt
           - gradle-ms-eureka-oauth
           - jdl-default-app
-        include:
-          - app-type: gradle-jwt-react
-          - app-type: mvn-jwt-angular
-          - app-type: mvn-jwt-redis-angular
-          - app-type: mvn-no-client
-          - app-type: mvn-oauth-angular
-          - app-type: gradle-oauth-angular
-          - app-type: mvn-ms-consul-jwt
-          - app-type: gradle-ms-eureka-oauth
-          - app-type: jdl-default-app
     steps:
       - uses: actions/checkout@v3
+        with:
+          path: generator-jhipster-micronaut
+          fetch-depth: 2
+      - uses: actions/checkout@v3
+        with:
+          repository: jhipster/generator-jhipster
+          ref: v7.8.1
+          path: generator-jhipster
+      - name: 'SETUP: environment'
+        id: setup
+        uses: ./generator-jhipster/.github/actions/setup
+        with:
+          jdl-sample: ${{ matrix.app-type }}
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node_version }}
+          node-version: ${{ steps.setup.outputs.node-version }}
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '11.x'
-      - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
-        shell: bash
-      - name: 'Setup'
-        run: ./test-integration/scripts/00-setup.sh
+          java-version: ${{ steps.setup.outputs.java-version }}
+      - name: 'Install blueprint'
+        run: npm install && npm link
+        working-directory: ${{ github.workspace }}/generator-jhipster-micronaut
       - name: 'Generate Project'
-        run: ./test-integration/scripts/01-generate-project.sh ${{ matrix.app-type }}
-      - name: 'Apply Fixes'
-        run: ./test-integration/scripts/02-apply-fixes.sh ${{ matrix.app-type }}
+        run: mhipster jdl ../generator-jhipster-micronaut/test-integration/samples/${{ matrix.app-type }}.jdl --skip-jhipster-dependencies --force
       - name: 'Start Dependency Containers'
-        run: ./test-integration/scripts/03-dep-containers.sh ${{ matrix.app-type }}
-      - name: 'Run Server Tests'
-        run: ./test-integration/scripts/04-server-tests.sh ${{ matrix.app-type }}
+        run: npm run ci:e2e:prepare
+      # - name: 'Run Server Tests'
+      #  run: npm run ci:backend:test
       - name: 'Run Client Tests'
-        run: ./test-integration/scripts/05-client-tests.sh ${{ matrix.app-type }}
+        run: npm run ci:frontend:test
       - name: 'Build App'
-        run: ./test-integration/scripts/06-build-app.sh ${{ matrix.app-type }}
-      - name: 'Start App'
-        run: ./test-integration/scripts/07-start-app.sh ${{ matrix.app-type }}
+        run: npm run ci:e2e:package
+      - name: 'Copy jar'
+        run: |
+          ls target/*.jar
+          rm target/original*.jar
+          cp target/*.jar target/e2e.jar
       - name: 'E2E Tests'
-        run: ./test-integration/scripts/08-e2e-tests.sh ${{ matrix.app-type }}
+        run: npm run ci:e2e:run --if-present
+      - name: Dump docker logs
+        if: always()
+        uses: jwalton/gh-docker-logs@v2

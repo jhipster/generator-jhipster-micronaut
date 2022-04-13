@@ -31,7 +31,6 @@ application {
     skipServer false
     skipUserManagement false
     testFrameworks []
-    useSass true
     websocket false
   }
 

@@ -88,9 +88,10 @@ export default class extends extendGenerator(EntityServerGenerator) {
     return {
       ...super._writing(),
       cleanupMicronautCustomizedFiles() {
-        this.deleteDestination(`${this.packageFolder}/repository`);
-        this.deleteDestination(`${this.packageFolder}/service`);
-        this.deleteDestination(`${this.packageFolder}/web`);
+        const { name: entityName } = this.entity;
+        this.deleteDestination(`src/main/java/${this.packageFolder}/repository/${entityName}*.*`);
+        this.deleteDestination(`src/main/java/${this.packageFolder}/service/${entityName}*.*`);
+        this.deleteDestination(`src/main/java/${this.packageFolder}/web/rest/${entityName}*.*`);
       },
       ...writeFiles(),
     };
