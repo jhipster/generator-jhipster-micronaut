@@ -32,7 +32,6 @@ application {
     skipServer false
     skipUserManagement true
     testFrameworks [cypress]
-    useSass true
     websocket false
   }
 
