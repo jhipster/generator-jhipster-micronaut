@@ -301,16 +301,6 @@ const reactFiles = {
         },
       ],
     },
-    {
-      condition: generator => generator.protractorTests && generator.clientFramework === 'react',
-      templates: [
-        {
-          file: 'react/src/test/javascript/e2e/modules/administration/administration.spec.ts',
-          method: 'processJs',
-          renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/modules/administration/administration.spec.ts`,
-        },
-      ],
-    },
   ],
 };
 

@@ -31,8 +31,7 @@ application {
     skipClient false
     skipServer false
     skipUserManagement false
-    testFrameworks [protractor]
-    useSass true
+    testFrameworks [cypress]
     websocket false
   }
 
