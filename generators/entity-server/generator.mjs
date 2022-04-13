@@ -92,6 +92,9 @@ export default class extends extendGenerator(EntityServerGenerator) {
         this.deleteDestination(`src/main/java/${this.packageFolder}/repository/${entityName}*.*`);
         this.deleteDestination(`src/main/java/${this.packageFolder}/service/${entityName}*.*`);
         this.deleteDestination(`src/main/java/${this.packageFolder}/web/rest/${entityName}*.*`);
+        this.deleteDestination(`src/test/java/${this.packageFolder}/repository/${entityName}*.*`);
+        this.deleteDestination(`src/test/java/${this.packageFolder}/service/${entityName}*.*`);
+        this.deleteDestination(`src/test/java/${this.packageFolder}/web/rest/${entityName}*.*`);
       },
       ...writeFiles(),
     };

@@ -115,7 +115,7 @@ const serverFiles = {
       path: DOCKER_DIR,
       templates: [
         { file: 'consul.yml', useBluePrint: true },
-        { file: 'config/git2consul.json', method: 'copy' },
+        { file: 'config/git2consul.json', noEjs: true },
         {
           file: 'config/consul-config/application.yml',
           useBluePrint: true,
@@ -151,7 +151,7 @@ const serverFiles = {
       templates: [
         'keycloak.yml',
         { file: 'config/realm-config/jhipster-realm.json', renameTo: () => 'realm-config/jhipster-realm.json' },
-        { file: 'config/realm-config/jhipster-users-0.json', method: 'copy', renameTo: () => 'realm-config/jhipster-users-0.json' },
+        { file: 'config/realm-config/jhipster-users-0.json', renameTo: () => 'realm-config/jhipster-users-0.json' },
       ],
     },
   ],
@@ -170,8 +170,8 @@ const serverFiles = {
       path: SERVER_MAIN_RES_DIR,
       templates: [
         {
-          file: 'views/error.html',
-          method: 'copy',
+          file: 'templates/error.html',
+          renameTo: () => 'views/error.html',
         },
         { file: 'logback.xml', useBluePrint: true },
         { file: 'application.yml', useBluePrint: true },
