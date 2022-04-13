@@ -38,8 +38,9 @@ export default class extends extendGenerator(ClientGenerator) {
 
   get [POST_WRITING_PRIORITY]() {
     return {
-      customizeForMicronaut({ application: { clientFrameworkAngular } }) {
-        if (clientFrameworkAngular) {
+      customizeAngularForMicronaut({ application: { clientFrameworkAngular, authenticationTypeJwt } }) {
+        if (!clientFrameworkAngular) return;
+        if (authenticationTypeJwt) {
           this.editFile('src/main/webapp/app/core/auth/auth-jwt.service.ts', content => content.replaceAll('id_token', 'access_token'));
           this.editFile('src/main/webapp/app/core/auth/auth-jwt.service.spec.ts', content =>
             content.replaceAll('id_token', 'access_token')
