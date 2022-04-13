@@ -85,6 +85,12 @@ export default class extends EntityServerGenerator {
 
   get [WRITING_PRIORITY]() {
     return {
+      ...super._writing(),
+      cleanupMicronautCustomizedFiles() {
+        this.deleteDestination(`${this.packageFolder}/repository`);
+        this.deleteDestination(`${this.packageFolder}/service`);
+        this.deleteDestination(`${this.packageFolder}/web`);
+      },
       ...writeFiles(),
     };
   }

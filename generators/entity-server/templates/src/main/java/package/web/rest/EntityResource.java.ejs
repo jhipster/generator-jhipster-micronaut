@@ -22,12 +22,10 @@ package <%= packageName %>.web.rest;
 const viaService = service !== 'no';
 let isUsingMapsId = false;
 let mapsIdAssoc;
-let primaryKeyType = pkType;
 for (idx in relationships) {
     isUsingMapsId = relationships[idx].useJPADerivedIdentifier;
     if ( isUsingMapsId === true) {
         mapsIdAssoc = relationships[idx];
-        primaryKeyType = (relationships[idx].otherEntityName === 'user'  && authenticationType === 'oauth2') ? 'String' : pkType;
         break;
     }
     isUsingMapsId = false;
@@ -50,7 +48,7 @@ import <%= packageName %>.repository.<%= entityClass %>Repository;
     <%_ if (isUsingMapsId === true) { _%>
 import <%= packageName %>.repository.<%= mapsIdAssoc.otherEntityNameCapitalized %>Repository;
     <%_ } _%>
-    <%_ if (reactiveRepositories) { _%>
+    <%_ if (reactive) { _%>
 import <%= packageName %>.repository.reactive.<%= entityClass %>ReactiveRepository;
     <%_ } _%>
     <%_ if (searchEngine === 'elasticsearch') { _%>
@@ -102,7 +100,7 @@ import org.springframework.http.HttpStatus; %>
 <%# import org.springframework.web.util.UriComponentsBuilder; %>
     <%_ } _%>
 <%_ } _%>
-<%_ if (reactiveRepositories) { _%>
+<%_ if (reactive) { _%>
 <%# import org.springframework.http.MediaType; %>
 <%_ } _%>
 <%# import org.springframework.http.HttpResponse; %>
@@ -110,7 +108,7 @@ import org.springframework.http.HttpStatus; %>
 <%# import org.springframework.transaction.annotation.Transactional; %>
 <%_ } _%>
 
-<%_ if (reactiveRepositories) { _%>
+<%_ if (reactive) { _%>
 import reactor.core.publisher.Flux;
 <%_ } _%>
 import java.net.URI;
@@ -119,9 +117,7 @@ import java.net.URISyntaxException;
 import java.util.LinkedList;
 <%_ } _%>
 import java.util.List;
-<%_ if (isUsingMapsId === true) { _%>
 import java.util.Objects;
-<%_ } _%>
 import java.util.Optional;
 <%_ if (databaseType === 'cassandra') { _%>
 import java.util.UUID;
@@ -203,7 +199,7 @@ public class <%= entityClass %>Resource {
     }
 
     /**
-     * {@code PUT  /<%= entityApiUrl %>} : Updates an existing <%= entityInstance %>.
+     * {@code PUT  /<%= entityApiUrl %>/:id} : Updates an existing <%= entityInstance %>.
      *
      * @param <%= instanceName %> the <%= instanceName %> to update.
      * @return the {@link HttpResponse} with status {@code 200 (OK)} and with body the updated <%= instanceName %>,
@@ -211,14 +207,17 @@ public class <%= entityClass %>Resource {
      * or with status {@code 500 (Internal Server Error)} if the <%= instanceName %> couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @Put("/<%= entityApiUrl %>")
+    @Put("/<%= entityApiUrl %>/{id}")
     @ExecuteOn(TaskExecutors.IO)
-    public HttpResponse<<%= instanceType %>> update<%= entityClass %>(@Body <%= instanceType %> <%= instanceName %>) throws URISyntaxException {
+    public HttpResponse<<%= instanceType %>> update<%= entityClass %>(@Body <%= instanceType %> <%= instanceName %>, @PathVariable <%= primaryKey.type %> <%= primaryKey.name %>) throws URISyntaxException {
         log.debug("REST request to update <%= entityClass %> : {}", <%= instanceName %>);
         if (<%= instanceName %>.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        <%_ if (saveUserSnapshot) { _%>
+        if (!Objects.equals(<%= primaryKey.name %>, <%= instanceName %>.get<%= primaryKey.nameCapitalized %>())) {
+            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+        }
+      <%_ if (saveUserSnapshot) { _%>
             <%_ if (manyToManyWithUser) { _%>
         if (<%= instanceName %>.getUsers() != null) {
             // Save users in case they are new and only exists in gateway
@@ -264,7 +263,7 @@ public class <%= entityClass %>Resource {
     <%_ } _%>
 <%- include('../../common/get_all_template', {asEntity, asDto, viaService}); -%>
 
-    <%_ if (reactiveRepositories) { _%>
+    <%_ if (reactive) { _%>
     /**
      * {@code GET  /<%= entityApiUrl %>} : get all the <%= entityInstancePlural %> as a stream.
      * @return the {@link Flux} of <%= entityInstancePlural %>.
@@ -297,7 +296,7 @@ public class <%= entityClass %>Resource {
     @ReadOnly
     @Transactional
     <%_ } _%>
-    public Optional<<%= instanceType %>> get<%= entityClass %>(@PathVariable <%= primaryKeyType %> id) {
+    public Optional<<%= instanceType %>> get<%= entityClass %>(@PathVariable <%= primaryKey.type %> id) {
         log.debug("REST request to get <%= entityClass %> : {}", id);
         <%- include('../../common/get_template', {asEntity, asDto, viaService, returnDirectly:true}); -%>
     }
@@ -311,10 +310,10 @@ public class <%= entityClass %>Resource {
      */
     @Delete("/<%= entityApiUrl %>/{id}")
     @ExecuteOn(TaskExecutors.IO)
-    public HttpResponse delete<%= entityClass %>(@PathVariable <%= primaryKeyType %> id) {
+    public HttpResponse delete<%= entityClass %>(@PathVariable <%= primaryKey.type %> id) {
         log.debug("REST request to delete <%= entityClass %> : {}", id);
 <%- include('../../common/delete_template', {viaService: viaService}); -%>
-        return HttpResponse.noContent().headers(headers -> HeaderUtil.createEntityDeletionAlert(headers, applicationName, <%= enableTranslation %>, ENTITY_NAME, id<% if (pkType !== 'String') { %>.toString()<% } %>));
+        return HttpResponse.noContent().headers(headers -> HeaderUtil.createEntityDeletionAlert(headers, applicationName, <%= enableTranslation %>, ENTITY_NAME, id<% if (primaryKey.type !== 'String') { %>.toString()<% } %>));
     }
 <%_ } _%>
 <%_ if (searchEngine === 'elasticsearch') { _%>

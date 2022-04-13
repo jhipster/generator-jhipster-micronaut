@@ -97,7 +97,7 @@ import javax.persistence.EntityManager;
 <%_ } _%>
 <% if (fieldsContainBigDecimal === true) { %>
 import java.math.BigDecimal;<% } %><% if (fieldsContainBlob === true && databaseType === 'cassandra') { %>
-import java.nio.ByteBuffer;<% } %><% if (reactiveRepositories || fieldsContainDuration === true) { %>
+import java.nio.ByteBuffer;<% } %><% if (reactive || fieldsContainDuration === true) { %>
 import java.time.Duration;<% } %><% if (fieldsContainLocalDate === true) { %>
 import java.time.LocalDate;<% } %><% if (fieldsContainInstant === true || fieldsContainZonedDateTime === true) { %>
 import java.time.Instant;<% } %><% if (fieldsContainZonedDateTime === true) { %>
@@ -335,7 +335,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     @Inject
     private UserRepository userRepository;
     <%_ } _%>
-    <%_ if (reactiveRepositories && service === 'no') { _%>
+    <%_ if (reactive && service === 'no') { _%>
 
     @Inject
     private <%= entityClass %>ReactiveRepository <%= entityInstance %>ReactiveRepository;

@@ -19,7 +19,6 @@
 package <%= packageName %>.service;
 
 <%_
-const primaryKeyType = getPkTypeBasedOnDBAndAssociation(authenticationType, databaseType, relationships);
 const instanceType = (dto === 'mapstruct') ? asDto(entityClass) : asEntity(entityClass);
 const instanceName = (dto === 'mapstruct') ? asDto(entityInstance) : asEntity(entityInstance);
 _%>
@@ -33,7 +32,7 @@ import <%= packageName %>.domain.<%= asEntity(entityClass) %>;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 <%_ } _%>
-<%_ if (reactiveRepositories) { _%>
+<%_ if (reactive) { _%>
 import reactor.core.publisher.Flux;
 <%_ } _%>
 
@@ -91,7 +90,7 @@ public interface <%= entityClass %>Service {
     Page<<%= instanceType %>> findAllWithEagerRelationships(Pageable pageable);
     <% } -%>
 
-    <%_ if (reactiveRepositories) { _%>
+    <%_ if (reactive) { _%>
     /**
      * Get all the <%= entityInstancePlural %>.
      * @return the {@link Flux} of entities.
@@ -105,14 +104,14 @@ public interface <%= entityClass %>Service {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<<%= instanceType %>> findOne(<%= primaryKeyType %> id);
+    Optional<<%= instanceType %>> findOne(<%= primaryKey.type %> id);
 
     /**
      * Delete the "id" <%= entityInstance %>.
      *
      * @param id the id of the entity.
      */
-    void delete(<%= primaryKeyType %> id);<% if (searchEngine === 'elasticsearch') { %>
+    void delete(<%= primaryKey.type %> id);<% if (searchEngine === 'elasticsearch') { %>
 
     /**
      * Search for the <%= entityInstance %> corresponding to the query.

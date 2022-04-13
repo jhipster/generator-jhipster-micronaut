@@ -23,7 +23,7 @@ const fs = require('fs');
 const utils = require('generator-jhipster/generators/utils');
 const constants = require('generator-jhipster/generators/generator-constants');
 
-const NeedleServerChacheMn = require('./needle-server-cache-mn');
+const NeedleServerChacheMn = require('./needle-server-cache-mn.cjs');
 
 /* Use customized randexp */
 const randexp = utils.RandexpWithFaker;
@@ -159,11 +159,13 @@ const serverFiles = {
     {
       path: SERVER_MAIN_SRC_DIR,
       templates: [
+        /*
         {
           file: 'package/domain/Entity.java',
           useBluePrint: true,
           renameTo: generator => `${generator.packageFolder}/domain/${generator.asEntity(generator.entityClass)}.java`,
         },
+        */
         {
           file: 'package/repository/EntityRepository.java',
           useBluePrint: true,
@@ -309,6 +311,7 @@ const serverFiles = {
         },
       ],
     },
+    /*
     {
       path: SERVER_TEST_SRC_DIR,
       templates: [
@@ -319,6 +322,7 @@ const serverFiles = {
         },
       ],
     },
+    */
     {
       condition: generator => generator.dto === 'mapstruct',
       path: SERVER_TEST_SRC_DIR,
@@ -368,14 +372,14 @@ function writeFiles() {
       );
     },
 
-    setupReproducibility() {
+    setupMicronautReproducibility() {
       if (this.skipServer) return;
 
       // In order to have consistent results with Faker, restart seed with current entity name hash.
       faker.seed(utils.stringHashCode(this.name.toLowerCase()));
     },
 
-    writeServerFiles() {
+    writeMicronautServerFiles() {
       if (this.skipServer) return;
 
       // write server side files
@@ -403,6 +407,7 @@ function writeFiles() {
       }
     },
 
+    /*
     writeEnumFiles() {
       this.fields.forEach(field => {
         if (field.fieldIsEnum === true) {
@@ -426,6 +431,7 @@ function writeFiles() {
         }
       });
     },
+    */
   };
 }
 
