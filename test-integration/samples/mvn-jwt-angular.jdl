@@ -19,7 +19,6 @@ application {
     enableSwaggerCodegen false
     enableTranslation true
     jhiPrefix jhi
-    jhipsterVersion "6.10.1"
     languages [en, al, ar-ly, hy]
     messageBroker false
     nativeLanguage en
