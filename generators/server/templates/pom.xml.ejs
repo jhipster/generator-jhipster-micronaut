@@ -41,9 +41,6 @@ _%>
     <%_ if (clientPackageManager === 'npm') { _%>
         <npm.version><%= NPM_VERSION %></npm.version>
     <%_ } _%>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-        <yarn.version>v<%= YARN_VERSION %></yarn.version>
-    <%_ } _%>
 <%_ } _%>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -1071,24 +1068,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
                         <executions>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-                            <execution>
-                                <id>install node and yarn</id>
-                                <goals>
-                                    <goal>install-node-and-yarn</goal>
-                                </goals>
-                                <configuration>
-                                    <nodeVersion>${node.version}</nodeVersion>
-                                    <yarnVersion>${yarn.version}</yarnVersion>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>yarn install</id>
-                                <goals>
-                                    <goal>yarn</goal>
-                                </goals>
-                            </execution>
-    <%_ } else if (clientPackageManager === 'npm') { _%>
+    <%_ if (clientPackageManager === 'npm') { _%>
                             <execution>
                                 <id>install node and npm</id>
                                 <goals>
@@ -1114,9 +1094,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                                 <phase>generate-resources</phase>
                                 <configuration>
                                     <arguments>run webapp:build</arguments>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-                                    <yarnInheritsProxyConfigFromMaven>false</yarnInheritsProxyConfigFromMaven>
-    <%_ } else if (clientPackageManager === 'npm') { _%>
+    <%_ if (clientPackageManager === 'npm') { _%>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
     <%_ } _%>
                                 </configuration>
@@ -1186,27 +1164,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
                         <executions>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-                            <execution>
-                                <id>install node and yarn</id>
-                                <goals>
-                                    <goal>install-node-and-yarn</goal>
-                                </goals>
-                                <configuration>
-                                    <nodeVersion>${node.version}</nodeVersion>
-                                    <yarnVersion>${yarn.version}</yarnVersion>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>yarn install</id>
-                                <goals>
-                                    <goal>yarn</goal>
-                                </goals>
-                                <configuration>
-                                    <arguments>install</arguments>
-                                </configuration>
-                            </execution>
-    <%_ } else if (clientPackageManager === 'npm') { _%>
+    <%_ if (clientPackageManager === 'npm') { _%>
                             <execution>
                                 <id>install node and npm</id>
                                 <goals>
@@ -1235,9 +1193,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                                 <phase>test</phase>
                                 <configuration>
                                     <arguments>run webapp:test</arguments>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-                                    <yarnInheritsProxyConfigFromMaven>false</yarnInheritsProxyConfigFromMaven>
-    <%_ } else if (clientPackageManager === 'npm') { _%>
+    <%_ if (clientPackageManager === 'npm') { _%>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
     <%_ } _%>
                                 </configuration>
@@ -1253,9 +1209,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                                     <environmentVariables>
                                         <APP_VERSION>${project.version}</APP_VERSION>
                                     </environmentVariables>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-                                    <yarnInheritsProxyConfigFromMaven>false</yarnInheritsProxyConfigFromMaven>
-    <%_ } else if (clientPackageManager === 'npm') { _%>
+    <%_ if (clientPackageManager === 'npm') { _%>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
     <%_ } _%>
                                 </configuration>
@@ -1390,10 +1344,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                                                 <artifactId>frontend-maven-plugin</artifactId>
                                                 <versionRange>${frontend-maven-plugin.version}</versionRange>
                                                 <goals>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-                                                    <goal>install-node-and-yarn</goal>
-                                                    <goal>yarn</goal>
-    <%_ } else if (clientPackageManager === 'npm') { _%>
+    <%_ if (clientPackageManager === 'npm') { _%>
                                                     <goal>install-node-and-npm</goal>
                                                     <goal>npm</goal>
     <%_ } _%>
