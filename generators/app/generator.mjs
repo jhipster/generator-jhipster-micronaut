@@ -16,8 +16,9 @@ import {
 } from 'generator-jhipster/esm/priorities';
 
 import { askForApplicationType, askForTestOpts } from './prompts.cjs';
+import { extendGenerator } from '#lib/utils.mjs';
 
-export default class extends AppGenerator {
+export default class extends extendGenerator(AppGenerator) {
   constructor(args, opts, features) {
     super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
 

@@ -3,8 +3,9 @@ import { constants as jhipsterConstants } from 'generator-jhipster';
 import CommonGenerator from 'generator-jhipster/esm/generators/common';
 import { PRIORITY_PREFIX, LOADING_PRIORITY, PREPARING_PRIORITY, WRITING_PRIORITY } from 'generator-jhipster/esm/priorities';
 import { writeFiles } from './files.cjs';
+import { extendGenerator } from '#lib/utils.mjs';
 
-export default class extends CommonGenerator {
+export default class extends extendGenerator(CommonGenerator) {
   constructor(args, opts, features) {
     super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
 

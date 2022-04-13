@@ -18,8 +18,9 @@ import {
 import { writeFiles } from './files.cjs';
 import { askForModuleName, askForServerSideOpts } from './prompts.cjs';
 import mnConstants from '../constants.cjs';
+import { extendGenerator } from '#lib/utils.mjs';
 
-export default class extends ServerGenerator {
+export default class extends extendGenerator(ServerGenerator) {
   constructor(args, opts, features) {
     super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
 

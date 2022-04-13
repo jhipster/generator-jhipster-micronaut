@@ -17,8 +17,9 @@ import {
   END_PRIORITY,
 } from 'generator-jhipster/esm/priorities';
 import { writeFiles } from './files.cjs';
+import { extendGenerator } from '#lib/utils.mjs';
 
-export default class extends EntityServerGenerator {
+export default class extends extendGenerator(EntityServerGenerator) {
   constructor(args, opts, features) {
     super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
 

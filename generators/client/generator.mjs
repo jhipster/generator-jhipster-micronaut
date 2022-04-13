@@ -2,8 +2,9 @@ import chalk from 'chalk';
 import ClientGenerator from 'generator-jhipster/esm/generators/client';
 import { PRIORITY_PREFIX, WRITING_PRIORITY, POST_WRITING_PRIORITY } from 'generator-jhipster/esm/priorities';
 import { angularFiles } from './files.cjs';
+import { extendGenerator } from '../../lib/utils.mjs';
 
-export default class extends ClientGenerator {
+export default class extends extendGenerator(ClientGenerator) {
   constructor(args, opts, features) {
     super(args, opts, { taskPrefix: PRIORITY_PREFIX, priorityArgs: true, ...features });
 

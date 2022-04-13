@@ -14,8 +14,9 @@ import {
   INSTALL_PRIORITY,
   END_PRIORITY,
 } from 'generator-jhipster/esm/priorities';
+import { extendGenerator } from '#lib/utils.mjs';
 
-export default class extends HerokuGenerator {
+export default class extends extendGenerator(HerokuGenerator) {
   constructor(args, opts, features) {
     super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
 
