@@ -197,7 +197,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
             sampleTextString += "A";
             updatedTextString += "B";
         }
-        if (!this._.isUndefined(fields[idx].fieldValidateRulesPattern)) {
+        if (fields[idx].fieldValidateRulesPattern) {
             // Generate Strings, using pattern
             try {
                 const patternRegExp = new RegExp(fields[idx].fieldValidateRulesPattern);
