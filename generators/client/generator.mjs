@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import ClientGenerator from 'generator-jhipster/esm/generators/client';
 import { PRIORITY_PREFIX, WRITING_PRIORITY, POST_WRITING_PRIORITY } from 'generator-jhipster/esm/priorities';
-import { writeFiles } from './files.cjs';
+import { angularFiles } from './files.cjs';
 
 export default class extends ClientGenerator {
   constructor(args, opts, features) {
@@ -22,7 +22,16 @@ export default class extends ClientGenerator {
 
   get [WRITING_PRIORITY]() {
     return {
-      // ...writeFiles(),
+      async writeCustomFiles({ application }) {
+        const { clientFrameworkAngular } = application;
+        if (clientFrameworkAngular) {
+          this.deleteDestination(`src/main/webapp/app/admin/configuration`);
+          await this.writeFiles({
+            sections: angularFiles,
+            context: application,
+          });
+        }
+      },
     };
   }
 
@@ -33,6 +42,12 @@ export default class extends ClientGenerator {
           this.editFile('src/main/webapp/app/core/auth/auth-jwt.service.ts', content => content.replaceAll('id_token', 'access_token'));
           this.editFile('src/main/webapp/app/core/auth/auth-jwt.service.spec.ts', content =>
             content.replaceAll('id_token', 'access_token')
+          );
+
+          this.editFile('src/main/webapp/app/admin/health/health.model.ts', content => content.replaceAll('components', 'details'));
+          this.editFile('src/main/webapp/app/admin/health/health.component.html', content => content.replaceAll('components', 'details'));
+          this.editFile('src/main/webapp/app/admin/health/health.component.spec.ts', content =>
+            content.replaceAll('components', 'details')
           );
 
           // Should be dropped when the blueprint supports public/admin users.
