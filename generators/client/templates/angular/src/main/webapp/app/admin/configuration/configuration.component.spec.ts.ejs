@@ -18,8 +18,8 @@ limitations under the License.
 -%>
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { <%= frontendAppName %>TestModule } from '../../../test.module';
 import { ConfigurationComponent } from 'app/admin/configuration/configuration.component';
 import { ConfigurationService } from 'app/admin/configuration/configuration.service';
 
@@ -31,7 +31,7 @@ describe('Component Tests', () => {
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
-                imports: [<%= frontendAppName %>TestModule],
+                imports: [HttpClientTestingModule],
                 declarations: [ConfigurationComponent],
                 providers: [ConfigurationService]
             })
@@ -52,7 +52,7 @@ describe('Component Tests', () => {
             it('Should call load all on init', () => {
               // GIVEN
               const body = [{ config: 'test', properties: 'test' }, { config: 'test2' }];
-              spyOn(service, 'get').and.returnValue(of(body));
+              jest.spyOn(service, 'get').mockReturnValue(of(body));
 
               // WHEN
               comp.ngOnInit();

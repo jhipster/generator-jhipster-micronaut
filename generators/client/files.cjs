@@ -1,17 +1,11 @@
-const jhipsterConstants = require('generator-jhipster/generators/generator-constants');
+const { ANGULAR_DIR, REACT_DIR, CLIENT_MAIN_SRC_DIR: MAIN_SRC_DIR, CLIENT_TEST_SRC_DIR, CLIENT_WEBPACK_DIR } = require('generator-jhipster/generators/generator-constants');
 
-const ANGULAR_DIR = jhipsterConstants.ANGULAR_DIR;
-const REACT_DIR = jhipsterConstants.REACT_DIR;
-const MAIN_SRC_DIR = jhipsterConstants.CLIENT_MAIN_SRC_DIR;
-const CLIENT_WEBPACK_DIR = jhipsterConstants.CLIENT_WEBPACK_DIR;
-
-const CLIENT_TEST_SRC_DIR = jhipsterConstants.CLIENT_TEST_SRC_DIR;
-
-const clientFiles = {
+const angularFiles = {
   angularMain: [
     {
       condition: generator => generator.clientFramework === 'angularX',
       templates: [
+        /*
         {
           file: 'angular/src/main/webapp/content/images/jhipster_family_member_4.svg',
           method: 'copy',
@@ -70,6 +64,7 @@ const clientFiles = {
           method: 'processJs',
           renameTo: () => `${ANGULAR_DIR}core/auth/auth-jwt.service.ts`,
         },
+        */
         // Admin config changes, since we store config in a flat map
         {
           file: 'angular/src/main/webapp/app/admin/configuration/configuration.component.html',
@@ -102,15 +97,16 @@ const clientFiles = {
           renameTo: () => `${ANGULAR_DIR}admin/configuration/configuration.service.ts`,
         },
         {
-          file: 'angular/src/test/javascript/spec/app/admin/configuration/configuration.component.spec.ts',
+          file: 'angular/src/main/webapp/app/admin/configuration/configuration.component.spec.ts',
           method: 'processJs',
-          renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/admin/configuration/configuration.component.spec.ts`,
+          renameTo: () => `${ANGULAR_DIR}admin/configuration/configuration.component.spec.ts`,
         },
         {
-          file: 'angular/src/test/javascript/spec/app/admin/configuration/configuration.service.spec.ts',
+          file: 'angular/src/main/webapp/app/admin/configuration/configuration.service.spec.ts',
           method: 'processJs',
-          renameTo: () => `${CLIENT_TEST_SRC_DIR}spec/app/admin/configuration/configuration.service.spec.ts`,
+          renameTo: () => `${ANGULAR_DIR}admin/configuration/configuration.service.spec.ts`,
         },
+        /*
         // Admin health changes
         {
           file: 'angular/src/main/webapp/app/admin/health/health.component.html',
@@ -180,19 +176,13 @@ const clientFiles = {
           useBluePrint: true,
           renameTo: () => `${CLIENT_WEBPACK_DIR}/webpack.dev.js`,
         },
-      ],
-    },
-    {
-      condition: generator => generator.protractorTests && generator.clientFramework === 'angularX',
-      templates: [
-        {
-          file: 'angular/src/test/javascript/e2e/admin/administration.spec.ts',
-          method: 'processJs',
-          renameTo: () => `${CLIENT_TEST_SRC_DIR}e2e/admin/administration.spec.ts`,
-        },
+        */
       ],
     },
   ],
+};
+
+const reactFiles = {
   reactMain: [
     {
       condition: generator => generator.clientFramework === 'react',
@@ -318,14 +308,7 @@ const clientFiles = {
   ],
 };
 
-function writeFiles() {
-  return {
-    overrideFiles() {
-      this.writeFilesToDisk(clientFiles, this, false);
-    },
-  };
-}
-
 module.exports = {
-  writeFiles,
+  angularFiles,
+  reactFiles,
 };
