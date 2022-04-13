@@ -58,6 +58,13 @@ export default class extends extendGenerator(ClientGenerator) {
           );
         }
       },
+
+      customizeCypressForMicronaut({ application: { cypressTests, authenticationTypeJwt } }) {
+        if (!cypressTests) return;
+        if (authenticationTypeJwt) {
+          this.editFile('src/test/javascript/cypress/support/commands.ts', content => content.replaceAll('id_token', 'access_token'));
+        }
+      },
     };
   }
 
