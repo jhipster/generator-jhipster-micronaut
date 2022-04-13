@@ -58,7 +58,7 @@ _%>
 <%_ if (databaseType === 'sql') { _%>
         <profile.no-liquibase />
 <%_ } _%>
-        <profile.swagger />
+        <profile.api-docs />
         <profile.tls />
 
         <!-- Dependency versions -->
@@ -1037,9 +1037,12 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             </properties>
         </profile>
         <profile>
-            <id>swagger</id>
+            <id>api-docs</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
-                <profile.swagger>,swagger</profile.swagger>
+                <profile.api-docs>,api-docs</profile.api-docs>
             </properties>
         </profile>
         <profile>
@@ -1050,7 +1053,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         </profile>
 <%_ if (!skipClient) { _%>
         <profile>
-            <id>webpack</id>
+            <id>webapp</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -1104,7 +1107,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                             </execution>
     <%_ } _%>
                             <execution>
-                                <id>webpack build dev</id>
+                                <id>webapp build dev</id>
                                 <goals>
                                     <goal><%= clientPackageManager %></goal>
                                 </goals>
@@ -1225,13 +1228,13 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                             </execution>
     <%_ } _%>
                             <execution>
-                                <id>webpack build test</id>
+                                <id>webapp build test</id>
                                 <goals>
                                     <goal><%= clientPackageManager %></goal>
                                 </goals>
                                 <phase>test</phase>
                                 <configuration>
-                                    <arguments>run webpack:test</arguments>
+                                    <arguments>run webapp:test</arguments>
     <%_ if (clientPackageManager === 'yarn') { _%>
                                     <yarnInheritsProxyConfigFromMaven>false</yarnInheritsProxyConfigFromMaven>
     <%_ } else if (clientPackageManager === 'npm') { _%>
@@ -1240,13 +1243,13 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>webpack build prod</id>
+                                <id>webapp build prod</id>
                                 <goals>
                                     <goal><%= clientPackageManager %></goal>
                                 </goals>
                                 <phase>generate-resources</phase>
                                 <configuration>
-                                    <arguments>run webpack:prod</arguments>
+                                    <arguments>run webapp:prod</arguments>
                                     <environmentVariables>
                                         <APP_VERSION>${project.version}</APP_VERSION>
                                     </environmentVariables>
@@ -1291,7 +1294,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
 
             </dependencies>
             <properties>
-                <profiles.active>prod${profile.swagger}${profile.no-liquibase}</profiles.active>
+                <profiles.active>prod${profile.api-docs}${profile.no-liquibase}</profiles.active>
             </properties>
         </profile>
         <profile>
