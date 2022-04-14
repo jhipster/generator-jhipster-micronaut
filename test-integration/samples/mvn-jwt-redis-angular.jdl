@@ -12,7 +12,7 @@ application {
     clientThemeVariant dark
     creationTimestamp 1590870527345
     databaseType sql
-    devDatabaseType mariadb
+    devDatabaseType postgresql
     dtoSuffix DTO
     embeddableLaunchScript false
     enableHibernateCache true
@@ -23,7 +23,7 @@ application {
     messageBroker false
     nativeLanguage en
     packageName com.mycompany.myapp
-    prodDatabaseType mariadb
+    prodDatabaseType postgresql
     searchEngine false
     serverPort 8080
     serviceDiscoveryType false

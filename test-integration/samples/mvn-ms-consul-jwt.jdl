@@ -19,7 +19,7 @@ application {
     messageBroker false
     nativeLanguage en
     packageName com.mycompany.myapp
-    prodDatabaseType mysql
+    prodDatabaseType postgresql
     searchEngine false
     serverPort 8081
     serviceDiscoveryType consul
