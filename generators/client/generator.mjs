@@ -59,10 +59,18 @@ export default class extends extendGenerator(ClientGenerator) {
         }
       },
 
-      customizeCypressForMicronaut({ application: { cypressTests, authenticationTypeJwt } }) {
+      customizeCypressForMicronaut({ application: { cypressTests, authenticationTypeJwt, authenticationTypeOauth2 } }) {
         if (!cypressTests) return;
+        this.editFile('src/test/javascript/cypress/integration/administration/administration.spec.ts', content =>
+          content.replaceAll('info.activeProfiles', "info['active-profiles']")
+        );
         if (authenticationTypeJwt) {
           this.editFile('src/test/javascript/cypress/support/commands.ts', content => content.replaceAll('id_token', 'access_token'));
+        }
+        if (!authenticationTypeOauth2) {
+          this.editFile('src/test/javascript/cypress/integration/account/reset-password-page.spec.ts', content =>
+            content.replaceAll('user@gmail.com', 'user@localhost.fr')
+          );
         }
       },
     };
