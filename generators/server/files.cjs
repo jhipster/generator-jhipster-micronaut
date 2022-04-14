@@ -665,8 +665,8 @@ const serverFiles = {
       templates: [
         // Handlers
         {
-          file: 'package/web/rest/errors/handlers/BadRequestAlertExceptionHandler.java',
-          renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/BadRequestAlertExceptionHandler.java`,
+          file: 'package/web/rest/errors/handlers/AbstractThrowableProblemHandler.java',
+          renameTo: generator => `${generator.javaDir}web/rest/errors/handlers/AbstractThrowableProblemHandler.java`,
           useBluePrint: true,
         },
         {
