@@ -38,6 +38,39 @@ const serverFiles = {
     {
       path: SERVER_MAIN_SRC_DIR,
       templates: [
+        {
+          path: SERVER_MAIN_SRC_DIR,
+          templates: [
+            {
+              file: 'package/domain/Entity.java.jhi',
+              renameTo: generator => `${generator.entityAbsoluteFolder}/domain/${generator.persistClass}.java.jhi`,
+            },
+            {
+              file: 'package/domain/Entity.java.jhi.javax_validation',
+              renameTo: generator => `${generator.entityAbsoluteFolder}/domain/${generator.persistClass}.java.jhi.javax_validation`,
+            },
+            {
+              condition: generator => generator.databaseTypeSql && !generator.reactive,
+              path: SERVER_MAIN_SRC_DIR,
+              templates: [
+                {
+                  file: 'package/domain/Entity.java.jhi.javax_persistence',
+                  renameTo: generator => `${generator.entityAbsoluteFolder}/domain/${generator.persistClass}.java.jhi.javax_persistence`,
+                },
+              ],
+            },
+            {
+              condition: generator => generator.databaseTypeSql && !generator.reactive && generator.enableHibernateCache,
+              path: SERVER_MAIN_SRC_DIR,
+              templates: [
+                {
+                  file: 'package/domain/Entity.java.jhi.hibernate_cache',
+                  renameTo: generator => `${generator.entityAbsoluteFolder}/domain/${generator.persistClass}.java.jhi.hibernate_cache`,
+                },
+              ],
+            },
+          ],
+        },
         /*
         {
           file: 'package/domain/Entity.java',
