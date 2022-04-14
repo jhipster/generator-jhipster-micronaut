@@ -127,8 +127,14 @@ public class`
             )
         );
 
+        const hasUserRelationship = this.relationships.find(({ otherEntity }) => otherEntity === this.user);
+        let replacement = 'componentModel = "jsr330"';
+        if (hasUserRelationship) {
+          replacement += ', uses = UserMapper.class';
+        }
+
         this.editFile(`src/main/java/${this.entityAbsoluteFolder}/service/mapper/${this.entityClass}Mapper.java`, content =>
-          content.replace('componentModel = "spring"', 'componentModel = "jsr330"')
+          content.replace('componentModel = "spring"', replacement)
         );
       },
     };
