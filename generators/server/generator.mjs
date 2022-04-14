@@ -54,11 +54,11 @@ export default class extends extendGenerator(ServerGenerator) {
       ...super._configuring(),
 
       configureMicronaut() {
-        const { applicationType, authenticationType } = this.jhipsterConfig;
+        const { applicationType, authenticationType, jwtSecretKey } = this.jhipsterConfig;
         if (applicationType !== 'monolith' && applicationType !== 'microservice') {
           throw new Error('Application should be only monolith or microservice for this blueprint');
         }
-        if (authenticationType === 'oauth2') {
+        if (authenticationType === 'oauth2' && !jwtSecretKey) {
           this.jhipsterConfig.jwtSecretKey = getBase64Secret.call(this, null, 64);
         }
       },
