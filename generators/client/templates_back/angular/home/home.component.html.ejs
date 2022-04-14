@@ -27,12 +27,12 @@
             </div>
 
             <div class="alert alert-warning" *ngSwitchCase="false">
-                <span<%= jhiPrefix %>Translate="global.messages.info.authenticated.prefix">If you want to </span>
-                <a class="alert-link" (click)="login()"<%= jhiPrefix %>Translate="global.messages.info.authenticated.link">sign in</a><span<%= jhiPrefix %>Translate="global.messages.info.authenticated.suffix">, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
+                <span <%= jhiPrefix %>Translate="global.messages.info.authenticated.prefix">If you want to </span>
+                <a class="alert-link" (click)="login()"<%= jhiPrefix %>Translate="global.messages.info.authenticated.link">sign in</a><span <%= jhiPrefix %>Translate="global.messages.info.authenticated.suffix">, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
             </div>
             <%_ if (!skipUserManagement) { _%>
             <div class="alert alert-warning" *ngSwitchCase="false">
-                <span<%= jhiPrefix %>Translate="global.messages.info.register.noaccount">You don't have an account yet?</span>&nbsp;
+                <span <%= jhiPrefix %>Translate="global.messages.info.register.noaccount">You don't have an account yet?</span>&nbsp;
                 <a class="alert-link" routerLink="account/register"<%= jhiPrefix %>Translate="global.messages.info.register.link">Register a new account</a>
             </div>
             <%_ } _%>
@@ -48,7 +48,7 @@
             <li><a href="https://twitter.com/java_hipster" target="_blank" rel="noopener noreferrer"<%= jhiPrefix %>Translate="home.link.follow">follow @java_hipster on Twitter</a></li>
         </ul>
         <p>
-            <span<%= jhiPrefix %>Translate="home.like">If you like MHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster-micronaut" target="_blank" rel="noopener noreferrer"<%= jhiPrefix %>Translate="home.github">GitHub</a>!
+            <span <%= jhiPrefix %>Translate="home.like">If you like MHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster-micronaut" target="_blank" rel="noopener noreferrer"<%= jhiPrefix %>Translate="home.github">GitHub</a>!
         </p>
     </div>
 </div>
