@@ -19,9 +19,11 @@ import {
 import { writeFiles } from './files.cjs';
 import { extendGenerator } from '#lib/utils.mjs';
 
+import NeedleServerChacheMn from './needle-server-cache-mn.cjs';
+
 export default class extends extendGenerator(EntityServerGenerator) {
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
+    super(args, opts, { taskPrefix: PRIORITY_PREFIX, priorityArgs: true, ...features });
 
     if (this.options.help) return;
 
@@ -103,6 +105,14 @@ export default class extends extendGenerator(EntityServerGenerator) {
   get [POST_WRITING_PRIORITY]() {
     return {
       ...super._postWriting(),
+
+      customizeFiles({ application: { cacheProvider, enableHibernateCache } }) {
+        if (!enableHibernateCache || !cacheProvider) return;
+        const serverCacheMn = new NeedleServerChacheMn(this);
+        if (['ehcache', 'caffeine', 'infinispan', 'redis'].includes(cacheProvider)) {
+          serverCacheMn.addEntityToCache(this.persistClass, this.relationships, this.packageName, this.packageFolder, this.cacheProvider);
+        }
+      },
     };
   }
 
