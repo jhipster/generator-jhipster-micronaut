@@ -310,6 +310,7 @@ public class UserService {
                 user.setEmail(email.toLowerCase());
                 user.setLangKey(langKey);
                 user.setImageUrl(imageUrl);
+                user = userRepository.update(user);
                 <%_ if (usesCache) { _%>
                 this.clearUserCaches(user);
                 <%_ } _%>
