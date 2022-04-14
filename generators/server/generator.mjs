@@ -98,8 +98,10 @@ export default class extends extendGenerator(ServerGenerator) {
   }
 
   get [WRITING_PRIORITY]() {
+    const { writeEnumFiles } = super._writing();
     return {
       ...writeFiles(),
+      writeEnumFiles,
     };
   }
 
