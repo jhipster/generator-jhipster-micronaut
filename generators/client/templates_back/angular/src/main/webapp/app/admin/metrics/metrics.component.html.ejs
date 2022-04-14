@@ -18,14 +18,14 @@
 -%>
 <div>
     <h2>
-        <span id="metrics-page-heading" jhiTranslate="metrics.title">Application Metrics</span>
+        <span id="metrics-page-heading"<%= jhiPrefix %>Translate="metrics.title">Application Metrics</span>
 
         <button class="btn btn-primary float-right" (click)="refresh()">
-            <fa-icon icon="sync"></fa-icon> <span jhiTranslate="metrics.refresh.button">Refresh</span>
+            <fa-icon icon="sync"></fa-icon> <span<%= jhiPrefix %>Translate="metrics.refresh.button">Refresh</span>
         </button>
     </h2>
 
-    <h3 jhiTranslate="metrics.jvm.title">JVM Metrics</h3>
+    <h3<%= jhiPrefix %>Translate="metrics.jvm.title">JVM Metrics</h3>
 
     <div class="row" *ngIf="metrics && !updatingMetrics">
         <jhi-jvm-memory
@@ -47,7 +47,7 @@
     </div>
 
     <div *ngIf="metrics && metricsKeyExists('garbageCollector')">
-        <h3 jhiTranslate="metrics.jvm.gc.title">Garbage collector statistics</h3>
+        <h3<%= jhiPrefix %>Translate="metrics.jvm.gc.title">Garbage collector statistics</h3>
 
         <jhi-metrics-garbagecollector
             [updating]="updatingMetrics"
@@ -55,7 +55,7 @@
         </jhi-metrics-garbagecollector>
     </div>
 
-    <div class="well well-lg" *ngIf="updatingMetrics" jhiTranslate="metrics.updating">Updating...</div>
+    <div class="well well-lg" *ngIf="updatingMetrics"<%= jhiPrefix %>Translate="metrics.updating">Updating...</div>
 
     <jhi-metrics-request
         *ngIf="metrics && metricsKeyExists('http.server.requests')"
