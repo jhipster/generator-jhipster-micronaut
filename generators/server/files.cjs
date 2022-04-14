@@ -130,12 +130,10 @@ const serverFiles = {
         'jhipster-registry.yml',
         {
           file: 'config/docker-config/application.yml',
-          method: 'copy',
           renameTo: () => 'central-server-config/docker-config/application.yml',
         },
         {
           file: 'config/localhost-config/application.yml',
-          method: 'copy',
           renameTo: () => 'central-server-config/localhost-config/application.yml',
         },
       ],
