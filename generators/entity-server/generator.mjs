@@ -87,8 +87,11 @@ export default class extends extendGenerator(EntityServerGenerator) {
   }
 
   get [WRITING_PRIORITY]() {
+    const { writeEnumFiles } = super._writing();
+    console.log(writeEnumFiles);
     return {
       ...writeFiles(),
+      writeEnumFiles,
     };
   }
 
