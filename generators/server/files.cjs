@@ -16,7 +16,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const mkdirp = require('mkdirp');
 const constants = require('generator-jhipster/generators/generator-constants');
 const baseServerFiles = require('generator-jhipster/generators/server/files').serverFiles;
 
@@ -1015,20 +1014,15 @@ const serverFiles = {
 /* eslint-disable no-template-curly-in-string */
 function writeFiles() {
   return {
-    setUp() {
+    async writeFiles({ application: { reactive } }) {
+      const rootTemplatesPath = reactive ? ['reactive', ''] : undefined;
       this.javaDir = `${this.packageFolder}/`;
       this.testDir = `${this.packageFolder}/`;
 
-      // Create server resource files
-      mkdirp(SERVER_MAIN_RES_DIR);
-      mkdirp(`${SERVER_TEST_SRC_DIR}/${this.testDir}`);
-      this.generateKeyStore();
-    },
-
-    async writeFiles() {
       this.writeFiles({
         sections: serverFiles,
         context: this,
+        rootTemplatesPath,
       });
     },
 
