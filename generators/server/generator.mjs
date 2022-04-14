@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import os from 'os';
+import { utils as jhipsterUtils } from 'generator-jhipster';
 import ServerGenerator from 'generator-jhipster/esm/generators/server';
 import {
   PRIORITY_PREFIX,
@@ -15,14 +16,17 @@ import {
   INSTALL_PRIORITY,
   END_PRIORITY,
 } from 'generator-jhipster/esm/priorities';
+
 import { writeFiles } from './files.cjs';
 import { askForModuleName, askForServerSideOpts } from './prompts.cjs';
 import mnConstants from '../constants.cjs';
 import { extendGenerator } from '#lib/utils.mjs';
 
+const { getBase64Secret } = jhipsterUtils;
+
 export default class extends extendGenerator(ServerGenerator) {
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
+    super(args, opts, { taskPrefix: PRIORITY_PREFIX, priorityArgs: true, ...features });
 
     if (this.options.help) return;
 
@@ -48,10 +52,14 @@ export default class extends extendGenerator(ServerGenerator) {
   get [CONFIGURING_PRIORITY]() {
     return {
       ...super._configuring(),
+
       configureMicronaut() {
-        const { applicationType } = this.jhipsterConfig;
+        const { applicationType, authenticationType } = this.jhipsterConfig;
         if (applicationType !== 'monolith' && applicationType !== 'microservice') {
           throw new Error('Application should be only monolith or microservice for this blueprint');
+        }
+        if (authenticationType === 'oauth2') {
+          this.jhipsterConfig.jwtSecretKey = getBase64Secret.call(this, null, 64);
         }
       },
     };
@@ -72,6 +80,7 @@ export default class extends extendGenerator(ServerGenerator) {
   get [PREPARING_PRIORITY]() {
     return {
       ...super._preparing(),
+
       setupMnConstants() {
         this.MN_CONSTANTS = mnConstants;
         this.GRADLE_VERSION = mnConstants.GRADLE_VERSION;
@@ -97,6 +106,27 @@ export default class extends extendGenerator(ServerGenerator) {
   get [POST_WRITING_PRIORITY]() {
     return {
       ...super._postWriting(),
+
+      customizeMaven({ application: { buildToolMaven } }) {
+        if (!buildToolMaven) return;
+        this.packageJson.merge({
+          scripts: {
+            'postci:e2e:package':
+              'rm target/original*.$npm_package_config_packaging && cp target/*.$npm_package_config_packaging target/e2e.$npm_package_config_packaging',
+          },
+        });
+      },
+
+      customizeGradle({ application: { buildToolGradle } }) {
+        if (!buildToolGradle) return;
+        this.packageJson.merge({
+          scripts: {
+            'java:jar': './gradlew shadowJar -x test -x integrationTest',
+            'java:war': './gradlew shadowWar -Pwar -x test -x integrationTest',
+            'java:docker': './gradlew shadowJar -Pprod jibDockerBuild',
+          },
+        });
+      },
     };
   }
 

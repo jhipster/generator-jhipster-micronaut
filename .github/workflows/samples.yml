@@ -86,11 +86,6 @@ jobs:
         run: npm run ci:frontend:test --if-present
       - name: 'Build App'
         run: npm run ci:e2e:package
-      - name: 'Copy jar'
-        run: |
-          ls target/*.jar
-          rm target/original*.jar
-          cp target/*.jar target/e2e.jar
       - name: 'E2E Tests'
         run: npm run ci:e2e:run --if-present
       - name: Dump docker logs
