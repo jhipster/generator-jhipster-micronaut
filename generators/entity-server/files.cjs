@@ -157,24 +157,23 @@ const serverFiles = {
         },
       ],
     },
+  ],
+  mapstruct: [
     {
       condition: generator => generator.dto === 'mapstruct',
       path: SERVER_MAIN_SRC_DIR,
       templates: [
         {
           file: 'package/service/dto/EntityDTO.java',
-          useBluePrint: true,
-          renameTo: generator => `${generator.packageFolder}/service/dto/${generator.asDto(generator.entityClass)}.java`,
+          renameTo: generator => `${generator.entityAbsoluteFolder}/service/dto/${generator.restClass}.java`,
         },
         {
           file: 'package/service/mapper/BaseEntityMapper.java',
-          useBluePrint: true,
-          renameTo: generator => `${generator.packageFolder}/service/mapper/EntityMapper.java`,
+          renameTo: generator => `${generator.entityAbsoluteFolder}/service/mapper/EntityMapper.java`,
         },
         {
           file: 'package/service/mapper/EntityMapper.java',
-          useBluePrint: true,
-          renameTo: generator => `${generator.packageFolder}/service/mapper/${generator.entityClass}Mapper.java`,
+          renameTo: generator => `${generator.entityAbsoluteFolder}/service/mapper/${generator.entityClass}Mapper.java`,
         },
       ],
     },

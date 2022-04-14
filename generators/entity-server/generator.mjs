@@ -98,12 +98,38 @@ export default class extends extendGenerator(EntityServerGenerator) {
     return {
       ...super._postWriting(),
 
+      // Override jhipster customizeFiles
       customizeFiles({ application: { cacheProvider, enableHibernateCache } }) {
         if (!enableHibernateCache || !cacheProvider) return;
         const serverCacheMn = new NeedleServerChacheMn(this);
         if (['ehcache', 'caffeine', 'infinispan', 'redis'].includes(cacheProvider)) {
           serverCacheMn.addEntityToCache(this.persistClass, this.relationships, this.packageName, this.packageFolder, this.cacheProvider);
         }
+      },
+
+      customizeMapstruct() {
+        if (this.dto !== 'mapstruct') return;
+
+        this.editFile(
+          `src/main/java/${this.entityAbsoluteFolder}/service/dto/${this.restClass}.java`,
+          content =>
+            content.replace(
+              'import java.io.Serializable;',
+              `import io.micronaut.core.annotation.Introspected;
+import java.io.Serializable;`
+            ),
+          content =>
+            content.replace(
+              '\npublic class',
+              `
+@Introspected
+public class`
+            )
+        );
+
+        this.editFile(`src/main/java/${this.entityAbsoluteFolder}/service/mapper/${this.entityClass}Mapper.java`, content =>
+          content.replace('componentModel = "spring"', 'componentModel = "jsr330"')
+        );
       },
     };
   }
