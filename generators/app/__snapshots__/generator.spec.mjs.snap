@@ -266,7 +266,7 @@ Object {
   "src/main/java/com/mycompany/myapp/web/rest/errors/LoginAlreadyUsedException.java": Object {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/web/rest/errors/handlers/BadRequestAlertExceptionHandler.java": Object {
+  "src/main/java/com/mycompany/myapp/web/rest/errors/handlers/AbstractThrowableProblemHandler.java": Object {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/errors/handlers/ConstraintViolationExceptionHandler.java": Object {

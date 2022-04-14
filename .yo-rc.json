@@ -33,10 +33,10 @@
         "sbs": true,
         "written": true
       },
-      "database-changelog": {
+      "cypress": {
         "command": false,
-        "priorities": [],
-        "sbs": false,
+        "priorities": ["postWriting"],
+        "sbs": true,
         "written": true
       },
       "entity": {
@@ -120,6 +120,6 @@
     "prettierDefaultIndent": 2,
     "projectName": "Micronaut Blueprint",
     "skipCommitHook": true,
-    "subGenerators": ["app", "client", "common", "database-changelog", "entity", "entity-server", "heroku", "server"]
+    "subGenerators": ["app", "client", "common", "cypress", "database-changelog", "entity", "entity-server", "heroku", "server"]
   }
 }
