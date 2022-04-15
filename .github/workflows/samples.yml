@@ -66,6 +66,7 @@ jobs:
         uses: ./generator-jhipster/.github/actions/setup
         with:
           jdl-sample: ${{ matrix.app-type }}
+          application-environment: dev
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ steps.setup.outputs.node-version }}
