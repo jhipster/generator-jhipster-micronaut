@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import ClientGenerator from 'generator-jhipster/esm/generators/client';
 import { PRIORITY_PREFIX, DEFAULT_PRIORITY, WRITING_PRIORITY, POST_WRITING_PRIORITY } from 'generator-jhipster/esm/priorities';
-import { angularFiles } from './files.cjs';
+import { angularFiles, reactFiles } from './files.cjs';
 import { extendGenerator } from '#lib/utils.mjs';
 
 export default class extends extendGenerator(ClientGenerator) {
@@ -32,11 +32,16 @@ export default class extends extendGenerator(ClientGenerator) {
   get [WRITING_PRIORITY]() {
     return {
       async writeCustomFiles({ application }) {
-        const { clientFrameworkAngular } = application;
+        const { clientFrameworkAngular, clientFrameworkReact } = application;
         if (clientFrameworkAngular) {
           this.deleteDestination(`src/main/webapp/app/admin/configuration`);
           await this.writeFiles({
             sections: angularFiles,
+            context: application,
+          });
+        } else if (clientFrameworkReact) {
+          await this.writeFiles({
+            sections: reactFiles,
             context: application,
           });
         }
@@ -62,6 +67,37 @@ export default class extends extendGenerator(ClientGenerator) {
 
           // Should be dropped when the blueprint supports public/admin users.
           this.editFile('src/main/webapp/app/admin/user-management/service/user-management.service.ts', content =>
+            content.replaceAll('api/admin/users', 'api/users')
+          );
+        }
+      },
+
+      customizeReactForMicronaut({ application: { clientFrameworkReact, authenticationTypeJwt } }) {
+        if (!clientFrameworkReact) return;
+        if (authenticationTypeJwt) {
+          this.editFile('src/main/webapp/app/shared/reducers/application-profile.ts', content =>
+            content.replaceAll('.activeProfiles', "['active-profiles']")
+          );
+          this.editFile('src/main/webapp/app/shared/reducers/application-profile.spec.ts', content =>
+            content.replaceAll('activeProfiles', "['active-profiles']")
+          );
+          this.editFile('src/main/webapp/app/modules/administration/administration.reducer.spec.ts', content =>
+            content.replaceAll('activeProfiles', "['active-profiles']")
+          );
+
+          this.editFile('src/main/webapp/app/shared/reducers/authentication.ts', content =>
+            content
+              .replace('const bearerToken = response?.headers?.authorization;', 'const jwt = response?.data?.access_token;')
+              .replace("bearerToken && bearerToken.slice(0, 7) === 'Bearer '", 'jwt')
+              .replace('const jwt = bearerToken.slice(7, bearerToken.length);', '')
+          );
+
+          this.editFile('src/main/webapp/app/modules/administration/health/health.tsx', content =>
+            content.replaceAll('components', 'details')
+          );
+
+          // Should be dropped when the blueprint supports public/admin users.
+          this.editFile('src/main/webapp/app/modules/administration/user-management/user-management.reducer.ts', content =>
             content.replaceAll('api/admin/users', 'api/users')
           );
         }

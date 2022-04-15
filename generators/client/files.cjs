@@ -200,6 +200,7 @@ const reactFiles = {
     {
       condition: generator => generator.clientFramework === 'react',
       templates: [
+        /*
         {
           file: 'react/src/main/webapp/manifest.webapp',
           renameTo: () => `${MAIN_SRC_DIR}manifest.webapp`,
@@ -281,6 +282,7 @@ const reactFiles = {
           useBluePrint: true,
           renameTo: () => `${CLIENT_WEBPACK_DIR}/webpack.dev.js`,
         },
+        */
       ],
     },
   ],
