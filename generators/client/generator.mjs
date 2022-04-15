@@ -85,6 +85,14 @@ export default class extends extendGenerator(ClientGenerator) {
             content.replaceAll('activeProfiles', "['active-profiles']")
           );
 
+          this.editFile('src/main/webapp/app/modules/home/home.tsx', content =>
+            content
+              .replaceAll('https://github.com/jhipster/generator-jhipster', 'https://github.com/jhipster/generator-jhipster-micronaut')
+              .replace('If you like JHipster', 'If you like MHipster')
+              .replace('JHipster bug tracker', 'MHipster bug tracker')
+              .replace('If you have any question on JHipster', 'If you have any question on JHipster or MHipster')
+          );
+
           this.editFile('src/main/webapp/app/shared/reducers/authentication.ts', content =>
             content
               .replace('const bearerToken = response?.headers?.authorization;', 'const jwt = response?.data?.access_token;')

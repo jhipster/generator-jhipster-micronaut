@@ -33,6 +33,8 @@ export default class extends extendGenerator(ServerGenerator) {
     if (!this.options.jhipsterContext) {
       throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
     }
+
+    this.configOptions.backendName = 'Micronaut';
   }
 
   async _postConstruct() {
