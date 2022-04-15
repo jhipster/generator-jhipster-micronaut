@@ -113,6 +113,15 @@ export default class extends extendGenerator(ServerGenerator) {
     return {
       ...super._postWriting(),
 
+      customizeScripts() {
+        this.packageJson.merge({
+          scripts: {
+            // Remove 'npm run backend:doc:test && npm run backend:nohttp:test'
+            'ci:backend:test': 'npm run backend:info && npm run backend:unit:test -- -P$npm_package_config_default_environment',
+          },
+        });
+      },
+
       customizeMaven({ application: { buildToolMaven } }) {
         if (!buildToolMaven) return;
         this.packageJson.merge({
