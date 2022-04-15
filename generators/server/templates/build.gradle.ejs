@@ -583,6 +583,9 @@ wrapper {
 }
 
 <%_ if (!skipClient) { _%>
+task webapp_test(type: NpmTask, dependsOn: "npm_install") {
+    args = ["run", "webapp:test"]
+}
 
 if (project.hasProperty("nodeInstall")) {
     node {
@@ -591,6 +594,8 @@ if (project.hasProperty("nodeInstall")) {
         download = true
     }
 }
+
+test.dependsOn webapp_test
 <%_ } _%>
 
 compileJava.dependsOn processResources
