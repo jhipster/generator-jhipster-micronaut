@@ -2,7 +2,7 @@
 const variableToComparePrefix = isUpdate ? 'UPDATED_' : 'DEFAULT_';
 _%>
 
-<%_ for (idx in fields) { if (fields[idx].fieldType === 'ZonedDateTime') { _%>
+<%_ for (idx in fields) { if (fields[idx].id) continue; if (fields[idx].fieldType === 'ZonedDateTime') { _%>
         assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= variableToComparePrefix + fields[idx].fieldNameUnderscored.toUpperCase() %>);
 <%_ } else if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { _%>
         assertThat(test<%= entityClass %>.get<%= fields[idx].fieldInJavaBeanMethod %>()).isEqualTo(<%= variableToComparePrefix + fields[idx].fieldNameUnderscored.toUpperCase() %>);

@@ -127,7 +127,7 @@ import static org.assertj.core.api.Assertions.assertThat;
     import static <%= packageName %>.web.rest.TestUtil.mockAuthentication;
 <%_ } _%>
 
-<%_ for (idx in fields) { if (fields[idx].fieldIsEnum === true) { _%>import <%= packageName %>.domain.enumeration.<%= fields[idx].fieldType %>;
+<%_ for (idx in fields) { if (fields[idx].id) continue; if (fields[idx].fieldIsEnum === true) { _%>import <%= packageName %>.domain.enumeration.<%= fields[idx].fieldType %>;
 <%_ } } _%>
 /**
  * Integration tests for the {@Link <%= entityClass %>Resource} REST controller.
@@ -140,6 +140,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') { %>extends AbstractCassandraTest <% } %>{
     <%_ for (idx in fields) {
+    if (fields[idx].id) continue;
     const defaultValueName = 'DEFAULT_' + fields[idx].fieldNameUnderscored.toUpperCase();
     const updatedValueName = 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase();
     const smallerValueName = 'SMALLER_' + fields[idx].fieldNameUnderscored.toUpperCase();
@@ -368,12 +369,12 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
      */
     public static <%= asEntity(entityClass) %> createEntity(<% if (databaseType === 'sql') { %>TransactionOperations<Connection> transactionManager, EntityManager em<% } %>) {
         <%_ if (fluentMethods) { _%>
-        <%= asEntity(entityClass) %> <%= asEntity(entityInstance) %> = new <%= asEntity(entityClass) %>()<% for (idx in fields) { %>
+        <%= asEntity(entityClass) %> <%= asEntity(entityInstance) %> = new <%= asEntity(entityClass) %>()<% for (idx in fields) { if (fields[idx].id) continue;%>
             .<%= fields[idx].fieldName %>(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>)<% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %>
             .<%= fields[idx].fieldName %>ContentType(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE)<% } %><% } %>;
         <%_ } else { _%>
         <%= asEntity(entityClass) %> <%= asEntity(entityInstance) %> = new <%= asEntity(entityClass) %>();
-            <%_ for (idx in fields) { _%>
+            <%_ for (idx in fields) { if (fields[idx].id) continue;_%>
         <%= asEntity(entityInstance) %>.set<%= fields[idx].fieldInJavaBeanMethod %>(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>);
                 <%_ if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { _%>
         <%= asEntity(entityInstance) %>.set<%= fields[idx].fieldInJavaBeanMethod %>ContentType(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE);
@@ -511,7 +512,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ } _%>
     }
 
-<% for (idx in fields) { %><% if (fields[idx].fieldValidate === true) {
+<% for (idx in fields) { if (fields[idx].id) continue; %><% if (fields[idx].fieldValidate === true) {
     let required = false;
     if (fields[idx].fieldType !== 'byte[]' && fields[idx].fieldValidate === true && fields[idx].fieldValidateRules.includes('required')) {
         required = true;
@@ -596,11 +597,11 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%= asEntity(entityClass) %> updated<%= asEntity(entityClass) %> = <%= entityInstance %>Repository.findById(<%= asEntity(entityInstance) %>.getId()).get();
 
         <%_ if (fluentMethods && fields.length > 0) { _%>
-        updated<%= asEntity(entityClass) %><% for (idx in fields) { %>
+        updated<%= asEntity(entityClass) %><% for (idx in fields) { if (fields[idx].id) continue; %>
             .<%= fields[idx].fieldName %>(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>)<% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %>
             .<%= fields[idx].fieldName %>ContentType(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE)<% } %><% } %>;
         <%_ } else { _%>
-            <%_ for (idx in fields) { _%>
+            <%_ for (idx in fields) { if (fields[idx].id) continue; _%>
         updated<%= asEntity(entityClass) %>.set<%= fields[idx].fieldInJavaBeanMethod %>(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
                 <%_ if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { _%>
         updated<%= asEntity(entityClass) %>.set<%= fields[idx].fieldInJavaBeanMethod %>ContentType(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE);
