@@ -236,7 +236,7 @@ public class AccountResourceIT {
         HttpResponse<String> response = client.exchange(HttpRequest.POST("/api/register", invalidUser), String.class).
             onErrorReturn(t -> (HttpResponse<String>) ((HttpClientResponseException) t).getResponse()).blockingFirst();;
 
-        assertThat(response.status().getCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR.getCode());
+        assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
         Optional<User> user = userRepository.findOneByLogin("bob");
         assertThat(user.isPresent()).isFalse();
@@ -418,7 +418,7 @@ public class AccountResourceIT {
         userRepository.saveAndFlush(user);
         when(userService.requestPasswordReset(anyString())).thenReturn(Optional.of(user));
 
-        HttpResponse<String> response = client.exchange(HttpRequest.POST("/api/account/reset-password/init", "{\"mail\":\"password-reset@example.com\"}"), Argument.of(String.class)).
+        HttpResponse<String> response = client.exchange(HttpRequest.POST("/api/account/reset-password/init", "password-reset@example.com").contentType("text/plain"), Argument.of(String.class)).
             onErrorReturn(t -> (HttpResponse<String>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.OK.getCode());

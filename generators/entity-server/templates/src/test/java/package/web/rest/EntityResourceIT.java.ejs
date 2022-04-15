@@ -612,7 +612,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ } _%>
 
         @SuppressWarnings("unchecked")
-        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>", updated<%= httpEntityClass %>), <%= httpEntityClass %>.class)
+        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>/" + <%= asEntity(entityInstance) %>.getId(), updated<%= httpEntityClass %>), <%= httpEntityClass %>.class)
             .onErrorReturn(t -> (HttpResponse<<%= httpEntityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.OK.getCode());
@@ -633,7 +633,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         @SuppressWarnings("unchecked")
-        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>", <%= httpEntityInstance %>), <%= httpEntityClass %>.class)
+        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>/" + <%= asEntity(entityInstance) %>.getId(), <%= httpEntityInstance %>), <%= httpEntityClass %>.class)
             .onErrorReturn(t -> (HttpResponse<<%= httpEntityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
