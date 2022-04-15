@@ -35,6 +35,10 @@ export default class extends extendGenerator(ServerGenerator) {
     }
   }
 
+  async _postConstruct() {
+    await this.dependsOnJHipster('bootstrap-application');
+  }
+
   get [INITIALIZING_PRIORITY]() {
     return {
       ...super._initializing(),
