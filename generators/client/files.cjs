@@ -6,41 +6,47 @@ const {
   CLIENT_WEBPACK_DIR,
 } = require('generator-jhipster/generators/generator-constants');
 
+const commonFiles = {
+  layoutFiles: [
+    {
+      templates: [
+        {
+          file: `common/${MAIN_SRC_DIR}content/images/jhipster_family_member_4.svg`,
+          noEjs: true,
+          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4.svg`,
+        },
+        {
+          file: `common/${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-192.png`,
+          noEjs: true,
+          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-192.png`,
+        },
+        {
+          file: `common/${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-256.png`,
+          noEjs: true,
+          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-256.png`,
+        },
+        {
+          file: `common/${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-384.png`,
+          noEjs: true,
+          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-384.png`,
+        },
+        {
+          file: `common/${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-512.png`,
+          noEjs: true,
+          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-512.png`,
+        },
+      ],
+    },
+  ],
+};
+
 const angularFiles = {
+  ...commonFiles,
   angularMain: [
     {
       condition: generator => generator.clientFramework === 'angularX',
       templates: [
         /*
-        {
-          file: 'angular/src/main/webapp/content/images/jhipster_family_member_4.svg',
-          method: 'copy',
-          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4.svg`,
-        },
-        {
-          file: 'angular/src/main/webapp/content/images/jhipster_family_member_4_head-192.png',
-          method: 'copy',
-          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-192.png`,
-        },
-        {
-          file: 'angular/src/main/webapp/content/images/jhipster_family_member_4_head-256.png',
-          method: 'copy',
-          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-256.png`,
-        },
-        {
-          file: 'angular/src/main/webapp/content/images/jhipster_family_member_4_head-384.png',
-          method: 'copy',
-          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-384.png`,
-        },
-        {
-          file: 'angular/src/main/webapp/content/images/jhipster_family_member_4_head-512.png',
-          method: 'copy',
-          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-512.png`,
-        },
-        {
-          file: 'angular/src/main/webapp/manifest.webapp',
-          renameTo: () => `${MAIN_SRC_DIR}manifest.webapp`,
-        },
         {
           file: 'angular/home/home.scss',
           method: 'copy',
@@ -189,35 +195,11 @@ const angularFiles = {
 };
 
 const reactFiles = {
+  ...commonFiles,
   reactMain: [
     {
       condition: generator => generator.clientFramework === 'react',
       templates: [
-        {
-          file: 'react/src/main/webapp/content/images/jhipster_family_member_4.svg',
-          method: 'copy',
-          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4.svg`,
-        },
-        {
-          file: 'react/src/main/webapp/content/images/jhipster_family_member_4_head-192.png',
-          method: 'copy',
-          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-192.png`,
-        },
-        {
-          file: 'react/src/main/webapp/content/images/jhipster_family_member_4_head-256.png',
-          method: 'copy',
-          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-256.png`,
-        },
-        {
-          file: 'react/src/main/webapp/content/images/jhipster_family_member_4_head-384.png',
-          method: 'copy',
-          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-384.png`,
-        },
-        {
-          file: 'react/src/main/webapp/content/images/jhipster_family_member_4_head-512.png',
-          method: 'copy',
-          renameTo: () => `${MAIN_SRC_DIR}content/images/jhipster_family_member_4_head-512.png`,
-        },
         {
           file: 'react/src/main/webapp/manifest.webapp',
           renameTo: () => `${MAIN_SRC_DIR}manifest.webapp`,
