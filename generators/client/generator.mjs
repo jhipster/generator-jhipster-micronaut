@@ -51,20 +51,31 @@ export default class extends extendGenerator(ClientGenerator) {
 
   get [POST_WRITING_PRIORITY]() {
     return {
-      customizeAngularForMicronaut({ application: { clientFrameworkAngular, authenticationTypeJwt } }) {
+      customizeAngularForMicronaut({ application: { clientFrameworkAngular, authenticationTypeJwt, authenticationTypeOauth2 } }) {
         if (!clientFrameworkAngular) return;
+
+        // Update home with mhipster
+        this.editFile('src/main/webapp/app/home/home.component.html', content =>
+          content
+            .replaceAll('https://github.com/jhipster/generator-jhipster', 'https://github.com/jhipster/generator-jhipster-micronaut')
+            .replace('If you like JHipster', 'If you like MHipster')
+            .replace('JHipster bug tracker', 'MHipster bug tracker')
+            .replace('If you have any question on JHipster', 'If you have any question on JHipster or MHipster')
+        );
+
+        // health api
+        this.editFile('src/main/webapp/app/admin/health/health.model.ts', content => content.replaceAll('components', 'details'));
+        this.editFile('src/main/webapp/app/admin/health/health.component.html', content => content.replaceAll('components', 'details'));
+        this.editFile('src/main/webapp/app/admin/health/health.component.spec.ts', content => content.replaceAll('components', 'details'));
+
         if (authenticationTypeJwt) {
+          // authentication api
           this.editFile('src/main/webapp/app/core/auth/auth-jwt.service.ts', content => content.replaceAll('id_token', 'access_token'));
           this.editFile('src/main/webapp/app/core/auth/auth-jwt.service.spec.ts', content =>
             content.replaceAll('id_token', 'access_token')
           );
-
-          this.editFile('src/main/webapp/app/admin/health/health.model.ts', content => content.replaceAll('components', 'details'));
-          this.editFile('src/main/webapp/app/admin/health/health.component.html', content => content.replaceAll('components', 'details'));
-          this.editFile('src/main/webapp/app/admin/health/health.component.spec.ts', content =>
-            content.replaceAll('components', 'details')
-          );
-
+        }
+        if (!authenticationTypeOauth2) {
           // Should be dropped when the blueprint supports public/admin users.
           this.editFile('src/main/webapp/app/admin/user-management/service/user-management.service.ts', content =>
             content.replaceAll('api/admin/users', 'api/users')
@@ -72,38 +83,47 @@ export default class extends extendGenerator(ClientGenerator) {
         }
       },
 
-      customizeReactForMicronaut({ application: { clientFrameworkReact, authenticationTypeJwt } }) {
+      customizeReactForMicronaut({ application: { clientFrameworkReact, authenticationTypeJwt, authenticationTypeOauth2 } }) {
         if (!clientFrameworkReact) return;
+
+        // Update home with mhipster
+        this.editFile('src/main/webapp/app/modules/home/home.tsx', content =>
+          content
+            .replaceAll('https://github.com/jhipster/generator-jhipster', 'https://github.com/jhipster/generator-jhipster-micronaut')
+            .replace('If you like JHipster', 'If you like MHipster')
+            .replace('JHipster bug tracker', 'MHipster bug tracker')
+            .replace('If you have any question on JHipster', 'If you have any question on JHipster or MHipster')
+        );
+
+        // health api
+        this.editFile('src/main/webapp/app/modules/administration/health/health.tsx', content =>
+          content.replaceAll('components', 'details')
+        );
+
+        // active-profiles api
+        this.editFile('src/main/webapp/app/shared/reducers/application-profile.ts', content =>
+          content.replaceAll('.activeProfiles', "['active-profiles']")
+        );
+        this.editFile('src/main/webapp/app/shared/reducers/application-profile.spec.ts', content =>
+          content.replaceAll('activeProfiles', "['active-profiles']")
+        );
+        this.editFile('src/main/webapp/app/modules/administration/administration.reducer.spec.ts', content =>
+          content.replaceAll('activeProfiles', "['active-profiles']")
+        );
+
         if (authenticationTypeJwt) {
-          this.editFile('src/main/webapp/app/shared/reducers/application-profile.ts', content =>
-            content.replaceAll('.activeProfiles', "['active-profiles']")
+          // authentication api
+          this.editFile('src/main/webapp/app/shared/reducers/authentication.spec.ts', content =>
+            content.replaceAll("headers: { authorization: 'Bearer ", "data: { access_token: '")
           );
-          this.editFile('src/main/webapp/app/shared/reducers/application-profile.spec.ts', content =>
-            content.replaceAll('activeProfiles', "['active-profiles']")
-          );
-          this.editFile('src/main/webapp/app/modules/administration/administration.reducer.spec.ts', content =>
-            content.replaceAll('activeProfiles', "['active-profiles']")
-          );
-
-          this.editFile('src/main/webapp/app/modules/home/home.tsx', content =>
-            content
-              .replaceAll('https://github.com/jhipster/generator-jhipster', 'https://github.com/jhipster/generator-jhipster-micronaut')
-              .replace('If you like JHipster', 'If you like MHipster')
-              .replace('JHipster bug tracker', 'MHipster bug tracker')
-              .replace('If you have any question on JHipster', 'If you have any question on JHipster or MHipster')
-          );
-
           this.editFile('src/main/webapp/app/shared/reducers/authentication.ts', content =>
             content
               .replace('const bearerToken = response?.headers?.authorization;', 'const jwt = response?.data?.access_token;')
               .replace("bearerToken && bearerToken.slice(0, 7) === 'Bearer '", 'jwt')
               .replace('const jwt = bearerToken.slice(7, bearerToken.length);', '')
           );
-
-          this.editFile('src/main/webapp/app/modules/administration/health/health.tsx', content =>
-            content.replaceAll('components', 'details')
-          );
-
+        }
+        if (!authenticationTypeOauth2) {
           // Should be dropped when the blueprint supports public/admin users.
           this.editFile('src/main/webapp/app/modules/administration/user-management/user-management.reducer.ts', content =>
             content.replaceAll('api/admin/users', 'api/users')

@@ -791,6 +791,21 @@ Object {
   "src/main/webapp/content/images/jhipster_family_member_3_head-512.png": Object {
     "stateCleared": "modified",
   },
+  "src/main/webapp/content/images/jhipster_family_member_4.svg": Object {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_4_head-192.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_4_head-256.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_4_head-384.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/content/images/jhipster_family_member_4_head-512.png": Object {
+    "stateCleared": "modified",
+  },
   "src/main/webapp/content/images/logo-jhipster.png": Object {
     "stateCleared": "modified",
   },
