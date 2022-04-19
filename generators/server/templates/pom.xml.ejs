@@ -41,9 +41,6 @@ _%>
     <%_ if (clientPackageManager === 'npm') { _%>
         <npm.version><%= NPM_VERSION %></npm.version>
     <%_ } _%>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-        <yarn.version>v<%= YARN_VERSION %></yarn.version>
-    <%_ } _%>
 <%_ } _%>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -58,7 +55,7 @@ _%>
 <%_ if (databaseType === 'sql') { _%>
         <profile.no-liquibase />
 <%_ } _%>
-        <profile.swagger />
+        <profile.api-docs />
         <profile.tls />
 
         <!-- Dependency versions -->
@@ -100,7 +97,7 @@ _%>
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
         <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
         <maven-exec-plugin.version>1.6.0</maven-exec-plugin.version>
-        <micronaut-plugin.version>1.1.7</micronaut-plugin.version>
+        <micronaut-plugin.version>3.2.3</micronaut-plugin.version>
 
 <%_ if (!skipClient) { _%>
         <frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
@@ -1037,9 +1034,12 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             </properties>
         </profile>
         <profile>
-            <id>swagger</id>
+            <id>api-docs</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
-                <profile.swagger>,swagger</profile.swagger>
+                <profile.api-docs>,api-docs</profile.api-docs>
             </properties>
         </profile>
         <profile>
@@ -1050,7 +1050,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         </profile>
 <%_ if (!skipClient) { _%>
         <profile>
-            <id>webpack</id>
+            <id>webapp</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -1068,24 +1068,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
                         <executions>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-                            <execution>
-                                <id>install node and yarn</id>
-                                <goals>
-                                    <goal>install-node-and-yarn</goal>
-                                </goals>
-                                <configuration>
-                                    <nodeVersion>${node.version}</nodeVersion>
-                                    <yarnVersion>${yarn.version}</yarnVersion>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>yarn install</id>
-                                <goals>
-                                    <goal>yarn</goal>
-                                </goals>
-                            </execution>
-    <%_ } else if (clientPackageManager === 'npm') { _%>
+    <%_ if (clientPackageManager === 'npm') { _%>
                             <execution>
                                 <id>install node and npm</id>
                                 <goals>
@@ -1104,16 +1087,14 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                             </execution>
     <%_ } _%>
                             <execution>
-                                <id>webpack build dev</id>
+                                <id>webapp build dev</id>
                                 <goals>
                                     <goal><%= clientPackageManager %></goal>
                                 </goals>
                                 <phase>generate-resources</phase>
                                 <configuration>
-                                    <arguments>run webpack:build</arguments>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-                                    <yarnInheritsProxyConfigFromMaven>false</yarnInheritsProxyConfigFromMaven>
-    <%_ } else if (clientPackageManager === 'npm') { _%>
+                                    <arguments>run webapp:build</arguments>
+    <%_ if (clientPackageManager === 'npm') { _%>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
     <%_ } _%>
                                 </configuration>
@@ -1183,27 +1164,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
                         <executions>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-                            <execution>
-                                <id>install node and yarn</id>
-                                <goals>
-                                    <goal>install-node-and-yarn</goal>
-                                </goals>
-                                <configuration>
-                                    <nodeVersion>${node.version}</nodeVersion>
-                                    <yarnVersion>${yarn.version}</yarnVersion>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>yarn install</id>
-                                <goals>
-                                    <goal>yarn</goal>
-                                </goals>
-                                <configuration>
-                                    <arguments>install</arguments>
-                                </configuration>
-                            </execution>
-    <%_ } else if (clientPackageManager === 'npm') { _%>
+    <%_ if (clientPackageManager === 'npm') { _%>
                             <execution>
                                 <id>install node and npm</id>
                                 <goals>
@@ -1225,34 +1186,30 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                             </execution>
     <%_ } _%>
                             <execution>
-                                <id>webpack build test</id>
+                                <id>webapp build test</id>
                                 <goals>
                                     <goal><%= clientPackageManager %></goal>
                                 </goals>
                                 <phase>test</phase>
                                 <configuration>
-                                    <arguments>run webpack:test</arguments>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-                                    <yarnInheritsProxyConfigFromMaven>false</yarnInheritsProxyConfigFromMaven>
-    <%_ } else if (clientPackageManager === 'npm') { _%>
+                                    <arguments>run webapp:test</arguments>
+    <%_ if (clientPackageManager === 'npm') { _%>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
     <%_ } _%>
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>webpack build prod</id>
+                                <id>webapp build prod</id>
                                 <goals>
                                     <goal><%= clientPackageManager %></goal>
                                 </goals>
                                 <phase>generate-resources</phase>
                                 <configuration>
-                                    <arguments>run webpack:prod</arguments>
+                                    <arguments>run webapp:prod</arguments>
                                     <environmentVariables>
                                         <APP_VERSION>${project.version}</APP_VERSION>
                                     </environmentVariables>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-                                    <yarnInheritsProxyConfigFromMaven>false</yarnInheritsProxyConfigFromMaven>
-    <%_ } else if (clientPackageManager === 'npm') { _%>
+    <%_ if (clientPackageManager === 'npm') { _%>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
     <%_ } _%>
                                 </configuration>
@@ -1291,7 +1248,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
 
             </dependencies>
             <properties>
-                <profiles.active>prod${profile.swagger}${profile.no-liquibase}</profiles.active>
+                <profiles.active>prod${profile.api-docs}${profile.no-liquibase}</profiles.active>
             </properties>
         </profile>
         <profile>
@@ -1387,10 +1344,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                                                 <artifactId>frontend-maven-plugin</artifactId>
                                                 <versionRange>${frontend-maven-plugin.version}</versionRange>
                                                 <goals>
-    <%_ if (clientPackageManager === 'yarn') { _%>
-                                                    <goal>install-node-and-yarn</goal>
-                                                    <goal>yarn</goal>
-    <%_ } else if (clientPackageManager === 'npm') { _%>
+    <%_ if (clientPackageManager === 'npm') { _%>
                                                     <goal>install-node-and-npm</goal>
                                                     <goal>npm</goal>
     <%_ } _%>

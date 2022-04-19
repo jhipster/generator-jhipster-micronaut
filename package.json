@@ -3,89 +3,72 @@
   "version": "1.0.2",
   "description": "A Micronaut application generator for JHipster",
   "keywords": [
-    "jhipster",
-    "jhipster-6",
+    "yeoman-generator",
     "jhipster-blueprint",
-    "Micronaut",
-    "yeoman-generator"
+    "jhipster-7",
+    "Micronaut"
   ],
   "homepage": "https://github.com/jhipster/generator-jhipster-micronaut",
+  "bugs": {
+    "url": "https://github.com/jhipster/generator-jhipster-micronaut/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhipster/generator-jhipster-micronaut.git"
+  },
+  "license": "Apache-2.0",
   "author": {
     "name": "Sendil Kumar N",
     "email": "sendilkumarn@live.com",
     "url": "https://sendilkumarn.com"
   },
+  "type": "module",
+  "imports": {
+    "#lib/*": "./lib/*",
+    "#test-utils": "./test/utils.mjs"
+  },
   "bin": {
-    "mhipster": "./cli/mhipster.js"
+    "mhipster": "cli/cli.mjs"
   },
   "files": [
     "cli",
-    "generators"
+    "generators",
+    "lib"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jhipster/generator-jhipster-micronaut.git"
+  "scripts": {
+    "ejslint": "ejslint generators/**/*.ejs && ejslint generators/**/*.ejs -d '&'",
+    "lint": "eslint .",
+    "lint-fix": "npm run ejslint && npm run lint -- --fix",
+    "mocha": "mocha generators --no-insight --forbid-only",
+    "prettier-check": "prettier --check \"{,**/}*.{md,json,yml,xml,java,html,css,scss,js,cjs,mjs,ts,mts,tsx,vue}\"",
+    "prettier-format": "prettier --write \"{,**/}*.{md,json,yml,html,js,cjs,mjs,ts,tsx,css,scss,vue,java}\"",
+    "prettier-write": "prettier --write \"{,**/}*.{md,json,yml,xml,java,html,css,scss,js,cjs,mjs,ts,mts,tsx,vue}\"",
+    "pretest": "npm run prettier-check && npm run lint",
+    "test": "npm run mocha --",
+    "update-snapshot": "npm run mocha -- --no-parallel --updateSnapshot"
   },
   "dependencies": {
-    "chalk": "4.1.0",
-    "commander": "4.1.1",
-    "didyoumean": "1.2.1",
-    "ejs": "3.1.5",
-    "faker": "5.1.0",
-    "generator-jhipster": "6.10.5",
-    "jhipster-core": "7.3.4",
-    "glob": "7.1.6",
-    "insight": "0.10.3",
-    "js-yaml": "3.14.0",
-    "lodash": "4.17.20",
-    "meow": "6.1.0",
-    "mkdirp": "1.0.4",
-    "pluralize": "8.0.0",
-    "prettier": "2.1.2",
-    "prettier-plugin-java": "0.8.3",
-    "randexp": "0.5.3",
-    "semver": "7.3.2",
-    "shelljs": "0.8.5",
-    "tabtab": "2.2.2",
-    "yeoman-environment": "2.10.3",
-    "yeoman-generator": "4.12.0"
+    "chalk": "4.1.2",
+    "generator-jhipster": "7.8.1",
+    "os": "^0.1.2"
   },
   "devDependencies": {
-    "chai": "4.2.0",
-    "ejs-lint": "1.1.0",
-    "eslint": "7.11.0",
-    "eslint-config-airbnb-base": "14.2.0",
-    "eslint-config-prettier": "6.13.0",
-    "eslint-plugin-import": "2.22.1",
-    "eslint-plugin-prettier": "3.1.4",
-    "fs-extra": "9.0.1",
-    "mocha": "7.1.2",
-    "yeoman-assert": "3.1.1",
-    "yeoman-test": "2.6.0"
-  },
-  "scripts": {
-    "ejs-lint": "npm run test:unit -- test/ejslint.js",
-    "eslint": "eslint .",
-    "jsdoc": "jsdoc --configure jsdoc-conf.json",
-    "lint": "npm run eslint && npm run ejs-lint",
-    "lint-fix": "npm run prettier:format && npm run eslint -- --fix",
-    "pretest": "npm run lint",
-    "release": "git push && git push --tags && npm publish",
-    "release:patch": "npm version patch -a -m \"Update to %s\" && npm run release",
-    "release:minor": "npm version minor -a -m \"Update to %s\" && npm run release",
-    "release:major": "npm version major -a -m \"Update to %s\" && npm run release",
-    "test": "npm run test:unit -- test/*.spec.js",
-    "test:unit": "mocha --timeout 20000 --slow 0 --reporter spec"
-  },
-  "resolutions": {
-    "inquirer": "6.3.1"
+    "ejs-lint": "1.2.1",
+    "eslint": "8.13.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-mocha": "10.0.3",
+    "eslint-plugin-prettier": "4.0.0",
+    "expect": "27.5.1",
+    "mocha": "9.2.2",
+    "mocha-expect-snapshot": "3.1.0",
+    "prettier": "2.6.2",
+    "prettier-plugin-java": "1.6.1",
+    "prettier-plugin-packagejson": "2.2.17",
+    "yeoman-test": "6.3.0"
   },
   "engines": {
-    "node": ">=10.20.1",
-    "npm": ">=6.14.4"
-  },
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/jhipster/generator-jhipster-micronaut/issues"
+    "node": ">=16.13.0"
   }
 }

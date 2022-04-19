@@ -583,15 +583,19 @@ wrapper {
 }
 
 <%_ if (!skipClient) { _%>
+task webapp_test(type: NpmTask, dependsOn: "npm_install") {
+    args = ["run", "webapp:test"]
+}
 
 if (project.hasProperty("nodeInstall")) {
     node {
         version = "${node_version}"
         npmVersion = "${npm_version}"
-        yarnVersion = "${yarn_version}"
         download = true
     }
 }
+
+test.dependsOn webapp_test
 <%_ } _%>
 
 compileJava.dependsOn processResources

@@ -1,9 +1,9 @@
 template: |
-    # What's Changed
-    $CHANGES
+  # What's Changed
+  $CHANGES
 categories:
   - title: 💎 Features & Enhancements
-    labels: 
+    labels:
       - enhancement 💎
       - Auth 🔐
       - Database 💾

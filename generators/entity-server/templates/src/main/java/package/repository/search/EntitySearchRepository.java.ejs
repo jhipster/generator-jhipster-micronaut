@@ -18,9 +18,6 @@
 -%>
 package <%= packageName %>.repository.search;
 
-<%_
-const primaryKeyType = getPkTypeBasedOnDBAndAssociation(authenticationType, databaseType, relationships);
-_%>
 import <%= packageName %>.domain.<%= asEntity(entityClass) %>;
 //import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 <% if (databaseType === 'cassandra') { %>
@@ -30,5 +27,5 @@ import java.util.UUID;<% } %>
 /**
  * Spring Data Elasticsearch repository for the {@link <%= asEntity(entityClass) %>} entity.
  */
-public interface <%= entityClass %>SearchRepository extends ElasticsearchRepository<<%= asEntity(entityClass) %>, <% if (databaseType === 'sql') { %><%= primaryKeyType %><% } %><% if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>String<% } %><% if (databaseType === 'cassandra') { %>UUID<% } %>> {
+public interface <%= entityClass %>SearchRepository extends ElasticsearchRepository<<%= asEntity(entityClass) %>, <% if (databaseType === 'sql') { %><%= primaryKey.type %><% } %><% if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>String<% } %><% if (databaseType === 'cassandra') { %>UUID<% } %>> {
 }

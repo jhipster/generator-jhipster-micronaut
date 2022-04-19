@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubGenerator cypress of micronaut JHipster blueprint run should succeed 1`] = `
+Object {
+  ".yo-rc.json": Object {
+    "stateCleared": "modified",
+  },
+  "cypress-audits.json": Object {
+    "stateCleared": "modified",
+  },
+  "cypress.json": Object {
+    "stateCleared": "modified",
+  },
+  "package.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/.eslintrc.json": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/fixtures/integration-test.png": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/integration/account/login-page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/integration/account/password-page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/integration/account/register-page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/integration/account/reset-password-page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/integration/account/settings-page.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/integration/administration/administration.spec.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/integration/lighthouse.audits.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/plugins/index.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/support/commands.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/support/entity.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/support/index.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/support/management.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/support/navbar.ts": Object {
+    "stateCleared": "modified",
+  },
+  "src/test/javascript/cypress/tsconfig.json": Object {
+    "stateCleared": "modified",
+  },
+}
+`;

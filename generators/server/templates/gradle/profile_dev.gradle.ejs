@@ -55,11 +55,9 @@ tasks.withType(JavaExec) {
 }
 
 <%_ if (!skipClient) { _%>
-task webpack(type: <%= _.upperFirst(clientPackageManager) %>Task) {
+task webapp(type: <%= _.upperFirst(clientPackageManager) %>Task) {
     <%_ if (clientPackageManager==='npm') { _%>
     inputs.files("package-lock.json")
-    <%_ } else { _%>
-    inputs.files("yarn.lock")
     <%_ } _%>
     inputs.files("build.gradle")
     inputs.dir("<%= CLIENT_MAIN_SRC_DIR %>")
@@ -72,18 +70,18 @@ task webpack(type: <%= _.upperFirst(clientPackageManager) %>Task) {
 
     dependsOn <%= clientPackageManager %><%_ if (clientPackageManager === 'npm') { _%>Install<%_ } _%>
 
-    args = ["run", "webpack:build"]
+    args = ["run", "webapp:build"]
     environment = [APP_VERSION: project.version]
 }
 <%_ } _%>
 
 <%_ if (!skipClient) { _%>
-task webpackBuildDev(type: NpmTask, dependsOn: 'npmInstall') {
+task webappBuildDev(type: NpmTask, dependsOn: 'npmInstall') {
     inputs.dir("src/main/webapp/")
     inputs.files(fileTree('src/main/webapp/'))
     outputs.dir("build/www/")
     outputs.file("build/www/app/main.bundle.js")
-    args = ["run", "webpack:build"]
+    args = ["run", "webapp:build"]
 }
 
 task copyIntoStatic (type: Copy) {
@@ -102,16 +100,16 @@ processResources {
 }
 
 <%_ if (!skipClient) { _%>
-processResources.dependsOn webpack
+processResources.dependsOn webapp
 
-processResources.dependsOn webpackBuildDev
+processResources.dependsOn webappBuildDev
 copyIntoStatic.dependsOn processResources
 assemble.dependsOn copyIntoStatic
 
-npmInstall.onlyIf { shouldWebpackRun() == true }
+npmInstall.onlyIf { shouldWebappRun() == true }
 
-def shouldWebpackRun() {
-    project.hasProperty('webpack')
+def shouldWebappRun() {
+    project.hasProperty('webapp')
 }
 
 <%_ } _%>

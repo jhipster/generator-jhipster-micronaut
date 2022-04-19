@@ -18,9 +18,6 @@
 -%>
 package <%= packageName %>.repository;
 
-<%_
-const primaryKeyType = getPkTypeBasedOnDBAndAssociation(authenticationType, databaseType, relationships);
-_%>
 import <%= packageName %>.domain.<%= asEntity(entityClass) %>;
 
 <%_ if (fieldsContainOwnerManyToMany) { _%>
@@ -83,7 +80,7 @@ import java.util.UUID;
 @SuppressWarnings("unused")
 <%_ } _%>
 @Repository
-public interface <%= entityClass %>Repository extends <% if (databaseType === 'sql') { %>JpaRepository<% } %><% if (databaseType === 'mongodb') { %>MongoRepository<% } %><% if (databaseType === 'cassandra') { %>CassandraRepository<% } %><% if (databaseType === 'couchbase') { %>N1qlCouchbaseRepository<% } %><<%= asEntity(entityClass) %>, <%= primaryKeyType %>><% if (jpaMetamodelFiltering) { %>, JpaSpecificationExecutor<<%= asEntity(entityClass) %>><% } %> {
+public interface <%= entityClass %>Repository extends <% if (databaseType === 'sql') { %>JpaRepository<% } %><% if (databaseType === 'mongodb') { %>MongoRepository<% } %><% if (databaseType === 'cassandra') { %>CassandraRepository<% } %><% if (databaseType === 'couchbase') { %>N1qlCouchbaseRepository<% } %><<%= asEntity(entityClass) %>, <%= primaryKey.type %>><% if (jpaMetamodelFiltering) { %>, JpaSpecificationExecutor<<%= asEntity(entityClass) %>><% } %> {
 
     <%_ for (idx in relationships) {
         if (relationships[idx].relationshipType === 'many-to-one' && relationships[idx].otherEntityName === 'user' && databaseType === 'sql') { _%>
@@ -105,7 +102,7 @@ public interface <%= entityClass %>Repository extends <% if (databaseType === 's
 
     @Query("select <%= entityInstance %> from <%= asEntity(entityClass) %> <%= entityInstance %><% for (idx in relationships) {
     if (relationships[idx].relationshipType === 'many-to-many' && relationships[idx].ownerSide === true) { %> left join fetch <%= entityInstance %>.<%= relationships[idx].relationshipFieldNamePlural %><% } } %> where <%= entityInstance %>.id =:id")
-    public Optional<<%= asEntity(entityClass) %>> findOneWithEagerRelationships(<%= primaryKeyType %> id);
+    public Optional<<%= asEntity(entityClass) %>> findOneWithEagerRelationships(<%= primaryKey.type %> id);
     <%_
         } else if (databaseType === 'mongodb' || databaseType === 'couchbase')  { _%>
 
@@ -116,7 +113,7 @@ public interface <%= entityClass %>Repository extends <% if (databaseType === 's
     public List<<%= asEntity(entityClass) %>> findAllWithEagerRelationships();
 
     @Query("<%- (databaseType === 'mongodb')?"{'id': ?0}":"#{#n1ql.selectEntity} USE KEYS $1 WHERE #{#n1ql.filter}"%>")
-    public Optional<<%= asEntity(entityClass) %>> findOneWithEagerRelationships(<%= primaryKeyType %> id);
+    public Optional<<%= asEntity(entityClass) %>> findOneWithEagerRelationships(<%= primaryKey.type %> id);
     <%_ }
     } _%>
 }

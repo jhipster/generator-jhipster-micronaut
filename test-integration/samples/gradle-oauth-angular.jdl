@@ -19,7 +19,6 @@ application {
     enableSwaggerCodegen false
     enableTranslation true
     jhiPrefix jhi
-    jhipsterVersion "6.10.1"
     languages [en]
     messageBroker false
     nativeLanguage en
@@ -31,8 +30,7 @@ application {
     skipClient false
     skipServer false
     skipUserManagement true
-    testFrameworks [protractor]
-    useSass true
+    testFrameworks [cypress]
     websocket false
   }
 

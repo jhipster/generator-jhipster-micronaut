@@ -1,8 +1,8 @@
 > ## 🛠 Blueprint In Active Development
+>
 > This project is a [Micronaut](https://micronaut.io) blueprint for [JHipster](https://jhipster.tech).
 > While we are working to create a complete experience, there are likely some gaps.
 > Please [let us know](https://github.com/jhipster/generator-jhipster-micronaut/issues) if you encounter issues.
->
 
 # Greetings, Micronaut Hipster!
 
@@ -19,12 +19,13 @@ It is based on JHipster Blueprint 🔵, and intends to replace the Spring Boot p
 ## Installation and Usage
 
 1. Install MHipster
-    + `npm install -g generator-jhipster-micronaut`
+   - `npm install -g generator-jhipster-micronaut`
 2. Create a new folder for your application
 3. Start MHipster
-    + `mhipster`
+   - `mhipster`
 
 Alternatively, if you already have JHipster installed, you can use this blueprint with:
+
 ```
 $ jhipster --blueprints micronaut
 ```
@@ -65,28 +66,29 @@ docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut /bin
 ```
 
 ## Currently supported options
-* Monolith projects
-* Microservice projects
-* JWT or OAuth 2.0 Authentication
-* SQL Database Support
-  * MySQL
-  * MariaDB
-  * PostgreSQL
-  * H2
-* Ehcache
-* Caffeine Cache
-* Redis Cache
-* Maven or Gradle Build System
-* Angular or React Client
-* Protractor Tests
-* Heroku Deployment
 
-## Compatibility 
+- Monolith projects
+- Microservice projects
+- JWT or OAuth 2.0 Authentication
+- SQL Database Support
+  - MySQL
+  - MariaDB
+  - PostgreSQL
+  - H2
+- Ehcache
+- Caffeine Cache
+- Redis Cache
+- Maven or Gradle Build System
+- Angular or React Client
+- Protractor Tests
+- Heroku Deployment
 
-| Micronaut Blueprint       | Micronaut     | JHipster  |
-| -------------             |-------------  | -----     |
-| 1.0.2                     | 2.4.4         | 6.10.5    |
-| 0.8.0                     | 2.3.0         | 6.10.5    |
+## Compatibility
+
+| Micronaut Blueprint | Micronaut | JHipster |
+| ------------------- | --------- | -------- |
+| 1.0.2               | 2.4.4     | 6.10.5   |
+| 0.8.0               | 2.3.0     | 6.10.5   |
 
 ## ❤️ for community
 
