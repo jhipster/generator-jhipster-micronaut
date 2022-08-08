@@ -43,10 +43,10 @@ module.exports = {
     },
   },
   versions: {
-    micronaut: '2.4.4',
-    micronautData: '2.3.1',
+    micronaut: '3.6.0',
+    micronautData: '3.7.2',
     micronautOpenApi: '2.3.1',
-
+    rxJava3: '2.3.0',
     hibernate: '5.4.24.Final',
     jackson: '2.12.2',
     javassist: '3.27.0-GA', // Should match Hibernate deps
