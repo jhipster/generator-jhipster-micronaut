@@ -9,10 +9,9 @@ import <%=packageName%>.security.PasswordEncoder;
 
 import io.micronaut.security.authentication.AuthenticationRequest;
 import io.micronaut.security.authentication.AuthenticationResponse;
-import io.micronaut.security.authentication.UserDetails;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.test.annotation.MockBean;
-import io.reactivex.Flowable;
+import io.reactivex.rxjava3.core.Flowable;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 <%_ } _%>
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.Locale;
 
@@ -97,7 +96,8 @@ public class DomainUserDetailsServiceIT {
             }
         })).blockingFirst();
         assertThat(response).isNotNull();
-        assertThat(((UserDetails) response).getUsername()).isEqualTo(USER_ONE_LOGIN);
+        Authentication authentication = response.getAuthentication().get();
+        assertThat(authentication.getName()).isEqualTo(USER_ONE_LOGIN);
     }
 
     @Test
@@ -115,7 +115,8 @@ public class DomainUserDetailsServiceIT {
             }
         })).blockingFirst();
         assertThat(response).isNotNull();
-        assertThat(((UserDetails) response).getUsername()).isEqualTo(USER_ONE_LOGIN);
+        Authentication authentication = response.getAuthentication().get();
+        assertThat(authentication.getName()).isEqualTo(USER_ONE_LOGIN);
     }
 
     @Test
@@ -133,7 +134,8 @@ public class DomainUserDetailsServiceIT {
             }
         })).blockingFirst();
         assertThat(response).isNotNull();
-        assertThat(((UserDetails) response).getUsername()).isEqualTo(USER_TWO_LOGIN);
+        Authentication authentication = response.getAuthentication().get();
+        assertThat(authentication.getName()).isEqualTo(USER_TWO_LOGIN);
     }
 
     @Test
@@ -169,7 +171,8 @@ public class DomainUserDetailsServiceIT {
             }
         })).blockingFirst();
         assertThat(response).isNotNull();
-        assertThat(((UserDetails) response).getUsername()).isEqualTo(USER_ONE_LOGIN);
+        Authentication authentication = response.getAuthentication().get();
+        assertThat(authentication.getName()).isEqualTo(USER_ONE_LOGIN);
     }
 
     @Test

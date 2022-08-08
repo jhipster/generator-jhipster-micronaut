@@ -65,7 +65,7 @@ import org.slf4j.LoggerFactory;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 <%_ } _%>
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 <%_ if (databaseType === 'sql') { _%>
 import javax.transaction.Transactional;
 import io.micronaut.transaction.annotation.ReadOnly;

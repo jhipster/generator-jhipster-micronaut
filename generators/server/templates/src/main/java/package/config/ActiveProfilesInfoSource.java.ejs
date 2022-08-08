@@ -6,7 +6,7 @@ import io.micronaut.core.async.publisher.Publishers;
 import io.micronaut.management.endpoint.info.InfoSource;
 import org.reactivestreams.Publisher;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.HashMap;
 
 @Singleton

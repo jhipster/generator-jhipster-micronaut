@@ -18,7 +18,7 @@
  */
 
 module.exports = {
-  GRADLE_VERSION: '6.8.1',
+  GRADLE_VERSION: '7.4.2',
   DOCKER_REDIS: 'redis:6.0.10',
   sqlDb: {
     h2Disk: {

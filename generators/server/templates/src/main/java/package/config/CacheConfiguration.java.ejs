@@ -41,7 +41,7 @@ import javax.cache.configuration.MutableConfiguration;
 import javax.cache.expiry.CreatedExpiryPolicy;
 import javax.cache.expiry.Duration;
 <%_ } _%>
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 <%_ if (cacheProvider === 'redis') { _%>
 import java.util.concurrent.TimeUnit;
 <%_ } _%>
