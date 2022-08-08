@@ -74,7 +74,7 @@ import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
-import io.micronaut.http.client.RxHttpClient;
+import io.micronaut.rxjava3.http.client.Rx3HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -343,7 +343,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     <%_ } _%>
 
     @Inject @Client("/")
-    RxHttpClient client;
+    Rx3HttpClient client;
 
     private <%= asEntity(entityClass) %> <%= asEntity(entityInstance) %>;
 

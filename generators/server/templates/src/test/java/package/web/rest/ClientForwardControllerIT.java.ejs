@@ -12,7 +12,7 @@ import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.http.client.RxHttpClient;
+import io.micronaut.rxjava3.http.client.Rx3HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
@@ -36,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ClientForwardControllerIT {
 
     @Inject @Client("/")
-    RxHttpClient client;
+    Rx3HttpClient client;
 
     @Test
     public void getBackendEndpoint() throws Exception {
