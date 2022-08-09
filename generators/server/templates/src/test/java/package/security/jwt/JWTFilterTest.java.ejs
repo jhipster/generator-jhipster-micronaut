@@ -132,7 +132,7 @@ public class JWTFilterTest {
         public Publisher<AuthenticationResponse> authenticate(@Nullable HttpRequest<?> httpRequest, AuthenticationRequest<?, ?> authenticationRequest) {
             if (authenticationRequest.getIdentity().toString().equals("test-user") &&
             authenticationRequest.getSecret().toString().equals("test-password")) {
-                return Flowable.just(new UserDetails("test-user", Collections.emptyList()));
+                return Flowable.just(AuthenticationResponse.success("test-user", Collections.emptyList()));
             }
             return Flowable.empty();
         }
