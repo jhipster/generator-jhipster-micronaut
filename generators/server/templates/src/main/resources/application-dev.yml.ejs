@@ -103,7 +103,11 @@ logger:
 
 micronaut:
   server:
-    port: <%= serverPort %>
+    <%_ serverPort { _%>
+      port: <%= serverPort %>
+    <%_ } else { _%>
+      port: 8080  
+    <%_ } _%>  
     cors:
       # CORS is only enabled by default with the "dev" profile, so BrowserSync can access the API
       enabled: true
