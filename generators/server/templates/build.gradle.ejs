@@ -276,7 +276,6 @@ dependencies {
         implementation platform("io.micronaut:micronaut-bom:${micronautVersion}")
     }
 
-    annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut:micronaut-validation"
     <%_ if (databaseType === 'sql') { _%>
     annotationProcessor "io.micronaut.data:micronaut-data-processor:$micronaut_data_version"
@@ -295,7 +294,7 @@ dependencies {
         exclude group: "org.springframework.boot", module: "spring-boot-starter-web"
     }
     implementation "org.simplejavamail:simple-java-mail:$simplejavamail_version"
-    implementation "javax.annotation:javax.annotation-api"
+    implementation "jakarta.annotation:jakarta.annotation-api"
     implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
     implementation "io.dropwizard.metrics:metrics-core"
@@ -529,7 +528,6 @@ dependencies {
 
     // Micronaut test deps
     testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testAnnotationProcessor "io.micronaut.data:micronaut-data-processor:$micronaut_data_version"
     testAnnotationProcessor "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
     testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
