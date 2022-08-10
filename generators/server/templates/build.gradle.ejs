@@ -48,6 +48,8 @@ plugins {
     //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
+graalvmNative.toolchainDetection = false
+
 micronaut {
     runtime "netty"
     testRuntime "junit5"
@@ -563,7 +565,6 @@ dependencies {
     implementation("io.micronaut.rxjava3:micronaut-rxjava3:$rxJava3Version")
     implementation("io.micronaut.rxjava3:micronaut-rxjava3-http-client:$rxJava3Version")
 
-    compileOnly("org.graalvm.nativeimage:svm")
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
 
