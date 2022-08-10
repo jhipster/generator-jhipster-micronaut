@@ -539,6 +539,12 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <artifactId>micronaut-rxjava3-http-client</artifactId>
             <version>2.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-aop</artifactId>
+            <scope>compile</scope>
+            <version>${micronaut.version}</version>
+          </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
     <build>
