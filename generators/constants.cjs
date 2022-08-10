@@ -50,7 +50,7 @@ module.exports = {
     hibernate: '5.4.24.Final',
     jackson: '2.13.3',
     javassist: '3.27.0-GA', // Should match Hibernate deps
-    javaxMail: '1.6.2',
+    javaxMail: '2.0.1',
     jbcrypt: '0.4',
     jhipsterDeps: '3.8.0',
     liquibase: '4.2.2',
