@@ -623,6 +623,11 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                             <annotationProcessorPaths>
                                 <path>
                                     <groupId>io.micronaut</groupId>
+                                    <artifactId>micronaut-inject</artifactId>
+                                    <version>${micronaut.version}</version>
+                                </path>
+                                <path>
+                                    <groupId>io.micronaut</groupId>
                                     <artifactId>micronaut-validation</artifactId>
                                     <version>${micronaut.version}</version>
                                 </path>
