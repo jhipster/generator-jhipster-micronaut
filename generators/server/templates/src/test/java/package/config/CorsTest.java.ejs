@@ -11,6 +11,8 @@ import io.micronaut.http.client.BlockingHttpClient;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.runtime.server.EmbeddedServer;
 import org.junit.jupiter.api.Test;
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+
 <%_ if (cacheProvider === 'redis') { _%>
 import org.junit.jupiter.api.extension.ExtendWith;
 <%_ } _%>
@@ -22,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 <%_ if (cacheProvider === 'redis') { _%>
 @ExtendWith(RedisTestContainerExtension.class)
 <%_ } _%>
+@MicronautTest
 public class CorsTest {
 
     @Test
