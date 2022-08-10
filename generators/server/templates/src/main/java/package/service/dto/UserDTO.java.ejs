@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Introspected
 public class <%= asDto('User') %> {
 
-    private <%= userPkType %> id;
+    private <%= user.primaryKey.type %> id;
     private String login;
 
     <%_ if (databaseType !== 'no') { _%>
@@ -35,11 +35,11 @@ public class <%= asDto('User') %> {
     }
 
     <%_ } _%>
-    public <%= userPkType %> getId() {
+    public <%= user.primaryKey.type %> getId() {
         return id;
     }
 
-    public void setId(<%= userPkType %> id) {
+    public void setId(<%= user.primaryKey.type %> id) {
         this.id = id;
     }
 
