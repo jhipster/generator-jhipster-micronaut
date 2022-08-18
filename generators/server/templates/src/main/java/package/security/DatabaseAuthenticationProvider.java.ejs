@@ -55,10 +55,7 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
         if (!user.getActivated()) {
             return new NotAuthenticatedResponse("User " + lowercaseLogin + " was not activated");
         }
-        List<String> grantedAuthorities = user.getAuthorities().stream()
-            .map(Authority::getName)
-            .collect(Collectors.toList());
-
+        List<String> grantedAuthorities  = authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
         return AuthenticationResponse.success(user.getLogin(), grantedAuthorities);
     }
 }
