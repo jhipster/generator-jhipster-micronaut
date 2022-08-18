@@ -104,7 +104,7 @@ public class UserService {
             .map(user -> {
                 // activate given user for the registration key.
                 user.setActivated(true);
-                user.setActivationKey(null);
+                user.setActivationKey(key);
                 <%_ if (usesCache) { _%>
                 this.clearUserCaches(user);
                 <%_ } _%>

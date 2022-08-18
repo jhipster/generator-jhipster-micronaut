@@ -130,6 +130,10 @@ micronaut:
         access: isAnonymous()
       - pattern: /management/**
         access: ROLE_ADMIN
+      - pattern: /api/test-cors/
+        access: isAnonymous()
+      - pattern: /test/test-cors/
+        access: isAnonymous()  
 
   executors:
     scheduled:
