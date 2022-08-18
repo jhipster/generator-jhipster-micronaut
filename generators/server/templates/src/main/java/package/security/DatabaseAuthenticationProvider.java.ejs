@@ -25,10 +25,12 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
     private final Logger log = LoggerFactory.getLogger(DatabaseAuthenticationProvider.class);
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthorityRepository authorityRepository;
 
-    public DatabaseAuthenticationProvider(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public DatabaseAuthenticationProvider(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authorityRepository = authorityRepository;
     }
 
     @Override
