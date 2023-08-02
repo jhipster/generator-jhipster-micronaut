@@ -67,6 +67,7 @@ public class <%= mainClass %> {
 
         ApplicationContext context = Micronaut.build(args)
             .mainClass(<%= mainClass %>.class)
+            .deduceEnvironment(false)
             .environments(environments.toArray(new String[0]))
             .start();
 
