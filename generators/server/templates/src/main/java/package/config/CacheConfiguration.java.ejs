@@ -1,7 +1,5 @@
 package <%=packageName%>.config;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Properties;
 
 import <%=packageName%>.util.JHipsterProperties;
@@ -13,18 +11,12 @@ import java.time.Duration;
 import org.ehcache.config.builders.*;
 import org.ehcache.jsr107.Eh107Configuration;
 import org.ehcache.jsr107.EhcacheCachingProvider;
-    <%_ if (enableHibernateCache) { _%>
-import org.hibernate.cache.jcache.ConfigSettings;
-    <%_ } _%>
 <%_ } _%>  
 <%_ if (cacheProvider === 'caffeine') { _%>
 import com.github.benmanes.caffeine.jcache.spi.CaffeineCachingProvider;
 import com.github.benmanes.caffeine.jcache.configuration.CaffeineConfiguration;
 import java.util.OptionalLong;
 import java.util.concurrent.TimeUnit;
-    <%_ if (enableHibernateCache) { _%>
-import org.hibernate.cache.jcache.ConfigSettings;
-    <%_ } _%>
 <%_ } _%>
 <%_ if (cacheProvider === 'redis') { _%>
 import org.redisson.Redisson;
@@ -121,8 +113,7 @@ public class CacheConfiguration {
 
     private void customizeCacheManager(CacheManager cm) {
         <%_ if (!skipUserManagement || (authenticationType === 'oauth2' && databaseType !== 'no')) { _%>
-        createCache(cm, <%=packageName%>.repository.UserRepository.USERS_BY_LOGIN_CACHE);
-        createCache(cm, <%=packageName%>.repository.UserRepository.USERS_BY_EMAIL_CACHE);
+        createCache(cm, <%=packageName%>.repository.UserRepository.USERS_CACHE);
           <%_ if (enableHibernateCache) { _%>
         createCache(cm, <%=packageName%>.domain.User.class.getName());
         createCache(cm, <%=packageName%>.domain.Authority.class.getName());
