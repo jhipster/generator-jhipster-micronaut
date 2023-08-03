@@ -55,6 +55,12 @@ public interface UserRepository extends JpaRepository<User, <% if (authenticatio
 <%_ } _%>
     public Optional<User> findOneByEmail(String email);
 
+    @EntityGraph(attributePaths = "authorities")
+<%_ if (usesCache) { _%>
+    @Cacheable(cacheNames = "usersByLoginOrEmail")
+<%_ } _%>
+    public Optional<User> findOneByLoginIgnoreCaseOrEmail(String login, String email);    
+
     public Page<User> findAllByLoginNot(String login, Pageable pageable);
 
     public void update(@Id <% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %> id, Instant createdDate);

@@ -54,7 +54,7 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
         if (violations.size() == 0) {
             return Flowable.just(
                 userRepository
-                    .findOneByLogin(loginAttempt.getUsername())
+                .findOneByLoginIgnoreCaseOrEmail(loginAttempt.getUsername(), loginAttempt.getUsername())
                     .filter(user -> passwordEncoder.matches(loginAttempt.getPassword(), user.getPassword()))
                     .map(this::createMicronautSecurityUser)
                     .orElse(new NotAuthenticatedResponse("Invalid username or password"))
