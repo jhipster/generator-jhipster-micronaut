@@ -21,7 +21,7 @@ public class ActiveProfilesInfoSource implements InfoSource {
     @Override
     public Publisher<PropertySource> getSource() {
         HashMap<String, Object> map = new HashMap<>(1);
-        map.put("activeProfiles", environment.getActiveNames());
+        map.put("active-profiles", environment.getActiveNames());
         return Publishers.just(PropertySource.of("active-profiles", map));
     }
 }
