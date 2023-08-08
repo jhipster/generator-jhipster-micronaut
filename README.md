@@ -3,6 +3,51 @@
 > This project is a [Micronaut](https://micronaut.io) blueprint for [JHipster](https://jhipster.tech).
 > While we are working to create a complete experience, there are likely some gaps.
 > Please [let us know](https://github.com/jhipster/generator-jhipster-micronaut/issues) if you encounter issues.
+>
+## Installing and Using the Active Development Version
+
+This currently active development branch is based on the latest production release of JHipster - v7.9.3
+
+As a pre-requisite, you must have NodeJS v16.x installed, along with the bundled version of NPM. 
+
+1. Start by installing JHipster v7.9.3 with
+
+```
+npm install -g generator-jhipster
+```
+
+2. Then install this in-development blueprint by
+```
+git clone https://github.com/jeremyg484/generator-jhipster-micronaut.git
+cd generator-jhipster-micronaut
+git checkout micronaut-3
+npm link generator-jhipster
+npm install
+npm link
+```
+
+3. Next you can create a new application with the development version of this blueprint by executing:
+```
+mkdir my-project
+cd my-project
+npm link "generator-jhipster-micronaut"
+mhipster --skip-jhipster-dependencies
+```
+
+This will execute the mhipster CLI tool that walks you through a series of steps to generate the code for your application.
+
+Alternatively, you can generate an application based on one of the samples in https://github.com/jhipster/jdl-samples
+
+For example, to generate a default gradle-based application, execute:
+
+```
+mkdir my-jdl-project
+cd my-jdl-project
+npm link "generator-jhipster-micronaut"
+mhipster jdl default-gradle --skip-jhipster-dependencies
+```
+
+You will re-execute the commands in step 3 for any new application that you would like to generate with this in-development version.
 
 # Greetings, Micronaut Hipster!
 

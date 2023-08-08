@@ -25,9 +25,7 @@ import java.time.Instant;
 public interface UserRepository extends JpaRepository<User, <% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %>> {
 
 <%_ if (usesCache) { _%>
-    public static String USERS_BY_LOGIN_CACHE = "usersByLogin";
-
-    public static String USERS_BY_EMAIL_CACHE = "usersByEmail";
+    public static String USERS_CACHE = "usersByLogin";
 <%_ } _%>
     <% if (authenticationType !== 'oauth2') { %>
 
@@ -45,17 +43,23 @@ public interface UserRepository extends JpaRepository<User, <% if (authenticatio
 
     @EntityGraph(attributePaths = "authorities")
 <%_ if (usesCache) { _%>
-    @Cacheable(cacheNames = "usersByLogin")
+    @Cacheable(cacheNames = USERS_CACHE)
 <%_ } _%>
     public Optional<User> findOneByLogin(String login);
 
     @EntityGraph(attributePaths = "authorities")
 <%_ if (usesCache) { _%>
-    @Cacheable(cacheNames = "usersByEmail")
+    @Cacheable(cacheNames = USERS_CACHE)
 <%_ } _%>
     public Optional<User> findOneByEmail(String email);
 
-    public Page<User> findAllByLoginNot(String login, Pageable pageable);
+    @EntityGraph(attributePaths = "authorities")
+<%_ if (usesCache) { _%>
+    @Cacheable(cacheNames = USERS_CACHE)
+<%_ } _%>
+    public Optional<User> findOneByLoginIgnoreCaseOrEmail(String login, String email);    
+
+    public Page<User> findByLoginNotEqual(String login, Pageable pageable);
 
     public void update(@Id <% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %> id, Instant createdDate);
 }

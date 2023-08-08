@@ -31,6 +31,7 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,7 +71,7 @@ public class MailServiceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        doNothing().when(mailer).sendMail(any(Email.class));
+        when(mailer.sendMail(any(Email.class))).thenReturn(new CompletableFuture<>());
         mailService = new MailService(jHipsterProperties, mailer, messageSource, templateEngine);
     }
 

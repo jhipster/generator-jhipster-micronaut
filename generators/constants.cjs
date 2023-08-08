@@ -43,11 +43,12 @@ module.exports = {
     },
   },
   versions: {
-    micronaut: '3.9.1',
+    micronaut: '3.9.5',
     micronautData: '3.10.0',
-    micronautOpenApi: '2.3.1',
+    micronautOpenApi: '4.8.7',
     rxJava3: '2.3.0',
-    hibernate: '5.5.9.Final',
+    hibernate: '5.6.15.Final',
+    prometheusSimpleclient: '0.16.0', 
     jackson: '2.13.3',
     javassist: '3.27.0-GA', // Should match Hibernate deps
     javaxMail: '2.0.1',

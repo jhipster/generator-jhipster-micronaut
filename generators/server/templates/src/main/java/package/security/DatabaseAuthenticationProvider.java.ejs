@@ -3,21 +3,22 @@ package <%=packageName%>.security;
 import <%=packageName%>.domain.Authority;
 import <%=packageName%>.domain.User;
 import <%=packageName%>.repository.UserRepository;
+import <%=packageName%>.web.rest.vm.LoginVM;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.security.authentication.AuthenticationProvider;
 import io.micronaut.security.authentication.AuthenticationRequest;
 import io.micronaut.security.authentication.AuthenticationResponse;
-import io.micronaut.validation.validator.constraints.EmailValidator;
-import <%=packageName%>.repository.AuthorityRepository;
+import io.micronaut.validation.validator.Validator;
 import io.reactivex.rxjava3.core.Flowable;
+import jakarta.inject.Singleton;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jakarta.inject.Singleton;
+import javax.validation.ConstraintViolation;
 import java.util.List;
-import java.util.Locale;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -26,39 +27,49 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
     private final Logger log = LoggerFactory.getLogger(DatabaseAuthenticationProvider.class);
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AuthorityRepository authorityRepository;
+    private final Validator validator;
 
-    public DatabaseAuthenticationProvider(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
+    public DatabaseAuthenticationProvider(
+        UserRepository userRepository,
+        PasswordEncoder passwordEncoder,
+        Validator validator) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.authorityRepository = authorityRepository;
+        this.validator = validator;
     }
 
     @Override
-    public Publisher<AuthenticationResponse> authenticate(@Nullable HttpRequest<?> httpRequest, AuthenticationRequest<?, ?> authenticationRequest) {
-        String username = authenticationRequest.getIdentity().toString();
+    public Publisher<AuthenticationResponse> authenticate(
+        @Nullable HttpRequest<?> httpRequest,
+        AuthenticationRequest<?, ?> authenticationRequest
+    ) {
 
-        log.debug("Authenticating {}", username);
+        LoginVM loginAttempt = new LoginVM();
+        loginAttempt.setUsername(authenticationRequest.getIdentity().toString());
+        loginAttempt.setPassword(authenticationRequest.getSecret().toString());
 
-        if (new EmailValidator().isValid(username, null)) {
-            return Flowable.just(userRepository.findOneByEmail(username)
-                .filter(user -> passwordEncoder.matches(authenticationRequest.getSecret().toString(), user.getPassword()))
-                .map(user -> createMicronautSecurityUser(username, user))
-                .orElse(new NotAuthenticatedResponse("Invalid username or password")));
+        log.debug("Authenticating {}", loginAttempt.getUsername());
+
+        Set<ConstraintViolation<LoginVM>> violations = validator.validate(loginAttempt);
+        if (violations.size() == 0) {
+            return Flowable.just(
+                userRepository
+                .findOneByLoginIgnoreCaseOrEmail(loginAttempt.getUsername(), loginAttempt.getUsername())
+                    .filter(user -> passwordEncoder.matches(loginAttempt.getPassword(), user.getPassword()))
+                    .map(this::createMicronautSecurityUser)
+                    .orElse(new NotAuthenticatedResponse("Invalid username or password"))
+            );
+        } else {
+            log.debug("User validation failed with violations {}", violations);
+            return Flowable.just(new NotAuthenticatedResponse("Invalid username or password"));
         }
-
-        String lowercaseLogin = username.toLowerCase(Locale.ENGLISH);
-        return Flowable.just(userRepository.findOneByLogin(lowercaseLogin)
-            .filter(user -> passwordEncoder.matches(authenticationRequest.getSecret().toString(), user.getPassword()))
-            .map(user -> createMicronautSecurityUser(lowercaseLogin, user))
-            .orElse(new NotAuthenticatedResponse("Invalid username or password")));
     }
 
-    private AuthenticationResponse createMicronautSecurityUser(String lowercaseLogin, User user) {
+    private AuthenticationResponse createMicronautSecurityUser(User user) {
         if (!user.getActivated()) {
-            return new NotAuthenticatedResponse("User " + lowercaseLogin + " was not activated");
+            return new NotAuthenticatedResponse("User " + user.getLogin() + " was not activated");
         }
-        List<String> grantedAuthorities  = authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+        List<String> grantedAuthorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toList());
         return AuthenticationResponse.success(user.getLogin(), grantedAuthorities);
     }
 }

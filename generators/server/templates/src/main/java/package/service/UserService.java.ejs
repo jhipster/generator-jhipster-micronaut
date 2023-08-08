@@ -18,6 +18,7 @@ import <%=packageName%>.security.PasswordEncoder;
 <%_ } _%>
 <%_ if (usesCache) { _%>
 import io.micronaut.cache.CacheManager;
+import io.micronaut.cache.interceptor.ParametersKey;
 <%_ } _%>
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
@@ -320,7 +321,7 @@ public class UserService {
 
     @ReadOnly
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
-        Page<User> userPage = userRepository.findAllByLoginNot(Constants.ANONYMOUS_USER, pageable);
+        Page<User> userPage = userRepository.findByLoginNotEqual(Constants.ANONYMOUS_USER, pageable);
         return Page.of(userPage.getContent().stream().map(UserDTO::new).collect(Collectors.toList()), pageable, userPage.getTotalSize());
     }
 
@@ -370,9 +371,9 @@ public class UserService {
     <%_ if (usesCache) { _%>
 
     private void clearUserCaches(User user) {
-        Objects.requireNonNull(
-            cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).invalidate(user.getLogin());
-        Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).invalidate(user.getEmail());
+        Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_CACHE)).invalidate(user.getLogin());
+        Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_CACHE)).invalidate(user.getEmail());
+        Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_CACHE)).invalidate(new ParametersKey(user.getLogin(), user.getEmail()));
     }
     <%_ } _%>
 

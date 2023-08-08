@@ -12,6 +12,12 @@ _%>
     <packaging>jar</packaging>
     <name><%= humanizedBaseName %></name>
 
+    <parent>
+        <groupId>io.micronaut</groupId>
+        <artifactId>micronaut-parent</artifactId>
+        <version><%= versions.micronaut %></version>
+    </parent>
+
     <repositories>
         <!-- jhipster-needle-maven-repository -->
         <%_ if (JHIPSTER_DEPENDENCIES_VERSION.endsWith('-SNAPSHOT')) { _%>
@@ -34,8 +40,10 @@ _%>
     <properties>
         <!-- Build properties -->
         <exec.mainClass><%=packageName%>.<%=mainClass%></exec.mainClass>
-        <maven.version>3.3.9</maven.version>
+        <micronaut.runtime>netty</micronaut.runtime>
         <java.version><%= JAVA_VERSION %></java.version>
+        <jdk.version><%= JAVA_VERSION %></jdk.version>
+        <release.version><%= JAVA_VERSION %></release.version>
 <%_ if (!skipClient) { _%>
         <node.version>v<%= NODE_VERSION %></node.version>
     <%_ if (clientPackageManager === 'npm') { _%>
@@ -63,6 +71,7 @@ _%>
         <micronaut.version><%= versions.micronaut %></micronaut.version>
         <micronaut-data.version><%= versions.micronautData %></micronaut-data.version>
         <micronaut-openapi.version><%= versions.micronautOpenApi %></micronaut-openapi.version>
+        <prometheus-simpleclient.version><%= versions.prometheusSimpleclient %></prometheus-simpleclient.version>
         <hibernate.version><%= versions.hibernate %></hibernate.version>
         <!-- The javassist version should match the one managed by
         https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
@@ -118,12 +127,12 @@ _%>
 
     <dependencyManagement>
         <dependencies>
-             <dependency>
-                <groupId>com.fasterxml.jackson</groupId>
-                <artifactId>jackson-bom</artifactId>
-                <version>${jackson.version}</version>
-                <scope>import</scope>
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-bom</artifactId>
+                <version>${micronaut.version}</version>
                 <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>io.github.jhipster</groupId>
@@ -133,13 +142,6 @@ _%>
                 <scope>import</scope>
             </dependency>
             <!-- jhipster-needle-maven-add-dependency-management -->
-            <dependency>
-                <groupId>io.micronaut</groupId>
-                <artifactId>micronaut-bom</artifactId>
-                <version>${micronaut.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -486,11 +488,6 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         </dependency>
 <%_ } _%>
         <dependency>
-            <groupId>jakarta.mail</groupId>
-            <artifactId>jakarta.mail-api</artifactId>
-            <version>${javax-mail.version}</version>
-        </dependency>
-        <dependency>
             <groupId>io.micronaut.test</groupId>
             <artifactId>micronaut-test-junit5</artifactId>
             <scope>test</scope>
@@ -522,8 +519,18 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <version>${javax-mail.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.sun.activation</groupId>
+            <artifactId>jakarta.activation</artifactId>
+            <version>${javax-mail.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient</artifactId>
+            <version>${prometheus-simpleclient.version}</version>
         </dependency>
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
@@ -586,6 +593,8 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                     <target>${java.version}</target>
                     <compilerArgs>
                         <arg>-parameters</arg>
+                        <arg>-Amicronaut.processing.group=<%= packageName %></arg>
+                        <arg>-Amicronaut.processing.module=<%= dasherizedBaseName %></arg>
                     </compilerArgs>
                     <annotationProcessorPaths>
                         <path>
@@ -598,6 +607,11 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                             <groupId>org.hibernate</groupId>
                             <artifactId>hibernate-jpamodelgen</artifactId>
                             <version>${hibernate.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut</groupId>
+                            <artifactId>micronaut-inject-java</artifactId>
+                            <version>${micronaut.version}</version>
                         </path>
                         <path>
                             <groupId>io.micronaut</groupId>
