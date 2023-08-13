@@ -1,21 +1,19 @@
 package <%=packageName%>.service;
 
 import <%=packageName%>.domain.User;
+import <%=packageName%>.util.UserLocaleAwareThymeleafViewsRenderer;
 import <%=packageName%>.util.JHipsterProperties;
 import io.micronaut.context.MessageSource;
+import io.micronaut.email.*;
+import io.micronaut.email.template.TemplateBody;
 import io.micronaut.scheduling.annotation.Async;
-import org.simplejavamail.api.email.EmailPopulatingBuilder;
-import org.simplejavamail.api.mailer.Mailer;
-import org.simplejavamail.email.EmailBuilder;
+import io.micronaut.views.ModelAndView;
+import jakarta.inject.Singleton;
+import java.util.Locale;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
-
-import jakarta.inject.Singleton;
-import jakarta.mail.internet.MimeMessage;
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
 
 /**
  * Service for sending emails.
@@ -32,41 +30,47 @@ public class MailService {
     private static final String BASE_URL = "baseUrl";
 
     private final JHipsterProperties jHipsterProperties;
-
-    private final Mailer mailer;
+    
+    private final EmailSender<?, ?> emailSender;
 
     private final MessageSource messageSource;
 
-    private final TemplateEngine templateEngine;
-
-
-    public MailService(JHipsterProperties jHipsterProperties, Mailer mailer,
-                       MessageSource messageSource, TemplateEngine templateEngine) {
-
+    public MailService(JHipsterProperties jHipsterProperties, EmailSender<?, ?> emailSender, MessageSource messageSource) {
         this.jHipsterProperties = jHipsterProperties;
-        this.mailer = mailer;
+        this.emailSender = emailSender;
         this.messageSource = messageSource;
-        this.templateEngine = templateEngine;
     }
 
     @Async
     public void sendEmail(String to, String subject, String content, boolean isHtml) {
-        log.debug("Send email[html '{}'] to '{}' with subject '{}' and content={}",
-            isHtml, to, subject, content);
+        doSendEmail(to, subject, new StringBody(content, isHtml ? BodyType.HTML : BodyType.TEXT), isHtml);
+    }
 
-        EmailPopulatingBuilder emailPopulatingBuilder = EmailBuilder.startingBlank()
+    @Async
+    public void sendEmailFromTemplate(User user, String templateName, String titleKey) {
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        String subject = messageSource.getMessage(titleKey, MessageSource.MessageContext.of(locale)).orElse(null);
+
+        Map<String, Object> model = Map.of(
+            USER, user,
+            BASE_URL, jHipsterProperties.getMail().getBaseUrl(),
+            UserLocaleAwareThymeleafViewsRenderer.LOCALE_KEY, user.getLangKey()
+        );
+
+        doSendEmail(user.getEmail(), subject, new TemplateBody<>(BodyType.HTML, new ModelAndView<>(templateName, model)), true);
+    }
+
+    private void doSendEmail(String to, String subject, Body content, boolean isHtml) {
+        log.debug("Send email[html '{}'] to '{}' with subject '{}' and content={}", isHtml, to, subject, content);
+
+        Email.Builder emailPopulatingBuilder = Email.builder()
             .to(to)
             .from(jHipsterProperties.getMail().getFrom())
-            .withSubject(subject);
-
-        if (isHtml) {
-            emailPopulatingBuilder.withHTMLText(content);
-        } else {
-            emailPopulatingBuilder.withPlainText(content);
-        }
+            .subject(subject)
+            .body(content);
 
         try {
-            mailer.sendMail(emailPopulatingBuilder.buildEmail());
+            emailSender.send(emailPopulatingBuilder);
             log.debug("Sent email to User '{}'", to);
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
@@ -75,17 +79,6 @@ public class MailService {
                 log.warn("Email could not be sent to user '{}': {}", to, e.getMessage());
             }
         }
-    }
-
-    @Async
-    public void sendEmailFromTemplate(User user, String templateName, String titleKey) {
-        Locale locale = Locale.forLanguageTag(user.getLangKey());
-        Context context = new Context(locale);
-        context.setVariable(USER, user);
-        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
-        String content = templateEngine.process(templateName, context);
-        String subject = messageSource.getMessage(titleKey, MessageSource.MessageContext.of(locale)).orElse(null);
-        sendEmail(user.getEmail(), subject, content, true);
     }
 
     <%_ if (authenticationType !== 'oauth2') { _%>

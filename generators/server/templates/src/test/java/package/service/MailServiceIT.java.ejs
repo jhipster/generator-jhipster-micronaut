@@ -7,14 +7,15 @@ import <%= packageName %>.domain.User;
 import <%= packageName %>.util.JHipsterProperties;
 import io.micronaut.context.MessageSource;
 import io.micronaut.context.annotation.Property;
+import io.micronaut.email.BodyType;
+import io.micronaut.email.Email;
+import io.micronaut.email.EmailSender;
+import io.micronaut.email.template.DefaultTemplateBodyDecorator;
+import io.micronaut.email.template.TemplateBody;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.simplejavamail.api.email.Email;
 import org.simplejavamail.api.mailer.Mailer;
 import org.thymeleaf.TemplateEngine;
@@ -23,7 +24,6 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.extension.ExtendWith;
 <%_ } _%>
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -38,6 +38,11 @@ import java.util.regex.Pattern;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
 
 /**
  * Integration tests for {@link MailService}.
@@ -59,44 +64,44 @@ public class MailServiceIT {
     @Inject
     private JHipsterProperties jHipsterProperties;
     @Inject
-    private TemplateEngine templateEngine;
+    private DefaultTemplateBodyDecorator decorator;
     @Inject
     private MessageSource messageSource;
-    @Spy
-    private Mailer mailer;
+    @Mock
+    private EmailSender mailer;
     @Captor
-    private ArgumentCaptor<Email> messageCaptor;
+    private ArgumentCaptor<Email.Builder> messageCaptor;
     private MailService mailService;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        when(mailer.sendMail(any(Email.class))).thenReturn(new CompletableFuture<>());
-        mailService = new MailService(jHipsterProperties, mailer, messageSource, templateEngine);
+        when(mailer.send(any())).thenReturn(new CompletableFuture<>());
+        mailService = new MailService(jHipsterProperties, mailer, messageSource);
     }
 
     @Test
     void testSendEmail() throws Exception {
         mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false);
-        verify(mailer).sendMail(messageCaptor.capture());
-        Email message = messageCaptor.getValue();
-        assertThat(message.getSubject()).isEqualTo("testSubject");
-        assertThat(message.getRecipients().get(0).getAddress()).isEqualTo("john.doe@example.com");
-        assertThat(message.getFromRecipient().getAddress()).isEqualTo(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getPlainText()).isInstanceOf(String.class);
-        assertThat(message.getPlainText()).hasToString("testContent");
+        verify(mailer).send(messageCaptor.capture());
+        Email.Builder message = messageCaptor.getValue();
+        assertThat(message.getSubject().orElseThrow()).isEqualTo("testSubject");
+        assertThat(message.getTo().orElseThrow().get(0).getEmail()).isEqualTo("john.doe@example.com");
+        assertThat(message.getFrom().orElseThrow().getEmail()).isEqualTo(jHipsterProperties.getMail().getFrom());
+        assertThat(message.getBody().orElseThrow().get(BodyType.TEXT).orElseThrow()).isInstanceOf(String.class);
+        assertThat(message.getBody().orElseThrow().get(BodyType.TEXT).orElseThrow()).hasToString("testContent");
     }
 
     @Test
     void testSendHtmlEmail() throws Exception {
-        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent",  true);
-        verify(mailer).sendMail(messageCaptor.capture());
-        Email message = messageCaptor.getValue();
-        assertThat(message.getSubject()).isEqualTo("testSubject");
-        assertThat(message.getRecipients().get(0).getAddress()).isEqualTo("john.doe@example.com");
-        assertThat(message.getFromRecipient().getAddress()).isEqualTo(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getHTMLText()).isInstanceOf(String.class);
-        assertThat(message.getHTMLText()).hasToString("testContent");
+        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", true);
+        verify(mailer).send(messageCaptor.capture());
+        Email.Builder message = messageCaptor.getValue();
+        assertThat(message.getSubject().orElseThrow()).isEqualTo("testSubject");
+        assertThat(message.getTo().orElseThrow().get(0).getEmail()).isEqualTo("john.doe@example.com");
+        assertThat(message.getFrom().orElseThrow().getEmail()).isEqualTo(jHipsterProperties.getMail().getFrom());
+        assertThat(message.getBody().orElseThrow().get(BodyType.HTML).orElseThrow()).isInstanceOf(String.class);
+        assertThat(message.getBody().orElseThrow().get(BodyType.HTML).orElseThrow()).hasToString("testContent");
     }
 
     <%_ if (authenticationType !== 'oauth2') { _%>
@@ -107,14 +112,17 @@ public class MailServiceIT {
         user.setEmail("john.doe@example.com");
         user.setLangKey("en");
         mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
-        verify(mailer).sendMail(messageCaptor.capture());
-        Email message = messageCaptor.getValue();
-        assertThat(message.getSubject()).isEqualTo("test title");
-        assertThat(message.getRecipients().get(0).getAddress()).isEqualTo("john.doe@example.com");
-        assertThat(message.getFromRecipient().getAddress()).isEqualTo(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getHTMLText()).isEqualToNormalizingNewlines("<html>test title, http://127.0.0.1:8080, john</html>\n");
+        verify(mailer).send(messageCaptor.capture());
+        Email.Builder message = messageCaptor.getValue();
+        assertThat(message.getSubject().orElseThrow()).isEqualTo("test title");
+        assertThat(message.getTo().orElseThrow().get(0).getEmail()).isEqualTo("john.doe@example.com");
+        assertThat(message.getFrom().orElseThrow().getEmail()).isEqualTo(jHipsterProperties.getMail().getFrom());
+        assertThat(message.getBody().orElseThrow()).isInstanceOf(TemplateBody.class);
+        TemplateBody<?> body = (TemplateBody<?>) message.getBody().orElseThrow();
+        decorator.renderBody(body, BodyType.HTML);
+        assertThat(body.get(BodyType.HTML).orElseThrow()).isEqualToNormalizingNewlines("<html>test title, http://127.0.0.1:8080, john</html>\n");
     }
-
+    
     @Test
     void testSendActivationEmail() throws Exception {
         User user = new User();
@@ -122,13 +130,16 @@ public class MailServiceIT {
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
         mailService.sendActivationEmail(user);
-        verify(mailer).sendMail(messageCaptor.capture());
-        Email message = messageCaptor.getValue();
-        assertThat(message.getRecipients().get(0).getAddress()).isEqualTo(user.getEmail());
-        assertThat(message.getFromRecipient().getAddress()).isEqualTo(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getHTMLText()).isNotEmpty();
+        verify(mailer).send(messageCaptor.capture());
+        Email.Builder message = messageCaptor.getValue();
+        assertThat(message.getTo().orElseThrow().get(0).getEmail()).isEqualTo("john.doe@example.com");
+        assertThat(message.getFrom().orElseThrow().getEmail()).isEqualTo(jHipsterProperties.getMail().getFrom());
+        assertThat(message.getBody().orElseThrow()).isInstanceOf(TemplateBody.class);
+        TemplateBody<?> body = (TemplateBody<?>) message.getBody().orElseThrow();
+        decorator.renderBody(body, BodyType.HTML);
+        assertThat(body.get(BodyType.HTML).orElseThrow()).isNotEmpty();
     }
-
+    
     @Test
     void testCreationEmail() throws Exception {
         User user = new User();
@@ -136,38 +147,44 @@ public class MailServiceIT {
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
         mailService.sendCreationEmail(user);
-        verify(mailer).sendMail(messageCaptor.capture());
-        Email message = messageCaptor.getValue();
-        assertThat(message.getRecipients().get(0).getAddress()).isEqualTo(user.getEmail());
-        assertThat(message.getFromRecipient().getAddress()).isEqualTo(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getHTMLText()).isNotEmpty();
+        verify(mailer).send(messageCaptor.capture());
+        Email.Builder message = messageCaptor.getValue();
+        assertThat(message.getTo().orElseThrow().get(0).getEmail()).isEqualTo("john.doe@example.com");
+        assertThat(message.getFrom().orElseThrow().getEmail()).isEqualTo(jHipsterProperties.getMail().getFrom());
+        assertThat(message.getBody().orElseThrow()).isInstanceOf(TemplateBody.class);
+        TemplateBody<?> body = (TemplateBody<?>) message.getBody().orElseThrow();
+        decorator.renderBody(body, BodyType.HTML);
+        assertThat(body.get(BodyType.HTML).orElseThrow()).isNotEmpty();
     }
-
+    
     @Test
     void testSendPasswordResetMail() throws Exception {
         User user = new User();
         user.setLangKey(Constants.DEFAULT_LANGUAGE);
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
-        mailService.sendCreationEmail(user);
-        verify(mailer).sendMail(messageCaptor.capture());
-        Email message = messageCaptor.getValue();
-        assertThat(message.getRecipients().get(0).getAddress()).isEqualTo(user.getEmail());
-        assertThat(message.getFromRecipient().getAddress()).isEqualTo(jHipsterProperties.getMail().getFrom());
-        assertThat(message.getHTMLText()).isNotEmpty();
+        mailService.sendPasswordResetMail(user);
+        verify(mailer).send(messageCaptor.capture());
+        Email.Builder message = messageCaptor.getValue();
+        assertThat(message.getTo().orElseThrow().get(0).getEmail()).isEqualTo("john.doe@example.com");
+        assertThat(message.getFrom().orElseThrow().getEmail()).isEqualTo(jHipsterProperties.getMail().getFrom());
+        assertThat(message.getBody().orElseThrow()).isInstanceOf(TemplateBody.class);
+        TemplateBody<?> body = (TemplateBody<?>) message.getBody().orElseThrow();
+        decorator.renderBody(body, BodyType.HTML);
+        assertThat(body.get(BodyType.HTML).orElseThrow()).isNotEmpty();
     }
     <%_ } _%>
 
     @Test
     public void testSendLocalizedEmailForAllSupportedLanguages() throws Exception {
-        <%= asEntity('User') %> user = new <%= asEntity('User') %>();
+        User user = new User();
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
         for (String langKey : languages) {
             user.setLangKey(langKey);
             mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
-            verify(mailer, atLeastOnce()).sendMail(messageCaptor.capture());
-            Email message = messageCaptor.getValue();
+            verify(mailer, atLeastOnce()).send(messageCaptor.capture());
+            Email.Builder message = messageCaptor.getValue();
 
             String propertyFilePath = "i18n/messages_" + getJavaLocale(langKey) + ".properties";
             URL resource = this.getClass().getClassLoader().getResource(propertyFilePath);
@@ -176,8 +193,11 @@ public class MailServiceIT {
             properties.load(new InputStreamReader(new FileInputStream(file), Charset.forName("UTF-8")));
 
             String emailTitle = (String) properties.get("email.test.title");
-            assertThat(message.getSubject()).isEqualTo(emailTitle);
-            assertThat(message.getHTMLText()).isEqualToNormalizingNewlines("<html>" + emailTitle + ", http://127.0.0.1:8080, john</html>\n");
+            assertThat(message.getSubject().orElseThrow()).isEqualTo(emailTitle);
+            assertThat(message.getBody().orElseThrow()).isInstanceOf(TemplateBody.class);
+            TemplateBody<?> body = (TemplateBody<?>) message.getBody().orElseThrow();
+            decorator.renderBody(body, BodyType.HTML);
+            assertThat(body.get(BodyType.HTML).orElseThrow()).isEqualToNormalizingNewlines("<html>" + emailTitle + ", http://127.0.0.1:8080, john</html>\n");
         }
     }
 

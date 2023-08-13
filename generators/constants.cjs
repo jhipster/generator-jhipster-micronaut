@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2023 the original author or authors from the JHipster project.
+ * Copyright 2019-2021 the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see https://www.jhipster.tech/
  * for more information.
@@ -18,7 +18,8 @@
  */
 
 module.exports = {
-  GRADLE_VERSION: '7.4.2',
+  JAVA_VERSION: 17,
+  GRADLE_VERSION: '8.1.1',
   DOCKER_REDIS: 'redis:6.0.10',
   sqlDb: {
     h2Disk: {
@@ -51,20 +52,19 @@ module.exports = {
     },
   },
   versions: {
-    micronaut: '3.10.1',
-    micronautData: '3.10.0',
-    micronautDiscoveryClient: '3.3.1',
+    micronaut: '4.0.3',
+    micronautData: '4.0.4',
+    micronautDiscoveryClient: '4.0.1',
     micronautOpenApi: '4.8.7',
     rxJava3: '2.3.0',
-    hibernate: '5.6.15.Final',
+    hibernate: '6.2.6.Final',
     prometheusSimpleclient: '0.16.0',
     jackson: '2.13.3',
     javassist: '3.27.0-GA', // Should match Hibernate deps
-    javaxInject: '1',
     javaxMail: '2.0.1',
     jbcrypt: '0.4',
     liquibase: '4.15.0',
-    liquibaseHibernate5: '4.15.0',
+    liquibaseHibernate6: '4.23.0',
     logback: '1.2.11',
     mapstruct: '1.5.2.Final',
     swaggerAnnotations: '2.2.2',

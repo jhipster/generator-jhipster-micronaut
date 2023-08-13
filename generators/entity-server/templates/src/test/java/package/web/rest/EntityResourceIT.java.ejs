@@ -93,7 +93,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import jakarta.inject.Inject;
 <%_ if (databaseType === 'sql' && !reactive) { _%>
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 <%_ } _%>
 <% if (fieldsContainBigDecimal === true) { %>
 import java.math.BigDecimal;<% } %><% if (fieldsContainBlob === true && databaseType === 'cassandra') { %>

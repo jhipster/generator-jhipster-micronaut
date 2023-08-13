@@ -1,12 +1,10 @@
 package <%=packageName%>.config;
 
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
-
+import com.fasterxml.jackson.datatype.hibernate6.Hibernate6Module;
 import io.micronaut.context.annotation.Factory;
+import jakarta.inject.Singleton;
 import org.zalando.problem.ProblemModule;
 import org.zalando.problem.violations.ConstraintViolationProblemModule;
-
-import jakarta.inject.Singleton;
 
 @Factory
 public class JacksonConfiguration {
@@ -15,8 +13,8 @@ public class JacksonConfiguration {
      * Support for Hibernate types in Jackson.
      */
     @Singleton
-    Hibernate5Module hibernate5Module() {
-        return new Hibernate5Module();
+    Hibernate6Module hibernate6Module() {
+        return new Hibernate6Module();
     }
 
     /*

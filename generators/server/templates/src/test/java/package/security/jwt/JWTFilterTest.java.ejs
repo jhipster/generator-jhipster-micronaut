@@ -29,7 +29,7 @@ import io.micronaut.runtime.server.EmbeddedServer;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.authentication.*;
 import io.micronaut.security.rules.SecurityRule;
-import io.micronaut.security.token.jwt.render.AccessRefreshToken;
+import io.micronaut.security.token.render.AccessRefreshToken;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.reactivex.rxjava3.core.Flowable;
 import org.junit.jupiter.api.Test;
@@ -127,7 +127,7 @@ public class JWTFilterTest {
     <%_ } _%>
     @Requires(property = "spec.name", value = "JWTFilterTest")
     @Singleton
-    static class MockAuthenticationProvider implements AuthenticationProvider {
+    static class MockAuthenticationProvider implements AuthenticationProvider<HttpRequest<?>> {
         @Override
         public Publisher<AuthenticationResponse> authenticate(@Nullable HttpRequest<?> httpRequest, AuthenticationRequest<?, ?> authenticationRequest) {
             if (authenticationRequest.getIdentity().toString().equals("test-user") &&

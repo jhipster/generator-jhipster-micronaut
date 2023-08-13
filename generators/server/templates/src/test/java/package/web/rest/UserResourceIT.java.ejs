@@ -44,7 +44,7 @@ import org.mockito.Mockito;
 
 import jakarta.inject.Inject;
 <%_ if (databaseType === 'sql' && !reactive) { _%>
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 <%_ } _%>
 <%_ if (databaseType === 'sql') { _%>
 import java.sql.Connection;

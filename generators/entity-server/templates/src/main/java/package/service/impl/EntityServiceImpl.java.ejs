@@ -67,7 +67,7 @@ import io.micronaut.data.model.Pageable;
 <%_ } _%>
 import jakarta.inject.Singleton;
 <%_ if (databaseType === 'sql') { _%>
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import io.micronaut.transaction.annotation.ReadOnly;
 <%_ } _%>
 <%_ if (reactive) { _%>
