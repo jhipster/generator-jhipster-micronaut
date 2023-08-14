@@ -242,6 +242,9 @@ Object {
   "src/main/java/com/mycompany/myapp/util/PaginationUtil.java": Object {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/util/UserLocaleAwareThymeleafViewsRenderer.java": Object {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/web/rest/AccountResource.java": Object {
     "stateCleared": "modified",
   },
@@ -1266,15 +1269,6 @@ Object {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/config/CorsTest.java": Object {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/timezone/HibernateTimeZoneIT.java": Object {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/repository/timezone/DateTimeWrapper.java": Object {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/repository/timezone/DateTimeWrapperRepository.java": Object {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/security/DomainUserDetailsServiceIT.java": Object {
