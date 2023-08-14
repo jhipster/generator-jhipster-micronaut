@@ -367,10 +367,12 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -1318,6 +1320,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                 <dependency>
                     <groupId>org.mapstruct</groupId>
                     <artifactId>mapstruct-processor</artifactId>
+                    <version>${mapstruct.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.hibernate</groupId>
