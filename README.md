@@ -3,12 +3,12 @@
 > This project is a [Micronaut](https://micronaut.io) blueprint for [JHipster](https://jhipster.tech).
 > While we are working to create a complete experience, there are likely some gaps.
 > Please [let us know](https://github.com/jhipster/generator-jhipster-micronaut/issues) if you encounter issues.
->
+
 ## Installing and Using the Active Development Version
 
 This currently active development branch is based on the latest production release of JHipster - v7.9.3
 
-As a pre-requisite, you must have NodeJS v16.x installed, along with the bundled version of NPM. 
+As a pre-requisite, you must have NodeJS v16.x installed, along with the bundled version of NPM.
 
 1. Start by installing JHipster v7.9.3 with
 
@@ -17,6 +17,7 @@ npm install -g generator-jhipster
 ```
 
 2. Then install this in-development blueprint by
+
 ```
 git clone https://github.com/jeremyg484/generator-jhipster-micronaut.git
 cd generator-jhipster-micronaut
@@ -27,6 +28,7 @@ npm link
 ```
 
 3. Next you can create a new application with the development version of this blueprint by executing:
+
 ```
 mkdir my-project
 cd my-project
