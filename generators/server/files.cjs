@@ -821,11 +821,6 @@ const serverFiles = {
       path: SERVER_TEST_SRC_DIR,
       templates: [
         {
-          file: 'package/config/timezone/HibernateTimeZoneIT.java',
-          renameTo: generator => `${generator.javaDir}config/timezone/HibernateTimeZoneIT.java`,
-          useBluePrint: true,
-        },
-        {
           file: 'package/config/CorsController.java',
           renameTo: generator => `${generator.javaDir}config/CorsController.java`,
           useBluePrint: true,
@@ -833,23 +828,6 @@ const serverFiles = {
         {
           file: 'package/config/CorsTest.java',
           renameTo: generator => `${generator.javaDir}config/CorsTest.java`,
-          useBluePrint: true,
-        },
-      ],
-    },
-  ],
-  serverJavaRepositoryTest: [
-    {
-      path: SERVER_TEST_SRC_DIR,
-      templates: [
-        {
-          file: 'package/repository/timezone/DateTimeWrapper.java',
-          renameTo: generator => `${generator.javaDir}repository/timezone/DateTimeWrapper.java`,
-          useBluePrint: true,
-        },
-        {
-          file: 'package/repository/timezone/DateTimeWrapperRepository.java',
-          renameTo: generator => `${generator.javaDir}repository/timezone/DateTimeWrapperRepository.java`,
           useBluePrint: true,
         },
       ],

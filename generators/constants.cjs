@@ -59,11 +59,11 @@ module.exports = {
     rxJava3: '2.3.0',
     hibernate: '6.2.6.Final',
     prometheusSimpleclient: '0.16.0',
-    jackson: '2.13.3',
+    jackson: '2.15.2',
     javassist: '3.27.0-GA', // Should match Hibernate deps
     javaxMail: '2.0.1',
     jbcrypt: '0.4',
-    liquibase: '4.15.0',
+    liquibase: '4.23.0',
     liquibaseHibernate6: '4.23.0',
     logback: '1.2.11',
     mapstruct: '1.5.2.Final',
