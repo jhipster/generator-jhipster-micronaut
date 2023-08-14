@@ -76,6 +76,7 @@ _%>
         <!-- The javassist version should match the one managed by
         https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
         <javassist.version><%= versions.javassist %></javassist.version>
+        <javax-inject.version><%= versions.javaxInject %></javax-inject.version>
         <javax-mail.version><%= versions.javaxMail %></javax-mail.version>
         <%_ if (!skipUserManagement) { _%>
         <jbcrypt.version><%= versions.jbcrypt %></jbcrypt.version>
@@ -229,6 +230,7 @@ _%>
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
+            <version>${logback.version}</version>
         </dependency>
 <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) { _%>
         <dependency>

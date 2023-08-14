@@ -51,6 +51,7 @@ module.exports = {
     prometheusSimpleclient: '0.16.0',
     jackson: '2.13.3',
     javassist: '3.27.0-GA', // Should match Hibernate deps
+    javaxInject: '1',
     javaxMail: '2.0.1',
     jbcrypt: '0.4',
     jhipsterDeps: '3.8.0',

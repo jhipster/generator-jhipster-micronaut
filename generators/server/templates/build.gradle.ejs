@@ -338,7 +338,6 @@ dependencies {
         <%_ if (enableHibernateCache) { _%>
     implementation "org.hibernate:hibernate-jcache"
         <%_ } _%>
-    implementation "javax.inject:javax.inject"
     testImplementation "org.testcontainers:testcontainers:$testcontainers_version"
     <%_ } _%>
     <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'redis'].includes(cacheProvider) || applicationType === 'gateway') { _%>
@@ -420,6 +419,7 @@ dependencies {
     implementation "io.micronaut:micronaut-discovery-client"
 <%_ } _%>
 
+    implementation "javax.inject:javax.inject:${javax_inject_version}"
     implementation "jakarta.mail:jakarta.mail-api:$javax_mail_version"
     implementation "com.sun.mail:jakarta.mail:$javax_mail_version"
     implementation "org.zalando:problem:$problem_version"
