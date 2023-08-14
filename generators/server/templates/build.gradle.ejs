@@ -338,6 +338,7 @@ dependencies {
         <%_ if (enableHibernateCache) { _%>
     implementation "org.hibernate:hibernate-jcache"
         <%_ } _%>
+    implementation "javax.inject:javax.inject"
     testImplementation "org.testcontainers:testcontainers:$testcontainers_version"
     <%_ } _%>
     <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'redis'].includes(cacheProvider) || applicationType === 'gateway') { _%>
