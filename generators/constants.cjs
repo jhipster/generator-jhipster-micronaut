@@ -58,7 +58,7 @@ module.exports = {
     liquibase: '4.14.0',
     liquibaseHibernate5: '4.1.1',
     logback: '1.2.11',
-    mapstruct: '1.3.1.Final',
+    mapstruct: '1.5.2.Final',
     swaggerAnnotations: '2.2.2',
     mockito: '3.6.28',
     problem: '0.24.0',
