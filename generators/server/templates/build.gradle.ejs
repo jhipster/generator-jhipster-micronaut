@@ -48,6 +48,8 @@ plugins {
     //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
+graalvmNative.toolchainDetection = false
+
 micronaut {
     runtime "netty"
     testRuntime "junit5"
@@ -270,16 +272,13 @@ dependencies {
     // import JHipster dependencies BOM
     if (!project.hasProperty("gae")) {
         implementation platform("io.github.jhipster:jhipster-dependencies:${jhipster_dependencies_version}")
-        annotationProcessor platform("io.micronaut:micronaut-bom:${micronautVersion}")
-        implementation platform("io.micronaut:micronaut-bom:${micronautVersion}")
     }
 
-    annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut:micronaut-validation"
     <%_ if (databaseType === 'sql') { _%>
-    annotationProcessor "io.micronaut.data:micronaut-data-processor:$micronaut_data_version"
+    annotationProcessor "io.micronaut.data:micronaut-data-processor"
     <%_ } _%>
-    annotationProcessor "io.micronaut.openapi:micronaut-openapi:$micronaut_openapi_version"
+    annotationProcessor "io.micronaut.openapi:micronaut-openapi"
 
     // Use ", version: jhipster_dependencies_version, changing: true" if you want
     // to use a SNAPSHOT release instead of a stable release
@@ -293,7 +292,7 @@ dependencies {
         exclude group: "org.springframework.boot", module: "spring-boot-starter-web"
     }
     implementation "org.simplejavamail:simple-java-mail:$simplejavamail_version"
-    implementation "javax.annotation:javax.annotation-api"
+    implementation "jakarta.annotation:jakarta.annotation-api"
     implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
     implementation "io.dropwizard.metrics:metrics-core"
@@ -386,12 +385,12 @@ dependencies {
     liquibaseRuntime sourceSets.main.compileClasspath
     <%_ } _%>
 
-    implementation "io.micronaut:micronaut-inject:$micronautVersion"
-    implementation "io.micronaut:micronaut-validation:$micronautVersion"
-    implementation "io.micronaut:micronaut-runtime:$micronautVersion"
-    implementation "io.micronaut:micronaut-http-client:$micronautVersion"
-    implementation "io.micronaut:micronaut-http-server-netty:$micronautVersion"
-    implementation "io.micronaut:micronaut-management:$micronautVersion"
+    implementation "io.micronaut:micronaut-inject"
+    implementation "io.micronaut:micronaut-validation"
+    implementation "io.micronaut:micronaut-runtime"
+    implementation "io.micronaut:micronaut-http-client"
+    implementation "io.micronaut:micronaut-http-server-netty"
+    implementation "io.micronaut:micronaut-management"
     implementation "io.micronaut.security:micronaut-security-jwt"
 <%_ if (authenticationType == 'oauth2') { _%>
     implementation "io.micronaut.security:micronaut-security-oauth2"
@@ -417,11 +416,12 @@ dependencies {
         exclude group: 'io.micronaut', module: 'micronaut-jdbc'
     }
 <%_ if (serviceDiscoveryType === 'eureka' || serviceDiscoveryType === 'consul') { _%>
-    implementation "io.micronaut:micronaut-discovery-client"
+    implementation "io.micronaut.discovery:micronaut-discovery-client:$micronaut_discovery_client_version"
 <%_ } _%>
 
-    implementation "javax.mail:javax.mail-api:$javax_mail_version"
-    implementation "com.sun.mail:javax.mail:$javax_mail_version"
+    implementation "javax.inject:javax.inject:${javax_inject_version}"
+    implementation "jakarta.mail:jakarta.mail-api:$javax_mail_version"
+    implementation "com.sun.mail:jakarta.mail:$javax_mail_version"
     implementation "org.zalando:problem:$problem_version"
     implementation "org.zalando:problem-violations:$problem_version"
     implementation "org.zalando:jackson-datatype-problem:$problem_version"
@@ -526,11 +526,8 @@ dependencies {
     <%_ } _%>
 
     // Micronaut test deps
-    testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
-    testAnnotationProcessor "io.micronaut.data:micronaut-data-processor:$micronaut_data_version"
+    testAnnotationProcessor "io.micronaut.data:micronaut-data-processor"
     testAnnotationProcessor "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
-    testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     testImplementation "io.micronaut.test:micronaut-test-junit5"
 
     testImplementation "org.junit.jupiter:junit-jupiter-engine"
@@ -559,6 +556,10 @@ dependencies {
     <%_ if (messageBroker === 'kafka') { _%>
     testImplementation "org.testcontainers:kafka"
     <%_ } _%>
+
+    implementation("io.micronaut.rxjava3:micronaut-rxjava3")
+    implementation("io.micronaut.rxjava3:micronaut-rxjava3-http-client:$rxJava3Version")
+
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
 

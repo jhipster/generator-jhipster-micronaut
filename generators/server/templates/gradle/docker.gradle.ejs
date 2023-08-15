@@ -2,6 +2,7 @@ dockerfile {
     baseImage = "openjdk:15-alpine"
     args("-Xmx128m")
 }
+
 dockerBuild {
     images = ["<%= baseName %>:$project.version", "<%= baseName %>:latest"]
 }
@@ -17,9 +18,7 @@ dockerfileNative {
     baseImage = "oracle/graalvm-ce:20.3.0-java11"
     args("-Xmx64m")
 }
-nativeImage {
-    args('--static')
-}
+
 dockerBuildNative {
     images = ["<%= baseName %>:$project.version", "<%= baseName %>:latest"]
 }

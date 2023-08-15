@@ -6,7 +6,7 @@ import io.micronaut.context.annotation.Factory;
 import org.zalando.problem.ProblemModule;
 import org.zalando.problem.violations.ConstraintViolationProblemModule;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Factory
 public class JacksonConfiguration {

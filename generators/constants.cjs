@@ -18,7 +18,7 @@
  */
 
 module.exports = {
-  GRADLE_VERSION: '6.8.1',
+  GRADLE_VERSION: '7.4.2',
   DOCKER_REDIS: 'redis:6.0.10',
   sqlDb: {
     h2Disk: {
@@ -43,26 +43,29 @@ module.exports = {
     },
   },
   versions: {
-    micronaut: '2.4.4',
-    micronautData: '2.3.1',
-    micronautOpenApi: '2.3.1',
-
-    hibernate: '5.4.24.Final',
-    jackson: '2.12.2',
+    micronaut: '3.9.5',
+    micronautData: '3.10.0',
+    micronautDiscoveryClient: '3.3.1',
+    micronautOpenApi: '4.8.7',
+    rxJava3: '2.3.0',
+    hibernate: '5.6.15.Final',
+    prometheusSimpleclient: '0.16.0',
+    jackson: '2.13.3',
     javassist: '3.27.0-GA', // Should match Hibernate deps
-    javaxMail: '1.6.2',
+    javaxInject: '1',
+    javaxMail: '2.0.1',
     jbcrypt: '0.4',
     jhipsterDeps: '3.8.0',
-    liquibase: '4.2.2',
+    liquibase: '4.14.0',
     liquibaseHibernate5: '4.1.1',
-    logback: '1.2.3',
-    mapstruct: '1.3.1.Final',
-    swaggerAnnotations: '2.1.6',
+    logback: '1.2.11',
+    mapstruct: '1.5.2.Final',
+    swaggerAnnotations: '2.2.2',
     mockito: '3.6.28',
     problem: '0.24.0',
-    caffeine: '2.8.8',
-    archunit: '0.14.1',
-    simplejavamail: '6.4.4',
-    testcontainers: '1.15.2',
+    caffeine: '3.1.1',
+    archunit: '0.23.1',
+    simplejavamail: '7.5.0',
+    testcontainers: '1.17.3',
   },
 };

@@ -9,7 +9,7 @@ import io.micronaut.security.authentication.DefaultAuthorizationExceptionHandler
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 @Replaces(DefaultAuthorizationExceptionHandler.class)

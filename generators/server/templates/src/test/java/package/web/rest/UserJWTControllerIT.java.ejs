@@ -11,7 +11,7 @@ import <%=packageName%>.security.PasswordEncoder;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
-import io.micronaut.http.client.RxHttpClient;
+import io.micronaut.rxjava3.http.client.Rx3HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.security.token.jwt.render.AccessRefreshToken;
@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 <%_ if (cacheProvider === 'redis') { _%>
 import org.junit.jupiter.api.extension.ExtendWith;
 <%_ } _%>
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class UserJWTControllerIT {
     UserRepository userRepository;
 
     @Inject @Client("/")
-    RxHttpClient client;
+    Rx3HttpClient client;
 
     @Test
     public void testAuthorize() throws Exception {
