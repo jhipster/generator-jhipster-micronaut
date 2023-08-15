@@ -70,6 +70,7 @@ _%>
         <jhipster-dependencies.version><%= JHIPSTER_DEPENDENCIES_VERSION %></jhipster-dependencies.version>
         <micronaut.version><%= versions.micronaut %></micronaut.version>
         <micronaut-data.version><%= versions.micronautData %></micronaut-data.version>
+        <micronaut-discovery-client.version><%= versions.micronautDiscoveryClient %></micronaut-discovery-client.version>
         <micronaut-openapi.version><%= versions.micronautOpenApi %></micronaut-openapi.version>
         <prometheus-simpleclient.version><%= versions.prometheusSimpleclient %></prometheus-simpleclient.version>
         <hibernate.version><%= versions.hibernate %></hibernate.version>
@@ -492,6 +493,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         <dependency>
             <groupId>io.micronaut.discovery</groupId>
             <artifactId>micronaut-discovery-client</artifactId>
+            <version>${micronaut-discovery-client.version}</version>
             <scope>compile</scope>
         </dependency>
 <%_ } _%>

@@ -416,7 +416,7 @@ dependencies {
         exclude group: 'io.micronaut', module: 'micronaut-jdbc'
     }
 <%_ if (serviceDiscoveryType === 'eureka' || serviceDiscoveryType === 'consul') { _%>
-    implementation "io.micronaut:micronaut-discovery-client"
+    implementation "io.micronaut:micronaut-discovery-client:$micronaut_discovery_client_version"
 <%_ } _%>
 
     implementation "javax.inject:javax.inject:${javax_inject_version}"

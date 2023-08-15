@@ -45,6 +45,7 @@ module.exports = {
   versions: {
     micronaut: '3.9.5',
     micronautData: '3.10.0',
+    micronautDiscoveryClient: '3.3.1',
     micronautOpenApi: '4.8.7',
     rxJava3: '2.3.0',
     hibernate: '5.6.15.Final',
