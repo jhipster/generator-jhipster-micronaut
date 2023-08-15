@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: jhipster/generator-jhipster
-          ref: v7.9.2
+          ref: v7.9.3
           path: generator-jhipster
       - name: 'SETUP: environment'
         id: setup
@@ -54,7 +54,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '11'
       - name: 'Install blueprint'
         run: npm install && npm link
         working-directory: ${{ github.workspace }}/generator-jhipster-micronaut
