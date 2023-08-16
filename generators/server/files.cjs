@@ -145,10 +145,7 @@ const serverFiles = {
     {
       condition: generator => generator.authenticationType === 'oauth2' && generator.applicationType !== 'microservice',
       path: DOCKER_DIR,
-      templates: [
-        'keycloak.yml',
-        { file: 'config/realm-config/jhipster-realm.json', renameTo: () => 'realm-config/jhipster-realm.json' },
-      ],
+      templates: ['keycloak.yml', { file: 'config/realm-config/jhipster-realm.json', renameTo: () => 'realm-config/jhipster-realm.json' }],
     },
   ],
   serverResources: [
