@@ -19,7 +19,7 @@ npm install -g generator-jhipster
 2. Then install this in-development blueprint by
 
 ```
-git clone https://github.com/jeremyg484/generator-jhipster-micronaut.git
+git clone https://github.com/jhipster/generator-jhipster-micronaut.git
 cd generator-jhipster-micronaut
 git checkout micronaut-3
 npm link generator-jhipster
