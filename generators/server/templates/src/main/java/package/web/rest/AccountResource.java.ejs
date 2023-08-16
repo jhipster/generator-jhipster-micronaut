@@ -229,10 +229,14 @@ public class AccountResource {
     @Post(value = "/account/reset-password/init", consumes = "text/plain")
     @ExecuteOn(TaskExecutors.IO)
     public void requestPasswordReset(@Body String mail) {
-        mailService.sendPasswordResetMail(
-           userService.requestPasswordReset(mail)
-               .orElseThrow(EmailNotFoundException::new)
-        );
+        Optional<User> user = userService.requestPasswordReset(mail);
+        if (user.isPresent()) {
+            mailService.sendPasswordResetMail(user.orElseThrow());
+        } else {
+            // Pretend the request has been successful to prevent checking which emails really exist
+            // but log that an invalid attempt has been made
+            log.warn("Password reset requested for non existing mail");
+        }
     }
 
     /**
