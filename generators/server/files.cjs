@@ -160,6 +160,11 @@ const serverFiles = {
       templates: ['swagger/api.yml'],
     },
     {
+      condition: generator => !generator.skipClient,
+      transform: false,
+      templates: ['npmw', 'npmw.cmd'],
+    },
+    {
       path: SERVER_MAIN_RES_DIR,
       templates: [
         {
