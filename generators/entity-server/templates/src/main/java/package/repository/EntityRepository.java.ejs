@@ -91,9 +91,9 @@ public interface <%= entityClass %>Repository extends <% if (databaseType === 's
     <%_ if (fieldsContainOwnerManyToMany === true) {
         if (databaseType === 'sql') { _%>
 
-    @Query(value = "select distinct <%= entityInstance %> from <%= asEntity(entityClass) %> <%= entityInstance %><% for (idx in relationships) {
-    if (relationships[idx].relationshipType === 'many-to-many' && relationships[idx].ownerSide === true) { %> left join fetch <%= entityInstance %>.<%= relationships[idx].relationshipFieldNamePlural %><% } } %>",
-        countQuery = "select count(distinct <%= entityInstance %>) from <%= asEntity(entityClass) %> <%= entityInstance %>")
+    @Query(value = "select distinct <%= entityInstance %>_ from <%= asEntity(entityClass) %> <%= entityInstance %>_<% for (idx in relationships) {
+    if (relationships[idx].relationshipType === 'many-to-many' && relationships[idx].ownerSide === true) { %> left join fetch <%= entityInstance %>_.<%= relationships[idx].relationshipFieldNamePlural %><% } } %>",
+        countQuery = "select count(distinct <%= entityInstance %>_) from <%= asEntity(entityClass) %> <%= entityInstance %>_")
     public Page<<%= asEntity(entityClass) %>> findAllWithEagerRelationships(Pageable pageable);
 
     @Query("select distinct <%= entityInstance %> from <%= asEntity(entityClass) %> <%= entityInstance %><% for (idx in relationships) {
