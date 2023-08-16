@@ -23,7 +23,7 @@ export default class extends extendGenerator(CypressGenerator) {
   get [POST_WRITING_PRIORITY]() {
     return {
       customizeCypressForMicronaut({ application: { authenticationTypeJwt } }) {
-        this.editFile('src/test/javascript/cypress/integration/administration/administration.spec.ts', content =>
+        this.editFile('src/test/javascript/cypress/e2e/administration/administration.cy.ts', content =>
           content.replaceAll('info.activeProfiles', "info['active-profiles']")
         );
         if (authenticationTypeJwt) {
