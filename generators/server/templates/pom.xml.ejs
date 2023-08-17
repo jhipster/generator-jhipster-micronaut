@@ -137,7 +137,7 @@ _%>
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>io.github.jhipster</groupId>
+                <groupId>tech.jhipster</groupId>
                 <artifactId>jhipster-dependencies</artifactId>
                 <version>${jhipster-dependencies.version}</version>
                 <type>pom</type>
@@ -154,7 +154,7 @@ _%>
             <version><%= versions.swaggerAnnotations %></version>
         </dependency>
         <dependency>
-            <groupId>io.github.jhipster</groupId>
+            <groupId>tech.jhipster</groupId>
             <artifactId>jhipster-framework</artifactId>
             <exclusions>
                 <exclusion>
@@ -541,10 +541,6 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <groupId>io.prometheus</groupId>
             <artifactId>simpleclient</artifactId>
             <version>${prometheus-simpleclient.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.dropwizard.metrics</groupId>
-            <artifactId>metrics-core</artifactId>
         </dependency>
         <dependency>
             <groupId>io.micronaut.rxjava3</groupId>

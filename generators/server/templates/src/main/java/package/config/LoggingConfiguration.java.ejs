@@ -75,9 +75,6 @@ public class LoggingConfiguration {
         if (this.jHipsterProperties.getLogging().isUseJsonFormat() || this.jHipsterProperties.getLogging().getLogstash().isEnabled()) {
             addContextListener(context);
         }
-        if (this.jHipsterProperties.getMetrics().getLogs().isEnabled()) {
-            setMetricsMarkerLogbackFilter(context);
-        }
     }
 
     private void addJsonConsoleAppender(LoggerContext context) {
@@ -192,33 +189,6 @@ public class LoggingConfiguration {
         LogbackLoggerContextListener loggerContextListener = new LogbackLoggerContextListener(this.jHipsterProperties);
         loggerContextListener.setContext(context);
         context.addListener(loggerContextListener);
-    }
-
-    // Configure a log filter to remove "metrics" logs from all appenders except the "LOGSTASH" appender
-    private void setMetricsMarkerLogbackFilter(LoggerContext context) {
-        log.info("Filtering metrics logs from all appenders except the {} appender", LOGSTASH_APPENDER_NAME);
-        OnMarkerEvaluator onMarkerMetricsEvaluator = new OnMarkerEvaluator();
-        onMarkerMetricsEvaluator.setContext(context);
-        onMarkerMetricsEvaluator.addMarker("metrics");
-        onMarkerMetricsEvaluator.start();
-        EvaluatorFilter<ILoggingEvent> metricsFilter = new EvaluatorFilter<>();
-        metricsFilter.setContext(context);
-        metricsFilter.setEvaluator(onMarkerMetricsEvaluator);
-        metricsFilter.setOnMatch(FilterReply.DENY);
-        metricsFilter.start();
-
-        context.getLoggerList().forEach((logger) -> {
-            for (Iterator<Appender<ILoggingEvent>> it = logger.iteratorForAppenders(); it.hasNext();) {
-                Appender<ILoggingEvent> appender = it.next();
-                if (!appender.getName().equals(ASYNC_LOGSTASH_APPENDER_NAME)
-                        && !(appender.getName().equals(CONSOLE_APPENDER_NAME) && this.jHipsterProperties.getLogging().isUseJsonFormat())) {
-                    log.debug("Filter metrics logs from the {} appender", appender.getName());
-                    appender.setContext(context);
-                    appender.addFilter(metricsFilter);
-                    appender.start();
-                }
-            }
-        });
     }
 
     /**
