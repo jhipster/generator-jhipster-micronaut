@@ -10,8 +10,8 @@ import <%=packageName%>.repository.AuthorityRepository;
 import <%=packageName%>.repository.UserRepository;
 import <%=packageName%>.security.AuthoritiesConstants;
 import <%=packageName%>.security.SecurityUtils;
-import <%=packageName%>.service.dto.AdminUserDTO;
-import <%=packageName%>.service.dto.UserDTO;
+import <%=packageName%>.service.dto.<%= asDto('AdminUser') %>;
+import <%=packageName%>.service.dto.<%= asDto('User') %>;
 import <%=packageName%>.service.util.RandomUtil;
 import <%=packageName%>.web.rest.errors.*;
 <%_ if (authenticationType !== 'oauth2') { _%>
@@ -143,7 +143,7 @@ public class UserService {
             });
     }
 
-    public User registerUser(AdminUserDTO userDTO, String password) {
+    public User registerUser(<%= asDto('AdminUser') %> userDTO, String password) {
         userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).ifPresent(existingUser -> {
             boolean removed = removeNonActivatedUser(existingUser);
             if (!removed) {
@@ -193,7 +193,7 @@ public class UserService {
         return true;
     }
 
-    public User createUser(AdminUserDTO userDTO) {
+    public User createUser(<%= asDto('AdminUser') %> userDTO) {
         User user = new User();
         user.setLogin(userDTO.getLogin().toLowerCase());
         user.setFirstName(userDTO.getFirstName());
@@ -232,7 +232,7 @@ public class UserService {
      * @param userDTO user to update.
      * @return updated user.
      */
-    public Optional<AdminUserDTO> updateUser(AdminUserDTO userDTO) {
+    public Optional<<%= asDto('AdminUser') %>> updateUser(<%= asDto('AdminUser') %> userDTO) {
         return Optional.of(userRepository
             .findById(userDTO.getId()))
             .filter(Optional::isPresent)
@@ -262,7 +262,7 @@ public class UserService {
                 log.debug("Changed Information for User: {}", user);
                 return user;
             })
-            .map(AdminUserDTO::new);
+            .map(<%= asDto('AdminUser') %>::new);
     }
 
     public void deleteUser(String login) {
@@ -321,15 +321,15 @@ public class UserService {
     }
 
     @ReadOnly
-    public Page<AdminUserDTO> getAllManagedUsers(Pageable pageable) {
+    public Page<<%= asDto('AdminUser') %>> getAllManagedUsers(Pageable pageable) {
         Page<User> userPage = userRepository.findByLoginNotEqual(Constants.ANONYMOUS_USER, pageable);
-        return Page.of(userPage.getContent().stream().map(AdminUserDTO::new).collect(Collectors.toList()), pageable, userPage.getTotalSize());
+        return Page.of(userPage.getContent().stream().map(<%= asDto('AdminUser') %>::new).collect(Collectors.toList()), pageable, userPage.getTotalSize());
     }
 
     @ReadOnly
-    public Page<UserDTO> getAllPublicUsers(Pageable pageable) {
+    public Page<<%= asDto('User') %>> getAllPublicUsers(Pageable pageable) {
         Page<User> userPage = userRepository.findByLoginNotEqual(Constants.ANONYMOUS_USER, pageable);
-        return Page.of(userPage.getContent().stream().map(UserDTO::new).collect(Collectors.toList()), pageable, userPage.getTotalSize());
+        return Page.of(userPage.getContent().stream().map(<%= asDto('User') %>::new).collect(Collectors.toList()), pageable, userPage.getTotalSize());
     }
 
     @ReadOnly
