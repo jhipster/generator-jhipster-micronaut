@@ -74,7 +74,7 @@ docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut /bin
 - Redis Cache
 - Maven or Gradle Build System
 - Angular or React Client
-- Protractor Tests
+- Cypress Tests
 - Heroku Deployment
 
 ## Compatibility
