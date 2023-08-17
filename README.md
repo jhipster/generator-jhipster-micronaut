@@ -6,20 +6,20 @@
 
 ## Installing and Using the Active Development Version
 
-This currently active development branch is based on the latest production release of JHipster - v7.9.3
+This currently active development branch is based on the latest production release of JHipster - v7.9.3.
 
 As a pre-requisite, you must have NodeJS v16.x installed, along with the bundled version of NPM.
 
 1. Start by installing JHipster v7.9.3 with
 
 ```
-npm install -g generator-jhipster
+npm install -g generator-jhipster@7
 ```
 
 2. Then install this in-development blueprint by
 
 ```
-git clone https://github.com/jeremyg484/generator-jhipster-micronaut.git
+git clone https://github.com/jhipster/generator-jhipster-micronaut.git
 cd generator-jhipster-micronaut
 git checkout micronaut-3
 npm link generator-jhipster
@@ -133,7 +133,8 @@ docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut /bin
 ## Compatibility
 
 | Micronaut Blueprint | Micronaut | JHipster |
-| ------------------- | --------- | -------- |
+|---------------------|-----------|----------|
+| 2.0.0               | 3.10.1    | 7.9.3    |
 | 1.0.2               | 2.4.4     | 6.10.5   |
 | 0.8.0               | 2.3.0     | 6.10.5   |
 
