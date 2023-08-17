@@ -501,8 +501,8 @@ dependencies {
     implementation "io.springfox:springfox-bean-validators"
     <%_ } _%>
     <%_ if (devDatabaseType === 'mysql' || prodDatabaseType === 'mysql') { _%>
-    implementation "com.mysql:mysql-connector-j"
-    liquibaseRuntime "com.mysql:mysql-connector-j"
+    implementation "mysql:mysql-connector-java"
+    liquibaseRuntime "mysql:mysql-connector-java"
     <%_ } _%>
     <%_ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
     implementation "org.postgresql:postgresql"
