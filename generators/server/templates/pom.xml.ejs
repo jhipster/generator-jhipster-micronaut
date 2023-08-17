@@ -246,7 +246,7 @@ _%>
 <%_
 if (devDatabaseType === 'mysql' || prodDatabaseType === 'mysql') { _%>
         <dependency>
-            <groupId>mysql</groupId>
+            <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
 <%_ } _%>
@@ -1149,7 +1149,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                 <%_
                 if (devDatabaseType === 'mysql') { _%>
                 <dependency>
-                    <groupId>mysql</groupId>
+                    <groupId>com.mysql</groupId>
                     <artifactId>mysql-connector-j</artifactId>
                 </dependency>
                 <%_ } _%>
@@ -1259,7 +1259,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                 <%_
                 if (prodDatabaseType === 'mysql') { _%>
                 <dependency>
-                    <groupId>mysql</groupId>
+                    <groupId>com.mysql</groupId>
                     <artifactId>mysql-connector-j</artifactId>
                 </dependency>
                 <%_ } _%>
