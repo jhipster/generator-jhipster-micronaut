@@ -121,7 +121,27 @@ export default class extends extendGenerator(ServerGenerator) {
           },
         });
       },
-
+      customizeLiquibase({
+        application: { devDatabaseTypeH2Any, prodDatabaseTypeMysql, prodDatabaseTypeMariadb, prodDatabaseTypePostgres },
+      }) {
+        // Micronaut uses h2 for tests, add liquibase h2 configuration.
+        if (!devDatabaseTypeH2Any) {
+          try {
+            this.editFile('src/main/resources/config/liquibase/master.xml', content =>
+              content.replace(
+                'xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">',
+                `xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <property name="now" value="now()" dbms="h2"/>
+    <property name="floatType" value="float4" dbms="h2"/>
+    <property name="uuidType" value="${prodDatabaseTypeMysql || prodDatabaseTypeMariadb ? 'varchar(36)' : 'uuid'}" dbms="h2"/>
+    <property name="datetimeType" value="datetime(6)" dbms="h2"/>
+    <property name="clobType" value="${prodDatabaseTypePostgres ? 'longvarchar' : 'clob'}" dbms="h2"/>
+    <property name="blobType" value="blob" dbms="h2"/>`
+              )
+            );
+          } catch {}
+        }
+      },
       customizeMaven({ application: { buildToolMaven } }) {
         if (!buildToolMaven) return;
         this.packageJson.merge({

@@ -145,11 +145,7 @@ const serverFiles = {
     {
       condition: generator => generator.authenticationType === 'oauth2' && generator.applicationType !== 'microservice',
       path: DOCKER_DIR,
-      templates: [
-        'keycloak.yml',
-        { file: 'config/realm-config/jhipster-realm.json', renameTo: () => 'realm-config/jhipster-realm.json' },
-        { file: 'config/realm-config/jhipster-users-0.json', renameTo: () => 'realm-config/jhipster-users-0.json' },
-      ],
+      templates: ['keycloak.yml', { file: 'config/realm-config/jhipster-realm.json', renameTo: () => 'realm-config/jhipster-realm.json' }],
     },
   ],
   serverResources: [
@@ -162,6 +158,11 @@ const serverFiles = {
       condition: generator => !!generator.enableSwaggerCodegen,
       path: SERVER_MAIN_RES_DIR,
       templates: ['swagger/api.yml'],
+    },
+    {
+      condition: generator => !generator.skipClient,
+      transform: false,
+      templates: ['npmw', 'npmw.cmd'],
     },
     {
       path: SERVER_MAIN_RES_DIR,

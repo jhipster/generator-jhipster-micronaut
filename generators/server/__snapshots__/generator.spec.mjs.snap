@@ -50,6 +50,12 @@ Object {
   "mvnw.cmd": Object {
     "stateCleared": "modified",
   },
+  "npmw": Object {
+    "stateCleared": "modified",
+  },
+  "npmw.cmd": Object {
+    "stateCleared": "modified",
+  },
   "openapi.properties": Object {
     "stateCleared": "modified",
   },
