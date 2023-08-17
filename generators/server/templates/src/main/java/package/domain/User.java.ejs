@@ -44,7 +44,7 @@ public class User implements Serializable {
     <%_ if (databaseType === 'couchbase') { _%>
     @GeneratedValue(strategy = UNIQUE, delimiter = ID_DELIMITER)
     <%_ } _%>
-    private <% if (authenticationType === 'oauth2') { %>String<% } else { %>Long<% } %> id;
+    private <%= user.primaryKey.type %> id;
 
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)
@@ -120,11 +120,11 @@ public class User implements Serializable {
     @Column(name = "last_modified_date")
     private Instant lastModifiedDate;
 
-    public <% if (databaseType === 'sql' && authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %> getId() {
+    public <%= user.primaryKey.type %> getId() {
         return id;
     }
 
-    public void setId(<% if (databaseType === 'sql' && authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %> id) {
+    public void setId(<%= user.primaryKey.type %> id) {
         this.id = id;
     }
 

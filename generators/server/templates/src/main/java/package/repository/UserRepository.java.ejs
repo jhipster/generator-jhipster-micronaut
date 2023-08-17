@@ -22,7 +22,7 @@ import java.time.Instant;
  * Micronaut Data JPA repository for the {@link User} entity.
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, <% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %>> {
+public interface UserRepository extends JpaRepository<User, <%= user.primaryKey.type %>> {
 
 <%_ if (usesCache) { _%>
     public static String USERS_CACHE = "usersByLogin";
@@ -39,7 +39,7 @@ public interface UserRepository extends JpaRepository<User, <% if (authenticatio
     public Optional<User> findOneByEmailIgnoreCase(String email);
 
     @EntityGraph(attributePaths = "authorities")
-    public Optional<User> findOneById(<% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %> id);
+    public Optional<User> findOneById(<%= user.primaryKey.type %> id);
 
     @EntityGraph(attributePaths = "authorities")
 <%_ if (usesCache) { _%>
@@ -61,5 +61,5 @@ public interface UserRepository extends JpaRepository<User, <% if (authenticatio
 
     public Page<User> findByLoginNotEqual(String login, Pageable pageable);
 
-    public void update(@Id <% if (authenticationType !== 'oauth2') { %>Long<% } else { %>String<% } %> id, Instant createdDate);
+    public void update(@Id <%= user.primaryKey.type %> id, Instant createdDate);
 }

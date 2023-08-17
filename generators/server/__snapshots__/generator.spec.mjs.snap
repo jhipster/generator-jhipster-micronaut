@@ -185,6 +185,9 @@ Object {
   "src/main/java/com/mycompany/myapp/service/UserService.java": Object {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/service/dto/AdminUserDTO.java": Object {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/dto/PasswordChangeDTO.java": Object {
     "stateCleared": "modified",
   },
@@ -219,6 +222,9 @@ Object {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/ClientForwardController.java": Object {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/PublicUserResource.java": Object {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/SwaggerResource.java": Object {

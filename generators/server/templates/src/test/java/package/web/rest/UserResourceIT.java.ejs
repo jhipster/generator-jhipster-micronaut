@@ -14,7 +14,8 @@ import <%=packageName%>.security.AuthoritiesConstants;
 <%_ if (authenticationType !== 'oauth2') { _%>
 import <%=packageName%>.service.MailService;
 <%_ } _%>
-import <%=packageName%>.service.dto.UserDTO;
+import <%=packageName%>.service.dto.<%= asDto('AdminUser') %>;
+import <%=packageName%>.service.dto.<%= asDto('User') %>;
 import <%=packageName%>.service.mapper.UserMapper;
 import <%=packageName%>.web.rest.vm.ManagedUserVM;
 <%_ if (usesCache) { _%>
@@ -204,7 +205,7 @@ public class UserResourceIT {
         managedUserVM.setLangKey(DEFAULT_LANGKEY);
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-        HttpResponse<User> response = client.exchange(HttpRequest.POST("/api/users", managedUserVM), User.class).blockingFirst();
+        HttpResponse<User> response = client.exchange(HttpRequest.POST("/api/admin/users", managedUserVM), User.class).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.CREATED.getCode());
 
@@ -237,7 +238,7 @@ public class UserResourceIT {
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        HttpResponse<User> response = client.exchange(HttpRequest.POST("/api/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        HttpResponse<User> response = client.exchange(HttpRequest.POST("/api/admin/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
@@ -262,7 +263,7 @@ public class UserResourceIT {
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         // Create the User
-        HttpResponse<User> response = client.exchange(HttpRequest.POST("/api/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        HttpResponse<User> response = client.exchange(HttpRequest.POST("/api/admin/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
@@ -287,7 +288,7 @@ public class UserResourceIT {
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
         // Create the User
-        HttpResponse<User> response = client.exchange(HttpRequest.POST("/api/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        HttpResponse<User> response = client.exchange(HttpRequest.POST("/api/admin/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
@@ -300,7 +301,7 @@ public class UserResourceIT {
     @Test
     public void getAllUsers() throws Exception {
         // Get all the users
-        List<User> users = client.retrieve(HttpRequest.GET("/api/users?sort=id,desc"), Argument.listOf(User.class)).blockingFirst();
+        List<User> users = client.retrieve(HttpRequest.GET("/api/admin/users?sort=id,desc"), Argument.listOf(User.class)).blockingFirst();
 
         assertThat(users.get(0).getLogin()).isEqualTo(DEFAULT_LOGIN);
         assertThat(users.get(0).getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
@@ -317,7 +318,7 @@ public class UserResourceIT {
 
         <%_ } _%>
         // Get the user
-        User u = client.retrieve(HttpRequest.GET("/api/users/" + user.getLogin()), User.class).blockingFirst();
+        User u = client.retrieve(HttpRequest.GET("/api/admin/users/" + user.getLogin()), User.class).blockingFirst();
 
         assertThat(u.getLogin()).isEqualTo(user.getLogin());
         assertThat(u.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
@@ -333,7 +334,7 @@ public class UserResourceIT {
 
     @Test
     public void getNonExistingUser() throws Exception {
-        HttpResponse<User> response = client.exchange(HttpRequest.GET("/api/users/unknown"), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        HttpResponse<User> response = client.exchange(HttpRequest.GET("/api/admin/users/unknown"), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.getStatus().getCode()).isEqualTo(HttpStatus.NOT_FOUND.getCode());
     }
@@ -359,7 +360,7 @@ public class UserResourceIT {
         managedUserVM.setLastModifiedDate(updatedUser.getLastModifiedDate());
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-        HttpResponse<User> response = client.exchange(HttpRequest.PUT("/api/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        HttpResponse<User> response = client.exchange(HttpRequest.PUT("/api/admin/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.OK.getCode());
 
@@ -397,7 +398,7 @@ public class UserResourceIT {
         managedUserVM.setLastModifiedDate(oldUser.getLastModifiedDate());
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-        HttpResponse<User> response = client.exchange(HttpRequest.PUT("/api/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        HttpResponse<User> response = client.exchange(HttpRequest.PUT("/api/admin/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.OK.getCode());
 
@@ -445,7 +446,7 @@ public class UserResourceIT {
         managedUserVM.setLastModifiedDate(updatedUser.getLastModifiedDate());
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-        HttpResponse<User> response = client.exchange(HttpRequest.PUT("/api/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        HttpResponse<User> response = client.exchange(HttpRequest.PUT("/api/admin/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
@@ -483,7 +484,7 @@ public class UserResourceIT {
         managedUserVM.setLastModifiedDate(updatedUser.getLastModifiedDate());
         managedUserVM.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-        HttpResponse<User> response = client.exchange(HttpRequest.PUT("/api/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        HttpResponse<User> response = client.exchange(HttpRequest.PUT("/api/admin/users", managedUserVM), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
@@ -497,7 +498,7 @@ public class UserResourceIT {
 
         // Delete the user
 
-        HttpResponse<User> response = client.exchange(HttpRequest.DELETE("/api/users/" + user.getLogin()), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        HttpResponse<User> response = client.exchange(HttpRequest.DELETE("/api/admin/users/" + user.getLogin()), User.class).onErrorReturn(t -> (HttpResponse<User>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.NO_CONTENT.getCode());
         <%_ if (usesCache) { _%>
@@ -517,7 +518,7 @@ public class UserResourceIT {
     @Test
     public void getAllAuthorities() throws Exception {
 
-        HttpResponse<List<String>> response = client.exchange(HttpRequest.GET("/api/users/authorities"), Argument.listOf(String.class)).onErrorReturn(t -> (HttpResponse<List<String>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
+        HttpResponse<List<String>> response = client.exchange(HttpRequest.GET("/api/authorities"), Argument.listOf(String.class)).onErrorReturn(t -> (HttpResponse<List<String>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.OK.getCode());
         assertThat(response.body()).contains(AuthoritiesConstants.USER);
@@ -551,7 +552,7 @@ public class UserResourceIT {
 
     @Test
     public void testUserDTOtoUser() {
-        UserDTO userDTO = new UserDTO();
+        <%= asDto('AdminUser') %> userDTO = new <%= asDto('AdminUser') %>();
         userDTO.setId(DEFAULT_ID);
         userDTO.setLogin(DEFAULT_LOGIN);
         userDTO.setFirstName(DEFAULT_FIRSTNAME);
@@ -587,7 +588,7 @@ public class UserResourceIT {
         authorities.add(authority);
         user.setAuthorities(authorities);
 
-        UserDTO userDTO = userMapper.userToUserDTO(user);
+        <%= asDto('AdminUser') %> userDTO = userMapper.userToAdminUserDTO(user);
 
         assertThat(userDTO.getId()).isEqualTo(DEFAULT_ID);
         assertThat(userDTO.getLogin()).isEqualTo(DEFAULT_LOGIN);
