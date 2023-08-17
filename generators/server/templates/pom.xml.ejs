@@ -247,7 +247,7 @@ _%>
 if (devDatabaseType === 'mysql' || prodDatabaseType === 'mysql') { _%>
         <dependency>
             <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
 <%_ } _%>
 <%_ if (devDatabaseType === 'mariadb' || prodDatabaseType === 'mariadb') { _%>
@@ -1150,7 +1150,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                 if (devDatabaseType === 'mysql') { _%>
                 <dependency>
                     <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
+                    <artifactId>mysql-connector-j</artifactId>
                 </dependency>
                 <%_ } _%>
                 <%_
@@ -1260,7 +1260,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                 if (prodDatabaseType === 'mysql') { _%>
                 <dependency>
                     <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
+                    <artifactId>mysql-connector-j</artifactId>
                 </dependency>
                 <%_ } _%>
                 <%_
