@@ -23,15 +23,15 @@ module.exports = {
   sqlDb: {
     h2Disk: {
       driver: 'org.h2.Driver',
-      dialect: 'io.github.jhipster.domain.util.FixedH2Dialect',
+      dialect: 'org.hibernate.dialect.H2Dialect',
     },
     h2Memory: {
       driver: 'org.h2.Driver',
-      dialect: 'io.github.jhipster.domain.util.FixedH2Dialect',
+      dialect: 'org.hibernate.dialect.H2Dialect',
     },
     mysql: {
       driver: 'com.mysql.jdbc.Driver',
-      dialect: 'org.hibernate.dialect.MySQL5InnoDBDialect',
+      dialect: 'org.hibernate.dialect.MySQL8Dialect',
     },
     mariadb: {
       driver: 'org.mariadb.jdbc.Driver',
@@ -39,7 +39,7 @@ module.exports = {
     },
     postgresql: {
       driver: 'org.postgresql.Driver',
-      dialect: 'io.github.jhipster.domain.util.FixedPostgreSQL10Dialect',
+      dialect: 'org.hibernate.dialect.PostgreSQLDialect',
     },
   },
   versions: {
