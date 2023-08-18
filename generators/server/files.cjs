@@ -623,8 +623,14 @@ const serverFiles = {
       path: SERVER_MAIN_SRC_DIR,
       templates: [
         {
+          file: 'package/service/dto/AdminUserDTO.java',
+          renameTo: generator => `${generator.javaDir}service/dto/${generator.asDto('AdminUser')}.java`,
+          useBluePrint: true,
+        },
+
+        {
           file: 'package/service/dto/UserDTO.java',
-          renameTo: generator => `${generator.javaDir}service/dto/UserDTO.java`,
+          renameTo: generator => `${generator.javaDir}service/dto/${generator.asDto('User')}.java`,
           useBluePrint: true,
         },
         {
@@ -761,6 +767,11 @@ const serverFiles = {
         {
           file: 'package/web/rest/vm/ManagedUserVM.java',
           renameTo: generator => `${generator.javaDir}web/rest/vm/ManagedUserVM.java`,
+          useBluePrint: true,
+        },
+        {
+          file: 'package/web/rest/PublicUserResource.java',
+          renameTo: generator => `${generator.javaDir}web/rest/PublicUserResource.java`,
           useBluePrint: true,
         },
         // Base rest pkg
