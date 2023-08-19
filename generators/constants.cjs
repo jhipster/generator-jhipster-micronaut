@@ -55,7 +55,6 @@ module.exports = {
     javaxInject: '1',
     javaxMail: '2.0.1',
     jbcrypt: '0.4',
-    jhipsterDeps: '3.8.0',
     liquibase: '4.14.0',
     liquibaseHibernate5: '4.1.1',
     logback: '1.2.11',
