@@ -39,7 +39,15 @@ module.exports = {
     },
     postgresql: {
       driver: 'org.postgresql.Driver',
-      dialect: 'org.hibernate.dialect.PostgreSQLDialect',
+      dialect: 'tech.jhipster.domain.util.FixedPostgreSQL10Dialect',
+    },
+    oracle: {
+      driver: 'oracle.jdbc.OracleDriver',
+      dialect: 'org.hibernate.dialect.Oracle12cDialect',
+    },
+    mssql: {
+      driver: '',
+      dialect: 'org.hibernate.dialect.SQLServer2012Dialect',
     },
   },
   versions: {
