@@ -36,6 +36,17 @@ const randexp = utils.RandexpWithFaker;
 const serverFiles = {
   domain: [
     {
+      condition: generator =>
+        !generator.reactive && generator.databaseTypeSql && generator.prodDatabaseTypePostgres && generator.fieldsContainImageBlob,
+      path: SERVER_MAIN_SRC_DIR,
+      templates: [
+        {
+          file: 'package/domain/_PersistClass_.java.jhi.micronaut',
+          renameTo: generator => `${generator.entityAbsoluteFolder}/domain/${generator.persistClass}.java.jhi.micronaut`,
+        },
+      ],
+    },
+    {
       path: SERVER_MAIN_SRC_DIR,
       templates: [
         {
