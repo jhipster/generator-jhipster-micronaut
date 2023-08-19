@@ -77,22 +77,25 @@ mail:
 
 jpa:
   default:
-    show-sql: false
     properties:
-      hibernate.dialect: "<%=dbInfo.dialect%>"
-<%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached'].includes(cacheProvider)) { _%>
-      hibernate.javax.cache.missing_cache_strategy: create
+      hibernate:
+        dialect: "<%=dbInfo.dialect%>"
+<%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) { _%>
+        javax.cache.missing_cache_strategy: create
 <%_ } _%>
-      hibernate.id.new_generator_mappings: true
-      hibernate.connection.provider_disables_autocommit: true
-      hibernate.connection.autocommit: false
+        id.new_generator_mappings: true
+        connection:
+          provider_disables_autocommit: true
+          autocommit: false
+        cache:
+          use_query_cache: false
 <%_ if (enableHibernateCache) { _%>
-      hibernate.cache.use_second_level_cache: true
+          use_second_level_cache: true
 <%_ } else { _%>
-      hibernate.cache.use_second_level_cache: false
+          use_second_level_cache: false
 <%_ } _%>
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
+        generate_statistics: false
+        show-sql: false
 <%_ } _%>
 
 logger:
