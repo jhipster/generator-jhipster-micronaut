@@ -19,7 +19,7 @@ import {
 import { writeFiles } from './files.cjs';
 import { extendGenerator } from '#lib/utils.mjs';
 
-import NeedleServerChacheMn from './needle-server-cache-mn.cjs';
+import NeedleServerCacheMn from './needle-server-cache-mn.cjs';
 
 export default class extends extendGenerator(EntityServerGenerator) {
   constructor(args, opts, features) {
@@ -101,7 +101,7 @@ export default class extends extendGenerator(EntityServerGenerator) {
       // Override jhipster customizeFiles
       customizeFiles({ application: { cacheProvider, enableHibernateCache } }) {
         if (!enableHibernateCache || !cacheProvider) return;
-        const serverCacheMn = new NeedleServerChacheMn(this);
+        const serverCacheMn = new NeedleServerCacheMn(this);
         if (['ehcache', 'caffeine', 'infinispan', 'redis'].includes(cacheProvider)) {
           serverCacheMn.addEntityToCache(this.persistClass, this.relationships, this.packageName, this.packageFolder, this.cacheProvider);
         }
