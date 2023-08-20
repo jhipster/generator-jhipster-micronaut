@@ -39,7 +39,7 @@ module.exports = {
     },
     postgresql: {
       driver: 'org.postgresql.Driver',
-      dialect: 'tech.jhipster.domain.util.FixedPostgreSQL10Dialect',
+      dialect: 'org.hibernate.dialect.PostgreSQL10Dialect',
     },
     oracle: {
       driver: 'oracle.jdbc.OracleDriver',
