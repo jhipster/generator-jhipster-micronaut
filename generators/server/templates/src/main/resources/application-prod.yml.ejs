@@ -73,22 +73,26 @@ datasources:
 ---
 jpa:
   default:
-    show-sql: false
     properties:
-      hibernate.dialect: "<%=dbInfo.dialect%>"
+      hibernate:
+        dialect: "<%=dbInfo.dialect%>"
 <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) { _%>
-      hibernate.javax.cache.missing_cache_strategy: create
+        javax.cache.missing_cache_strategy: create
 <%_ } _%>
-      hibernate.id.new_generator_mappings: true
-      hibernate.connection.provider_disables_autocommit: true
-      hibernate.connection.autocommit: false
+        id.new_generator_mappings: true
+        connection:
+          provider_disables_autocommit: true
+          autocommit: false
+        cache:
+          use_query_cache: false
 <%_ if (enableHibernateCache) { _%>
-      hibernate.cache.use_second_level_cache: true
+          use_second_level_cache: true
 <%_ } else { _%>
-      hibernate.cache.use_second_level_cache: false
+          use_second_level_cache: false
 <%_ } _%>
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
+        generate_statistics: false
+        show-sql: false
+
 
 # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
 liquibase:
@@ -178,10 +182,6 @@ jhipster:
   mail: # specific JHipster mail property, for standard properties see MailProperties
     from: <%= baseName %>@localhost
     base-url: http://my-server-url-to-change # Modify according to your server's URL
-  metrics:
-    logs: # Reports metrics in the logs
-      enabled: false
-      report-frequency: 60 # in seconds
   logging:
     use-json-format: false # By default, logs are not in Json format
     logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration

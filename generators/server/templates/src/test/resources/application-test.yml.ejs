@@ -34,7 +34,6 @@ liquibase:
 
 jpa:
   default:
-    database-platform: io.github.jhipster.domain.util.FixedH2Dialect
     properties:
       hibernate:
         cache:
@@ -45,6 +44,7 @@ jpa:
           time_zone: UTC
         hbm2ddl:
           auto: none
+        show_sql: false
 
 micronaut:
   security:
@@ -71,7 +71,3 @@ jhipster:
   mail:
     from: test@localhost
     base-url: http://127.0.0.1:8080
-  metrics:
-    logs: # Reports metrics in the logs
-      enabled: false
-      report-frequency: 60 # in seconds
