@@ -92,7 +92,7 @@ export default class extends extendGenerator(ServerGenerator) {
         this.GRADLE_VERSION = mnConstants.GRADLE_VERSION;
         this.DOCKER_REDIS = mnConstants.DOCKER_REDIS;
         this.DOCKER_CONSUL_CONFIG_LOADER = 'jhipster/consul-config-loader:v0.4.1'; // overrides jhipster value until main generator is updated
-        this.JHIPSTER_DEPENDENCIES_VERSION = '3.9.1';
+        this.JHIPSTER_DEPENDENCIES_VERSION = '7.9.3';
       },
     };
   }

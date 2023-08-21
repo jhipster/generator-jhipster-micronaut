@@ -51,6 +51,7 @@ public class DomainUserDetailsServiceIT {
 
     @BeforeAll
     public void init() {
+        userRepository.deleteAll();
         userOne = new User();
         userOne.setLogin(USER_ONE_LOGIN);
         userOne.setPassword(RandomStringUtils.random(60));

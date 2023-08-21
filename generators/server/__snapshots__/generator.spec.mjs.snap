@@ -62,9 +62,6 @@ Object {
   "package.json": Object {
     "stateCleared": "modified",
   },
-  "pom.xml": Object {
-    "stateCleared": "modified",
-  },
   "sonar-project.properties": Object {
     "stateCleared": "modified",
   },

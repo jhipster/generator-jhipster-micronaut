@@ -1,6 +1,7 @@
 package <%=packageName%>.util;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
+import tech.jhipster.config.JHipsterDefaults;
 
 @ConfigurationProperties("jhipster")
 public class JHipsterProperties {
@@ -8,13 +9,11 @@ public class JHipsterProperties {
     private Cache cache;
     private Mail mail;
     private Logging logging;
-    private Metrics metrics;
 
-    public JHipsterProperties(Cache cache, Mail mail, Logging logging, Metrics metrics) {
+    public JHipsterProperties(Cache cache, Mail mail, Logging logging) {
         this.cache = cache;
         this.mail = mail;
         this.logging = logging;
-        this.metrics = metrics;
     }
 
     public Cache getCache() {
@@ -29,10 +28,6 @@ public class JHipsterProperties {
         return logging;
     }
 
-    public Metrics getMetrics() {
-        return metrics;
-    }
-
     public void setCache(Cache cache) {
         this.cache = cache;
     }
@@ -44,11 +39,6 @@ public class JHipsterProperties {
     public void setLogging(Logging logging) {
         this.logging = logging;
     }
-
-    public void setMetrics(Metrics metrics) {
-        this.metrics = metrics;
-    }
-
 
     @ConfigurationProperties("logging")
     public static class Logging {
@@ -109,41 +99,6 @@ public class JHipsterProperties {
 
             public void setQueueSize(int queueSize) {
                 this.queueSize = queueSize;
-            }
-        }
-    }
-
-    @ConfigurationProperties("metrics")
-    public static class Metrics {
-        private Logs logs = new Logs();
-
-        public Logs getLogs() {
-            return this.logs;
-        }
-
-        public void setLogs(Logs logs) {
-            this.logs = logs;
-        }
-
-        @ConfigurationProperties("logs")
-        public static class Logs {
-            private boolean enabled = false;
-            private long reportFrequency = 60L;
-
-            public boolean isEnabled() {
-                return this.enabled;
-            }
-
-            public void setEnabled(boolean enabled) {
-                this.enabled = enabled;
-            }
-
-            public long getReportFrequency() {
-                return this.reportFrequency;
-            }
-
-            public void setReportFrequency(long reportFrequency) {
-                this.reportFrequency = reportFrequency;
             }
         }
     }
@@ -506,7 +461,7 @@ public class JHipsterProperties {
             private int subscriptionConnectionMinimumIdleSize;
 
             public Redis() {
-                this.server = io.github.jhipster.config.JHipsterDefaults.Cache.Redis.server;
+                this.server = JHipsterDefaults.Cache.Redis.server;
                 this.expiration = 300;
                 this.cluster = false;
                 this.connectionPoolSize = 64;

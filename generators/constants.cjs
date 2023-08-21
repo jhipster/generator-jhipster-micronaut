@@ -23,15 +23,15 @@ module.exports = {
   sqlDb: {
     h2Disk: {
       driver: 'org.h2.Driver',
-      dialect: 'io.github.jhipster.domain.util.FixedH2Dialect',
+      dialect: 'org.hibernate.dialect.H2Dialect',
     },
     h2Memory: {
       driver: 'org.h2.Driver',
-      dialect: 'io.github.jhipster.domain.util.FixedH2Dialect',
+      dialect: 'org.hibernate.dialect.H2Dialect',
     },
     mysql: {
       driver: 'com.mysql.jdbc.Driver',
-      dialect: 'org.hibernate.dialect.MySQL5InnoDBDialect',
+      dialect: 'org.hibernate.dialect.MySQL8Dialect',
     },
     mariadb: {
       driver: 'org.mariadb.jdbc.Driver',
@@ -39,7 +39,15 @@ module.exports = {
     },
     postgresql: {
       driver: 'org.postgresql.Driver',
-      dialect: 'io.github.jhipster.domain.util.FixedPostgreSQL10Dialect',
+      dialect: 'org.hibernate.dialect.PostgreSQL10Dialect',
+    },
+    oracle: {
+      driver: 'oracle.jdbc.OracleDriver',
+      dialect: 'org.hibernate.dialect.Oracle12cDialect',
+    },
+    mssql: {
+      driver: '',
+      dialect: 'org.hibernate.dialect.SQLServer2012Dialect',
     },
   },
   versions: {
@@ -55,9 +63,8 @@ module.exports = {
     javaxInject: '1',
     javaxMail: '2.0.1',
     jbcrypt: '0.4',
-    jhipsterDeps: '3.8.0',
-    liquibase: '4.14.0',
-    liquibaseHibernate5: '4.1.1',
+    liquibase: '4.15.0',
+    liquibaseHibernate5: '4.15.0',
     logback: '1.2.11',
     mapstruct: '1.5.2.Final',
     swaggerAnnotations: '2.2.2',

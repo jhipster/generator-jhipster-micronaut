@@ -75,12 +75,6 @@ export default class extends extendGenerator(ClientGenerator) {
             content.replaceAll('id_token', 'access_token')
           );
         }
-        if (!authenticationTypeOauth2) {
-          // Should be dropped when the blueprint supports public/admin users.
-          this.editFile('src/main/webapp/app/admin/user-management/service/user-management.service.ts', content =>
-            content.replaceAll('api/admin/users', 'api/users')
-          );
-        }
       },
 
       customizeReactForMicronaut({ application: { clientFrameworkReact, authenticationTypeJwt, authenticationTypeOauth2 } }) {
@@ -121,12 +115,6 @@ export default class extends extendGenerator(ClientGenerator) {
               .replace('const bearerToken = response?.headers?.authorization;', 'const jwt = response?.data?.access_token;')
               .replace("bearerToken && bearerToken.slice(0, 7) === 'Bearer '", 'jwt')
               .replace('const jwt = bearerToken.slice(7, bearerToken.length);', '')
-          );
-        }
-        if (!authenticationTypeOauth2) {
-          // Should be dropped when the blueprint supports public/admin users.
-          this.editFile('src/main/webapp/app/modules/administration/user-management/user-management.reducer.ts', content =>
-            content.replaceAll('api/admin/users', 'api/users')
           );
         }
       },
