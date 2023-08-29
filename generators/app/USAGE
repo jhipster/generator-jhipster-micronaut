@@ -1,5 +1,5 @@
 Description:
-    Creates a new MHipster application based on the selected optionsn the selected options
+    Creates a new MHipster application based on the selected options
 
 Example:
     jhipster --blueprints micronaut

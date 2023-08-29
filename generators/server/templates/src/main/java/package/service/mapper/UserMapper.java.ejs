@@ -1,16 +1,16 @@
 package <%=packageName%>.service.mapper;
 
 import <%=packageName%>.domain.Authority;
-import <%=packageName%>.domain.User;
-import <%=packageName%>.service.dto.<%= asDto('AdminUser') %>;
-import <%=packageName%>.service.dto.<%= asDto('User') %>;
+import <%= user.entityAbsoluteClass %>;
+import <%= packageName %>.service.dto.<%= user.adminUserDto %>;
+import <%= packageName %>.service.dto.<%= user.dtoClass %>;
 
 import jakarta.inject.Singleton;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Mapper for the entity {@link User} and its DTO called {@link <%= asDto('User') %>}.
+ * Mapper for the entity {@link User} and its DTO called {@link <%= user.dtoClass %>}.
  *
  * Normal mappers are generated using MapStruct, this one is hand-coded as MapStruct
  * support is still in beta, and requires a manual step with an IDE.
@@ -18,36 +18,36 @@ import java.util.stream.Collectors;
 @Singleton
 public class UserMapper {
 
-    public List<<%= asDto('User') %>> usersToUserDTOs(List<User> users) {
+    public List<<%= user.dtoClass %>> usersToUserDTOs(List<User> users) {
         return users.stream()
             .filter(Objects::nonNull)
             .map(this::userToUserDTO)
             .collect(Collectors.toList());
     }
 
-    public <%= asDto('User') %> userToUserDTO(User user) {
-        return new <%= asDto('User') %>(user);
+    public <%= user.dtoClass %> userToUserDTO(User user) {
+        return new <%= user.dtoClass %>(user);
     }
 
-    public List<<%= asDto('AdminUser') %>> usersToAdminUserDTOs(List<User> users) {
+    public List<<%= user.adminUserDto %>> usersToAdminUserDTOs(List<User> users) {
         return users.stream()
             .filter(Objects::nonNull)
             .map(this::userToAdminUserDTO)
             .collect(Collectors.toList());
     }
 
-    public <%= asDto('AdminUser') %> userToAdminUserDTO(User user) {
-        return new <%= asDto('AdminUser') %>(user);
+    public <%= user.adminUserDto %> userToAdminUserDTO(User user) {
+        return new <%= user.adminUserDto %>(user);
     }
 
-    public List<User> userDTOsToUsers(List<<%= asDto('AdminUser') %>> userDTOs) {
+    public List<User> userDTOsToUsers(List<<%= user.adminUserDto %>> userDTOs) {
         return userDTOs.stream()
             .filter(Objects::nonNull)
             .map(this::userDTOToUser)
             .collect(Collectors.toList());
     }
 
-    public User userDTOToUser(<%= asDto('AdminUser') %> userDTO) {
+    public User userDTOToUser(<%= user.adminUserDto %> userDTO) {
         if (userDTO == null) {
             return null;
         } else {

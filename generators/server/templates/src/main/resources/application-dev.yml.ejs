@@ -42,12 +42,10 @@ _%>
     }
   }
 
-  const dbUrl = getJDBCUrl(devDatabaseType, dbUrlConfig);
-
 _%>
 datasources:
   default:
-    url: "<%-dbUrl%>"
+    url: "<%- devJdbcUrl %>"
     username: "<%=dbUser%>"
     password: "<%=dbPass%>"
     driverClassName: "<%=dbInfo.driver%>"

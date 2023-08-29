@@ -50,13 +50,11 @@ management:
         dbPass = 'password';
     }
 
-    const dbUrl = getJDBCUrl(prodDatabaseType, dbUrlConfig);
-
 _%>
 datasources:
   default:
     type: com.zaxxer.hikari.HikariDataSource
-    url: ${JDBC_URL:`<%-dbUrl%>`}
+    url: ${JDBC_URL:`<%-prodJdbcUrl%>`}
     username: "<%=dbUser%>"
     password: "<%=dbPass%>"
     driverClassName: "<%=dbInfo.driver%>"

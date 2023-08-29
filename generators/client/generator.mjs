@@ -1,35 +1,24 @@
 import chalk from 'chalk';
-import ClientGenerator from 'generator-jhipster/esm/generators/client';
-import { PRIORITY_PREFIX, DEFAULT_PRIORITY, WRITING_PRIORITY, POST_WRITING_PRIORITY } from 'generator-jhipster/esm/priorities';
-import { angularFiles, reactFiles } from './files.cjs';
-import { extendGenerator } from '#lib/utils.mjs';
-
-export default class extends extendGenerator(ClientGenerator) {
+import ClientGenerator from 'generator-jhipster/generators/client';
+import { angularFiles, reactFiles } from './files.mjs';
+export default class extends ClientGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, priorityArgs: true, ...features });
+    super(args, opts, features);
 
     if (this.options.help) return;
 
-    if (!this.options.jhipsterContext) {
-      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
+    if (!this.jhipsterContext) {
+      throw new Error(
+        `This is a JHipster blueprint and should be used only like ${chalk.yellow(
+          "jhipster --blueprints mhipster",
+        )}`,
+      );
     }
 
     this.sbsBlueprint = true;
   }
 
-  async _postConstruct() {
-    await this.dependsOnJHipster('bootstrap-application');
-  }
-
-  get [DEFAULT_PRIORITY]() {
-    return {
-      async setHipster() {
-        this.options.jhipsterContext.hipster = this.getHipster();
-      },
-    };
-  }
-
-  get [WRITING_PRIORITY]() {
+  get [ClientGenerator.WRITING]() {
     return {
       async writeCustomFiles({ application }) {
         const { clientFrameworkAngular, clientFrameworkReact } = application;
@@ -49,7 +38,7 @@ export default class extends extendGenerator(ClientGenerator) {
     };
   }
 
-  get [POST_WRITING_PRIORITY]() {
+  get [ClientGenerator.POST_WRITING]() {
     return {
       customizeAngularForMicronaut({ application: { clientFrameworkAngular, authenticationTypeJwt, authenticationTypeOauth2 } }) {
         if (!clientFrameworkAngular) return;

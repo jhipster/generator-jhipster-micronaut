@@ -1,41 +1,38 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SubGenerator common of micronaut JHipster blueprint run should succeed 1`] = `
-Object {
-  ".editorconfig": Object {
+exports[`SubGenerator common of micronaut JHipster blueprint > run > should succeed 1`] = `
+{
+  ".editorconfig": {
     "stateCleared": "modified",
   },
-  ".gitattributes": Object {
+  ".gitattributes": {
     "stateCleared": "modified",
   },
-  ".gitignore": Object {
+  ".gitignore": {
     "stateCleared": "modified",
   },
-  ".husky/pre-commit": Object {
+  ".husky/pre-commit": {
     "stateCleared": "modified",
   },
-  ".lintstagedrc.js": Object {
+  ".lintstagedrc.js": {
     "stateCleared": "modified",
   },
-  ".prettierignore": Object {
+  ".prettierignore": {
     "stateCleared": "modified",
   },
-  ".prettierrc": Object {
+  ".prettierrc": {
     "stateCleared": "modified",
   },
-  ".yo-rc.json": Object {
+  ".yo-rc.json": {
     "stateCleared": "modified",
   },
-  "README.md": Object {
+  "README.md": {
     "stateCleared": "modified",
   },
-  "README.md.jhi": Object {
-    "state": "modified",
-  },
-  "package.json": Object {
+  "package.json": {
     "stateCleared": "modified",
   },
-  "sonar-project.properties": Object {
+  "sonar-project.properties": {
     "stateCleared": "modified",
   },
 }

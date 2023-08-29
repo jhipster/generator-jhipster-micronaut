@@ -1,100 +1,90 @@
-import chalk from 'chalk';
-import AppGenerator from 'generator-jhipster/esm/generators/app';
-import {
-  PRIORITY_PREFIX,
-  INITIALIZING_PRIORITY,
-  PROMPTING_PRIORITY,
-  CONFIGURING_PRIORITY,
-  COMPOSING_PRIORITY,
-  LOADING_PRIORITY,
-  PREPARING_PRIORITY,
-  DEFAULT_PRIORITY,
-  WRITING_PRIORITY,
-  POST_WRITING_PRIORITY,
-  INSTALL_PRIORITY,
-  END_PRIORITY,
-} from 'generator-jhipster/esm/priorities';
+import chalk from "chalk";
+import AppGenerator from "generator-jhipster/generators/app";
 
 import { askForApplicationType, askForTestOpts } from './prompts.cjs';
-import { extendGenerator } from '#lib/utils.mjs';
 
-export default class extends extendGenerator(AppGenerator) {
+export default class extends AppGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
+    super(args, opts, features);
 
     if (this.options.help) return;
 
-    if (!this.options.jhipsterContext) {
-      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
+    if (!this.jhipsterContext) {
+      throw new Error(
+        `This is a JHipster blueprint and should be used only like ${chalk.yellow(
+          "jhipster --blueprints mhipster",
+        )}`,
+      );
     }
   }
 
-  get [INITIALIZING_PRIORITY]() {
+  get [AppGenerator.INITIALIZING]() {
     return {
-      ...super._initializing(),
+      ...super.initializing,
+      async initializingTemplateTask() {},
     };
   }
 
-  get [PROMPTING_PRIORITY]() {
+  get [AppGenerator.PROMPTING]() {
     return {
-      ...super._prompting(),
+      ...super.prompting,
       askForApplicationType,
     };
   }
 
-  get [CONFIGURING_PRIORITY]() {
+  get [AppGenerator.CONFIGURING]() {
     return {
-      ...super._configuring(),
+      ...super.configuring,
     };
   }
 
-  get [COMPOSING_PRIORITY]() {
+  get [AppGenerator.COMPOSING]() {
     return {
-      ...super._composing(),
+      ...super.composing,
       askForTestOpts,
       askForMoreModules: undefined,
     };
   }
 
-  get [LOADING_PRIORITY]() {
+  get [AppGenerator.LOADING]() {
     return {
-      ...super._loading(),
+      ...super.loading,
     };
   }
 
-  get [PREPARING_PRIORITY]() {
+  get [AppGenerator.PREPARING]() {
     return {
-      ...super._preparing(),
+      ...super.preparing,
     };
   }
 
-  get [DEFAULT_PRIORITY]() {
+  get [AppGenerator.DEFAULT]() {
     return {
-      ...super._default(),
+      ...super.default,
     };
   }
 
-  get [WRITING_PRIORITY]() {
+  get [AppGenerator.WRITING]() {
     return {
-      ...super._writing(),
+      ...super.writing,
     };
   }
 
-  get [POST_WRITING_PRIORITY]() {
+  get [AppGenerator.POST_WRITING]() {
     return {
-      ...super._postWriting(),
+      ...super.postWriting,
     };
   }
 
-  get [INSTALL_PRIORITY]() {
+  get [AppGenerator.INSTALL]() {
     return {
-      ...super._install(),
+      ...super.install,
     };
   }
 
-  get [END_PRIORITY]() {
+  get [AppGenerator.END]() {
     return {
-      ...super._end(),
+      ...super.end,
     };
   }
 }

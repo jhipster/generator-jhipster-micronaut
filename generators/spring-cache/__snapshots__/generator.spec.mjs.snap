@@ -1,0 +1,12 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SubGenerator spring-cache of micronaut JHipster blueprint > run > should succeed 1`] = `
+{
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/config/CacheConfiguration.java": {
+    "stateCleared": "modified",
+  },
+}
+`;

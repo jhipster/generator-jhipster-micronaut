@@ -1,10 +1,12 @@
 {
   "generator-jhipster": {
+    "additionalSubGenerators": "",
     "baseName": "micronaut",
     "cli": true,
+    "entities": [],
     "generators": {
       "app": {
-        "command": false,
+        "command": true,
         "priorities": [
           "initializing",
           "prompting",
@@ -30,12 +32,6 @@
       "common": {
         "command": false,
         "priorities": ["writing"],
-        "sbs": true,
-        "written": true
-      },
-      "cypress": {
-        "command": false,
-        "priorities": ["postWriting"],
         "sbs": true,
         "written": true
       },
@@ -114,12 +110,24 @@
         ],
         "sbs": false,
         "written": true
+      },
+      "spring-cache": {
+        "command": false,
+        "priorities": [
+          "preparing",
+          "writing",
+          "postWriting"
+        ],
+        "sbs": false,
+        "written": true
       }
     },
-    "jhipsterVersion": "7.8.1",
+    "jhipsterVersion": "8.0.0-beta.3",
+    "localBlueprint": false,
     "prettierDefaultIndent": 2,
     "projectName": "Micronaut Blueprint",
+    "sampleWritten": true,
     "skipCommitHook": true,
-    "subGenerators": ["app", "client", "common", "cypress", "database-changelog", "entity", "entity-server", "heroku", "server"]
+    "subGenerators": ["app", "client", "common", "entity", "heroku", "server", "spring-cache"]
   }
 }
