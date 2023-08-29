@@ -1,111 +1,92 @@
 import chalk from 'chalk';
-import EntityGenerator from 'generator-jhipster/esm/generators/entity';
-import {
-  PRIORITY_PREFIX,
-  INITIALIZING_PRIORITY,
-  PROMPTING_PRIORITY,
-  CONFIGURING_PRIORITY,
-  COMPOSING_PRIORITY,
-  LOADING_PRIORITY,
-  PREPARING_PRIORITY,
-  PREPARING_FIELDS_PRIORITY,
-  PREPARING_RELATIONSHIPS_PRIORITY,
-  DEFAULT_PRIORITY,
-  WRITING_PRIORITY,
-  POST_WRITING_PRIORITY,
-  INSTALL_PRIORITY,
-  END_PRIORITY,
-} from 'generator-jhipster/esm/priorities';
-import { extendGenerator } from '#lib/utils.mjs';
+import EntityGenerator from 'generator-jhipster/generators/entity';
 
-export default class extends extendGenerator(EntityGenerator) {
+export default class extends EntityGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
+    super(args, opts, features);
 
     if (this.options.help) return;
 
-    if (!this.options.jhipsterContext) {
-      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
+    if (!this.jhipsterContext) {
+      throw new Error(
+        `This is a JHipster blueprint and should be used only like ${chalk.yellow(
+          "jhipster --blueprints mhipster",
+        )}`,
+      );
     }
   }
 
-  get [INITIALIZING_PRIORITY]() {
+  get [EntityGenerator.INITIALIZING]() {
     return {
       async initializingTemplateTask() {},
-      ...super._initializing(),
+      ...super.initializing,
     };
   }
 
-  get [PROMPTING_PRIORITY]() {
+  get [EntityGenerator.PROMPTING]() {
     return {
-      ...super._prompting(),
+      ...super.prompting,
       askForFiltering: undefined,
     };
   }
 
-  get [CONFIGURING_PRIORITY]() {
+  get [EntityGenerator.CONFIGURING]() {
     return {
-      ...super._configuring(),
+      ...super.configuring,
     };
   }
 
-  get [COMPOSING_PRIORITY]() {
+  get [EntityGenerator.COMPOSING]() {
     return {
-      ...super._composing(),
+      ...super.composing,
     };
   }
 
-  get [LOADING_PRIORITY]() {
+  get [EntityGenerator.LOADING]() {
     return {
-      ...super._loading(),
+      ...super.loading,
     };
   }
 
-  get [PREPARING_PRIORITY]() {
+  get [EntityGenerator.PREPARING_EACH_ENTITY_FIELD]() {
     return {
-      ...super._preparing(),
+      ...super.preparingEachEntityField,
     };
   }
 
-  get [PREPARING_FIELDS_PRIORITY]() {
+  get [EntityGenerator.PREPARING_EACH_ENTITY_RELATIONSHIP]() {
     return {
-      ...super._preparingFields(),
+      ...super.preparingEachEntityRelationship,
     };
   }
 
-  get [PREPARING_RELATIONSHIPS_PRIORITY]() {
+  get [EntityGenerator.DEFAULT]() {
     return {
-      ...super._preparingRelationships(),
+      ...super.default,
     };
   }
 
-  get [DEFAULT_PRIORITY]() {
+  get [EntityGenerator.WRITING]() {
     return {
-      ...super._default(),
+      ...super.writing,
     };
   }
 
-  get [WRITING_PRIORITY]() {
+  get [EntityGenerator.POST_WRITING]() {
     return {
-      ...super._writing(),
+      ...super.postWriting,
     };
   }
 
-  get [POST_WRITING_PRIORITY]() {
+  get [EntityGenerator.INSTALL]() {
     return {
-      ...super._postWriting(),
+      ...super.install,
     };
   }
 
-  get [INSTALL_PRIORITY]() {
+  get [EntityGenerator.END]() {
     return {
-      ...super._install(),
-    };
-  }
-
-  get [END_PRIORITY]() {
-    return {
-      ...super._end(),
+      ...super.end,
     };
   }
 }

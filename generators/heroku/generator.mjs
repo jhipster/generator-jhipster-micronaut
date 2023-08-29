@@ -1,105 +1,94 @@
 import chalk from 'chalk';
-import HerokuGenerator from 'generator-jhipster/esm/generators/heroku';
-import {
-  PRIORITY_PREFIX,
-  INITIALIZING_PRIORITY,
-  PROMPTING_PRIORITY,
-  CONFIGURING_PRIORITY,
-  COMPOSING_PRIORITY,
-  LOADING_PRIORITY,
-  PREPARING_PRIORITY,
-  DEFAULT_PRIORITY,
-  WRITING_PRIORITY,
-  POST_WRITING_PRIORITY,
-  INSTALL_PRIORITY,
-  END_PRIORITY,
-} from 'generator-jhipster/esm/priorities';
-import { extendGenerator } from '#lib/utils.mjs';
+import HerokuGenerator from 'generator-jhipster/generators/heroku';
 
-export default class extends extendGenerator(HerokuGenerator) {
+export default class extends HerokuGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, ...features });
+    super(args, opts, features);
 
     if (this.options.help) return;
 
-    if (!this.options.jhipsterContext) {
-      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
+    if (!this.jhipsterContext) {
+      throw new Error(
+        `This is a JHipster blueprint and should be used only like ${chalk.yellow(
+          "jhipster --blueprints mhipster",
+        )}`,
+      );
     }
   }
 
-  get [INITIALIZING_PRIORITY]() {
+  get[HerokuGenerator.INITIALIZING]() {
     return {
       async initializingTemplateTask() {},
-      ...super._initializing(),
+      ...super.initializing,
     };
   }
 
-  get [PROMPTING_PRIORITY]() {
+  get[HerokuGenerator.PROMPTING]() {
     return {
       async promptingTemplateTask() {},
-      ...super._prompting(),
+      ...super.prompting,
     };
   }
 
-  get [CONFIGURING_PRIORITY]() {
+  get[HerokuGenerator.CONFIGURING]() {
     return {
       async configuringTemplateTask() {},
-      ...super._configuring(),
+      ...super.configuring,
     };
   }
 
-  get [COMPOSING_PRIORITY]() {
+  get[HerokuGenerator.COMPOSING]() {
     return {
       async composingTemplateTask() {},
-      ...super._composing(),
+      ...super.composing,
     };
   }
 
-  get [LOADING_PRIORITY]() {
+  get[HerokuGenerator.LOADING]() {
     return {
       async loadingTemplateTask() {},
-      ...super._loading(),
+      ...super.loading,
     };
   }
 
-  get [PREPARING_PRIORITY]() {
+  get[HerokuGenerator.PREPARING]() {
     return {
       async preparingTemplateTask() {},
-      ...super._preparing(),
+      ...super.preparing,
     };
   }
 
-  get [DEFAULT_PRIORITY]() {
+  get[HerokuGenerator.DEFAULT]() {
     return {
       async defaultTemplateTask() {},
-      ...super._default(),
+      ...super.default,
     };
   }
 
-  get [WRITING_PRIORITY]() {
+  get[HerokuGenerator.WRITING]() {
     return {
-      ...super._writing(),
+      ...super.writing,
     };
   }
 
-  get [POST_WRITING_PRIORITY]() {
+  get[HerokuGenerator.POST_WRITING]() {
     return {
       async postWritingTemplateTask() {},
-      ...super._postWriting(),
+      ...super.postWriting,
     };
   }
 
-  get [INSTALL_PRIORITY]() {
+  get[HerokuGenerator.INSTALL]() {
     return {
       async installTemplateTask() {},
-      ...super._install(),
+      ...super.install,
     };
   }
 
-  get [END_PRIORITY]() {
+  get[HerokuGenerator.END]() {
     return {
       async endTemplateTask() {},
-      ...super._end(),
+      ...super.end,
     };
   }
 

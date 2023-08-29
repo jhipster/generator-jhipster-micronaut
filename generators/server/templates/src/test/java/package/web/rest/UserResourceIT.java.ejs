@@ -14,8 +14,8 @@ import <%=packageName%>.security.AuthoritiesConstants;
 <%_ if (authenticationType !== 'oauth2') { _%>
 import <%=packageName%>.service.MailService;
 <%_ } _%>
-import <%=packageName%>.service.dto.<%= asDto('AdminUser') %>;
-import <%=packageName%>.service.dto.<%= asDto('User') %>;
+import <%=packageName%>.service.dto.<%= user.adminUserDto %>;
+import <%=packageName%>.service.dto.<%= user.dtoClass %>;
 import <%=packageName%>.service.mapper.UserMapper;
 import <%=packageName%>.web.rest.vm.ManagedUserVM;
 <%_ if (usesCache) { _%>
@@ -552,7 +552,7 @@ public class UserResourceIT {
 
     @Test
     public void testUserDTOtoUser() {
-        <%= asDto('AdminUser') %> userDTO = new <%= asDto('AdminUser') %>();
+        <%= user.adminUserDto %> userDTO = new <%= user.adminUserDto %>();
         userDTO.setId(DEFAULT_ID);
         userDTO.setLogin(DEFAULT_LOGIN);
         userDTO.setFirstName(DEFAULT_FIRSTNAME);
@@ -588,7 +588,7 @@ public class UserResourceIT {
         authorities.add(authority);
         user.setAuthorities(authorities);
 
-        <%= asDto('AdminUser') %> userDTO = userMapper.userToAdminUserDTO(user);
+        <%= user.adminUserDto %> userDTO = userMapper.userToAdminUserDTO(user);
 
         assertThat(userDTO.getId()).isEqualTo(DEFAULT_ID);
         assertThat(userDTO.getLogin()).isEqualTo(DEFAULT_LOGIN);

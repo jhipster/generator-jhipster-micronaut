@@ -1,16 +1,37 @@
 <%_
 const { versions } = MN_CONSTANTS;
 _%>
+<%#
+ Copyright 2013-2023 the original author or authors from the JHipster project.
+
+ This file is part of the JHipster project, see https://www.jhipster.tech/
+ for more information.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-%>
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId><%=packageName%></groupId>
+    <groupId><%= packageName %></groupId>
     <artifactId><%= dasherizedBaseName %></artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version><%= projectVersion %></version>
     <packaging>jar</packaging>
     <name><%= humanizedBaseName %></name>
+    <description><%= projectDescription %></description>
 
     <parent>
         <groupId>io.micronaut.platform</groupId>
@@ -18,108 +39,77 @@ _%>
         <version><%= versions.micronaut %></version>
     </parent>
 
-    <repositories>
-        <!-- jhipster-needle-maven-repository -->
-        <%_ if (JHIPSTER_DEPENDENCIES_VERSION.endsWith('-SNAPSHOT')) { _%>
-        <repository>
-            <id>ossrh-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
-        <%_ } _%>
-    </repositories>
-
-    <pluginRepositories>
-        <!-- jhipster-needle-maven-plugin-repository -->
-    </pluginRepositories>
-
-    <!-- jhipster-needle-distribution-management -->
-
     <properties>
-        <!-- Build properties -->
-        <exec.mainClass><%=packageName%>.<%=mainClass%></exec.mainClass>
-        <maven.version>3.3.9</maven.version>
-        <micronaut.runtime>netty</micronaut.runtime>
-        <java.version>17</java.version>
-        <jdk.version>17</jdk.version>
-        <release.version>17</release.version>
-<%_ if (!skipClient) { _%>
-        <node.version>v<%= NODE_VERSION %></node.version>
-    <%_ if (clientPackageManager === 'npm') { _%>
-        <npm.version><%= NPM_VERSION %></npm.version>
-    <%_ } _%>
-<%_ } _%>
+        <!--
+            Build properties
+        -->
+        <maven.version>3.2.5</maven.version>
+        <java.version><%= JAVA_VERSION %></java.version>
+        <jdk.version><%= JAVA_VERSION %></jdk.version>
+        <release.version><%= JAVA_VERSION %></release.version>
+        <%_ if (!skipClient) { _%>
+            <node.version>v<%= nodeVersion %></node.version>
+            <npm.version><%= nodeDependencies.npm %></npm.version>
+
+        <%_ } _%>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <argLine>-Djava.security.egd=file:/dev/./urandom -Xmx256m</argLine>
+        <exec.mainClass><%=packageName%>.<%=mainClass%></exec.mainClass>
+        <argLine>-Djava.security.egd=file:/dev/./urandom -Xmx1G</argLine>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <run.addResources>false</run.addResources>
-        <!-- These remain empty unless the corresponding profile is active -->
-<%_ if (databaseType === 'sql') { _%>
-        <profile.no-liquibase />
-<%_ } _%>
         <profile.api-docs />
         <profile.tls />
+        <profile.e2e />
+        <profile.test />
 
-        <!-- Dependency versions -->
-        <jhipster-dependencies.version><%= JHIPSTER_DEPENDENCIES_VERSION %></jhipster-dependencies.version>
+        <jhipster-dependencies.version><%= jhipsterDependenciesVersion %></jhipster-dependencies.version>
         <micronaut.version><%= versions.micronaut %></micronaut.version>
-        <prometheus-simpleclient.version><%= versions.prometheusSimpleclient %></prometheus-simpleclient.version>
-        <hibernate.version><%= versions.hibernate %></hibernate.version>
-        <!-- The javassist version should match the one managed by
-        https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
-        <javassist.version><%= versions.javassist %></javassist.version>
-        <%_ if (!skipUserManagement) { _%>
-        <jbcrypt.version><%= versions.jbcrypt %></jbcrypt.version>
+        <jbcrypt.version>0.4</jbcrypt.version>
+        <%_ if (reactive) { _%>
+            <blockhound-junit-platform.version><%- javaDependencies['blockhound-junit-platform'] %></blockhound-junit-platform.version>
+            <micrometer-context-propagation.version><%- javaDependencies['micrometer-context-propagation'] %></micrometer-context-propagation.version>
         <%_ } _%>
-        <liquibase.version><%= versions.liquibase %></liquibase.version>
-        <liquibase-hibernate6.version><%= versions.liquibaseHibernate6 %></liquibase-hibernate6.version>
-        <logback.version><%= versions.logback %></logback.version>
-        <mapstruct.version><%= versions.mapstruct %></mapstruct.version>
-        <mockito.version><%= versions.mockito %></mockito.version>
-        <problem.version><%= versions.problem %></problem.version>
-        <jackson.version><%= versions.jackson %></jackson.version>
-<%_ if (cacheProvider === 'caffeine') { _%>
-        <caffeine.version><%= versions.caffeine %></caffeine.version>
-        <typesafe.version>1.4.0</typesafe.version>
-<%_ } _%>
-        <testcontainers.version><%= versions.testcontainers %></testcontainers.version>
-        <!-- Plugin versions -->
-        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
-        <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-        <!-- We can't go to 3.0.0-M2 as it has a regression. See https://issues.apache.org/jira/browse/MENFORCER-306 -->
-        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-        <maven-failsafe-plugin.version>3.0.0-M3</maven-failsafe-plugin.version>
-        <maven-idea-plugin.version>2.2.1</maven-idea-plugin.version>
-        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
-        <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
-        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
-        <maven-exec-plugin.version>1.6.0</maven-exec-plugin.version>
-
-<%_ if (!skipClient) { _%>
-        <frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
-<%_ } _%>
-        <git-commit-id-plugin.version>4.0.2</git-commit-id-plugin.version>
-        <jacoco-maven-plugin.version><%= JACOCO_VERSION %></jacoco-maven-plugin.version>
-        <jib-maven-plugin.version><%= JIB_VERSION %></jib-maven-plugin.version>
-        <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
-        <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
-        <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
-        <jacoco.reportFolder>${project.build.directory}/jacoco</jacoco.reportFolder>
-        <jacoco.utReportFile>${jacoco.reportFolder}/test.exec</jacoco.utReportFile>
-        <jacoco.itReportFile>${jacoco.reportFolder}/integrationTest.exec</jacoco.itReportFile>
-        <junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
-        <junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
-        <!-- jhipster-needle-maven-property -->
+        <archunit-junit5.version><%- javaDependencies['archunit-junit5'] %></archunit-junit5.version>
+        <mapstruct.version><%- javaDependencies.mapstruct %></mapstruct.version>
+        <%_ if (enableSwaggerCodegen) { _%>
+            <jackson-databind-nullable.version><%- javaDependencies['jackson-databind-nullable'] %></jackson-databind-nullable.version>
+        <%_ } _%>
+        <checkstyle.version><%- javaDependencies.checkstyle %></checkstyle.version>
+        <%_ if (!skipClient) { _%>
+            <checksum-maven-plugin.version><%- javaDependencies['checksum-maven-plugin'] %></checksum-maven-plugin.version>
+            <frontend-maven-plugin.version><%- javaDependencies['frontend-maven-plugin'] %></frontend-maven-plugin.version>
+        <%_ } _%>
+        <git-commit-id-maven-plugin.version><%- javaDependencies['git-commit-id-maven-plugin'] %></git-commit-id-maven-plugin.version>
+        <jacoco-maven-plugin.version><%- javaDependencies['jacoco-maven-plugin'] %></jacoco-maven-plugin.version>
+        <jib-maven-plugin.version><%- javaDependencies['jib-maven-plugin'] %></jib-maven-plugin.version>
+        <jib-maven-plugin.image><%- dockerContainers.javaJre %></jib-maven-plugin.image>
+        <jib-maven-plugin.architecture>amd64</jib-maven-plugin.architecture>
+        <lifecycle-mapping.version><%- javaDependencies['lifecycle-mapping'] %></lifecycle-mapping.version>
+        <%_ if (!skipClient) { _%>
+            <maven-antrun-plugin.version><%- javaDependencies['maven-antrun-plugin'] %></maven-antrun-plugin.version>
+        <%_ } _%>
+        <maven-checkstyle-plugin.version><%- javaDependencies['maven-checkstyle-plugin'] %></maven-checkstyle-plugin.version>
+        <maven-clean-plugin.version><%- javaDependencies['maven-clean-plugin'] %></maven-clean-plugin.version>
+        <maven-compiler-plugin.version><%- javaDependencies['maven-compiler-plugin'] %></maven-compiler-plugin.version>
+        <maven-eclipse-plugin.version><%- javaDependencies['maven-eclipse-plugin'] %></maven-eclipse-plugin.version>
+        <maven-enforcer-plugin.version><%- javaDependencies['maven-enforcer-plugin'] %></maven-enforcer-plugin.version>
+        <maven-failsafe-plugin.version><%- javaDependencies['maven-failsafe-plugin'] %></maven-failsafe-plugin.version>
+        <maven-idea-plugin.version><%- javaDependencies['maven-idea-plugin'] %></maven-idea-plugin.version>
+        <maven-javadoc-plugin.version><%- javaDependencies['maven-javadoc-plugin'] %></maven-javadoc-plugin.version>
+        <maven-jar-plugin.version><%- javaDependencies['maven-jar-plugin'] %></maven-jar-plugin.version>
+        <maven-resources-plugin.version><%- javaDependencies['maven-resources-plugin'] %></maven-resources-plugin.version>
+        <maven-site-plugin.version><%- javaDependencies['maven-site-plugin'] %></maven-site-plugin.version>
+        <maven-surefire-plugin.version><%- javaDependencies['maven-surefire-plugin'] %></maven-surefire-plugin.version>
+        <maven-war-plugin.version><%- javaDependencies['maven-war-plugin'] %></maven-war-plugin.version>
+        <modernizer-maven-plugin.version><%- javaDependencies['modernizer-maven-plugin'] %></modernizer-maven-plugin.version>
+        <nohttp-checkstyle.version><%- javaDependencies['nohttp-checkstyle'] %></nohttp-checkstyle.version>
+        <properties-maven-plugin.version><%- javaDependencies['properties-maven-plugin'] %></properties-maven-plugin.version>
+        <sonar-maven-plugin.version><%- javaDependencies['sonar-maven-plugin'] %></sonar-maven-plugin.version>
+        <spotless-maven-plugin.version><%- javaDependencies['spotless-maven-plugin'] %></spotless-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -138,31 +128,10 @@ _%>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>jakarta.xml.bind</groupId>
-                <artifactId>jakarta.xml.bind-api</artifactId>
-                <version>4.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>jakarta.activation</groupId>
-                <artifactId>jakarta.activation-api</artifactId>
-                <version>2.1.2</version>
-            </dependency>
-            <dependency>
-                <groupId>net.bytebuddy</groupId>
-                <artifactId>byte-buddy</artifactId>
-                <version>1.12.18</version>
-            </dependency>
-            <!-- jhipster-needle-maven-add-dependency-management -->
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version><%= versions.swaggerAnnotations %></version>
-        </dependency>
         <dependency>
             <groupId>tech.jhipster</groupId>
             <artifactId>jhipster-framework</artifactId>
@@ -190,199 +159,9 @@ _%>
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.simplejavamail</groupId>
-            <artifactId>simple-java-mail</artifactId>
-            <version><%= versions.simplejavamail %></version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-hibernate6</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-hppc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-jaxb-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-yaml</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <scope>test</scope>
-            <!-- parent POM declares this dependency in default (compile) scope -->
-        </dependency>
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-<%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) { _%>
-        <dependency>
-            <groupId>io.micronaut.cache</groupId>
-            <artifactId>micronaut-cache-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.cache</groupId>
-            <artifactId>cache-api</artifactId>
-        </dependency>
-<%_ } _%>
-<%_
-if (devDatabaseType === 'mysql' || prodDatabaseType === 'mysql') { _%>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-<%_ } _%>
-<%_ if (devDatabaseType === 'mariadb' || prodDatabaseType === 'mariadb') { _%>
-        <dependency>
-            <groupId>org.mariadb.jdbc</groupId>
-            <artifactId>mariadb-java-client</artifactId>
-        </dependency>
-<%_ } _%>
-<%_
-if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
-<%_ } _%>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-<%_ if (cacheProvider === 'ehcache') { _%>
-        <dependency>
-            <groupId>io.micronaut.cache</groupId>
-            <artifactId>micronaut-cache-ehcache</artifactId>
-        </dependency>
-    <%_ if (enableHibernateCache) { _%>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-jcache</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-    <%_ } _%>
-<%_ } _%>
-<%_ if (cacheProvider === 'redis') { _%>
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson</artifactId>
-        </dependency>
-    <%_ if (enableHibernateCache) { _%>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-jcache</artifactId>
-        </dependency>
-    <%_ } _%>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
-            <version>${testcontainers.version}</version>
-            <scope>test</scope>
-        </dependency>
-<%_ } _%>
-<%_ if (cacheProvider === 'caffeine') { _%>
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>caffeine</artifactId>
-            <version>${caffeine.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.ben-manes.caffeine</groupId>
-            <artifactId>jcache</artifactId>
-            <version>${caffeine.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.typesafe</groupId>
-            <artifactId>config</artifactId>
-            <version>${typesafe.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.cache</groupId>
-            <artifactId>micronaut-cache-caffeine</artifactId>
-        </dependency>
-    <%_ if (enableHibernateCache) { _%>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-jcache</artifactId>
-        </dependency>
-    <%_ } _%>
-<%_ } _%>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-jpamodelgen</artifactId>
-            <scope>provided</scope>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-envers</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>${liquibase.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>${mapstruct.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>${mapstruct.version}</version>
-            <scope>provided</scope>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>io.micronaut</groupId>
@@ -393,6 +172,21 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-http-server-netty</artifactId>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.problem</groupId>
+            <artifactId>micronaut-problem-json</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.zalando</groupId>
+            <artifactId>jackson-datatype-problem</artifactId>
+            <version>0.27.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.zalando</groupId>
+            <artifactId>problem-violations</artifactId>
+            <version>0.29.1</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.security</groupId>
@@ -408,33 +202,9 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <groupId>io.micronaut.validation</groupId>
             <artifactId>micronaut-validation</artifactId>
         </dependency>
-<%_ if (authenticationType == 'oauth2') { _%>
-        <dependency>
-            <groupId>io.micronaut.security</groupId>
-            <artifactId>micronaut-security-oauth2</artifactId>
-            <scope>compile</scope>
-        </dependency>
-<%_ } _%>
-<%_ if (!skipUserManagement) { _%>
-        <dependency>
-            <groupId>org.mindrot</groupId>
-            <artifactId>jbcrypt</artifactId>
-            <version>${jbcrypt.version}</version>
-        </dependency>
-<%_ } _%>
-        <dependency>
-            <groupId>io.micronaut.liquibase</groupId>
-            <artifactId>micronaut-liquibase</artifactId>
-            <scope>compile</scope>
-        </dependency>
         <dependency>
             <groupId>io.micronaut.sql</groupId>
             <artifactId>micronaut-jdbc-hikari</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -445,16 +215,6 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         <dependency>
             <groupId>io.micronaut.jmx</groupId>
             <artifactId>micronaut-jmx</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.micrometer</groupId>
-            <artifactId>micronaut-micrometer-core</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.micrometer</groupId>
-            <artifactId>micronaut-micrometer-registry-prometheus</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -478,53 +238,6 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                     <artifactId>micronaut-jdbc</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.views</groupId>
-            <artifactId>micronaut-views-thymeleaf</artifactId>
-        </dependency>
-<%_ if (serviceDiscoveryType === 'eureka' || serviceDiscoveryType === 'consul') { _%>
-        <dependency>
-            <groupId>io.micronaut.discovery</groupId>
-            <artifactId>micronaut-discovery-client</artifactId>
-            <version>${micronaut-discovery-client.version}</version>
-            <scope>compile</scope>
-        </dependency>
-<%_ } _%>
-        <dependency>
-            <groupId>io.micronaut.test</groupId>
-            <artifactId>micronaut-test-junit5</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.zalando</groupId>
-            <artifactId>problem</artifactId>
-            <version>${problem.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.zalando</groupId>
-            <artifactId>jackson-datatype-problem</artifactId>
-            <version>${problem.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.zalando</groupId>
-            <artifactId>problem-violations</artifactId>
-            <version>${problem.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.prometheus</groupId>
-            <artifactId>simpleclient</artifactId>
-            <version>${prometheus-simpleclient.version}</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.rxjava3</groupId>
@@ -551,11 +264,175 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <groupId>io.micronaut.email</groupId>
             <artifactId>micronaut-email-template</artifactId>
         </dependency>
-        <!-- jhipster-needle-maven-add-dependency -->
-    </dependencies>
-    <build>
-        <defaultGoal>package mn:run</defaultGoal>
+        <dependency>
+            <groupId>io.micronaut.views</groupId>
+            <artifactId>micronaut-views-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.test</groupId>
+            <artifactId>micronaut-test-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <%_ if (cacheProviderAny) { _%>
+        <dependency>
+            <groupId>io.micronaut.cache</groupId>
+            <artifactId>micronaut-cache-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+        </dependency>
+        <%_ } _%>
+    <%_ if (cacheProviderCaffeine) { _%>
+        <dependency>
+            <groupId>io.micronaut.cache</groupId>
+            <artifactId>micronaut-cache-caffeine</artifactId>
+        </dependency>
+        <%_ if (enableHibernateCache) { _%>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-jcache</artifactId>
+        </dependency>
+        <%_ } _%>
+    <%_ } _%>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hppc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <%_ if (reactive) { _%>
+        <dependency>
+            <groupId>io.projectreactor.tools</groupId>
+            <artifactId>blockhound-junit-platform</artifactId>
+            <version>${blockhound-junit-platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <!-- fix https://github.com/jhipster/generator-jhipster/issues/21359 -->
+            <groupId>io.micrometer</groupId>
+            <artifactId>context-propagation</artifactId>
+            <version>${micrometer-context-propagation.version}</version>
+        </dependency>
+        <%_ } else { _%>
 
+        <%_ } _%>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5-api</artifactId>
+            <version>${archunit-junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <!-- Adding the engine dependency to the surefire-plugin unfortunately does not work in the current version. -->
+            <!-- https://www.archunit.org/userguide/html/000_Index.html#_junit_5 -->
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5-engine</artifactId>
+            <version>${archunit-junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.security</groupId>
+            <artifactId>micronaut-security</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <%_ if (authenticationTypeJwt) { _%>
+        <dependency>
+            <groupId>io.micronaut.security</groupId>
+            <artifactId>micronaut-security-jwt</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <%_ } _%>
+        <%_ if (authenticationTypeOauth2) { _%>
+        <dependency>
+            <groupId>io.micronaut.security</groupId>
+            <artifactId>micronaut-security-oauth2</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+        <%_ } _%>
+        <%_ if (!skipUserManagement) { _%>
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>${jbcrypt.version}</version>
+        </dependency>
+        <%_ } _%>
+        <%_ if (applicationTypeMicroservice) { _%>
+
+        <%_ } _%>
+        <%_ if (reactive) { _%>
+        <!-- TODO Determine Micronaut Equivalent -->
+        <!--<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
+        </dependency>-->
+        <%_ } else { _%>
+        <!-- TODO Determine Micronaut Equivalent -->
+        <!--<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+        </dependency>-->
+        <%_ } _%>
+        <!-- TODO Determine Micronaut Equivalent -->
+        <!--<dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>-->
+        <%_ if (serviceDiscoveryEureka || serviceDiscoveryConsul) { _%>
+        <dependency>
+            <groupId>io.micronaut.discovery</groupId>
+            <artifactId>micronaut-discovery-client</artifactId>
+            <version>${micronaut-discovery-client.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <%_ } _%>
+        <dependency>
+            <groupId>io.micronaut.micrometer</groupId>
+            <artifactId>micronaut-micrometer-core</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.micrometer</groupId>
+            <artifactId>micronaut-micrometer-registry-prometheus</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <defaultGoal>mn:run</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>io.micronaut.maven</groupId>
@@ -563,106 +440,15 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>${maven-shade-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                        <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                        <createDependencyReducedPom>false</createDependencyReducedPom>
-                        <transformers>
-                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <mainClass>${exec.mainClass}</mainClass>
-                            </transformer>
-                            <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                        </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <compilerArgs>
-                        <arg>-parameters</arg>
-                        <arg>-Amicronaut.processing.group=<%= packageName %></arg>
-                        <arg>-Amicronaut.processing.module=<%= dasherizedBaseName %></arg>
-                    </compilerArgs>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${mapstruct.version}</version>
-                        </path>
-                        <!-- For JPA static metamodel generation -->
-                        <path>
-                            <groupId>org.hibernate.orm</groupId>
-                            <artifactId>hibernate-jpamodelgen</artifactId>
-                            <version>${hibernate.version}</version>
-                        </path>
-                        <path>
-                            <groupId>io.micronaut</groupId>
-                            <artifactId>micronaut-inject-java</artifactId>
-                            <version>${micronaut.core.version}</version>
-                        </path>
-                        <path>
-                            <groupId>io.micronaut.data</groupId>
-                            <artifactId>micronaut-data-processor</artifactId>
-                            <version>${micronaut.data.version}</version>
-                            <exclusions>
-                                <exclusion>
-                                    <groupId>io.micronaut</groupId>
-                                    <artifactId>micronaut-inject</artifactId>
-                                </exclusion>
-                            </exclusions>
-                        </path>
-                        <path>
-                            <groupId>io.micronaut.openapi</groupId>
-                            <artifactId>micronaut-openapi</artifactId>
-                            <version>${micronaut.openapi.version}</version>
-                            <exclusions>
-                                <exclusion>
-                                    <groupId>io.micronaut</groupId>
-                                    <artifactId>micronaut-inject</artifactId>
-                                </exclusion>
-                            </exclusions>
-                        </path>
-                        <path>
-                            <groupId>io.micronaut.validation</groupId>
-                            <artifactId>micronaut-validation-processor</artifactId>
-                            <version>${micronaut.validation.version}</version>
-                            <exclusions>
-                                <exclusion>
-                                    <groupId>io.micronaut</groupId>
-                                    <artifactId>micronaut-inject</artifactId>
-                                </exclusion>
-                            </exclusions>
-                        </path>
-                        <path>
-                            <groupId>io.micronaut.security</groupId>
-                            <artifactId>micronaut-security-annotations</artifactId>
-                            <version>${micronaut.security.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
-                    <release>${java.version}</release>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven-checkstyle-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin.version}</version>
-                <configuration>
-                    <source>8</source>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -697,9 +483,8 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                 <artifactId>sonar-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>${liquibase.version}</version>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
@@ -708,41 +493,180 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
-                <version>${properties-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>read-project-properties</goal>
-                        </goals>
-                        <configuration>
-                            <files>
-                                <file>sonar-project.properties</file>
-                            </files>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
-            <!-- jhipster-needle-maven-add-plugin -->
+            <plugin>
+                <groupId>org.gaul</groupId>
+                <artifactId>modernizer-maven-plugin</artifactId>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven-checkstyle-plugin.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${checkstyle.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>io.spring.nohttp</groupId>
+                            <artifactId>nohttp-checkstyle</artifactId>
+                            <version>${nohttp-checkstyle.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <configLocation>checkstyle.xml</configLocation>
+                        <includes>pom.xml,README.md</includes>
+                        <excludes>.git/**/*,target/**/*,node_modules/**/*,node/**/*</excludes>
+                        <sourceDirectories>./</sourceDirectories>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <compilerArgs>
+                            <arg>-Amicronaut.processing.group=<%= packageName %></arg>
+                            <arg>-Amicronaut.processing.module=<%= dasherizedBaseName %></arg>
+                        </compilerArgs>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${mapstruct.version}</version>
+                            </path>
+                            <path>
+                                <groupId>io.micronaut</groupId>
+                                <artifactId>micronaut-inject-java</artifactId>
+                                <version>${micronaut.core.version}</version>
+                            </path>
+                            <path>
+                                <groupId>io.micronaut.data</groupId>
+                                <artifactId>micronaut-data-processor</artifactId>
+                                <version>${micronaut.data.version}</version>
+                                <exclusions>
+                                    <exclusion>
+                                        <groupId>io.micronaut</groupId>
+                                        <artifactId>micronaut-inject</artifactId>
+                                    </exclusion>
+                                </exclusions>
+                            </path>
+                            <path>
+                                <groupId>io.micronaut.validation</groupId>
+                                <artifactId>micronaut-validation-processor</artifactId>
+                                <version>${micronaut.validation.version}</version>
+                                <exclusions>
+                                    <exclusion>
+                                        <groupId>io.micronaut</groupId>
+                                        <artifactId>micronaut-inject</artifactId>
+                                    </exclusion>
+                                </exclusions>
+                            </path>
+                            <path>
+                                <groupId>io.micronaut.security</groupId>
+                                <artifactId>micronaut-security-annotations</artifactId>
+                                <version>${micronaut.security.version}</version>
+                            </path>
+                            <%_ if (enableSwaggerCodegen) { _%>
+                            <path>
+                                <groupId>io.micronaut.openapi</groupId>
+                                <artifactId>micronaut-openapi</artifactId>
+                                <version>${micronaut.openapi.version}</version>
+                                <exclusions>
+                                    <exclusion>
+                                        <groupId>io.micronaut</groupId>
+                                        <artifactId>micronaut-inject</artifactId>
+                                    </exclusion>
+                                </exclusions>
+                            </path>
+                            <%_ } _%>
+                        </annotationProcessorPaths>
+                    </configuration>
                 </plugin>
-<%_ if (!skipClient) { _%>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin.version}</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${maven-war-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>default-war</id>
+                            <goals>
+                                <goal>war</goal>
+                            </goals>
+                            <phase>package</phase>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <warSourceIncludes>WEB-INF/**,META-INF/**</warSourceIncludes>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                        <%_ if (!skipClient) { _%>
+                            <warSourceDirectory><%= clientDistDir %></warSourceDirectory>
+                            <webResources>
+                                <resource>
+                                    <directory><%= MAIN_DIR %>webapp</directory>
+                                    <includes>
+                                        <include>WEB-INF/**</include>
+                                    </includes>
+                                </resource>
+                            </webResources>
+                        <%_ } _%>
+                    </configuration>
+                </plugin>
+                <%_ if (!skipClient) { _%>
                 <plugin>
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>${frontend-maven-plugin.version}</version>
+                    <configuration>
+                        <installDirectory>target</installDirectory>
+                        <nodeVersion>${node.version}</nodeVersion>
+                        <npmVersion>${npm.version}</npmVersion>
+                    </configuration>
                 </plugin>
-<%_ } _%>
+                <%_ } _%>
                 <plugin>
-                    <groupId>pl.project13.maven</groupId>
-                    <artifactId>git-commit-id-plugin</artifactId>
-                    <version>${git-commit-id-plugin.version}</version>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>${properties-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>read-project-properties</goal>
+                            </goals>
+                            <configuration>
+                                <files>
+                                    <file>sonar-project.properties</file>
+                                </files>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>io.github.git-commit-id</groupId>
+                    <artifactId>git-commit-id-maven-plugin</artifactId>
+                    <version>${git-commit-id-maven-plugin.version}</version>
                     <executions>
                         <execution>
                             <goals>
@@ -762,6 +686,29 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                     </configuration>
                 </plugin>
                 <plugin>
+                    <groupId>org.gaul</groupId>
+                    <artifactId>modernizer-maven-plugin</artifactId>
+                    <version>${modernizer-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>modernizer</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>modernizer</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <javaVersion>${java.version}</javaVersion>
+                        <%_ if (databaseTypeCassandra) { _%>
+                            <ignoreClassNamePatterns>
+                                <ignoreClassNamePattern><%= packageName %>.domain.PersistentTokenHelper__MapperGenerated</ignoreClassNamePattern>
+                                <ignoreClassNamePattern><%= packageName %>.domain.UserHelper__MapperGenerated</ignoreClassNamePattern>
+                            </ignoreClassNamePatterns>
+                        <%_ } _%>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco-maven-plugin.version}</version>
@@ -771,44 +718,28 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                             <goals>
                                 <goal>prepare-agent</goal>
                             </goals>
-                            <configuration>
-                                <!-- Sets the path to the file which contains the execution data. -->
-                                <destFile>${jacoco.utReportFile}</destFile>
-                            </configuration>
                         </execution>
-                        <!-- Ensures that the code coverage report for unit tests is created after unit tests have been run -->
                         <execution>
+                            <!-- Ensures that the code coverage report for unit tests is created after unit tests have been run -->
                             <id>post-unit-test</id>
                             <phase>test</phase>
                             <goals>
                                 <goal>report</goal>
                             </goals>
-                            <configuration>
-                                <dataFile>${jacoco.utReportFile}</dataFile>
-                                <outputDirectory>${jacoco.reportFolder}</outputDirectory>
-                            </configuration>
                         </execution>
                         <execution>
                             <id>pre-integration-tests</id>
                             <goals>
                                 <goal>prepare-agent-integration</goal>
                             </goals>
-                            <configuration>
-                                <!-- Sets the path to the file which contains the execution data. -->
-                                <destFile>${jacoco.itReportFile}</destFile>
-                            </configuration>
                         </execution>
-                        <!-- Ensures that the code coverage report for integration tests is created after integration tests have been run -->
                         <execution>
+                            <!-- Ensures that the code coverage report for integration tests is created after integration tests have been run -->
                             <id>post-integration-tests</id>
                             <phase>post-integration-test</phase>
                             <goals>
                                 <goal>report-integration</goal>
                             </goals>
-                            <configuration>
-                                <dataFile>${jacoco.itReportFile}</dataFile>
-                                <outputDirectory>${jacoco.reportFolder}</outputDirectory>
-                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
@@ -818,31 +749,41 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                     <version>${jib-maven-plugin.version}</version>
                     <configuration>
                         <from>
-                            <image><%= DOCKER_JAVA_JRE %></image>
+                            <image>${jib-maven-plugin.image}</image>
+                            <platforms>
+                                <platform>
+                                    <architecture>${jib-maven-plugin.architecture}</architecture>
+                                    <os>linux</os>
+                                </platform>
+                            </platforms>
                         </from>
                         <to>
-                            <image><%= lowercaseBaseName %>:${project.version}</image>
-                            <tags>
-                                <tag>latest</tag>
-                            </tags>
+                            <image><%= baseName.toLowerCase() %>:latest</image>
                         </to>
                         <container>
                             <entrypoint>
-                                <shell>sh</shell>
+                                <shell>bash</shell>
                                 <option>-c</option>
                                 <arg>/entrypoint.sh</arg>
                             </entrypoint>
                             <ports>
-                                <port>8080</port>
+                                <port><%= serverPort %></port>
+                                <%_ if (cacheProviderHazelcast) { _%>
+                                <port>5701/udp</port>
+                                <%_ } _%>
                             </ports>
                             <environment>
+                                <%_ if (cacheProviderInfinispan) { _%>
+                                <JAVA_OPTS>-Djgroups.tcp.address=NON_LOOPBACK -Djava.net.preferIPv4Stack=true</JAVA_OPTS>
+                                <%_ } _%>
                                 <SPRING_OUTPUT_ANSI_ENABLED>ALWAYS</SPRING_OUTPUT_ANSI_ENABLED>
                                 <JHIPSTER_SLEEP>0</JHIPSTER_SLEEP>
                             </environment>
                             <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                            <user>1000</user>
                         </container>
                         <extraDirectories>
-                            <paths><%= MAIN_DIR %>jib</paths>
+                            <paths><%= dockerServicesDir %>jib</paths>
                             <permissions>
                                 <permission>
                                     <file>/entrypoint.sh</file>
@@ -853,52 +794,14 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                     </configuration>
                 </plugin>
                 <plugin>
-<%_
-    const { sqlDb } = MN_CONSTANTS;
-    const devDbInfo = sqlDb[devDatabaseType];
-_%>
-                    <groupId>org.liquibase</groupId>
-                    <artifactId>liquibase-maven-plugin</artifactId>
-                    <version>${liquibase.version}</version>
-                    <configuration>
-                        <changeLogFile>${project.basedir}/src/main/resources/config/liquibase/master.xml</changeLogFile>
-                        <diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
-                        <driver><%= devDbInfo.driver %></driver>
-                        <url></url>
-                        <defaultSchemaName></defaultSchemaName>
-                        <username><%= baseName %></username>
-                        <password></password>
-                        <referenceUrl>hibernate:spring:<%=packageName%>.domain?dialect=<%= devDbInfo.dialect %>&amp;hibernate.physical_naming_strategy=<%=packageName%>.config.SnakeCasePhysicalNamingStrategy</referenceUrl>
-                        <verbose>true</verbose>
-                        <logging>debug</logging>
-                        <contexts>!test</contexts>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>io.github.jhipster</groupId>
-                            <artifactId>jhipster-framework</artifactId>
-                            <version>${jhipster-dependencies.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.hibernate</groupId>
-                            <artifactId>hibernate-core</artifactId>
-                            <version>${hibernate.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.javassist</groupId>
-                            <artifactId>javassist</artifactId>
-                            <version>${javassist.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.liquibase.ext</groupId>
-                            <artifactId>liquibase-hibernate6</artifactId>
-                            <version>${liquibase-hibernate6.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>${maven-clean-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>${maven-site-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -940,8 +843,8 @@ _%>
                                 <version>[${maven.version},)</version>
                             </requireMavenVersion>
                             <requireJavaVersion>
-                                <message>You are running an incompatible version of Java. JHipster supports JDK 8 to 14.</message>
-                                <version>[1.8,18)</version>
+                                <message>You are running an incompatible version of Java. JHipster supports JDK <%= JAVA_COMPATIBLE_VERSIONS[0] %> to <%= JAVA_COMPATIBLE_VERSIONS[JAVA_COMPATIBLE_VERSIONS.length -1] %>.</message>
+                                <version><%= JAVA_COMPATIBLE_VERSIONS.map(version => parseInt(version)).map(version => `[${version},${version +1})`).join(',') %></version>
                             </requireJavaVersion>
                         </rules>
                     </configuration>
@@ -973,14 +876,14 @@ _%>
                                 </delimiters>
                                 <resources>
                                     <resource>
-                                        <directory>src/main/resources/</directory>
+                                        <directory><%= SERVER_MAIN_RES_DIR %></directory>
                                         <filtering>true</filtering>
                                         <includes>
                                             <include>config/*.yml</include>
                                         </includes>
                                     </resource>
                                     <resource>
-                                        <directory>src/main/resources/</directory>
+                                        <directory><%= SERVER_MAIN_RES_DIR %></directory>
                                         <filtering>false</filtering>
                                         <excludes>
                                             <exclude>config/*.yml</exclude>
@@ -998,26 +901,65 @@ _%>
                     <configuration>
                         <!-- Force alphabetical order to have a reproducible build -->
                         <runOrder>alphabetical</runOrder>
-                        <reportsDirectory>${junit.utReportFolder}</reportsDirectory>
                         <excludes>
                             <exclude>**/*IT*</exclude>
                             <exclude>**/*IntTest*</exclude>
                         </excludes>
+                        <%_ if (reactive) { _%>
+                        <!-- Fix tests at java 13+ https://github.com/reactor/BlockHound/issues/33 -->
+                        <argLine>@{argLine} -XX:+AllowRedefinitionToAddDeleteMethods</argLine>
+                        <%_ } _%>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.diffplug.spotless</groupId>
+                    <artifactId>spotless-maven-plugin</artifactId>
+                    <version>${spotless-maven-plugin.version}</version>
+                    <configuration>
+                        <java>
+                            <!-- <removeUnusedImports/> -->
+                        </java>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>spotless</id>
+                            <phase>process-sources</phase>
+                            <goals>
+                                <goal>apply</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-failsafe-plugin.version}</version>
                     <configuration>
+                        <!-- Due to spring-boot repackage, without adding this property test classes are not found
+                             See https://github.com/spring-projects/spring-boot/issues/6254 -->
                         <classesDirectory>${project.build.outputDirectory}</classesDirectory>
                         <!-- Force alphabetical order to have a reproducible build -->
                         <runOrder>alphabetical</runOrder>
-                        <reportsDirectory>${junit.itReportFolder}</reportsDirectory>
                         <includes>
                             <include>**/*IT*</include>
                             <include>**/*IntTest*</include>
                         </includes>
+                        <%_ if (reactive) { _%>
+                        <!-- Fix tests at java 13+ https://github.com/reactor/BlockHound/issues/33 -->
+                        <argLine>@{argLine} -XX:+AllowRedefinitionToAddDeleteMethods -Dspring.profiles.active=${profile.test}</argLine>
+                        <%_ } else { _%>
+                        <argLine>@{argLine} -Dspring.profiles.active=${profile.test}</argLine>
+                        <%_ } _%>
                     </configuration>
                     <executions>
                         <execution>
@@ -1034,26 +976,12 @@ _%>
                         </execution>
                     </executions>
                 </plugin>
-                <plugin>
-                    <groupId>org.sonarsource.scanner.maven</groupId>
-                    <artifactId>sonar-maven-plugin</artifactId>
-                    <version>${sonar-maven-plugin.version}</version>
-                </plugin>
             </plugins>
         </pluginManagement>
     </build>
     <profiles>
         <profile>
-            <id>no-liquibase</id>
-            <properties>
-                <profile.no-liquibase>,no-liquibase</profile.no-liquibase>
-            </properties>
-        </profile>
-        <profile>
             <id>api-docs</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <properties>
                 <profile.api-docs>,api-docs</profile.api-docs>
             </properties>
@@ -1064,160 +992,203 @@ _%>
                 <profile.tls>,tls</profile.tls>
             </properties>
         </profile>
-<%_ if (!skipClient) { _%>
-        <profile>
-            <id>webapp</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <dependencies>
-    <%_ if (devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') { _%>
-                <dependency>
-                    <groupId>com.h2database</groupId>
-                    <artifactId>h2</artifactId>
-                </dependency>
-    <%_ } _%>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.github.eirslett</groupId>
-                        <artifactId>frontend-maven-plugin</artifactId>
-                        <executions>
-    <%_ if (clientPackageManager === 'npm') { _%>
-                            <execution>
-                                <id>install node and npm</id>
-                                <goals>
-                                    <goal>install-node-and-npm</goal>
-                                </goals>
-                                <configuration>
-                                    <nodeVersion>${node.version}</nodeVersion>
-                                    <npmVersion>${npm.version}</npmVersion>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>npm install</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                            </execution>
-    <%_ } _%>
-                            <execution>
-                                <id>webapp build dev</id>
-                                <goals>
-                                    <goal><%= clientPackageManager %></goal>
-                                </goals>
-                                <phase>generate-resources</phase>
-                                <configuration>
-                                    <arguments>run webapp:build</arguments>
-    <%_ if (clientPackageManager === 'npm') { _%>
-                                    <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
-    <%_ } _%>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            <properties>
-                <profiles.active>dev${profile.no-liquibase}</profiles.active>
-            </properties>
-        </profile>
-<%_ } _%>
+        <%_ if (!skipClient) { _%>
+            <profile>
+                <id>webapp</id>
+                <activation>
+                    <activeByDefault>true</activeByDefault>
+                </activation>
+                <build>
+                    <plugins>
+                        <plugin>
+                            <groupId>net.nicoulaj.maven.plugins</groupId>
+                            <artifactId>checksum-maven-plugin</artifactId>
+                            <version>${checksum-maven-plugin.version}</version>
+                            <executions>
+                                <execution>
+                                    <id>create-pre-compiled-webapp-checksum</id>
+                                    <goals>
+                                        <goal>files</goal>
+                                    </goals>
+                                    <phase>generate-resources</phase>
+                                </execution>
+                                <execution>
+                                    <id>create-compiled-webapp-checksum</id>
+                                    <goals>
+                                        <goal>files</goal>
+                                    </goals>
+                                    <phase>compile</phase>
+                                    <configuration>
+                                        <csvSummaryFile>checksums.csv.old</csvSummaryFile>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <fileSets>
+                                    <fileSet>
+                                        <directory>${project.basedir}</directory>
+                                        <includes>
+                                            <include><%= MAIN_DIR %>webapp/**/*.*</include>
+                                            <include>target/classes/static/**/*.*</include>
+                                            <include>package-lock.json</include>
+                                            <include>package.json</include>
+                                            <include>webpack/*.*</include>
+                                            <include>tsconfig.json</include>
+                                            <%_ if (clientFrameworkAngular) { _%>
+                                            <include>tsconfig.app.json</include>
+                                            <%_ } _%>
+                                            <%_ if (clientFrameworkReact) { _%>
+                                            <include>.postcss.config.js</include>
+                                            <%_ } _%>
+                                            <%_ if (clientFrameworkVue) { _%>
+                                            <include>.postcssrc.js</include>
+                                            <%_ } _%>
+                                        </includes>
+                                        <excludes>
+                                            <exclude>**/app/**/service-worker.js</exclude>
+                                            <exclude>**/app/**/vendor.css</exclude>
+                                        </excludes>
+                                    </fileSet>
+                                </fileSets>
+                                <failOnError>false</failOnError>
+                                <failIfNoFiles>false</failIfNoFiles>
+                                <individualFiles>false</individualFiles>
+                                <algorithms>
+                                    <algorithm>SHA-1</algorithm>
+                                </algorithms>
+                                <includeRelativePath>true</includeRelativePath>
+                                <quiet>true</quiet>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-antrun-plugin</artifactId>
+                            <version>${maven-antrun-plugin.version}</version>
+                            <executions>
+                                <execution>
+                                    <id>eval-frontend-checksum</id>
+                                    <phase>generate-resources</phase>
+                                    <goals>
+                                        <goal>run</goal>
+                                    </goals>
+                                    <configuration>
+                                        <target>
+                                            <condition property="skip.npm" value="true" else="false" >
+                                                <and>
+                                                    <available file="checksums.csv" filepath="${project.build.directory}" />
+                                                    <available file="checksums.csv.old" filepath="${project.build.directory}" />
+                                                    <filesmatch file1="${project.build.directory}/checksums.csv" file2="${project.build.directory}/checksums.csv.old" />
+                                                </and>
+                                            </condition>
+                                        </target>
+                                        <exportAntProperties>true</exportAntProperties>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                        <plugin>
+                            <groupId>com.github.eirslett</groupId>
+                            <artifactId>frontend-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>install-node-and-npm</id>
+                                    <goals>
+                                        <goal>install-node-and-npm</goal>
+                                    </goals>
+                                </execution>
+                                <execution>
+                                    <id>npm install</id>
+                                    <goals>
+                                        <goal>npm</goal>
+                                    </goals>
+                                </execution>
+                                <execution>
+                                    <id>webapp build dev</id>
+                                    <goals>
+                                        <goal>npm</goal>
+                                    </goals>
+                                    <phase>generate-resources</phase>
+                                    <configuration>
+                                        <arguments>run webapp:build</arguments>
+                                        <environmentVariables>
+                                            <APP_VERSION>${project.version}</APP_VERSION>
+                                        </environmentVariables>
+                                        <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </build>
+                <properties>
+                    <!-- default Micronaut environments -->
+                    <micronaut.environments>dev<%_ if (databaseMigrationLiquibase) { _%>${profile.no-liquibase}<%_ } _%></micronaut.environments>
+                </properties>
+            </profile>
+        <%_ } _%>
         <profile>
             <id>dev</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <dependencies>
-                <%_
-                if (devDatabaseType === 'mysql') { _%>
-                <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                </dependency>
-                <%_ } _%>
-                <%_
-                if (devDatabaseType === 'mariadb') { _%>
-                <dependency>
-                    <groupId>org.mariadb.jdbc</groupId>
-                    <artifactId>mariadb-java-client</artifactId>
-                </dependency>
-                <%_ } _%>
-                <%_
-                if (devDatabaseType === 'postgresql') { _%>
-                <dependency>
-                    <groupId>org.postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
-                </dependency>
-                <%_ } else { _%>
-                <dependency>
-                    <groupId>com.h2database</groupId>
-                    <artifactId>h2</artifactId>
-                </dependency>
-                <%_ } _%>
-            </dependencies>
             <properties>
-                <profiles.active>dev${profile.tls}${profile.no-liquibase}</profiles.active>
+                <!-- default Micronaut environments -->
+                <micronaut.environments>dev${profile.tls}<%_ if (databaseMigrationLiquibase) { _%>${profile.no-liquibase}<%_ } _%></micronaut.environments>
+                <profile.test>testdev</profile.test>
             </properties>
         </profile>
         <profile>
             <id>prod</id>
+            <properties>
+                <!-- default Micronaut environments -->
+                <micronaut.environments>prod${profile.api-docs}${profile.tls}${profile.e2e}<%_ if (databaseMigrationLiquibase) { _%>${profile.no-liquibase}<%_ } _%></micronaut.environments>
+                <profile.test>testprod</profile.test>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-clean-plugin</artifactId>
                         <configuration>
                             <filesets>
                                 <fileset>
-                                    <directory>target/classes/static/</directory>
+                                    <directory><%= clientDistDir %></directory>
                                 </fileset>
                             </filesets>
                         </configuration>
                     </plugin>
-<%_ if (!skipClient) { _%>
+                    <%_ if (!skipClient) { _%>
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
                         <executions>
-    <%_ if (clientPackageManager === 'npm') { _%>
                             <execution>
-                                <id>install node and npm</id>
+                                <id>install-node-and-npm</id>
                                 <goals>
                                     <goal>install-node-and-npm</goal>
                                 </goals>
-                                <configuration>
-                                    <nodeVersion>${node.version}</nodeVersion>
-                                    <npmVersion>${npm.version}</npmVersion>
-                                </configuration>
                             </execution>
                             <execution>
                                 <id>npm install</id>
                                 <goals>
                                     <goal>npm</goal>
                                 </goals>
-                                <configuration>
-                                    <arguments>install</arguments>
-                                </configuration>
                             </execution>
-    <%_ } _%>
                             <execution>
                                 <id>webapp build test</id>
                                 <goals>
-                                    <goal><%= clientPackageManager %></goal>
+                                    <goal>npm</goal>
                                 </goals>
                                 <phase>test</phase>
                                 <configuration>
                                     <arguments>run webapp:test</arguments>
-    <%_ if (clientPackageManager === 'npm') { _%>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
-    <%_ } _%>
                                 </configuration>
                             </execution>
                             <execution>
                                 <id>webapp build prod</id>
                                 <goals>
-                                    <goal><%= clientPackageManager %></goal>
+                                    <goal>npm</goal>
                                 </goals>
                                 <phase>generate-resources</phase>
                                 <configuration>
@@ -1225,76 +1196,52 @@ _%>
                                     <environmentVariables>
                                         <APP_VERSION>${project.version}</APP_VERSION>
                                     </environmentVariables>
-    <%_ if (clientPackageManager === 'npm') { _%>
                                     <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
-    <%_ } _%>
                                 </configuration>
                             </execution>
                         </executions>
                     </plugin>
-<%_ } _%>
+                    <%_ } _%>
                     <plugin>
-                        <groupId>pl.project13.maven</groupId>
-                        <artifactId>git-commit-id-plugin</artifactId>
+                        <groupId>io.github.git-commit-id</groupId>
+                        <artifactId>git-commit-id-maven-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
-            <dependencies>
-                <%_
-                if (prodDatabaseType === 'mysql') { _%>
-                <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                </dependency>
-                <%_ } _%>
-                <%_
-                if (devDatabaseType === 'mariadb') { _%>
-                <dependency>
-                    <groupId>org.mariadb.jdbc</groupId>
-                    <artifactId>mariadb-java-client</artifactId>
-                </dependency>
-                <%_ } _%>
-                <%_
-                if (prodDatabaseType === 'postgresql') { _%>
-                <dependency>
-                    <groupId>org.postgresql</groupId>
-                    <artifactId>postgresql</artifactId>
-                </dependency>
-                <%_ } _%>
-
-            </dependencies>
-            <properties>
-                <profiles.active>prod${profile.api-docs}${profile.no-liquibase}</profiles.active>
-            </properties>
         </profile>
         <profile>
-            <id>jar</id>
+            <id>war</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-shade-plugin</artifactId>
-                        <version>${maven-shade-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>shade</goal>
-                                </goals>
-                                <configuration>
-                                    <transformers>
-                                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                            <mainClass>${exec.mainClass}</mainClass>
-                                        </transformer>
-                                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                                    </transformers>
-                                </configuration>
-                            </execution>
-                        </executions>
+                        <artifactId>maven-war-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
         </profile>
+        <%_ if (serviceDiscoveryAny || applicationTypeMicroservice) { _%>
+        <profile>
+            <!--
+                Profile for tracing requests with Zipkin.
+            -->
+            <id>zipkin</id>
+            <dependencies>
+                <dependency>
+                    <groupId>io.micrometer</groupId>
+                    <artifactId>micrometer-tracing</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>io.micrometer</groupId>
+                    <artifactId>micrometer-tracing-bridge-brave</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>io.zipkin.reporter2</groupId>
+                    <artifactId>zipkin-reporter-brave</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <%_ } _%>
         <profile>
             <!--
                 Profile for applying IDE-specific configuration.
@@ -1307,10 +1254,6 @@ _%>
                     <groupId>org.mapstruct</groupId>
                     <artifactId>mapstruct-processor</artifactId>
                     <version>${mapstruct.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.hibernate.orm</groupId>
-                    <artifactId>hibernate-jpamodelgen</artifactId>
                 </dependency>
             </dependencies>
         </profile>
@@ -1354,24 +1297,22 @@ _%>
                                                 <ignore/>
                                             </action>
                                         </pluginExecution>
-<%_ if (!skipClient) { _%>
+                                        <%_ if (!skipClient) { _%>
                                         <pluginExecution>
                                             <pluginExecutionFilter>
                                                 <groupId>com.github.eirslett</groupId>
                                                 <artifactId>frontend-maven-plugin</artifactId>
                                                 <versionRange>${frontend-maven-plugin.version}</versionRange>
                                                 <goals>
-    <%_ if (clientPackageManager === 'npm') { _%>
                                                     <goal>install-node-and-npm</goal>
                                                     <goal>npm</goal>
-    <%_ } _%>
                                                 </goals>
                                             </pluginExecutionFilter>
                                             <action>
                                                 <ignore/>
                                             </action>
                                         </pluginExecution>
-<%_ } _%>
+                                        <%_ } _%>
                                     </pluginExecutions>
                                 </lifecycleMappingMetadata>
                             </configuration>
@@ -1380,6 +1321,35 @@ _%>
                 </pluginManagement>
             </build>
         </profile>
-        <!-- jhipster-needle-maven-add-profile -->
+        <%_ if (cypressTests) { _%>
+        <profile>
+            <id>e2e</id>
+            <properties>
+                <profile.e2e>,e2e</profile.e2e>
+            </properties>
+            <build>
+                <finalName>e2e</finalName>
+                <!-- TODO Micronaut Equivalent? -->
+                <!--
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>repackage</id>
+                                    <goals>
+                                        <goal>repackage</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                -->
+            </build>
+        </profile>
+        <%_ } _%>
     </profiles>
 </project>

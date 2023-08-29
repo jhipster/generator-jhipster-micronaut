@@ -1,6 +1,6 @@
 import chalk from 'chalk';
-import { getPackageJson } from '../lib/utils.mjs';
 import constants from '../generators/constants.cjs';
+import {readFileSync} from "fs";
 
 const {
   versions: { micronaut: MICRONAUT_VERSION },
@@ -8,7 +8,9 @@ const {
 
 // eslint-disable-next-line import/prefer-default-export
 export function getLogo() {
-  const { version } = getPackageJson();
+
+  const { version } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)));
+
   return `
 ${chalk.blue(' ███╗   ███╗')}${chalk.green(' ██╗   ██╗ ████████╗ ███████╗   ██████╗ ████████╗ ████████╗ ███████╗')}
 ${chalk.blue(' ████╗ ████║')}${chalk.green(' ██║   ██║ ╚══██╔══╝ ██╔═══██╗ ██╔════╝ ╚══██╔══╝ ██╔═════╝ ██╔═══██╗')}

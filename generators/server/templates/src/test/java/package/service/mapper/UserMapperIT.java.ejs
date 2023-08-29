@@ -4,8 +4,8 @@ import <%= packageName %>.RedisTestContainerExtension;
 <%_ } _%>
 import <%=packageName%>.<%= mainClass %>;
 import <%=packageName%>.domain.User;
-import <%=packageName%>.service.dto.<%= asDto('AdminUser') %>;
-import <%=packageName%>.service.dto.<%= asDto('User') %>;
+import <%=packageName%>.service.dto.<%= user.adminUserDto %>;
+import <%=packageName%>.service.dto.<%= user.dtoClass %>;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +42,7 @@ public class UserMapperIT {
     @Inject UserMapper userMapper;
 
     private User user;
-    private <%= asDto('AdminUser') %> userDto;
+    private <%= user.adminUserDto %> userDto;
 
     @BeforeEach
     public void init() {
@@ -58,7 +58,7 @@ public class UserMapperIT {
         user.setImageUrl("image_url");
         user.setLangKey("en");
 
-        userDto = new <%= asDto('AdminUser') %>(user);
+        userDto = new <%= user.adminUserDto %>(user);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class UserMapperIT {
         users.add(user);
         users.add(null);
 
-        List<<%= asDto('User') %>> userDTOS = userMapper.usersToUserDTOs(users);
+        List<<%= user.dtoClass %>> userDTOS = userMapper.usersToUserDTOs(users);
 
         assertThat(userDTOS).isNotEmpty();
         assertThat(userDTOS).size().isEqualTo(1);
@@ -75,7 +75,7 @@ public class UserMapperIT {
 
     @Test
     public void userDTOsToUsersShouldMapOnlyNonNullUsers() {
-        List<<%= asDto('AdminUser') %>> usersDto = new ArrayList<>();
+        List<<%= user.adminUserDto %>> usersDto = new ArrayList<>();
         usersDto.add(userDto);
         usersDto.add(null);
 
@@ -91,7 +91,7 @@ public class UserMapperIT {
         authoritiesAsString.add("ADMIN");
         userDto.setAuthorities(authoritiesAsString);
 
-        List<<%= asDto('AdminUser') %>> usersDto = new ArrayList<>();
+        List<<%= user.adminUserDto %>> usersDto = new ArrayList<>();
         usersDto.add(userDto);
 
         List<User> users = userMapper.userDTOsToUsers(usersDto);
@@ -107,7 +107,7 @@ public class UserMapperIT {
     public void userDTOsToUsersMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities() {
         userDto.setAuthorities(null);
 
-        List<<%= asDto('AdminUser') %>> usersDto = new ArrayList<>();
+        List<<%= user.adminUserDto %>> usersDto = new ArrayList<>();
         usersDto.add(userDto);
 
         List<User> users = userMapper.userDTOsToUsers(usersDto);

@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import <%=packageName%>.service.UserService;
-import <%=packageName%>.service.dto.<%= asDto('User') %>;
+import <%=packageName%>.service.dto.<%= user.dtoClass %>;
 import <%=packageName%>.util.PaginationUtil;
 
 import io.micronaut.data.model.Page;
@@ -42,9 +42,9 @@ public class PublicUserResource {
      */
     @Get("/users")
     @ExecuteOn(TaskExecutors.IO)
-    public HttpResponse<List<<%= asDto('User') %>>> getAllUsers(HttpRequest request, Pageable pageable) {
+    public HttpResponse<List<<%= user.dtoClass %>>> getAllUsers(HttpRequest request, Pageable pageable) {
         log.debug("REST request to get Users: {}", pageable);
-        final Page<<%= asDto('User') %>> page = userService.getAllPublicUsers(pageable);
+        final Page<<%= user.dtoClass %>> page = userService.getAllPublicUsers(pageable);
         return HttpResponse.ok(page.getContent()).headers(headers ->
             PaginationUtil.generatePaginationHttpHeaders(headers, UriBuilder.of(request.getPath()), page)
         );

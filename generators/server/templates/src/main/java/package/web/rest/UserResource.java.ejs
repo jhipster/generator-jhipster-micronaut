@@ -10,7 +10,7 @@ import <%=packageName%>.security.AuthoritiesConstants;
 import <%=packageName%>.service.MailService;
 <%_ } _%>
 import <%=packageName%>.service.UserService;
-import <%=packageName%>.service.dto.<%= asDto('AdminUser') %>;
+import <%=packageName%>.service.dto.<%= user.adminUserDto %>;
 import <%=packageName%>.util.HeaderUtil;
 import <%=packageName%>.util.PaginationUtil;
 <%_ if (authenticationType !== 'oauth2') { _%>
@@ -103,7 +103,7 @@ public class UserResource {
     @Post("/users")
     @Secured(AuthoritiesConstants.ADMIN)
     @ExecuteOn(TaskExecutors.IO)
-    public HttpResponse<<%= asDto('AdminUser') %>> createUser(@Valid @Body <%= asDto('AdminUser') %> userDTO) throws URISyntaxException {
+    public HttpResponse<<%= user.adminUserDto %>> createUser(@Valid @Body <%= user.adminUserDto %> userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
 
         if (userDTO.getId() != null) {
@@ -122,7 +122,7 @@ public class UserResource {
                         applicationName,
                         "userManagement.created",
                         newUser.getLogin()))
-                .body(new <%= asDto('AdminUser') %>(newUser));
+                .body(new <%= user.adminUserDto %>(newUser));
         }
     }
 
@@ -137,7 +137,7 @@ public class UserResource {
     @Put("/users")
     @Secured(AuthoritiesConstants.ADMIN)
     @ExecuteOn(TaskExecutors.IO)
-    public HttpResponse<<%= asDto('AdminUser') %>> updateUser(@Valid @Body <%= asDto('AdminUser') %> userDTO) {
+    public HttpResponse<<%= user.adminUserDto %>> updateUser(@Valid @Body <%= user.adminUserDto %> userDTO) {
         log.debug("REST request to update User : {}", userDTO);
         Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(userDTO.getId()))) {
@@ -147,7 +147,7 @@ public class UserResource {
         if (existingUser.isPresent() && (!existingUser.get().getId().equals(userDTO.getId()))) {
             throw new LoginAlreadyUsedException();
         }
-        Optional<<%= asDto('AdminUser') %>> updatedUser = userService.updateUser(userDTO);
+        Optional<<%= user.adminUserDto %>> updatedUser = userService.updateUser(userDTO);
 
         return updatedUser.map(user ->
             HttpResponse.ok(user)
@@ -164,9 +164,9 @@ public class UserResource {
      */
     @Get("/users")
     @ExecuteOn(TaskExecutors.IO)
-    public HttpResponse<List<<%= asDto('AdminUser') %>>> getAllUsers(HttpRequest request, Pageable pageable) {
+    public HttpResponse<List<<%= user.adminUserDto %>>> getAllUsers(HttpRequest request, Pageable pageable) {
         log.debug("REST request to get Users for admin: {}", pageable);
-        final Page<<%= asDto('AdminUser') %>> page = userService.getAllManagedUsers(pageable);
+        final Page<<%= user.adminUserDto %>> page = userService.getAllManagedUsers(pageable);
         return HttpResponse.ok(page.getContent()).headers(headers ->
             PaginationUtil.generatePaginationHttpHeaders(headers, UriBuilder.of(request.getPath()), page)
         );
@@ -180,10 +180,10 @@ public class UserResource {
      */
     @Get("/users/{login:" + Constants.LOGIN_REGEX + "}")
     @ExecuteOn(TaskExecutors.IO)
-    public Optional<<%= asDto('AdminUser') %>> getUser(@PathVariable String login) {
+    public Optional<<%= user.adminUserDto %>> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
         return userService.getUserWithAuthoritiesByLogin(login)
-                .map(<%= asDto('AdminUser') %>::new);
+                .map(<%= user.adminUserDto %>::new);
     }
 
 <%_ if (authenticationType !== 'oauth2') { _%>

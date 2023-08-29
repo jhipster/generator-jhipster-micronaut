@@ -6,10 +6,10 @@ import <%=packageName%>.domain.Authority;
 import <%=packageName%>.domain.User;
 import io.micronaut.core.annotation.Introspected;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.time.Instant;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * A DTO representing a user, with their authorities.
  */
 @Introspected
-public class <%= asDto('AdminUser') %> {
+public class <%= user.adminUserDto %> {
 
     private <%= user.primaryKey.type %> id;
 
@@ -55,11 +55,11 @@ public class <%= asDto('AdminUser') %> {
 
     private Set<String> authorities;
 
-    public <%= asDto('AdminUser') %>() {
+    public <%= user.adminUserDto %>() {
         // Empty constructor needed for Jackson.
     }
 
-    public <%= asDto('AdminUser') %>(User user) {
+    public <%= user.adminUserDto %>(User user) {
         this.id = user.getId();
         this.login = user.getLogin();
         this.firstName = user.getFirstName();
@@ -165,7 +165,7 @@ public class <%= asDto('AdminUser') %> {
 
     @Override
     public String toString() {
-        return "<%= asDto('AdminUser') %>{" +
+        return "<%= user.adminUserDto %>{" +
             "login='" + login + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +

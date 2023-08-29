@@ -18,17 +18,17 @@ import java.util.stream.Collectors;
  * A DTO representing a user, with only the public attributes.
  */
 @Introspected
-public class <%= asDto('User') %> {
+public class <%= user.dtoClass %> {
 
     private <%= user.primaryKey.type %> id;
     private String login;
 
     <%_ if (databaseType !== 'no') { _%>
-    public <%= asDto('User') %>() {
+    public <%= user.dtoClass %>() {
         // Empty constructor needed for Jackson.
     }
 
-    public <%= asDto('User') %>(<%= asEntity('User') %> user) {
+    public <%= user.dtoClass %>(<%= user.persistClass %> user) {
         this.id = user.getId();
         // Customize it here if you need firstName/lastName/etc
         this.login = user.getLogin();
@@ -54,7 +54,7 @@ public class <%= asDto('User') %> {
     // prettier-ignore
     @Override
     public String toString() {
-        return "<%= asDto('User') %>{" +
+        return "<%= user.dtoClass %>{" +
             "id='" + id + '\'' +
             ", login='" + login + '\'' +
             "}";

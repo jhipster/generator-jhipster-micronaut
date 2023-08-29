@@ -1,15 +1,15 @@
 package <%=packageName%>.web.rest.vm;
 
-import <%=packageName%>.service.dto.<%= asDto('AdminUser') %>;
+import <%=packageName%>.service.dto.<%= user.adminUserDto %>;
 import io.micronaut.core.annotation.Introspected;
 
 import jakarta.validation.constraints.Size;
 
 /**
- * View Model extending the <%= asDto('AdminUser') %>, which is meant to be used in the user management UI.
+ * View Model extending the <%= user.adminUserDto %>, which is meant to be used in the user management UI.
  */
 @Introspected
-public class ManagedUserVM extends <%= asDto('AdminUser') %> {
+public class ManagedUserVM extends <%= user.adminUserDto %> {
 
     public static final int PASSWORD_MIN_LENGTH = 4;
 
