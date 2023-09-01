@@ -104,8 +104,8 @@ import org.springframework.http.HttpStatus; %>
 <%# import org.springframework.http.MediaType; %>
 <%_ } _%>
 <%# import org.springframework.http.HttpResponse; %>
-<%_ if (!viaService && !saveUserSnapshot) { _%>
-<%# import org.springframework.transaction.annotation.Transactional; %>
+<%_ if (databaseType === 'sql' && !viaService && !saveUserSnapshot) { _%>
+import org.springframework.transaction.annotation.Transactional;
 <%_ } _%>
 
 <%_ if (reactive) { _%>
@@ -135,6 +135,9 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 /**
  * REST controller for managing {@link <%= packageName %>.domain.<%= asEntity(entityClass) %>}.
  */
+<%_ if (databaseType === 'sql' && !viaService && !saveUserSnapshot) { _%>
+@Transactional
+<%_ } _%>
 @Controller("/api")
 public class <%= entityClass %>Resource {
 
@@ -255,7 +258,7 @@ public class <%= entityClass %>Resource {
      <%_ } _%>
      * @return the {@link HttpResponse} with status {@code 200 (OK)} and the list of <%= entityInstancePlural %> in body.
      */
-    @Get("/<%= entityApiUrl %><% if (!jpaMetamodelFiltering && fieldsContainOwnerManyToMany) { _%>{?eagerload}<% } %>")
+    @Get("/<%= entityApiUrl %><% if (jpaMetamodelFiltering) { _%>{?criteria*}<% } else if (fieldsContainOwnerManyToMany) { _%>{?eagerload}<% } %>")
     @ExecuteOn(TaskExecutors.IO)
     <%_ if (databaseType === 'sql' && isUsingMapsId === true && !viaService) { _%>
     @ReadOnly

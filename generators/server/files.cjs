@@ -455,6 +455,22 @@ const serverFiles = {
         },
       ],
     },
+    {
+      condition: generator => generator.databaseType === 'sql',
+      path: SERVER_MAIN_SRC_DIR,
+      templates: [
+        {
+          file: 'package/repository/MHipsterJpaSpecificationExecutor.java',
+          useBluePrint: true,
+          renameTo: generator => `${generator.javaDir}repository/MHipsterJpaSpecificationExecutor.java`,
+        },
+        {
+          file: 'package/repository/SpringDataTypeConverters.java',
+          useBluePrint: true,
+          renameTo: generator => `${generator.javaDir}repository/SpringDataTypeConverters.java`,
+        },
+      ],
+    },
   ],
   serverJavaOpenApi: [
     {

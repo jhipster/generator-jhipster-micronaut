@@ -24,7 +24,7 @@
     const entityToDtoReference = mapper + '::'+ 'toDto';
 _%>
 <%_ if (jpaMetamodelFiltering) { _%>
-    public HttpResponse<List<<%= instanceType %>>> getAll<%= entityClassPlural %>(<%= entityClass %>Criteria criteria<% if (pagination != 'no') { %>, Pageable pageable<% if (reactive) { %>, HttpRequest request<% } %><% } %>) {
+    public HttpResponse<List<<%= instanceType %>>> getAll<%= entityClassPlural %>(HttpRequest<?> request, <%= entityClass %>Criteria criteria<% if (pagination != 'no') { %>, Pageable pageable<% if (reactive) { %>, HttpRequest request<% } %><% } %>) {
         log.debug("REST request to get <%= entityClassPlural %> by criteria: {}", criteria);
     <%_ if (pagination === 'no') { _%>
         List<<%= instanceType %>> entityList = <%= entityInstance %>QueryService.findByCriteria(criteria);
@@ -42,7 +42,7 @@ _%>
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link HttpResponse} with status {@code 200 (OK)} and the count in body.
      */
-    @Get("/<%= entityApiUrl %>/count")
+    @Get("/<%= entityApiUrl %>/count{?criteria*}")
     public HttpResponse<Long> count<%= entityClassPlural %>(<%= entityClass %>Criteria criteria) {
         log.debug("REST request to count <%= entityClassPlural %> by criteria: {}", criteria);
         return HttpResponse.ok().body(<%= entityInstance %>QueryService.countByCriteria(criteria));

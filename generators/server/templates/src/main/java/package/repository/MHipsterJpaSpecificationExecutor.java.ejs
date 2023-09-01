@@ -1,0 +1,28 @@
+package <%=packageName%>.repository;
+
+import io.micronaut.core.convert.ConversionService;
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
+import io.micronaut.data.model.Sort;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.lang.Nullable;
+
+import java.util.List;
+
+/**
+ * Extension of JpaSpecificationExecutor that uses Micronaut Data Model of Page, Pageable and Sort rather than Spring equivalent.
+ *
+ * @param <T>
+ */
+public interface MHipsterJpaSpecificationExecutor<T> extends JpaSpecificationExecutor<T> {
+
+    default Page<T> findAll(@Nullable Specification<T> specification, Pageable page) {
+        org.springframework.data.domain.Pageable springPageable = ConversionService.SHARED.convertRequired(page, org.springframework.data.domain.Pageable.class);
+        return ConversionService.SHARED.convertRequired(findAll(specification, springPageable), Page.class);
+    }
+
+    default List<T> findAll(@Nullable Specification<T> specification, Sort sort) {
+        return findAll(specification, ConversionService.SHARED.convertRequired(sort, org.springframework.data.domain.Sort.class));
+    }
+}
