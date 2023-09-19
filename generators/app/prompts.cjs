@@ -16,15 +16,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const chalk = require('chalk');
-
 module.exports = {
   askForApplicationType,
-  askForTestOpts,
 };
 
-function askForApplicationType(meta) {
-  if (!meta && this.existingProject) return;
+async function askForApplicationType() {
+  if (this.existingProject) return;
+
+  const { default: chalk } = await import('chalk');
 
   const DEFAULT_APPTYPE = 'monolith';
 
@@ -47,43 +46,5 @@ function askForApplicationType(meta) {
     default: DEFAULT_APPTYPE,
   };
 
-  if (meta) return PROMPT; // eslint-disable-line consistent-return
-
-  const done = this.async();
-
-  this.prompt(PROMPT).then(prompt => {
-    this.applicationType = this.configOptions.applicationType = prompt.applicationType;
-    done();
-  });
-}
-
-function askForTestOpts(meta) {
-  if (!meta && this.existingProject) return;
-
-  const choices = [];
-  const defaultChoice = [];
-
-  if (meta || !this.skipClient) {
-    // all client side test frameworks should be added here
-    choices.push({ name: 'Cypress', value: 'cypress' });
-  } else {
-    return;
-  }
-
-  const PROMPT = {
-    type: 'checkbox',
-    name: 'testFrameworks',
-    message: 'Besides JUnit and Jest, which testing frameworks would you like to use?',
-    choices,
-    default: defaultChoice,
-  };
-
-  if (meta) return PROMPT; // eslint-disable-line consistent-return
-
-  const done = this.async();
-
-  this.prompt(PROMPT).then(prompt => {
-    this.testFrameworks = prompt.testFrameworks;
-    done();
-  });
+  await this.prompt(PROMPT, this.config);
 }

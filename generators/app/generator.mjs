@@ -1,7 +1,7 @@
-import chalk from "chalk";
-import AppGenerator from "generator-jhipster/generators/app";
+import chalk from 'chalk';
+import AppGenerator from 'generator-jhipster/generators/app';
 
-import { askForApplicationType, askForTestOpts } from './prompts.cjs';
+import { askForApplicationType } from './prompts.cjs';
 
 export default class extends AppGenerator {
   constructor(args, opts, features) {
@@ -10,11 +10,7 @@ export default class extends AppGenerator {
     if (this.options.help) return;
 
     if (!this.jhipsterContext) {
-      throw new Error(
-        `This is a JHipster blueprint and should be used only like ${chalk.yellow(
-          "jhipster --blueprints mhipster",
-        )}`,
-      );
+      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints mhipster')}`);
     }
   }
 
@@ -41,7 +37,6 @@ export default class extends AppGenerator {
   get [AppGenerator.COMPOSING]() {
     return {
       ...super.composing,
-      askForTestOpts,
       askForMoreModules: undefined,
     };
   }

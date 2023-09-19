@@ -299,7 +299,7 @@ function writeFiles() {
       }
       this.copy(
         `${this.microservicePath}/${this.jhipsterConfigDirectory}/${this.entityNameCapitalized}.json`,
-        this.destinationPath(`${this.jhipsterConfigDirectory}/${this.entityNameCapitalized}.json`)
+        this.destinationPath(`${this.jhipsterConfigDirectory}/${this.entityNameCapitalized}.json`),
       );
     },
 

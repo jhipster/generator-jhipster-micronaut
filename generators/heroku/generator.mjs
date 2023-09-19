@@ -8,84 +8,80 @@ export default class extends HerokuGenerator {
     if (this.options.help) return;
 
     if (!this.jhipsterContext) {
-      throw new Error(
-        `This is a JHipster blueprint and should be used only like ${chalk.yellow(
-          "jhipster --blueprints mhipster",
-        )}`,
-      );
+      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints mhipster')}`);
     }
   }
 
-  get[HerokuGenerator.INITIALIZING]() {
+  get [HerokuGenerator.INITIALIZING]() {
     return {
       async initializingTemplateTask() {},
       ...super.initializing,
     };
   }
 
-  get[HerokuGenerator.PROMPTING]() {
+  get [HerokuGenerator.PROMPTING]() {
     return {
       async promptingTemplateTask() {},
       ...super.prompting,
     };
   }
 
-  get[HerokuGenerator.CONFIGURING]() {
+  get [HerokuGenerator.CONFIGURING]() {
     return {
       async configuringTemplateTask() {},
       ...super.configuring,
     };
   }
 
-  get[HerokuGenerator.COMPOSING]() {
+  get [HerokuGenerator.COMPOSING]() {
     return {
       async composingTemplateTask() {},
       ...super.composing,
     };
   }
 
-  get[HerokuGenerator.LOADING]() {
+  get [HerokuGenerator.LOADING]() {
     return {
       async loadingTemplateTask() {},
       ...super.loading,
     };
   }
 
-  get[HerokuGenerator.PREPARING]() {
+  get [HerokuGenerator.PREPARING]() {
     return {
       async preparingTemplateTask() {},
       ...super.preparing,
     };
   }
 
-  get[HerokuGenerator.DEFAULT]() {
+  get [HerokuGenerator.DEFAULT]() {
     return {
       async defaultTemplateTask() {},
       ...super.default,
     };
   }
 
-  get[HerokuGenerator.WRITING]() {
+  get [HerokuGenerator.WRITING]() {
     return {
       ...super.writing,
     };
   }
 
-  get[HerokuGenerator.POST_WRITING]() {
+  get [HerokuGenerator.POST_WRITING]() {
     return {
       async postWritingTemplateTask() {},
       ...super.postWriting,
     };
   }
 
-  get[HerokuGenerator.INSTALL]() {
+  get [HerokuGenerator.INSTALL]() {
     return {
       async installTemplateTask() {},
       ...super.install,
     };
   }
 
-  get[HerokuGenerator.END]() {
+  get [HerokuGenerator.END]() {
     return {
       async endTemplateTask() {},
       ...super.end,

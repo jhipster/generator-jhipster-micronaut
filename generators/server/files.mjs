@@ -31,7 +31,7 @@ import {
   JAVA_MAIN_RESOURCES_DIR as SERVER_MAIN_RES_DIR,
   JAVA_TEST_SOURCES_DIR as SERVER_TEST_SRC_DIR,
   JAVA_SERVER_TEST_RESOURCES_DIR as SERVER_TEST_RES_DIR,
-  JAVA_DOCKER_DIR as DOCKER_DIR
+  JAVA_DOCKER_DIR as DOCKER_DIR,
 } from 'generator-jhipster';
 
 const INTERPOLATE_REGEX = true;
@@ -197,7 +197,7 @@ export const serverFiles = {
       path: SERVER_TEST_RES_DIR,
       templates: [
         { file: 'logback.xml', useBluePrint: true },
-        { file: 'application-test.yml', useBluePrint: true }
+        { file: 'application-test.yml', useBluePrint: true },
       ],
     },
     // Emails should be fine to import from base generator, no need for useBluePrint
@@ -225,9 +225,7 @@ export const serverFiles = {
         (!generator.skipUserManagement || (generator.skipUserManagement && generator.authenticationType === 'oauth2')),
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
-      templates: [
-        'config/dbmigrations/InitialSetupMigration.kt',
-      ],
+      templates: ['config/dbmigrations/InitialSetupMigration.kt'],
     },
     {
       condition: generator => generator.databaseType === 'couchbase',
@@ -328,10 +326,7 @@ export const serverFiles = {
       condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
-      templates: [
-        'domain/Authority.java',
-        'domain/User.java',
-        ],
+      templates: ['domain/Authority.java', 'domain/User.java'],
     },
   ],
   serverJavaRepository: [
@@ -344,10 +339,7 @@ export const serverFiles = {
       condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
-      templates: [
-        'repository/AuthorityRepository.java',
-        'repository/UserRepository.java',
-      ],
+      templates: ['repository/AuthorityRepository.java', 'repository/UserRepository.java'],
     },
   ],
   serverJavaOpenApi: [
@@ -381,10 +373,7 @@ export const serverFiles = {
       condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
-      templates: [
-        'security/Logout.java',
-        'security/UserNotActivatedException.java',
-      ],
+      templates: ['security/Logout.java', 'security/UserNotActivatedException.java'],
     },
     {
       condition: generator => generator.authenticationType === 'oauth2',
@@ -400,11 +389,7 @@ export const serverFiles = {
       condition: generator => !generator.skipUserManagement && generator.authenticationType !== 'oauth2',
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
-      templates: [
-        'security/PasswordEncoder.java',
-        'security/BcryptPasswordEncoder.java',
-        'security/DatabaseAuthenticationProvider.java',
-      ],
+      templates: ['security/PasswordEncoder.java', 'security/BcryptPasswordEncoder.java', 'security/DatabaseAuthenticationProvider.java'],
     },
   ],
   serverJavaService: [
@@ -415,7 +400,7 @@ export const serverFiles = {
         'service/dto/package-info.java',
         'service/mapper/package-info.java',
         'service/util/RandomUtil.java',
-        'service/package-info.java'
+        'service/package-info.java',
       ],
     },
     {
@@ -445,12 +430,7 @@ export const serverFiles = {
     {
       path: `${SERVER_MAIN_SRC_DIR}package/`,
       renameTo: moveToJavaPackageSrcDir,
-      templates: [
-        'util/HeaderUtil.java',
-        'util/JHipsterProperties.java',
-        'util/PaginationUtil.java',
-        'util/UserLocaleAwareThymeleafViewsRenderer.java',
-      ],
+      templates: ['util/HeaderUtil.java', 'util/JHipsterProperties.java', 'util/PaginationUtil.java'],
     },
   ],
   serverJavaRest: [
@@ -510,20 +490,14 @@ export const serverFiles = {
     {
       path: `${SERVER_TEST_SRC_DIR}package/`,
       renameTo: moveToJavaPackageTestDir,
-      templates: [
-        'config/CorsController.java',
-        'config/CorsTest.java',
-      ],
+      templates: ['config/CorsController.java', 'config/CorsTest.java'],
     },
   ],
   serverJavaSecurityTest: [
     {
       path: `${SERVER_TEST_SRC_DIR}package/`,
       renameTo: moveToJavaPackageTestDir,
-      templates: [
-        'security/SecurityUtilsUnitTest.java',
-        'security/SecurityHeaderFilterTest.java',
-      ],
+      templates: ['security/SecurityUtilsUnitTest.java', 'security/SecurityHeaderFilterTest.java'],
     },
     {
       condition: generator => !generator.skipUserManagement,
@@ -543,10 +517,7 @@ export const serverFiles = {
       condition: generator => !generator.skipUserManagement,
       path: `${SERVER_TEST_SRC_DIR}package/`,
       renameTo: moveToJavaPackageTestDir,
-      templates: [
-        'service/mapper/UserMapperIT.java',
-        'service/MailServiceIT.java',
-      ],
+      templates: ['service/mapper/UserMapperIT.java', 'service/MailServiceIT.java'],
     },
     {
       condition: generator => !shouldSkipUserManagement(generator),
@@ -582,10 +553,7 @@ export const serverFiles = {
       condition: generator => !generator.skipUserManagement,
       path: `${SERVER_TEST_SRC_DIR}package/`,
       renameTo: moveToJavaPackageTestDir,
-      templates: [
-        'web/rest/AccountResourceIT.java',
-        'web/rest/UserResourceIT.java',
-      ],
+      templates: ['web/rest/AccountResourceIT.java', 'web/rest/UserResourceIT.java'],
     },
     {
       condition: generator => !generator.skipUserManagement && generator.authenticationType !== 'oauth2',
@@ -616,9 +584,7 @@ export const serverFiles = {
     },
     {
       condition: generator => generator.buildTool === 'maven',
-      templates: [
-        { file: 'pom.xml', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
-      ],
+      templates: [{ file: 'pom.xml', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true }],
     },
   ],
 };
@@ -626,7 +592,6 @@ export const serverFiles = {
 /* eslint-disable no-template-curly-in-string */
 export function writeFiles() {
   return this.asWritingTaskGroup({
-
     async writeFiles({ application }) {
       return this.writeFiles({
         sections: serverFiles,

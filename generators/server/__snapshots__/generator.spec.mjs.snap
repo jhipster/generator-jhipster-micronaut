@@ -107,13 +107,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/java/com/mycompany/myapp/config/ApplicationProperties.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/CacheConfiguration.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/Constants.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/DatabaseConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/DefaultProfileUtil.java": {
@@ -123,9 +117,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/JacksonConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/LiquibaseConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/LoggingConfiguration.java": {
@@ -242,9 +233,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/java/com/mycompany/myapp/util/PaginationUtil.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/util/UserLocaleAwareThymeleafViewsRenderer.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/util/package-info.java": {
     "stateCleared": "modified",
   },
@@ -330,21 +318,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
     "stateCleared": "modified",
   },
   "src/main/resources/bootstrap.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/liquibase/changelog/00000000000000_initial_schema.xml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/liquibase/data/authority.csv": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/liquibase/data/user.csv": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/liquibase/data/user_authority.csv": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/liquibase/master.xml": {
     "stateCleared": "modified",
   },
   "src/main/resources/i18n/messages.properties": {
@@ -470,27 +443,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/test/java/com/mycompany/myapp/config/CorsTest.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/config/EmbeddedSQL.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/PostgreSqlTestContainer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SqlTestContainer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SqlTestContainersSpringContextCustomizerFactory.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/timezone/HibernateTimeZoneIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/repository/timezone/DateTimeWrapper.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/repository/timezone/DateTimeWrapperRepository.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/security/DomainUserDetailsServiceIT.java": {
     "stateCleared": "modified",
   },
@@ -540,12 +492,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
     "stateCleared": "modified",
   },
   "src/test/resources/bootstrap-test.yml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/config/application-testdev.yml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/config/application-testprod.yml": {
     "stateCleared": "modified",
   },
   "src/test/resources/i18n/messages_en.properties": {

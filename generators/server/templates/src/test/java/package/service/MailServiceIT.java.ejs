@@ -160,7 +160,7 @@ public class MailServiceIT {
 
     @Test
     public void testSendLocalizedEmailForAllSupportedLanguages() throws Exception {
-        <%= asEntity('User') %> user = new <%= asEntity('User') %>();
+        <%= user.persistClass %> user = new <%= user.persistClass %>();
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
         for (String langKey : languages) {

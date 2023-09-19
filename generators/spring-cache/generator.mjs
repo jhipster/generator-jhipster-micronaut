@@ -1,24 +1,13 @@
 import SpringCacheGenerator from 'generator-jhipster/generators/spring-cache';
-import {
-  moveToJavaEntityPackageSrcDir,
-  moveToJavaEntityPackageTestDir,
-  moveToJavaPackageSrcDir,
-  moveToJavaPackageTestDir,
-  replaceEntityFilePathVariables,
-} from 'generator-jhipster/generators/server/support';
+import { javaMainPackageTemplatesBlock } from 'generator-jhipster/generators/java/support';
 
-/* Constants use throughout */
-import {
-  JAVA_MAIN_SOURCES_DIR as SERVER_MAIN_SRC_DIR,
-  JAVA_MAIN_RESOURCES_DIR as SERVER_MAIN_RES_DIR,
-  JAVA_TEST_SOURCES_DIR as SERVER_TEST_SRC_DIR,
-  JAVA_SERVER_TEST_RESOURCES_DIR as SERVER_TEST_RES_DIR,
-  JAVA_DOCKER_DIR as DOCKER_DIR
-} from 'generator-jhipster';
-
-export default class extends SpringCacheGenerator {c
+export default class extends SpringCacheGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { ...features, checkBlueprint: true });
+    super(args, opts, {
+      ...features,
+      // Dropped it once migration is done.
+      jhipster7Migration: true,
+    });
   }
 
   get [SpringCacheGenerator.PREPARING]() {
@@ -36,8 +25,7 @@ export default class extends SpringCacheGenerator {c
           sections: {
             files: [
               {
-                path: `${SERVER_MAIN_SRC_DIR}package/`,
-                renameTo: moveToJavaPackageSrcDir,
+                ...javaMainPackageTemplatesBlock(),
                 templates: ['config/CacheConfiguration.java'],
               },
             ],

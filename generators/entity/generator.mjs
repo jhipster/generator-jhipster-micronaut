@@ -8,11 +8,7 @@ export default class extends EntityGenerator {
     if (this.options.help) return;
 
     if (!this.jhipsterContext) {
-      throw new Error(
-        `This is a JHipster blueprint and should be used only like ${chalk.yellow(
-          "jhipster --blueprints mhipster",
-        )}`,
-      );
+      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints mhipster')}`);
     }
   }
 

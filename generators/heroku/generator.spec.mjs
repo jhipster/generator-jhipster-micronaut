@@ -16,7 +16,6 @@ describe('SubGenerator heroku of micronaut JHipster blueprint', () => {
           defaults: true,
           baseName: 'jhipster',
           ignoreNeedlesError: true,
-          blueprint: 'micronaut',
         })
         .withLookups(lookups)
         .run();

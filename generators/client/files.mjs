@@ -1,6 +1,4 @@
-import {
-  TEMPLATES_WEBAPP_SOURCES_DIR as CLIENT_MAIN_SRC_DIR
-} from 'generator-jhipster';
+import { TEMPLATES_WEBAPP_SOURCES_DIR as CLIENT_MAIN_SRC_DIR } from 'generator-jhipster';
 
 //const CLIENT_MAIN_SRC_DIR = `src/main/webapp/`
 

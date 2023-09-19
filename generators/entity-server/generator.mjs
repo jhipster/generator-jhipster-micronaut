@@ -19,8 +19,6 @@ import {
 import { writeFiles } from './files.cjs';
 import { extendGenerator } from '#lib/utils.mjs';
 
-import NeedleServerCacheMn from './needle-server-cache-mn.cjs';
-
 export default class extends extendGenerator(EntityServerGenerator) {
   constructor(args, opts, features) {
     super(args, opts, { taskPrefix: PRIORITY_PREFIX, priorityArgs: true, ...features });
@@ -97,46 +95,6 @@ export default class extends extendGenerator(EntityServerGenerator) {
   get [POST_WRITING_PRIORITY]() {
     return {
       ...super._postWriting(),
-
-      // Override jhipster customizeFiles
-      customizeFiles({ application: { cacheProvider, enableHibernateCache } }) {
-        if (!enableHibernateCache || !cacheProvider) return;
-        const serverCacheMn = new NeedleServerCacheMn(this);
-        if (['ehcache', 'caffeine', 'infinispan', 'redis'].includes(cacheProvider)) {
-          serverCacheMn.addEntityToCache(this.persistClass, this.relationships, this.packageName, this.packageFolder, this.cacheProvider);
-        }
-      },
-
-      customizeMapstruct() {
-        if (this.dto !== 'mapstruct') return;
-
-        this.editFile(
-          `src/main/java/${this.entityAbsoluteFolder}/service/dto/${this.restClass}.java`,
-          content =>
-            content.replace(
-              'import java.io.Serializable;',
-              `import io.micronaut.core.annotation.Introspected;
-import java.io.Serializable;`
-            ),
-          content =>
-            content.replace(
-              '\npublic class',
-              `
-@Introspected
-public class`
-            )
-        );
-
-        const hasUserRelationship = this.relationships.find(({ otherEntity }) => otherEntity === this.user);
-        let replacement = 'componentModel = "jsr330"';
-        if (hasUserRelationship) {
-          replacement += ', uses = UserMapper.class';
-        }
-
-        this.editFile(`src/main/java/${this.entityAbsoluteFolder}/service/mapper/${this.entityClass}Mapper.java`, content =>
-          content.replace('componentModel = "spring"', replacement)
-        );
-      },
     };
   }
 

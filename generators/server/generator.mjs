@@ -1,9 +1,10 @@
-import chalk from "chalk";
-import ServerGenerator from "generator-jhipster/generators/server";
+import chalk from 'chalk';
+import ServerGenerator from 'generator-jhipster/generators/server';
 import { createBase64Secret, createSecret, createNeedleCallback } from 'generator-jhipster/generators/base/support';
 import mnConstants from '../constants.cjs';
 
 import { writeFiles } from './files.mjs';
+import { GENERATOR_DOCKER, GENERATOR_GRADLE, GENERATOR_LANGUAGES, GENERATOR_MAVEN } from 'generator-jhipster/generators';
 
 /*import {
   GENERATOR_BOOTSTRAP_APPLICATION,
@@ -50,16 +51,16 @@ const { GRADLE, MAVEN } = buildToolTypes;*/
 
 export default class extends ServerGenerator {
   constructor(args, opts, features) {
-    super(args, opts, features);
+    super(args, opts, {
+      ...features,
+      checkBlueprint: true,
+      jhipster7Migration: true,
+    });
 
     if (this.options.help) return;
 
     if (!this.jhipsterContext) {
-      throw new Error(
-        `This is a JHipster blueprint and should be used only like ${chalk.yellow(
-          "jhipster --blueprints mhipster",
-        )}`,
-      );
+      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints mhipster')}`);
     }
   }
 
@@ -86,16 +87,12 @@ export default class extends ServerGenerator {
 
   get [ServerGenerator.COMPOSING]() {
     return {
-      ...super.composing,
-      async composingTemplateTask() {},
-    };
-    /*return {
-      async composingTemplateTask() {
+      async composing() {
         const { buildTool, enableTranslation, databaseType, messageBroker, searchEngine, testFrameworks, websocket, cacheProvider } =
           this.jhipsterConfigWithDefaults;
-        if (buildTool === GRADLE) {
+        if (buildTool === 'gradle') {
           await this.composeWithJHipster(GENERATOR_GRADLE);
-        } else if (buildTool === MAVEN) {
+        } else if (buildTool === 'maven') {
           await this.composeWithJHipster(GENERATOR_MAVEN);
         } else {
           throw new Error(`Build tool ${buildTool} is not supported`);
@@ -107,14 +104,39 @@ export default class extends ServerGenerator {
         if (enableTranslation) {
           await this.composeWithJHipster(GENERATOR_LANGUAGES);
         }
+        /*
+        if (databaseType === SQL) {
+          await this.composeWithJHipster(GENERATOR_SPRING_DATA_RELATIONAL);
+        } else if (databaseType === CASSANDRA) {
+          await this.composeWithJHipster(GENERATOR_SPRING_DATA_CASSANDRA);
+        } else if (databaseType === COUCHBASE) {
+          await this.composeWithJHipster(GENERATOR_SPRING_DATA_COUCHBASE);
+        } else if (databaseType === MONGODB) {
+          await this.composeWithJHipster(GENERATOR_SPRING_DATA_MONGODB);
+        } else if (databaseType === NEO4J) {
+          await this.composeWithJHipster(GENERATOR_SPRING_DATA_NEO4J);
+        }
+        if (messageBroker === KAFKA || messageBroker === PULSAR) {
+          await this.composeWithJHipster(GENERATOR_SPRING_CLOUD_STREAM);
+        }
+        if (searchEngine === ELASTICSEARCH) {
+          await this.composeWithJHipster(GENERATOR_SPRING_DATA_ELASTICSEARCH);
+        }
         if (testFrameworks?.includes(CUCUMBER)) {
           await this.composeWithJHipster(GENERATOR_CUCUMBER);
         }
         if (testFrameworks?.includes(GATLING)) {
           await this.composeWithJHipster(GENERATOR_GATLING);
         }
+        if (websocket === SPRING_WEBSOCKET) {
+          await this.composeWithJHipster(GENERATOR_SPRING_WEBSOCKET);
+        }
+        if ([EHCACHE, CAFFEINE, HAZELCAST, INFINISPAN, MEMCACHED, REDIS].includes(cacheProvider)) {
+          await this.composeWithJHipster(GENERATOR_SPRING_CACHE);
+        }
+        */
       },
-    };*/
+    };
   }
 
   get [ServerGenerator.LOADING]() {
@@ -128,7 +150,7 @@ export default class extends ServerGenerator {
     return {
       ...super.preparing,
       prepareForTemplates({ application }) {
-        const SPRING_BOOT_VERSION = application.javaDependencies['spring-boot'];
+        application.hipster = 'jhipster_family_member_4';
         application.addSpringMilestoneRepository = false;
         application.MN_CONSTANTS = mnConstants;
         application.GRADLE_VERSION = mnConstants.GRADLE_VERSION;
@@ -179,11 +201,54 @@ export default class extends ServerGenerator {
     };*/
   }
 
-  get [ServerGenerator.POST_WRITING]() {
-    return {
-      ...super.postWriting,
-      async postWritingTemplateTask() {},
-    };
+  get [ServerGenerator.POST_WRITING_ENTITIES]() {
+    return this.asPostWritingEntitiesTaskGroup({
+      // Override jhipster customizeFiles
+      customizeFiles({ source, entities, application: { cacheProvider, enableHibernateCache } }) {
+        if (!enableHibernateCache || !cacheProvider) return;
+        if (['ehcache', 'caffeine', 'infinispan', 'redis'].includes(cacheProvider)) {
+          for (const entity of entities) {
+            const { entityAbsoluteClass } = entity;
+            source.addEntityToCache?.({
+              entityAbsoluteClass,
+              relationships: this.relationships,
+            });
+          }
+        }
+      },
+
+      customizeMapstruct({ entities, application }) {
+        for (const entity of entities) {
+          if (entity.dto !== 'mapstruct') return;
+          this.editFile(
+            `src/main/java/${entity.entityAbsoluteFolder}/service/dto/${entity.restClass}.java`,
+            content =>
+              content.replace(
+                'import java.io.Serializable;',
+                `import io.micronaut.core.annotation.Introspected;
+import java.io.Serializable;`,
+              ),
+            content =>
+              content.replace(
+                '\npublic class',
+                `
+@Introspected
+public class`,
+              ),
+          );
+
+          const hasUserRelationship = entity.relationships.find(({ otherEntity }) => otherEntity === application.user);
+          let replacement = 'componentModel = "jsr330"';
+          if (hasUserRelationship) {
+            replacement += ', uses = UserMapper.class';
+          }
+
+          this.editFile(`src/main/java/${entity.entityAbsoluteFolder}/service/mapper/${entity.entityClass}Mapper.java`, content =>
+            content.replace('componentModel = "spring"', replacement),
+          );
+        }
+      },
+    });
   }
 
   get [ServerGenerator.INSTALL]() {
