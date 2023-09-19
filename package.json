@@ -28,8 +28,7 @@
     "#test-utils": "./test/utils.mjs"
   },
   "bin": {
-    "jhipster-micronaut": "cli/cli.mjs",
-    "mhipster": "cli/cli.mjs"
+    "mhipster": "cli/cli.cjs"
   },
   "files": [
     "cli",
@@ -47,16 +46,16 @@
     "pretest": "npm run prettier-check && npm run lint",
     "test": "vitest run",
     "update-snapshot": "vitest run --update",
-    "vitest": "0.34.3"
+    "vitest": "vitest"
   },
   "dependencies": {
-    "chalk": "4.1.2",
-    "generator-jhipster": "8.0.0-beta.3",
+    "chalk": "^5.3.0",
+    "generator-jhipster": "github:jhipster/generator-jhipster#main",
     "os": "^0.1.2"
   },
   "devDependencies": {
     "ejs-lint": "2.0.0",
-    "eslint": "8.48.0",
+    "eslint": "8.49.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-import": "2.28.1",
@@ -65,11 +64,11 @@
     "expect": "27.5.1",
     "mocha": "9.2.2",
     "mocha-expect-snapshot": "3.1.0",
-    "prettier": "3.0.2",
+    "prettier": "3.0.3",
     "prettier-plugin-java": "1.6.1",
     "prettier-plugin-packagejson": "2.2.17",
-    "vitest": "0.34.3",
-    "yeoman-test": "8.0.0-rc.1"
+    "vitest": "0.34.4",
+    "yeoman-test": ">=8.0.0-rc.1"
   },
   "engines": {
     "node": "^18.13.0 || >= 20.2.0"

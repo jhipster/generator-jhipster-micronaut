@@ -11,6 +11,7 @@ const devBlueprintPath = join(packagePath, '.blueprint');
 
 (async () => {
   const { runJHipster, done, logger } = await import('generator-jhipster/cli');
+  const { getLogo } = await import('./logo.mjs');
   const executableName = Object.keys(bin)[0];
 
   runJHipster({
@@ -21,9 +22,9 @@ const devBlueprintPath = join(packagePath, '.blueprint');
     blueprints: {
       [packageFolderName]: version,
     },
+    printLogo: () => {},
     printBlueprintLogo: () => {
-      console.log('===================== JHipster micronaut =====================');
-      console.log('');
+      console.log(getLogo());
     },
     lookups: [{ packagePaths: [packagePath], lookups: ['generators'] }],
   }).catch(done);

@@ -3,6 +3,7 @@
     "additionalSubGenerators": "",
     "baseName": "micronaut",
     "cli": true,
+    "cliName": "mhipster",
     "entities": [],
     "generators": {
       "app": {
@@ -113,11 +114,7 @@
       },
       "spring-cache": {
         "command": false,
-        "priorities": [
-          "preparing",
-          "writing",
-          "postWriting"
-        ],
+        "priorities": ["preparing", "writing", "postWriting"],
         "sbs": false,
         "written": true
       }
