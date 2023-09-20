@@ -35,25 +35,16 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
   "README.md": {
     "stateCleared": "modified",
   },
-  "angular.json": {
-    "stateCleared": "modified",
-  },
   "jest.conf.js": {
-    "stateCleared": "modified",
-  },
-  "ngsw-config.json": {
     "stateCleared": "modified",
   },
   "package.json": {
     "stateCleared": "modified",
   },
+  "postcss.config.js": {
+    "stateCleared": "modified",
+  },
   "sonar-project.properties": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/i18n/messages_en.properties": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/i18n/messages_fr.properties": {
     "stateCleared": "modified",
   },
   "src/main/webapp/404.html": {
@@ -62,661 +53,292 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
   "src/main/webapp/WEB-INF/web.xml": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/account/account.route.ts": {
+  "src/main/webapp/app/_bootstrap-variables.scss": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/account/activate/activate.component.html": {
+  "src/main/webapp/app/app.scss": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/account/activate/activate.component.spec.ts": {
+  "src/main/webapp/app/app.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/account/activate/activate.component.ts": {
+  "src/main/webapp/app/config/axios-interceptor.spec.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/account/activate/activate.route.ts": {
+  "src/main/webapp/app/config/axios-interceptor.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/account/activate/activate.service.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/activate/activate.service.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password-reset/finish/password-reset-finish.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password-reset/finish/password-reset-finish.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password-reset/finish/password-reset-finish.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password-reset/finish/password-reset-finish.route.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password-reset/finish/password-reset-finish.service.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password-reset/finish/password-reset-finish.service.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password-reset/init/password-reset-init.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password-reset/init/password-reset-init.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password-reset/init/password-reset-init.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password-reset/init/password-reset-init.route.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password-reset/init/password-reset-init.service.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password-reset/init/password-reset-init.service.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password/password-strength-bar/password-strength-bar.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password/password-strength-bar/password-strength-bar.component.scss": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password/password-strength-bar/password-strength-bar.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password/password-strength-bar/password-strength-bar.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password/password.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password/password.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password/password.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password/password.route.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password/password.service.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/password/password.service.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/register/register.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/register/register.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/register/register.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/register/register.model.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/register/register.route.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/register/register.service.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/register/register.service.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/settings/settings.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/settings/settings.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/settings/settings.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/account/settings/settings.route.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/admin-routing.module.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/configuration/configuration.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/configuration/configuration.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/configuration/configuration.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/configuration/configuration.filter.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/configuration/configuration.model.ts": {
-    "state": "deleted",
-  },
-  "src/main/webapp/app/admin/configuration/configuration.module.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/configuration/configuration.route.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/configuration/configuration.service.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/configuration/configuration.service.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/docs/docs.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/docs/docs.component.scss": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/docs/docs.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/health/health.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/health/health.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/health/health.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/health/health.model.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/health/health.service.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/health/health.service.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/health/modal/health-modal.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/health/modal/health-modal.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/health/modal/health-modal.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/logs/log.model.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/logs/logs.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/logs/logs.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/logs/logs.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/logs/logs.service.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/logs/logs.service.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/jvm-memory/jvm-memory.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/jvm-memory/jvm-memory.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/jvm-threads/jvm-threads.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/jvm-threads/jvm-threads.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-cache/metrics-cache.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-cache/metrics-cache.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-datasource/metrics-datasource.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-datasource/metrics-datasource.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-endpoints-requests/metrics-endpoints-requests.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-endpoints-requests/metrics-endpoints-requests.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-garbagecollector/metrics-garbagecollector.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-garbagecollector/metrics-garbagecollector.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-modal-threads/metrics-modal-threads.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-modal-threads/metrics-modal-threads.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-request/metrics-request.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-request/metrics-request.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-system/metrics-system.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/blocks/metrics-system/metrics-system.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/metrics.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/metrics.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/metrics.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/metrics.model.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/metrics.service.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/metrics/metrics.service.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/delete/user-management-delete-dialog.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/delete/user-management-delete-dialog.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/delete/user-management-delete-dialog.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/detail/user-management-detail.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/detail/user-management-detail.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/detail/user-management-detail.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/list/user-management.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/list/user-management.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/list/user-management.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/service/user-management.service.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/service/user-management.service.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/update/user-management-update.component.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/update/user-management-update.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/update/user-management-update.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/user-management.model.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/user-management/user-management.route.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/app-page-title-strategy.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/app-routing.module.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/app.constants.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/app.module.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/config/authority.constants.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/config/datepicker-adapter.ts": {
+  "src/main/webapp/app/config/constants.ts": {
     "stateCleared": "modified",
   },
   "src/main/webapp/app/config/dayjs.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/config/error.constants.ts": {
+  "src/main/webapp/app/config/error-middleware.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/config/font-awesome-icons.ts": {
+  "src/main/webapp/app/config/icon-loader.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/config/input.constants.ts": {
+  "src/main/webapp/app/config/logger-middleware.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/config/language.constants.ts": {
+  "src/main/webapp/app/config/notification-middleware.spec.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/config/navigation.constants.ts": {
+  "src/main/webapp/app/config/notification-middleware.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/config/pagination.constants.ts": {
+  "src/main/webapp/app/config/store.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/config/translation.config.ts": {
+  "src/main/webapp/app/config/translation.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/config/uib-pagination.config.ts": {
+  "src/main/webapp/app/entities/menu.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/auth/account.model.ts": {
+  "src/main/webapp/app/entities/reducers.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/auth/account.service.spec.ts": {
+  "src/main/webapp/app/entities/routes.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/auth/account.service.ts": {
+  "src/main/webapp/app/index.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/auth/auth-jwt.service.spec.ts": {
+  "src/main/webapp/app/modules/account/activate/activate.reducer.spec.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/auth/auth-jwt.service.ts": {
+  "src/main/webapp/app/modules/account/activate/activate.reducer.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/auth/state-storage.service.ts": {
+  "src/main/webapp/app/modules/account/activate/activate.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/auth/user-route-access.service.ts": {
+  "src/main/webapp/app/modules/account/index.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/config/application-config.service.spec.ts": {
+  "src/main/webapp/app/modules/account/password-reset/finish/password-reset-finish.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/config/application-config.service.ts": {
+  "src/main/webapp/app/modules/account/password-reset/init/password-reset-init.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/interceptor/auth-expired.interceptor.ts": {
+  "src/main/webapp/app/modules/account/password-reset/password-reset.reducer.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/interceptor/auth.interceptor.ts": {
+  "src/main/webapp/app/modules/account/password/password.reducer.spec.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/interceptor/error-handler.interceptor.ts": {
+  "src/main/webapp/app/modules/account/password/password.reducer.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/interceptor/index.ts": {
+  "src/main/webapp/app/modules/account/password/password.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/interceptor/notification.interceptor.ts": {
+  "src/main/webapp/app/modules/account/register/register.reducer.spec.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/request/request-util.ts": {
+  "src/main/webapp/app/modules/account/register/register.reducer.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/request/request.model.ts": {
+  "src/main/webapp/app/modules/account/register/register.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/util/alert.service.spec.ts": {
+  "src/main/webapp/app/modules/account/settings/settings.reducer.spec.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/util/alert.service.ts": {
+  "src/main/webapp/app/modules/account/settings/settings.reducer.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/util/data-util.service.spec.ts": {
+  "src/main/webapp/app/modules/account/settings/settings.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/util/data-util.service.ts": {
+  "src/main/webapp/app/modules/administration/administration.reducer.spec.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/util/event-manager.service.spec.ts": {
+  "src/main/webapp/app/modules/administration/administration.reducer.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/util/event-manager.service.ts": {
+  "src/main/webapp/app/modules/administration/configuration/configuration.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/util/operators.spec.ts": {
+  "src/main/webapp/app/modules/administration/docs/docs.scss": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/util/operators.ts": {
+  "src/main/webapp/app/modules/administration/docs/docs.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/util/parse-links.service.spec.ts": {
+  "src/main/webapp/app/modules/administration/health/health-modal.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/core/util/parse-links.service.ts": {
+  "src/main/webapp/app/modules/administration/health/health.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/entities/entity-navbar-items.ts": {
+  "src/main/webapp/app/modules/administration/index.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/entities/entity-routing.module.ts": {
+  "src/main/webapp/app/modules/administration/logs/logs.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/entities/user/user.model.ts": {
+  "src/main/webapp/app/modules/administration/metrics/metrics.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/entities/user/user.service.spec.ts": {
+  "src/main/webapp/app/modules/administration/user-management/index.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/entities/user/user.service.ts": {
+  "src/main/webapp/app/modules/administration/user-management/user-management-delete-dialog.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/home/home.component.html": {
+  "src/main/webapp/app/modules/administration/user-management/user-management-detail.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/home/home.component.scss": {
+  "src/main/webapp/app/modules/administration/user-management/user-management-update.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/home/home.component.spec.ts": {
+  "src/main/webapp/app/modules/administration/user-management/user-management.reducer.spec.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/home/home.component.ts": {
+  "src/main/webapp/app/modules/administration/user-management/user-management.reducer.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/error/error.component.html": {
+  "src/main/webapp/app/modules/administration/user-management/user-management.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/error/error.component.ts": {
+  "src/main/webapp/app/modules/home/home.scss": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/error/error.route.ts": {
+  "src/main/webapp/app/modules/home/home.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/footer/footer.component.html": {
+  "src/main/webapp/app/modules/login/login-modal.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/footer/footer.component.ts": {
+  "src/main/webapp/app/modules/login/login.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/main/main.component.html": {
+  "src/main/webapp/app/modules/login/logout.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/main/main.component.spec.ts": {
+  "src/main/webapp/app/routes.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/main/main.component.ts": {
+  "src/main/webapp/app/setup-tests.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/main/main.module.ts": {
+  "src/main/webapp/app/shared/DurationFormat.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/navbar/active-menu.directive.ts": {
+  "src/main/webapp/app/shared/auth/private-route.spec.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/navbar/navbar-item.model.d.ts": {
+  "src/main/webapp/app/shared/auth/private-route.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/navbar/navbar.component.html": {
+  "src/main/webapp/app/shared/error/error-boundary-routes.spec.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/navbar/navbar.component.scss": {
+  "src/main/webapp/app/shared/error/error-boundary-routes.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/navbar/navbar.component.spec.ts": {
+  "src/main/webapp/app/shared/error/error-boundary.spec.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/navbar/navbar.component.ts": {
+  "src/main/webapp/app/shared/error/error-boundary.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/profiles/page-ribbon.component.scss": {
+  "src/main/webapp/app/shared/error/page-not-found.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/profiles/page-ribbon.component.spec.ts": {
+  "src/main/webapp/app/shared/layout/footer/footer.scss": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/profiles/page-ribbon.component.ts": {
+  "src/main/webapp/app/shared/layout/footer/footer.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/profiles/profile-info.model.ts": {
+  "src/main/webapp/app/shared/layout/header/header-components.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/layouts/profiles/profile.service.ts": {
+  "src/main/webapp/app/shared/layout/header/header.scss": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/login/login.component.html": {
+  "src/main/webapp/app/shared/layout/header/header.spec.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/login/login.component.spec.ts": {
+  "src/main/webapp/app/shared/layout/header/header.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/login/login.component.ts": {
+  "src/main/webapp/app/shared/layout/menus/account.spec.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/login/login.model.ts": {
+  "src/main/webapp/app/shared/layout/menus/account.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/login/login.service.ts": {
+  "src/main/webapp/app/shared/layout/menus/admin.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/alert/alert-error.component.html": {
+  "src/main/webapp/app/shared/layout/menus/entities.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/alert/alert-error.component.spec.ts": {
+  "src/main/webapp/app/shared/layout/menus/index.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/alert/alert-error.component.ts": {
+  "src/main/webapp/app/shared/layout/menus/locale.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/alert/alert-error.model.ts": {
+  "src/main/webapp/app/shared/layout/menus/menu-components.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/alert/alert.component.html": {
+  "src/main/webapp/app/shared/layout/menus/menu-item.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/alert/alert.component.spec.ts": {
+  "src/main/webapp/app/shared/layout/password/password-strength-bar.scss": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/alert/alert.component.ts": {
+  "src/main/webapp/app/shared/layout/password/password-strength-bar.tsx": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/auth/has-any-authority.directive.spec.ts": {
+  "src/main/webapp/app/shared/model/user.model.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/auth/has-any-authority.directive.ts": {
+  "src/main/webapp/app/shared/reducers/application-profile.spec.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/date/duration.pipe.ts": {
+  "src/main/webapp/app/shared/reducers/application-profile.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/date/format-medium-date.pipe.spec.ts": {
+  "src/main/webapp/app/shared/reducers/authentication.spec.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/date/format-medium-date.pipe.ts": {
+  "src/main/webapp/app/shared/reducers/authentication.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/date/format-medium-datetime.pipe.spec.ts": {
+  "src/main/webapp/app/shared/reducers/index.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/date/format-medium-datetime.pipe.ts": {
+  "src/main/webapp/app/shared/reducers/locale.spec.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/date/index.ts": {
+  "src/main/webapp/app/shared/reducers/locale.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/filter/filter.component.html": {
+  "src/main/webapp/app/shared/reducers/reducer.utils.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/filter/filter.component.ts": {
+  "src/main/webapp/app/shared/util/date-utils.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/filter/filter.model.spec.ts": {
+  "src/main/webapp/app/shared/util/entity-utils.spec.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/filter/filter.model.ts": {
+  "src/main/webapp/app/shared/util/entity-utils.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/filter/index.ts": {
+  "src/main/webapp/app/shared/util/pagination.constants.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/language/find-language-from-key.pipe.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/language/index.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/language/translate.directive.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/language/translate.directive.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/language/translation.module.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/pagination/index.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/pagination/item-count.component.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/pagination/item-count.component.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/shared.module.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/sort/index.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/sort/sort-by.directive.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/sort/sort-by.directive.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/sort/sort.directive.spec.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/sort/sort.directive.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/shared/sort/sort.service.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/bootstrap.ts": {
+  "src/main/webapp/app/typings.d.ts": {
     "stateCleared": "modified",
   },
   "src/main/webapp/content/css/loading.css": {
@@ -800,115 +422,10 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
   "src/main/webapp/content/images/logo-jhipster.png": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/content/scss/_bootstrap-variables.scss": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/content/scss/global.scss": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/content/scss/vendor.scss": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/declarations.d.ts": {
-    "stateCleared": "modified",
-  },
   "src/main/webapp/favicon.ico": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/i18n/en/activate.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/configuration.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/error.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/global.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/health.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/home.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/login.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/logs.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/metrics.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/password.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/register.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/reset.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/sessions.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/settings.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/user-management.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/activate.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/configuration.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/error.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/global.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/health.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/home.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/login.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/logs.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/metrics.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/password.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/register.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/reset.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/sessions.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/settings.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/fr/user-management.json": {
-    "stateCleared": "modified",
-  },
   "src/main/webapp/index.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/main.ts": {
     "stateCleared": "modified",
   },
   "src/main/webapp/manifest.webapp": {
@@ -923,19 +440,10 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
   "src/main/webapp/swagger-ui/index.html": {
     "stateCleared": "modified",
   },
-  "src/test/resources/i18n/messages_en.properties": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/i18n/messages_fr.properties": {
-    "stateCleared": "modified",
-  },
-  "tsconfig.app.json": {
-    "stateCleared": "modified",
-  },
   "tsconfig.json": {
     "stateCleared": "modified",
   },
-  "tsconfig.spec.json": {
+  "tsconfig.test.json": {
     "stateCleared": "modified",
   },
   "webpack/environment.js": {
@@ -944,10 +452,16 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
   "webpack/logo-jhipster.png": {
     "stateCleared": "modified",
   },
-  "webpack/proxy.conf.js": {
+  "webpack/utils.js": {
     "stateCleared": "modified",
   },
-  "webpack/webpack.custom.js": {
+  "webpack/webpack.common.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.dev.js": {
+    "stateCleared": "modified",
+  },
+  "webpack/webpack.prod.js": {
     "stateCleared": "modified",
   },
 }

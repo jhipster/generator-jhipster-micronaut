@@ -10,7 +10,9 @@ describe('SubGenerator react of micronaut JHipster blueprint', () => {
     beforeAll(async function () {
       await helpers
         .run(BLUEPRINT_NAMESPACE)
-        .withJHipsterConfig()
+        .withJHipsterConfig({
+          clientFramework: 'react',
+        })
         .withOptions({
           ignoreNeedlesError: true,
           blueprint: 'micronaut',

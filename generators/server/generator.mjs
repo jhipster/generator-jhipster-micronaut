@@ -86,10 +86,10 @@ export default class extends ServerGenerator {
         if (websocket === SPRING_WEBSOCKET) {
           await this.composeWithJHipster(GENERATOR_SPRING_WEBSOCKET);
         }
-        if ([EHCACHE, CAFFEINE, HAZELCAST, INFINISPAN, MEMCACHED, REDIS].includes(cacheProvider)) {
-          await this.composeWithJHipster(GENERATOR_SPRING_CACHE);
-        }
         */
+        if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) {
+          await this.composeWithJHipster('jhipster-micronaut:micronaut-cache');
+        }
       },
     });
   }
@@ -103,6 +103,7 @@ export default class extends ServerGenerator {
   get [ServerGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
       ...super.preparing,
+
       prepareForTemplates({ application }) {
         application.hipster = 'jhipster_family_member_4';
         application.addSpringMilestoneRepository = false;
@@ -111,7 +112,9 @@ export default class extends ServerGenerator {
         application.DOCKER_REDIS = mnConstants.DOCKER_REDIS;
         application.JHIPSTER_DEPENDENCIES_VERSION = '8.0.0-SNAPSHOT';
       },
+
       registerSpringFactory: undefined,
+
       addLogNeedles({ source, application }) {
         source.addIntegrationTestAnnotation = ({ package: packageName, annotation }) =>
           this.editFile(this.destinationPath(`${application.javaPackageTestDir}IntegrationTest.java`), content =>
@@ -119,7 +122,7 @@ export default class extends ServerGenerator {
           );
         source.addLogbackMainLog = ({ name, level }) =>
           this.editFile(
-            this.destinationPath('src/main/resources/logback.xml'),
+            this.destinationPath(`${application.srcMainResources}logback.xml`),
             createNeedleCallback({
               needle: 'logback-add-log',
               contentToAdd: `<logger name="${name}" level="${level}"/>`,
@@ -127,7 +130,7 @@ export default class extends ServerGenerator {
           );
         source.addLogbackTestLog = ({ name, level }) =>
           this.editFile(
-            this.destinationPath('src/test/resources/logback.xml'),
+            this.destinationPath(`${application.srcTestResources}logback.xml`),
             createNeedleCallback({
               needle: 'logback-add-log',
               contentToAdd: `<logger name="${name}" level="${level}"/>`,
@@ -140,7 +143,6 @@ export default class extends ServerGenerator {
   get [ServerGenerator.DEFAULT]() {
     return this.asDefaultTaskGroup({
       ...super.default,
-      async defaultTemplateTask() {},
     });
   }
 
@@ -153,26 +155,11 @@ export default class extends ServerGenerator {
   get [ServerGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
       ...super.postWriting,
-      async postWritingTemplateTask() {},
     });
   }
 
   get [ServerGenerator.POST_WRITING_ENTITIES]() {
     return this.asPostWritingEntitiesTaskGroup({
-      // Override jhipster customizeFiles
-      customizeFiles({ source, entities, application: { cacheProvider, enableHibernateCache } }) {
-        if (!enableHibernateCache || !cacheProvider) return;
-        if (['ehcache', 'caffeine', 'infinispan', 'redis'].includes(cacheProvider)) {
-          for (const entity of entities) {
-            const { entityAbsoluteClass } = entity;
-            source.addEntityToCache?.({
-              entityAbsoluteClass,
-              relationships: this.relationships,
-            });
-          }
-        }
-      },
-
       customizeMapstruct({ entities, application }) {
         for (const entity of entities) {
           if (entity.dto !== 'mapstruct') return;

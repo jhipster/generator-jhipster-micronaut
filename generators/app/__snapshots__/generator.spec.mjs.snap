@@ -122,6 +122,9 @@ exports[`SubGenerator app of micronaut JHipster blueprint > run > should succeed
   "src/main/java/com/mycompany/myapp/config/ApplicationProperties.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/config/CacheConfiguration.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/config/Constants.java": {
     "stateCleared": "modified",
   },
