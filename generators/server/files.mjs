@@ -18,21 +18,15 @@
  */
 import { files as baseServerFiles } from 'generator-jhipster/generators/server';
 import {
-  moveToJavaEntityPackageSrcDir,
-  moveToJavaEntityPackageTestDir,
-  moveToJavaPackageSrcDir,
-  moveToJavaPackageTestDir,
-  replaceEntityFilePathVariables,
-} from 'generator-jhipster/generators/server/support';
+  javaMainPackageTemplatesBlock,
+  javaTestPackageTemplatesBlock,
+  javaMainResourceTemplatesBlock,
+  javaTestResourceTemplatesBlock,
+} from 'generator-jhipster/generators/java/support';
+import { moveToJavaPackageSrcDir } from 'generator-jhipster/generators/server/support';
 
 /* Constants use throughout */
-import {
-  JAVA_MAIN_SOURCES_DIR as SERVER_MAIN_SRC_DIR,
-  JAVA_MAIN_RESOURCES_DIR as SERVER_MAIN_RES_DIR,
-  JAVA_TEST_SOURCES_DIR as SERVER_TEST_SRC_DIR,
-  JAVA_SERVER_TEST_RESOURCES_DIR as SERVER_TEST_RES_DIR,
-  JAVA_DOCKER_DIR as DOCKER_DIR,
-} from 'generator-jhipster';
+import { JAVA_SERVER_TEST_RESOURCES_DIR as SERVER_TEST_RES_DIR } from 'generator-jhipster';
 
 const INTERPOLATE_REGEX = true;
 
@@ -163,23 +157,20 @@ export const serverFiles = {
     },
   ],*/
   serverResources: [
-    {
+    javaMainResourceTemplatesBlock({
       condition: generator => generator.devDatabaseType === 'h2Disk' || generator.devDatabaseType === 'h2Memory',
-      path: SERVER_MAIN_RES_DIR,
       templates: [{ file: 'h2.server.properties', renameTo: () => '.h2.server.properties' }],
-    },
-    {
+    }),
+    javaMainResourceTemplatesBlock({
       condition: generator => !!generator.enableSwaggerCodegen,
-      path: SERVER_MAIN_RES_DIR,
       templates: ['swagger/api.yml'],
-    },
+    }),
     {
       condition: generator => !generator.skipClient,
       transform: false,
       templates: ['npmw', 'npmw.cmd'],
     },
-    {
-      path: SERVER_MAIN_RES_DIR,
+    javaMainResourceTemplatesBlock({
       templates: [
         {
           file: 'templates/error.html',
@@ -192,25 +183,23 @@ export const serverFiles = {
         { file: 'application-prod.yml', useBluePrint: true },
         { file: 'i18n/messages.properties', useBluePrint: true, noEjs: true },
       ],
-    },
-    {
-      path: SERVER_TEST_RES_DIR,
+    }),
+    javaTestResourceTemplatesBlock({
       templates: [
         { file: 'logback.xml', useBluePrint: true },
         { file: 'application-test.yml', useBluePrint: true },
       ],
-    },
+    }),
     // Emails should be fine to import from base generator, no need for useBluePrint
-    {
+    javaMainResourceTemplatesBlock({
       condition: generator => !generator.skipUserManagement,
-      path: SERVER_MAIN_RES_DIR,
       templates: [
         { file: 'templates/mail/activationEmail.html', renameTo: () => 'views/mail/activationEmail.html' },
         { file: 'templates/mail/creationEmail.html', renameTo: () => 'views/mail/creationEmail.html' },
         { file: 'templates/mail/passwordResetEmail.html', renameTo: () => 'views/mail/passwordResetEmail.html' },
         { file: 'views/mail/testEmail.html', useBluePrint: true, noEjs: true },
       ],
-    },
+    }),
     {
       condition: generator => !generator.skipUserManagement,
       path: SERVER_TEST_RES_DIR,
@@ -219,23 +208,19 @@ export const serverFiles = {
         'i18n/messages_en.properties',
       ],
     },
-    {
+    javaMainPackageTemplatesBlock({
       condition: generator =>
         generator.databaseType === 'mongodb' &&
         (!generator.skipUserManagement || (generator.skipUserManagement && generator.authenticationType === 'oauth2')),
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
       templates: ['config/dbmigrations/InitialSetupMigration.kt'],
-    },
-    {
+    }),
+    javaMainResourceTemplatesBlock({
       condition: generator => generator.databaseType === 'couchbase',
-      path: SERVER_MAIN_RES_DIR,
       templates: ['config/couchmove/changelog/V0__create_indexes.n1ql'],
-    },
-    {
+    }),
+    javaMainResourceTemplatesBlock({
       condition: generator =>
         generator.databaseType === 'couchbase' && (!generator.skipUserManagement || generator.authenticationType === 'oauth2'),
-      path: SERVER_MAIN_RES_DIR,
       templates: [
         'config/couchmove/changelog/V0.1__initial_setup/ROLE_ADMIN.json',
         'config/couchmove/changelog/V0.1__initial_setup/ROLE_USER.json',
@@ -244,23 +229,21 @@ export const serverFiles = {
         'config/couchmove/changelog/V0.1__initial_setup/user__system.json',
         'config/couchmove/changelog/V0.1__initial_setup/user__user.json',
       ],
-    },
-    {
+    }),
+    javaMainResourceTemplatesBlock({
       condition: generator => generator.databaseType === 'cassandra',
-      path: SERVER_MAIN_RES_DIR,
       templates: [
         'config/cql/create-keyspace-prod.cql',
         'config/cql/create-keyspace.cql',
         'config/cql/drop-keyspace.cql',
         { file: 'config/cql/changelog/README.md', method: 'copy' },
       ],
-    },
-    {
+    }),
+    javaMainResourceTemplatesBlock({
       condition: generator =>
         generator.databaseType === 'cassandra' &&
         generator.applicationType !== 'microservice' &&
         (!generator.skipUserManagement || generator.authenticationType === 'oauth2'),
-      path: SERVER_MAIN_RES_DIR,
       templates: [
         { file: 'config/cql/changelog/create-tables.cql', renameTo: () => 'config/cql/changelog/00000000000000_create-tables.cql' },
         {
@@ -268,33 +251,27 @@ export const serverFiles = {
           renameTo: () => 'config/cql/changelog/00000000000001_insert_default_users.cql',
         },
       ],
-    },
+    }),
   ],
   serverMicroserviceAndGateway: [
-    {
+    javaMainResourceTemplatesBlock({
       condition: generator => generator.serviceDiscoveryType,
-      path: SERVER_MAIN_RES_DIR,
       templates: [{ file: 'bootstrap.yml', useBluePrint: true }],
-    },
-    {
+    }),
+    javaTestResourceTemplatesBlock({
       condition: generator => generator.serviceDiscoveryType,
-      path: SERVER_TEST_RES_DIR,
       templates: [{ file: 'bootstrap-test.yml', useBluePrint: true }],
-    },
+    }),
   ],
   // TODO WIP Adding files in here, will need to properly conditional and remove some in the future
   serverJavaApp: [
-    {
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: (data, filename) => moveToJavaPackageSrcDir(data, filename.replace('App.java', `${data.mainClass}.java`)),
-      templates: ['App.java'],
-    },
+    javaMainPackageTemplatesBlock({
+      templates: ['_mainClass_.java'],
+    }),
   ],
   // I'm going to organize these by package, for lack of a better means of organizing right now
   serverJavaConfig: [
-    {
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
+    javaMainPackageTemplatesBlock({
       templates: [
         'config/ActiveProfilesInfoSource.java',
         'config/ApplicationProperties.java',
@@ -308,39 +285,23 @@ export const serverFiles = {
         'config/SnakeCasePhysicalNamingStrategy.java',
         'config/metric/JHipsterMetricsEndpoint.java',
       ],
-    },
-    {
+    }),
+    javaTestPackageTemplatesBlock({
       condition: generator => generator.cacheProvider === 'redis',
-      path: `${SERVER_TEST_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageTestDir,
       templates: ['RedisTestContainerExtension.java'],
-    },
+    }),
   ],
   serverJavaDomain: [
-    {
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
-      templates: ['domain/package-info.java'],
-    },
-    {
+    javaMainPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
       templates: ['domain/Authority.java', 'domain/User.java'],
-    },
+    }),
   ],
   serverJavaRepository: [
-    {
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
-      templates: ['repository/package-info.java'],
-    },
-    {
+    javaMainPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
       templates: ['repository/AuthorityRepository.java', 'repository/UserRepository.java'],
-    },
+    }),
   ],
   serverJavaOpenApi: [
     /*{
@@ -351,16 +312,12 @@ export const serverFiles = {
         },
       ],
     },
-    {
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
+    javaMainPackageTemplatesBlock({
       templates: ['web/rest/SwaggerResource.java'],
-    },*/
+    }),*/
   ],
   serverJavaSecurity: [
-    {
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
+    javaMainPackageTemplatesBlock({
       templates: [
         'security/AuthoritiesConstants.java',
         'security/NotAuthenticatedResponse.java',
@@ -368,45 +325,35 @@ export const serverFiles = {
         'security/SecurityUtils.java',
         'security/SecurityHeaderFilter.java',
       ],
-    },
-    {
+    }),
+    javaMainPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
       templates: ['security/Logout.java', 'security/UserNotActivatedException.java'],
-    },
-    {
+    }),
+    javaMainPackageTemplatesBlock({
       condition: generator => generator.authenticationType === 'oauth2',
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
       templates: [
         'security/ApiLogoutController.java',
         'security/JHipsterOpenIdUserDetailsMapper.java',
         'security/JHipsterEndSessionEndpoint.java',
       ],
-    },
-    {
+    }),
+    javaMainPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement && generator.authenticationType !== 'oauth2',
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
       templates: ['security/PasswordEncoder.java', 'security/BcryptPasswordEncoder.java', 'security/DatabaseAuthenticationProvider.java'],
-    },
+    }),
   ],
   serverJavaService: [
-    {
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
+    javaMainPackageTemplatesBlock({
       templates: [
         'service/dto/package-info.java',
         'service/mapper/package-info.java',
         'service/util/RandomUtil.java',
         'service/package-info.java',
       ],
-    },
-    {
+    }),
+    javaMainPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement,
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
       templates: [
         'service/dto/PasswordChangeDTO.java',
         'service/mapper/UserMapper.java',
@@ -414,29 +361,23 @@ export const serverFiles = {
         'service/MailService.java',
         'service/UserService.java',
       ],
-    },
-    {
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
+    }),
+    javaMainPackageTemplatesBlock({
       renameTo: (data, file) => moveToJavaPackageSrcDir(data, file).replace('/UserDTO.java', `/${data.user.dtoClass}.java`),
       templates: ['service/dto/UserDTO.java'],
-    },
-    {
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
+    }),
+    javaMainPackageTemplatesBlock({
       renameTo: (data, file) => moveToJavaPackageSrcDir(data, file).replace('/AdminUserDTO.java', `/${data.user.adminUserDto}.java`),
       templates: ['service/dto/AdminUserDTO.java'],
-    },
+    }),
   ],
   serverJavaUtil: [
-    {
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
+    javaMainPackageTemplatesBlock({
       templates: ['util/HeaderUtil.java', 'util/JHipsterProperties.java', 'util/PaginationUtil.java'],
-    },
+    }),
   ],
   serverJavaRest: [
-    {
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
+    javaMainPackageTemplatesBlock({
       templates: [
         // Handlers
         'web/rest/errors/handlers/AbstractThrowableProblemHandler.java',
@@ -453,11 +394,9 @@ export const serverFiles = {
         'web/rest/vm/package-info.java',
         'web/rest/package-info.java',
       ],
-    },
-    {
+    }),
+    javaMainPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement,
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
       templates: [
         // Handlers
         'web/rest/errors/EmailAlreadyUsedException.java',
@@ -472,95 +411,65 @@ export const serverFiles = {
         'web/rest/ClientForwardController.java',
         'web/rest/UserResource.java',
       ],
-    },
-    {
+    }),
+    javaMainPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
       templates: ['web/rest/AccountResource.java'],
-    },
-    {
+    }),
+    javaMainPackageTemplatesBlock({
       condition: generator => !generator.skipClient && !generator.reactive,
-      path: `${SERVER_MAIN_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageSrcDir,
       templates: ['web/rest/ClientForwardController.java'],
-    },
+    }),
   ],
   serverJavaConfigTest: [
-    {
-      path: `${SERVER_TEST_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageTestDir,
+    javaTestPackageTemplatesBlock({
       templates: ['config/CorsController.java', 'config/CorsTest.java'],
-    },
+    }),
   ],
   serverJavaSecurityTest: [
-    {
-      path: `${SERVER_TEST_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageTestDir,
+    javaTestPackageTemplatesBlock({
       templates: ['security/SecurityUtilsUnitTest.java', 'security/SecurityHeaderFilterTest.java'],
-    },
-    {
+    }),
+    javaTestPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement,
-      path: `${SERVER_TEST_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageTestDir,
       templates: ['security/jwt/JWTFilterTest.java'],
-    },
-    {
+    }),
+    javaTestPackageTemplatesBlock({
       condition: generator => !shouldSkipUserManagement(generator) && generator.authenticationType !== 'oauth2',
-      path: `${SERVER_TEST_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageTestDir,
       templates: ['security/DomainUserDetailsServiceIT.java'],
-    },
+    }),
   ],
   serverJavaServiceTest: [
-    {
+    javaTestPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement,
-      path: `${SERVER_TEST_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageTestDir,
       templates: ['service/mapper/UserMapperIT.java', 'service/MailServiceIT.java'],
-    },
-    {
+    }),
+    javaTestPackageTemplatesBlock({
       condition: generator => !shouldSkipUserManagement(generator),
-      path: `${SERVER_TEST_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageTestDir,
       templates: ['service/UserServiceIT.java'],
-    },
+    }),
   ],
   serverJavaRestTest: [
-    {
-      path: `${SERVER_TEST_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageTestDir,
+    javaTestPackageTemplatesBlock({
       templates: [
         'web/rest/errors/ExceptionTranslatorIT.java',
         'web/rest/errors/ExceptionTranslatorTestController.java',
         'web/rest/errors/TestDTO.java',
         'web/rest/TestUtil.java',
       ],
-    },
-    {
+    }),
+    javaTestPackageTemplatesBlock({
       condition: generator => !generator.skipClient,
-      path: `${SERVER_TEST_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageTestDir,
-      templates: [
-        {
-          file: 'web/rest/ClientForwardControllerIT.java',
-          renameTo: generator => `${generator.javaDir}web/rest/ClientForwardControllerIT.java`,
-          useBluePrint: true,
-        },
-      ],
-    },
-    {
+      templates: ['web/rest/ClientForwardControllerIT.java'],
+    }),
+    javaTestPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement,
-      path: `${SERVER_TEST_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageTestDir,
       templates: ['web/rest/AccountResourceIT.java', 'web/rest/UserResourceIT.java'],
-    },
-    {
+    }),
+    javaTestPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement && generator.authenticationType !== 'oauth2',
-      path: `${SERVER_TEST_SRC_DIR}package/`,
-      renameTo: moveToJavaPackageTestDir,
       templates: ['web/rest/UserJWTControllerIT.java'],
-    },
+    }),
   ],
   serverBuild: [
     {

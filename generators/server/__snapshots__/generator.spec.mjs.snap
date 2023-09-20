@@ -470,6 +470,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/test/java/com/mycompany/myapp/web/rest/AccountResourceIT.java": {
     "stateCleared": "modified",
   },
+  "src/test/java/com/mycompany/myapp/web/rest/ClientForwardControllerIT.java": {
+    "stateCleared": "modified",
+  },
   "src/test/java/com/mycompany/myapp/web/rest/TestUtil.java": {
     "stateCleared": "modified",
   },
@@ -486,9 +489,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/web/rest/errors/TestDTO.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/package/undefinedweb/rest/ClientForwardControllerIT.java": {
     "stateCleared": "modified",
   },
   "src/test/resources/application-test.yml": {
