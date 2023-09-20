@@ -20,18 +20,14 @@ application {
     enableTranslation true
     jhiPrefix jhi
     languages [en, fr]
-    messageBroker false
     nativeLanguage en
     packageName org.jhipster.space
     prodDatabaseType postgresql
-    searchEngine false
     serverPort 8080
-    serviceDiscoveryType false
     skipClient false
     skipServer false
     skipUserManagement true
     testFrameworks [cypress]
-    websocket false
   }
 
   entities Mission, SpaceEvent

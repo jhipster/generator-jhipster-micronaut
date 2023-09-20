@@ -9,7 +9,6 @@ application {
     authenticationType jwt
     prodDatabaseType postgresql
     buildTool maven
-    searchEngine false
     testFrameworks []
     clientFramework angularX
     enableTranslation true

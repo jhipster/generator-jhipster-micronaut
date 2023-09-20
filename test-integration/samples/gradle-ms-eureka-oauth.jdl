@@ -16,18 +16,15 @@ application {
     enableTranslation true
     jhiPrefix jhi
     languages [en]
-    messageBroker false
     nativeLanguage en
     packageName com.mycompany.myapp
     prodDatabaseType mysql
-    searchEngine false
     serverPort 8081
     serviceDiscoveryType eureka
     skipClient true
     skipServer false
     skipUserManagement true
     testFrameworks []
-    websocket false
   }
 
   entities BankAccount, Label, Operation

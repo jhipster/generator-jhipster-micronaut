@@ -19,18 +19,14 @@ application {
     enableTranslation true
     jhiPrefix jhi
     languages [en]
-    messageBroker false
     nativeLanguage en
     packageName io.github.jhipster.sample
     prodDatabaseType mysql
-    searchEngine false
     serverPort 8080
-    serviceDiscoveryType false
     skipClient false
     skipServer false
     skipUserManagement false
     testFrameworks []
-    websocket false
   }
 
   entities BankAccount, Label, Operation

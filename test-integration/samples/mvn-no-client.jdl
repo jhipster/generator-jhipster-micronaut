@@ -19,18 +19,14 @@ application {
     enableTranslation true
     jhiPrefix jhi
     languages [en]
-    messageBroker false
     nativeLanguage en
     packageName com.mycompany.myapp
     prodDatabaseType mysql
-    searchEngine false
     serverPort 8080
-    serviceDiscoveryType false
     skipClient true
     skipServer false
     skipUserManagement false
     testFrameworks []
-    websocket false
   }
 
   entities BankAccount, Label, Operation
