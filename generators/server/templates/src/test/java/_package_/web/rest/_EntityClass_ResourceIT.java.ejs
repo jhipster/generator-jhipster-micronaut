@@ -96,7 +96,7 @@ import jakarta.inject.Inject;
 <%_ if (databaseType === 'sql' && !reactive) { _%>
 import javax.persistence.EntityManager;
 <%_ } _%>
-<% if (fieldsContainBigDecimal === true) { %>
+<% if (anyFieldIsBigDecimal) { %>
 import java.math.BigDecimal;<% } %><% if (fieldsContainBlob === true && databaseType === 'cassandra') { %>
 import java.nio.ByteBuffer;<% } %><% if (reactive || fieldsContainDuration === true) { %>
 import java.time.Duration;<% } %><% if (fieldsContainLocalDate === true) { %>
