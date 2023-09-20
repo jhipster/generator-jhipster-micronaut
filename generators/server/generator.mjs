@@ -14,6 +14,13 @@ export default class extends ServerGenerator {
       // Dropped it once migration is done.
       jhipster7Migration: true,
     });
+
+    if (!this.options.help) {
+      this.jhipsterTemplatesFolders.push(
+        this.fetchFromInstalledJHipster('spring-data-relational/templates'),
+        this.fetchFromInstalledJHipster('liquibase/templates'),
+      );
+    }
   }
 
   get [ServerGenerator.INITIALIZING]() {
@@ -152,6 +159,21 @@ export default class extends ServerGenerator {
     });
   }
 
+  get [ServerGenerator.WRITING_ENTITIES]() {
+    return this.asWritingTaskGroup({
+      async writeMicronautServerFiles({ application, entities }) {
+        const rootTemplatesPath = application.reactive ? ['reactive', ''] : undefined;
+        for (const entity of entities.filter(entity => !entity.skipServer)) {
+          this.writeFiles({
+            sections: serverFiles,
+            context: { ...application, ...entity },
+            rootTemplatesPath,
+          });
+        }
+      },
+    });
+  }
+
   get [ServerGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
       ...super.postWriting,
@@ -161,7 +183,7 @@ export default class extends ServerGenerator {
   get [ServerGenerator.POST_WRITING_ENTITIES]() {
     return this.asPostWritingEntitiesTaskGroup({
       customizeMapstruct({ entities, application }) {
-        for (const entity of entities) {
+        for (const entity of entities.filter(entity => !entity.skipServer)) {
           if (entity.dto !== 'mapstruct') return;
           this.editFile(
             `src/main/java/${entity.entityAbsoluteFolder}/service/dto/${entity.restClass}.java`,

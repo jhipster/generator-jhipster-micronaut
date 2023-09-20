@@ -153,7 +153,7 @@ public class <%= entityClass %>Resource {
     <%_
     const instanceType = (dto === 'mapstruct') ? asDto(entityClass) : asEntity(entityClass);
     const instanceName = (dto === 'mapstruct') ? asDto(entityInstance) : asEntity(entityInstance);
-    _%><%- include('../../common/inject_template', {viaService: viaService, constructorName: entityClass + 'Resource', queryService: jpaMetamodelFiltering, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: true}); -%>
+    _%><%- include('../../partials_entity/inject_template', {viaService: viaService, constructorName: entityClass + 'Resource', queryService: jpaMetamodelFiltering, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: true}); -%>
 <%_ if (!readOnly) { _%>
 
     /**
@@ -190,7 +190,7 @@ public class <%= entityClass %>Resource {
         <%_ if (databaseType === 'cassandra') { _%>
         <%= instanceName %>.setId(UUID.randomUUID());
         <%_ } _%>
-<%- include('../../common/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: false, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: true, isUpdate: false}); -%>
+<%- include('../../partials_entity/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: false, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: true, isUpdate: false}); -%>
         URI location = new URI("/api/<%= entityApiUrl %>/" + result.getId());
         return HttpResponse.created(result).headers(headers -> {
             headers.location(location);
@@ -230,7 +230,7 @@ public class <%= entityClass %>Resource {
         }
             <%_ } _%>
         <%_ } _%>
-<%- include('../../common/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: false, isUsingMapsId: false, mapsIdAssoc: mapsIdAssoc, isUpdate: true}); -%>
+<%- include('../../partials_entity/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: false, isUsingMapsId: false, mapsIdAssoc: mapsIdAssoc, isUpdate: true}); -%>
         return HttpResponse.ok(result).headers(headers ->
             HeaderUtil.createEntityUpdateAlert(headers, applicationName, <%= enableTranslation %>, ENTITY_NAME, <%= instanceName %>.getId().toString()));
     }
@@ -261,7 +261,7 @@ public class <%= entityClass %>Resource {
     @ReadOnly
     @Transactional
     <%_ } _%>
-<%- include('../../common/get_all_template', {asEntity, asDto, viaService}); -%>
+<%- include('../../partials_entity/get_all_template', {asEntity, asDto, viaService}); -%>
 
     <%_ if (reactive) { _%>
     /**
@@ -298,7 +298,7 @@ public class <%= entityClass %>Resource {
     <%_ } _%>
     public Optional<<%= instanceType %>> get<%= entityClass %>(@PathVariable <%= primaryKey.type %> id) {
         log.debug("REST request to get <%= entityClass %> : {}", id);
-        <%- include('../../common/get_template', {asEntity, asDto, viaService, returnDirectly:true}); -%>
+        <%- include('../../partials_entity/get_template', {asEntity, asDto, viaService, returnDirectly:true}); -%>
     }
 <%_ if (!readOnly) { _%>
 
@@ -312,7 +312,7 @@ public class <%= entityClass %>Resource {
     @ExecuteOn(TaskExecutors.IO)
     public HttpResponse delete<%= entityClass %>(@PathVariable <%= primaryKey.type %> id) {
         log.debug("REST request to delete <%= entityClass %> : {}", id);
-<%- include('../../common/delete_template', {viaService: viaService}); -%>
+<%- include('../../partials_entity/delete_template', {viaService: viaService}); -%>
         return HttpResponse.noContent().headers(headers -> HeaderUtil.createEntityDeletionAlert(headers, applicationName, <%= enableTranslation %>, ENTITY_NAME, id<% if (primaryKey.type !== 'String') { %>.toString()<% } %>));
     }
 <%_ } _%>
@@ -331,6 +331,6 @@ public class <%= entityClass %>Resource {
     <%_ } _%>
      * @return the result of the search.
      */
-    @Get("/_search/<%= entityApiUrl %>")<%- include('../../common/search_template', {asEntity, asDto, viaService}); -%>
+    @Get("/_search/<%= entityApiUrl %>")<%- include('../../partials_entity/search_template', {asEntity, asDto, viaService}); -%>
 <%_ } _%>
 }
