@@ -36,26 +36,6 @@
         "sbs": true,
         "written": true
       },
-      "entity": {
-        "command": false,
-        "priorities": [
-          "initializing",
-          "prompting",
-          "configuring",
-          "composing",
-          "loading",
-          "preparing",
-          "preparingFields",
-          "preparingRelationships",
-          "default",
-          "writing",
-          "postWriting",
-          "install",
-          "end"
-        ],
-        "sbs": false,
-        "written": true
-      },
       "entity-server": {
         "command": false,
         "priorities": [
@@ -125,6 +105,6 @@
     "projectName": "Micronaut Blueprint",
     "sampleWritten": true,
     "skipCommitHook": true,
-    "subGenerators": ["app", "client", "common", "entity", "heroku", "server", "spring-cache"]
+    "subGenerators": ["app", "client", "common", "heroku", "server", "spring-cache"]
   }
 }

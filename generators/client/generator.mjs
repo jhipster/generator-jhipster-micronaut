@@ -1,21 +1,13 @@
-import chalk from 'chalk';
-import ClientGenerator from 'generator-jhipster/generators/client';
+import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
 import { angularFiles, reactFiles } from './files.mjs';
-export default class extends ClientGenerator {
+
+export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
-    super(args, opts, features);
-
-    if (this.options.help) return;
-
-    if (!this.jhipsterContext) {
-      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints mhipster')}`);
-    }
-
-    this.sbsBlueprint = true;
+    super(args, opts, { ...features, sbsBlueprint: true });
   }
 
-  get [ClientGenerator.WRITING]() {
-    return {
+  get [BaseApplicationGenerator.WRITING]() {
+    return this.asWritingTaskGroup({
       async writeCustomFiles({ application }) {
         const { clientFrameworkAngular, clientFrameworkReact } = application;
         if (clientFrameworkAngular) {
@@ -31,11 +23,11 @@ export default class extends ClientGenerator {
           });
         }
       },
-    };
+    });
   }
 
-  get [ClientGenerator.POST_WRITING]() {
-    return {
+  get [BaseApplicationGenerator.POST_WRITING]() {
+    return this.asPostWritingTaskGroup({
       customizeAngularForMicronaut({ application: { clientFrameworkAngular, authenticationTypeJwt, authenticationTypeOauth2 } }) {
         if (!clientFrameworkAngular) return;
 
@@ -103,6 +95,6 @@ export default class extends ClientGenerator {
           );
         }
       },
-    };
+    });
   }
 }

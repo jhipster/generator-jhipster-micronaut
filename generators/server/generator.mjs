@@ -1,92 +1,47 @@
-import chalk from 'chalk';
 import ServerGenerator from 'generator-jhipster/generators/server';
+import { GENERATOR_DOCKER, GENERATOR_GRADLE, GENERATOR_LANGUAGES, GENERATOR_MAVEN } from 'generator-jhipster/generators';
 import { createBase64Secret, createSecret, createNeedleCallback } from 'generator-jhipster/generators/base/support';
 import mnConstants from '../constants.cjs';
-
 import { writeFiles } from './files.mjs';
-import { GENERATOR_DOCKER, GENERATOR_GRADLE, GENERATOR_LANGUAGES, GENERATOR_MAVEN } from 'generator-jhipster/generators';
 
-/*import {
-  GENERATOR_BOOTSTRAP_APPLICATION,
-  GENERATOR_SPRING_DATA_CASSANDRA,
-  GENERATOR_COMMON,
-  GENERATOR_SPRING_DATA_COUCHBASE,
-  GENERATOR_CUCUMBER,
-  GENERATOR_DOCKER,
-  GENERATOR_SPRING_DATA_ELASTICSEARCH,
-  GENERATOR_GATLING,
-  GENERATOR_GRADLE,
-  GENERATOR_JAVA,
-  GENERATOR_SPRING_CLOUD_STREAM,
-  GENERATOR_LANGUAGES,
-  GENERATOR_MAVEN,
-  GENERATOR_SPRING_DATA_MONGODB,
-  GENERATOR_SPRING_DATA_NEO4J,
-  GENERATOR_SERVER,
-  GENERATOR_SPRING_CACHE,
-  GENERATOR_SPRING_WEBSOCKET,
-  GENERATOR_SPRING_DATA_RELATIONAL,
-} from '../generator-list.mjs';
-
-import {
-  applicationTypes,
-  authenticationTypes,
-  buildToolTypes,
-  databaseTypes,
-  cacheTypes,
-  serviceDiscoveryTypes,
-  websocketTypes,
-  fieldTypes,
-  entityOptions,
-  validations,
-  reservedKeywords,
-  searchEngineTypes,
-  messageBrokerTypes,
-  clientFrameworkTypes,
-  testFrameworkTypes,
-} from 'generator-jhipster/jdl';
-
-const { CUCUMBER, GATLING } = testFrameworkTypes;
-const { GRADLE, MAVEN } = buildToolTypes;*/
+import command from './command.mjs';
 
 export default class extends ServerGenerator {
   constructor(args, opts, features) {
     super(args, opts, {
       ...features,
       checkBlueprint: true,
+      // Dropped it once migration is done.
       jhipster7Migration: true,
     });
-
-    if (this.options.help) return;
-
-    if (!this.jhipsterContext) {
-      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints mhipster')}`);
-    }
   }
 
   get [ServerGenerator.INITIALIZING]() {
-    return {
+    return this.asInitializingTaskGroup({
       ...super.initializing,
-      async initializingTemplateTask() {},
-    };
+      async initializingTemplateTask() {
+        this.parseJHipsterArguments(command.arguments);
+        this.parseJHipsterOptions(command.options);
+      },
+    });
   }
 
   get [ServerGenerator.PROMPTING]() {
-    return {
+    return this.asPromptingTaskGroup({
       ...super.prompting,
       async promptingTemplateTask() {},
-    };
+    });
   }
 
   get [ServerGenerator.CONFIGURING]() {
-    return {
+    return this.asConfiguringTaskGroup({
       ...super.configuring,
       async configuringTemplateTask() {},
-    };
+    });
   }
 
   get [ServerGenerator.COMPOSING]() {
-    return {
+    return this.asComposingTaskGroup({
       async composing() {
         const { buildTool, enableTranslation, databaseType, messageBroker, searchEngine, testFrameworks, websocket, cacheProvider } =
           this.jhipsterConfigWithDefaults;
@@ -136,18 +91,17 @@ export default class extends ServerGenerator {
         }
         */
       },
-    };
+    });
   }
 
   get [ServerGenerator.LOADING]() {
-    return {
+    return this.asLoadingTaskGroup({
       ...super.loading,
-      async loadingTemplateTask() {},
-    };
+    });
   }
 
   get [ServerGenerator.PREPARING]() {
-    return {
+    return this.asPreparingTaskGroup({
       ...super.preparing,
       prepareForTemplates({ application }) {
         application.hipster = 'jhipster_family_member_4';
@@ -180,25 +134,27 @@ export default class extends ServerGenerator {
             }),
           );
       },
-    };
+    });
   }
 
   get [ServerGenerator.DEFAULT]() {
-    return {
+    return this.asDefaultTaskGroup({
       ...super.default,
       async defaultTemplateTask() {},
-    };
+    });
   }
 
   get [ServerGenerator.WRITING]() {
-    return {
+    return this.asWritingTaskGroup({
       ...writeFiles.call(this),
-    };
-    /*return {
+    });
+  }
 
-      ...super.writing,
-      async writingTemplateTask() {},
-    };*/
+  get [ServerGenerator.POST_WRITING]() {
+    return this.asPostWritingTaskGroup({
+      ...super.postWriting,
+      async postWritingTemplateTask() {},
+    });
   }
 
   get [ServerGenerator.POST_WRITING_ENTITIES]() {
@@ -252,16 +208,14 @@ public class`,
   }
 
   get [ServerGenerator.INSTALL]() {
-    return {
+    return this.asInstallTaskGroup({
       ...super.install,
-      async installTemplateTask() {},
-    };
+    });
   }
 
   get [ServerGenerator.END]() {
-    return {
+    return this.asEndTaskGroup({
       ...super.end,
-      async endTemplateTask() {},
-    };
+    });
   }
 }

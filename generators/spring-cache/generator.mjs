@@ -5,6 +5,7 @@ export default class extends SpringCacheGenerator {
   constructor(args, opts, features) {
     super(args, opts, {
       ...features,
+      checkBlueprint: true,
       // Dropped it once migration is done.
       jhipster7Migration: true,
     });

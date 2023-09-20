@@ -1,91 +1,84 @@
-import chalk from 'chalk';
 import HerokuGenerator from 'generator-jhipster/generators/heroku';
+import command from './command.mjs';
 
 export default class extends HerokuGenerator {
   constructor(args, opts, features) {
-    super(args, opts, features);
-
-    if (this.options.help) return;
-
-    if (!this.jhipsterContext) {
-      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints mhipster')}`);
-    }
+    super(args, opts, {
+      ...features,
+      checkBlueprint: true,
+      // Dropped it once migration is done.
+      jhipster7Migration: true,
+    });
   }
 
   get [HerokuGenerator.INITIALIZING]() {
-    return {
-      async initializingTemplateTask() {},
+    return this.asInitializingTaskGroup({
       ...super.initializing,
-    };
+      async initializingTemplateTask() {
+        this.parseJHipsterArguments(command.arguments);
+        this.parseJHipsterOptions(command.options);
+      },
+    });
   }
 
   get [HerokuGenerator.PROMPTING]() {
-    return {
-      async promptingTemplateTask() {},
+    return this.asPromptingTaskGroup({
       ...super.prompting,
-    };
+    });
   }
 
   get [HerokuGenerator.CONFIGURING]() {
-    return {
-      async configuringTemplateTask() {},
+    return this.asConfiguringTaskGroup({
       ...super.configuring,
-    };
+    });
   }
 
   get [HerokuGenerator.COMPOSING]() {
-    return {
-      async composingTemplateTask() {},
+    return this.asComposingTaskGroup({
       ...super.composing,
-    };
+    });
   }
 
   get [HerokuGenerator.LOADING]() {
-    return {
-      async loadingTemplateTask() {},
+    return this.asLoadingTaskGroup({
       ...super.loading,
-    };
+    });
   }
 
   get [HerokuGenerator.PREPARING]() {
-    return {
-      async preparingTemplateTask() {},
+    return this.asPreparingTaskGroup({
       ...super.preparing,
-    };
+    });
   }
 
   get [HerokuGenerator.DEFAULT]() {
-    return {
-      async defaultTemplateTask() {},
+    return this.asDefaultTaskGroup({
       ...super.default,
-    };
+    });
   }
 
   get [HerokuGenerator.WRITING]() {
-    return {
+    return this.asWritingTaskGroup({
       ...super.writing,
-    };
+    });
   }
 
   get [HerokuGenerator.POST_WRITING]() {
-    return {
-      async postWritingTemplateTask() {},
+    return this.asPostWritingTaskGroup({
       ...super.postWriting,
-    };
+    });
   }
 
   get [HerokuGenerator.INSTALL]() {
-    return {
-      async installTemplateTask() {},
+    return this.asInstallTaskGroup({
       ...super.install,
-    };
+    });
   }
 
   get [HerokuGenerator.END]() {
-    return {
-      async endTemplateTask() {},
+    return this.asEndTaskGroup({
       ...super.end,
-    };
+    });
   }
 
   /**

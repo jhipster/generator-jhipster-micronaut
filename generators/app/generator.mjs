@@ -1,85 +1,83 @@
-import chalk from 'chalk';
 import AppGenerator from 'generator-jhipster/generators/app';
-
-import { askForApplicationType } from './prompts.cjs';
+import command from './command.mjs';
 
 export default class extends AppGenerator {
   constructor(args, opts, features) {
-    super(args, opts, features);
-
-    if (this.options.help) return;
-
-    if (!this.jhipsterContext) {
-      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints mhipster')}`);
-    }
+    super(args, opts, {
+      ...features,
+      checkBlueprint: true,
+      // Dropped it once migration is done.
+      jhipster7Migration: true,
+    });
   }
 
   get [AppGenerator.INITIALIZING]() {
-    return {
+    return this.asInitializingTaskGroup({
       ...super.initializing,
-      async initializingTemplateTask() {},
-    };
+      async initializingTemplateTask() {
+        this.parseJHipsterArguments(command.arguments);
+        this.parseJHipsterOptions(command.options);
+      },
+    });
   }
 
   get [AppGenerator.PROMPTING]() {
-    return {
+    return this.asPromptingTaskGroup({
       ...super.prompting,
-      askForApplicationType,
-    };
+    });
   }
 
   get [AppGenerator.CONFIGURING]() {
-    return {
+    return this.asConfiguringTaskGroup({
       ...super.configuring,
-    };
+    });
   }
 
   get [AppGenerator.COMPOSING]() {
-    return {
+    return this.asComposingTaskGroup({
       ...super.composing,
-      askForMoreModules: undefined,
-    };
+    });
   }
 
   get [AppGenerator.LOADING]() {
-    return {
+    return this.asLoadingTaskGroup({
       ...super.loading,
-    };
+    });
   }
 
   get [AppGenerator.PREPARING]() {
-    return {
+    return this.asPreparingTaskGroup({
       ...super.preparing,
-    };
+    });
   }
 
   get [AppGenerator.DEFAULT]() {
-    return {
+    return this.asDefaultTaskGroup({
       ...super.default,
-    };
+    });
   }
 
   get [AppGenerator.WRITING]() {
-    return {
+    return this.asWritingTaskGroup({
       ...super.writing,
-    };
+    });
   }
 
   get [AppGenerator.POST_WRITING]() {
-    return {
+    return this.asPostWritingTaskGroup({
       ...super.postWriting,
-    };
+    });
   }
 
   get [AppGenerator.INSTALL]() {
-    return {
+    return this.asInstallTaskGroup({
       ...super.install,
-    };
+    });
   }
 
   get [AppGenerator.END]() {
-    return {
+    return this.asEndTaskGroup({
       ...super.end,
-    };
+    });
   }
 }

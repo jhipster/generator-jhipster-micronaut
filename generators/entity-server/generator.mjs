@@ -1,112 +1,87 @@
-import chalk from 'chalk';
-import EntityServerGenerator from 'generator-jhipster/esm/generators/entity-server';
-import {
-  PRIORITY_PREFIX,
-  INITIALIZING_PRIORITY,
-  PROMPTING_PRIORITY,
-  CONFIGURING_PRIORITY,
-  COMPOSING_PRIORITY,
-  LOADING_PRIORITY,
-  PREPARING_PRIORITY,
-  PREPARING_FIELDS_PRIORITY,
-  PREPARING_RELATIONSHIPS_PRIORITY,
-  DEFAULT_PRIORITY,
-  WRITING_PRIORITY,
-  POST_WRITING_PRIORITY,
-  INSTALL_PRIORITY,
-  END_PRIORITY,
-} from 'generator-jhipster/esm/priorities';
-import { writeFiles } from './files.cjs';
-import { extendGenerator } from '#lib/utils.mjs';
+import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
+import command from './command.mjs';
 
-export default class extends extendGenerator(EntityServerGenerator) {
-  constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, priorityArgs: true, ...features });
-
-    if (this.options.help) return;
-
-    if (!this.options.jhipsterContext) {
-      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
-    }
+export default class extends BaseApplicationGenerator {
+  get [BaseApplicationGenerator.INITIALIZING]() {
+    return this.asInitializingTaskGroup({
+      async initializingTemplateTask() {
+        this.parseJHipsterArguments(command.arguments);
+        this.parseJHipsterOptions(command.options);
+      },
+    });
   }
 
-  get [INITIALIZING_PRIORITY]() {
-    return {
-      ...super._initializing(),
-    };
+  get [BaseApplicationGenerator.PROMPTING]() {
+    return this.asPromptingTaskGroup({
+      async promptingTemplateTask() {},
+    });
   }
 
-  get [PROMPTING_PRIORITY]() {
-    return {
-      ...super._prompting(),
-    };
+  get [BaseApplicationGenerator.CONFIGURING]() {
+    return this.asConfiguringTaskGroup({
+      async configuringTemplateTask() {},
+    });
   }
 
-  get [CONFIGURING_PRIORITY]() {
-    return {
-      ...super._configuring(),
-    };
+  get [BaseApplicationGenerator.COMPOSING]() {
+    return this.asComposingTaskGroup({
+      async composingTemplateTask() {},
+    });
   }
 
-  get [COMPOSING_PRIORITY]() {
-    return {
-      ...super._composing(),
-    };
+  get [BaseApplicationGenerator.LOADING]() {
+    return this.asLoadingTaskGroup({
+      async loadingTemplateTask() {},
+    });
   }
 
-  get [LOADING_PRIORITY]() {
-    return {
-      ...super._loading(),
-    };
+  get [BaseApplicationGenerator.PREPARING]() {
+    return this.asPreparingTaskGroup({
+      async preparingTemplateTask() {},
+    });
   }
 
-  get [PREPARING_PRIORITY]() {
-    return {
-      ...super._preparing(),
-    };
+  get [BaseApplicationGenerator.PREPARING_FIELDS]() {
+    return this.asPreparingFieldsTaskGroup({
+      async preparingFieldsTemplateTask() {},
+    });
   }
 
-  get [PREPARING_FIELDS_PRIORITY]() {
-    return {
-      ...super._preparingFields(),
-    };
+  get [BaseApplicationGenerator.PREPARING_RELATIONSHIPS]() {
+    return this.asPreparingRelationshipsTaskGroup({
+      async preparingRelationshipsTemplateTask() {},
+    });
   }
 
-  get [PREPARING_RELATIONSHIPS_PRIORITY]() {
-    return {
-      ...super._preparingRelationships(),
-    };
+  get [BaseApplicationGenerator.DEFAULT]() {
+    return this.asDefaultTaskGroup({
+      async defaultTemplateTask() {},
+    });
   }
 
-  get [DEFAULT_PRIORITY]() {
-    return {
-      ...super._default(),
-    };
-  }
-
-  get [WRITING_PRIORITY]() {
+  get [BaseApplicationGenerator.WRITING]() {
     const { writeEnumFiles } = super._writing();
-    return {
+    return this.asWritingTaskGroup({
       ...writeFiles(),
       writeEnumFiles,
-    };
+    });
   }
 
-  get [POST_WRITING_PRIORITY]() {
-    return {
-      ...super._postWriting(),
-    };
+  get [BaseApplicationGenerator.POST_WRITING]() {
+    return this.asPostWritingTaskGroup({
+      async postWritingTemplateTask() {},
+    });
   }
 
-  get [INSTALL_PRIORITY]() {
-    return {
-      ...super._install(),
-    };
+  get [BaseApplicationGenerator.INSTALL]() {
+    return this.asInstallTaskGroup({
+      async installTemplateTask() {},
+    });
   }
 
-  get [END_PRIORITY]() {
-    return {
-      ...super._end(),
-    };
+  get [BaseApplicationGenerator.END]() {
+    return this.asEndTaskGroup({
+      async endTemplateTask() {},
+    });
   }
 }
