@@ -6,7 +6,7 @@ application {
     blueprints [generator-jhipster-micronaut]
     buildTool maven
     cacheProvider redis
-    clientFramework angularX
+    clientFramework angular
     clientPackageManager npm
     clientTheme cyborg
     clientThemeVariant dark

@@ -6,7 +6,7 @@ application {
     blueprints [generator-jhipster-micronaut]
     buildTool maven
     cacheProvider ehcache
-    clientFramework angularX
+    clientFramework angular
     clientPackageManager npm
     clientTheme none
     creationTimestamp 1590870527345

@@ -10,7 +10,7 @@ application {
     prodDatabaseType postgresql
     buildTool maven
     testFrameworks []
-    clientFramework angularX
+    clientFramework angular
     enableTranslation true
     nativeLanguage en
     languages [ en, fr ]
