@@ -24,19 +24,19 @@ const TEST_DIR = 'src/test/';
  * The default is to use a file path string. It implies use of the template method.
  * For any other config an object { file:.., method:.., template:.. } can be used
  */
-export const serverFiles = {
+export const entityFiles = {
   domain: [
     javaMainPackageTemplatesBlock({
       condition: generator =>
         !generator.reactive && generator.databaseTypeSql && generator.prodDatabaseTypePostgres && generator.fieldsContainImageBlob,
-      templates: ['_package_/domain/_PersistClass_.java.jhi.micronaut'],
+      templates: ['domain/_PersistClass_.java.jhi.micronaut'],
     }),
     javaMainPackageTemplatesBlock({
       templates: ['domain/_PersistClass_.java.jhi', 'domain/_PersistClass_.java.jhi.javax_validation'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.databaseTypeSql && !generator.reactive,
-      templates: ['domain/_PersistClass_.java.jhi.javax_Persistence'],
+      templates: ['domain/_PersistClass_.java.jhi.javax_persistence'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.databaseTypeSql && !generator.reactive && generator.enableHibernateCache,

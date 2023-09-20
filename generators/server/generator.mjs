@@ -1,10 +1,11 @@
 import ServerGenerator from 'generator-jhipster/generators/server';
 import { GENERATOR_DOCKER, GENERATOR_GRADLE, GENERATOR_LANGUAGES, GENERATOR_MAVEN } from 'generator-jhipster/generators';
-import { createBase64Secret, createSecret, createNeedleCallback } from 'generator-jhipster/generators/base/support';
+import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
 import mnConstants from '../constants.cjs';
 import { writeFiles } from './files.mjs';
 
 import command from './command.mjs';
+import { entityFiles } from './entity-files.mjs';
 
 export default class extends ServerGenerator {
   constructor(args, opts, features) {
@@ -165,7 +166,7 @@ export default class extends ServerGenerator {
         const rootTemplatesPath = application.reactive ? ['reactive', ''] : undefined;
         for (const entity of entities.filter(entity => !entity.skipServer)) {
           this.writeFiles({
-            sections: serverFiles,
+            sections: entityFiles,
             context: { ...application, ...entity },
             rootTemplatesPath,
           });
