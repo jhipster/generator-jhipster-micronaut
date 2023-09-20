@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SubGenerator client of micronaut JHipster blueprint > run > should succeed 1`] = `
+exports[`SubGenerator react of micronaut JHipster blueprint > run > should succeed 1`] = `
 {
   ".editorconfig": {
     "stateCleared": "modified",
