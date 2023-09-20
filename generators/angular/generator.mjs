@@ -20,9 +20,9 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
-      customizeAngularForMicronaut({ application: { authenticationTypeJwt } }) {
+      customizeAngularForMicronaut({ application: { authenticationTypeJwt, clientSrcDir } }) {
         // Update home with mhipster
-        this.editFile('src/main/webapp/app/home/home.component.html', content =>
+        this.editFile(`${clientSrcDir}app/home/home.component.html`, content =>
           content
             .replaceAll('https://github.com/jhipster/generator-jhipster', 'https://github.com/jhipster/generator-jhipster-micronaut')
             .replace('If you like JHipster', 'If you like MHipster')
@@ -31,16 +31,14 @@ export default class extends BaseApplicationGenerator {
         );
 
         // health api
-        this.editFile('src/main/webapp/app/admin/health/health.model.ts', content => content.replaceAll('components', 'details'));
-        this.editFile('src/main/webapp/app/admin/health/health.component.html', content => content.replaceAll('components', 'details'));
-        this.editFile('src/main/webapp/app/admin/health/health.component.spec.ts', content => content.replaceAll('components', 'details'));
+        this.editFile(`${clientSrcDir}app/admin/health/health.model.ts`, content => content.replaceAll('components', 'details'));
+        this.editFile(`${clientSrcDir}app/admin/health/health.component.html`, content => content.replaceAll('components', 'details'));
+        this.editFile(`${clientSrcDir}app/admin/health/health.component.spec.ts`, content => content.replaceAll('components', 'details'));
 
         if (authenticationTypeJwt) {
           // authentication api
-          this.editFile('src/main/webapp/app/core/auth/auth-jwt.service.ts', content => content.replaceAll('id_token', 'access_token'));
-          this.editFile('src/main/webapp/app/core/auth/auth-jwt.service.spec.ts', content =>
-            content.replaceAll('id_token', 'access_token'),
-          );
+          this.editFile(`${clientSrcDir}app/core/auth/auth-jwt.service.ts`, content => content.replaceAll('id_token', 'access_token'));
+          this.editFile(`${clientSrcDir}app/core/auth/auth-jwt.service.spec.ts`, content => content.replaceAll('id_token', 'access_token'));
         }
       },
     });

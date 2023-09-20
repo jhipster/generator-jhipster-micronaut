@@ -7,9 +7,9 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
-      customizeReactForMicronaut({ application: { authenticationTypeJwt } }) {
+      customizeReactForMicronaut({ application: { authenticationTypeJwt, clientSrcDir } }) {
         // Update home with mhipster
-        this.editFile('src/main/webapp/app/modules/home/home.tsx', content =>
+        this.editFile(`${clientSrcDir}app/modules/home/home.tsx`, content =>
           content
             .replaceAll('https://github.com/jhipster/generator-jhipster', 'https://github.com/jhipster/generator-jhipster-micronaut')
             .replace('If you like JHipster', 'If you like MHipster')
@@ -18,27 +18,27 @@ export default class extends BaseApplicationGenerator {
         );
 
         // health api
-        this.editFile('src/main/webapp/app/modules/administration/health/health.tsx', content =>
+        this.editFile(`${clientSrcDir}app/modules/administration/health/health.tsx`, content =>
           content.replaceAll('components', 'details'),
         );
 
         // active-profiles api
-        this.editFile('src/main/webapp/app/shared/reducers/application-profile.ts', content =>
+        this.editFile(`${clientSrcDir}app/shared/reducers/application-profile.ts`, content =>
           content.replaceAll('.activeProfiles', "['active-profiles']"),
         );
-        this.editFile('src/main/webapp/app/shared/reducers/application-profile.spec.ts', content =>
+        this.editFile(`${clientSrcDir}app/shared/reducers/application-profile.spec.ts`, content =>
           content.replaceAll('activeProfiles', "['active-profiles']"),
         );
-        this.editFile('src/main/webapp/app/modules/administration/administration.reducer.spec.ts', content =>
+        this.editFile(`${clientSrcDir}app/modules/administration/administration.reducer.spec.ts`, content =>
           content.replaceAll('activeProfiles', "['active-profiles']"),
         );
 
         if (authenticationTypeJwt) {
           // authentication api
-          this.editFile('src/main/webapp/app/shared/reducers/authentication.spec.ts', content =>
+          this.editFile(`${clientSrcDir}app/shared/reducers/authentication.spec.ts`, content =>
             content.replaceAll("headers: { authorization: 'Bearer ", "data: { access_token: '"),
           );
-          this.editFile('src/main/webapp/app/shared/reducers/authentication.ts', content =>
+          this.editFile(`${clientSrcDir}app/shared/reducers/authentication.ts`, content =>
             content
               .replace('const bearerToken = response?.headers?.authorization;', 'const jwt = response?.data?.access_token;')
               .replace("bearerToken && bearerToken.slice(0, 7) === 'Bearer '", 'jwt')
