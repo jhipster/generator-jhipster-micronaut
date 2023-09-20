@@ -21,8 +21,8 @@ package <%= packageName %>.service<% if (service === 'serviceImpl') { %>.impl<% 
 <%_
 const serviceClassName = service === 'serviceImpl' ? entityClass + 'ServiceImpl' : entityClass + 'Service';
 let viaService = false;
-const instanceType = (dto === 'mapstruct') ? asDto(entityClass) : asEntity(entityClass);
-const instanceName = (dto === 'mapstruct') ? asDto(entityInstance) : asEntity(entityInstance);
+const instanceType = (dto === 'mapstruct') ? dtoClass : persistClass;
+const instanceName = (dto === 'mapstruct') ? dtoIntance : persistInstance;
 const mapper = entityInstance  + 'Mapper';
 const dtoToEntity = mapper + '.'+ 'toEntity';
 const entityToDto = 'toDto';
@@ -43,7 +43,7 @@ _%>
 <%_ if (service === 'serviceImpl') { _%>
 import <%= packageName %>.service.<%= entityClass %>Service;
 <%_ } _%>
-import <%= packageName %>.domain.<%= asEntity(entityClass) %>;
+import <%= packageName %>.domain.<%= persistClass %>;
 import <%= packageName %>.repository.<%= entityClass %>Repository;
 <%_ if (isUsingMapsId === true) { _%>
 import <%= packageName %>.repository.<%= mapsIdAssoc.otherEntityNameCapitalized %>Repository;
@@ -55,7 +55,7 @@ import <%= packageName %>.repository.reactive.<%= entityClass %>ReactiveReposito
 import <%= packageName %>.repository.search.<%= entityClass %>SearchRepository;
 <%_ } _%>
 <%_ if (dto === 'mapstruct') { _%>
-import <%= packageName %>.service.dto.<%= asDto(entityClass) %>;
+import <%= packageName %>.service.dto.<%= dtoClass %>;
 import <%= packageName %>.service.mapper.<%= entityClass %>Mapper;
 <%_ } _%>
 import org.slf4j.Logger;
@@ -96,14 +96,14 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 <%_ } _%>
 
 /**
- * Service Implementation for managing {@link <%= asEntity(entityClass) %>}.
+ * Service Implementation for managing {@link <%= persistClass %>}.
  */
 @Singleton<% if (databaseType === 'sql') { %>
 @Transactional<% } %>
 public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> implements <%= entityClass %>Service<% } %> {
 
     private final Logger log = LoggerFactory.getLogger(<%= serviceClassName %>.class);
-<%- include('../../partials_entity/inject_template', {asEntity, asDto, viaService: viaService, constructorName: serviceClassName, queryService: false, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: false}); -%>
+<%- include('../../partials_entity/inject_template', {viaService: viaService, constructorName: serviceClassName, queryService: false, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: false}); -%>
 
     /**
      * Save a <%= entityInstance %>.
@@ -116,7 +116,7 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     <%_ } _%>
     public <%= instanceType %> save(<%= instanceType %> <%= instanceName %>) {
         log.debug("Request to save <%= entityClass %> : {}", <%= instanceName %>);
-<%- include('../../partials_entity/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: true, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: false, isUpdate: false}); -%>
+<%- include('../../partials_entity/save_template', {viaService: viaService, returnDirectly: true, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: false, isUpdate: false}); -%>
     }
 
     /**
@@ -130,7 +130,7 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     <%_ } _%>
     public <%= instanceType %> update(<%= instanceType %> <%= instanceName %>) {
         log.debug("Request to update <%= entityClass %> : {}", <%= instanceName %>);
-<%- include('../../partials_entity/save_template', {asEntity, asDto, viaService: viaService, returnDirectly: true, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: false, isUpdate: true}); -%>
+<%- include('../../partials_entity/save_template', {viaService: viaService, returnDirectly: true, isUsingMapsId: isUsingMapsId, mapsIdAssoc: mapsIdAssoc, isController: false, isUpdate: true}); -%>
     }
 
     /**
@@ -180,7 +180,7 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
         return <%= entityInstance %>Repository.findAllWithEagerRelationships(pageable)<% if (dto !== 'mapstruct') { %>;<% } else { %>.map(<%= entityToDtoReference %>);<% } %>
     }
     <% } %>
-<%- include('../../partials_entity/get_filtered_template', {asEntity, asDto}); -%>
+<%- include('../../partials_entity/get_filtered_template'); -%>
     /**
      * Get one <%= entityInstance %> by id.
      *
@@ -195,7 +195,7 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     @Transactional
     <%_ } _%>
     public Optional<<%= instanceType %>> findOne(<%= primaryKey.type %> id) {
-        log.debug("Request to get <%= entityClass %> : {}", id);<%- include('../../partials_entity/get_template', {asEntity, asDto, viaService, returnDirectly:true}); -%>
+        log.debug("Request to get <%= entityClass %> : {}", id);<%- include('../../partials_entity/get_template', {viaService, returnDirectly:true}); -%>
     }
 
     /**

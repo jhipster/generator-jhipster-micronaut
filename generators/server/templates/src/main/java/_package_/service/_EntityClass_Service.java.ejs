@@ -19,13 +19,13 @@
 package <%= packageName %>.service;
 
 <%_
-const instanceType = (dto === 'mapstruct') ? asDto(entityClass) : asEntity(entityClass);
-const instanceName = (dto === 'mapstruct') ? asDto(entityInstance) : asEntity(entityInstance);
+const instanceType = (dto === 'mapstruct') ? dtoClass : persistClass;
+const instanceName = (dto === 'mapstruct') ? dtoIntance : persistInstance;
 _%>
 <%_ if (dto === 'mapstruct') { _%>
-import <%= packageName %>.service.dto.<%= asDto(entityClass) %>;
+import <%= packageName %>.service.dto.<%= dtoClass %>;
 <%_ } else { _%>
-import <%= packageName %>.domain.<%= asEntity(entityClass) %>;
+import <%= packageName %>.domain.<%= persistClass %>;
 <%_ } _%>
 <%_ if (pagination !== 'no' || fieldsContainOwnerManyToMany === true) { _%>
 
@@ -45,7 +45,7 @@ import java.util.UUID;
 <%_ } _%>
 
 /**
- * Service Interface for managing {@link <% if (dto === 'mapstruct') { %><%= packageName %>.domain.<% } %><%= asEntity(entityClass) %>}.
+ * Service Interface for managing {@link <% if (dto === 'mapstruct') { %><%= packageName %>.domain.<% } %><%= persistClass %>}.
  */
 public interface <%= entityClass %>Service {
 
@@ -74,7 +74,7 @@ public interface <%= entityClass %>Service {
     <% if (pagination !== 'no') { %>Page<<%= instanceType %><% } else { %>List<<%= instanceType %><% } %>> findAll(<% if (pagination !== 'no') { %>Pageable pageable<% } %>);
 <% for (idx in relationships) { if (relationships[idx].relationshipType === 'one-to-one' && relationships[idx].ownerSide !== true) { -%>
     /**
-     * Get all the <%= asDto(entityClass) %> where <%= relationships[idx].relationshipNameCapitalized %> is {@code null}.
+     * Get all the <%= dtoClass %> where <%= relationships[idx].relationshipNameCapitalized %> is {@code null}.
      *
      * @return the list of entities.
      */

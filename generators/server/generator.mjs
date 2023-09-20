@@ -119,6 +119,8 @@ export default class extends ServerGenerator {
         application.GRADLE_VERSION = mnConstants.GRADLE_VERSION;
         application.DOCKER_REDIS = mnConstants.DOCKER_REDIS;
         application.JHIPSTER_DEPENDENCIES_VERSION = '8.0.0-SNAPSHOT';
+        // TODO implement
+        application.fieldsContainOwnerManyToMany = undefined;
       },
 
       registerSpringFactory: undefined,
@@ -164,7 +166,7 @@ export default class extends ServerGenerator {
     return this.asWritingTaskGroup({
       async writeMicronautServerFiles({ application, entities }) {
         const rootTemplatesPath = application.reactive ? ['reactive', ''] : undefined;
-        for (const entity of entities.filter(entity => !entity.skipServer)) {
+        for (const entity of entities.filter(entity => !entity.skipServer && !entity.builtIn)) {
           this.writeFiles({
             sections: entityFiles,
             context: { ...application, ...entity },
@@ -184,7 +186,7 @@ export default class extends ServerGenerator {
   get [ServerGenerator.POST_WRITING_ENTITIES]() {
     return this.asPostWritingEntitiesTaskGroup({
       customizeMapstruct({ entities, application }) {
-        for (const entity of entities.filter(entity => !entity.skipServer)) {
+        for (const entity of entities.filter(entity => !entity.skipServer && !entity.builtIn)) {
           if (entity.dto !== 'mapstruct') return;
           this.editFile(
             `src/main/java/${entity.entityAbsoluteFolder}/service/dto/${entity.restClass}.java`,

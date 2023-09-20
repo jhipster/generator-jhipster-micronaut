@@ -38,8 +38,8 @@ for (idx in relationships) {
 }
 
 const usesDto = dto === 'mapstruct';
-const httpEntityClass = usesDto ? asDto(entityClass) : entityClass;
-const httpEntityInstance = usesDto ? asDto(entityInstance) : entityInstance;
+const httpEntityClass = usesDto ? dtoClass : entityClass;
+const httpEntityInstance = usesDto ? dtoIntance : entityInstance;
 
 _%>
 <%_ if (databaseType === 'cassandra') { _%>
@@ -52,16 +52,17 @@ import <%= packageName %>.RedisTestContainerExtension;
 <%_ if (authenticationType === 'uaa') { _%>
 import <%= packageName %>.config.SecurityBeanOverrideConfiguration;
 <%_ } _%>
-import <%= packageName %>.domain.<%= asEntity(entityClass) %>;
+import <%= packageName %>.domain.<%= persistClass %>;
 <%_
     var imported = [];
     for (idx in relationships) { // import entities in required relationships
+        const relationship = relationships[idx];
         const relationshipValidate = relationships[idx].relationshipValidate;
         const otherEntityNameCapitalized = relationships[idx].otherEntityNameCapitalized;
         const isUsingMapsIdL1 = relationships[idx].useJPADerivedIdentifier;
         if (imported.indexOf(otherEntityNameCapitalized) === -1) {
             if ((relationshipValidate !== null && relationshipValidate === true) || jpaMetamodelFiltering || (isUsingMapsIdL1 === true)) { _%>
-import <%= packageName %>.domain.<%= asEntity(otherEntityNameCapitalized) %>;
+import <%= packageName %>.domain.<%= relationship.otherEntity.persistClass %>;
 <%_         imported.push(otherEntityNameCapitalized);
         } } } _%>
 <%_ if (saveUserSnapshot) { _%>
@@ -117,7 +118,7 @@ import java.util.UUID;
 <%_ } _%>
 
 <%_ if (usesDto) { _%>
-import <%= packageName %>.service.dto.<%= asDto(entityClass) %>;
+import <%= packageName %>.service.dto.<%= dtoClass %>;
 import <%= packageName %>.service.mapper.<%= entityClass %>Mapper;
 <%_ } _%>
 
@@ -345,11 +346,11 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     @Inject @Client("/")
     Rx3HttpClient client;
 
-    private <%= asEntity(entityClass) %> <%= asEntity(entityInstance) %>;
+    private <%= persistClass %> <%= persistInstance %>;
 
     @BeforeEach
     public void initTest() {
-        <%= asEntity(entityInstance) %> = createEntity(transactionManager, em);
+        <%= persistInstance %> = createEntity(transactionManager, em);
     }
 
     @AfterEach
@@ -357,7 +358,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ if (databaseType === 'sql' && !reactive) { _%>
         deleteAll(transactionManager, em);
         <%_ } else { _%>
-        <%= asEntity(entityInstance) %>Repository.deleteAll();
+        <%= persistInstance %>Repository.deleteAll();
         <%_ } _%>
     }
 
@@ -367,23 +368,24 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static <%= asEntity(entityClass) %> createEntity(<% if (databaseType === 'sql') { %>TransactionOperations<Connection> transactionManager, EntityManager em<% } %>) {
+    public static <%= persistClass %> createEntity(<% if (databaseType === 'sql') { %>TransactionOperations<Connection> transactionManager, EntityManager em<% } %>) {
         <%_ if (fluentMethods) { _%>
-        <%= asEntity(entityClass) %> <%= asEntity(entityInstance) %> = new <%= asEntity(entityClass) %>()<% for (idx in fields) { if (fields[idx].id) continue;%>
+        <%= persistClass %> <%= persistInstance %> = new <%= persistClass %>()<% for (idx in fields) { if (fields[idx].id) continue;%>
             .<%= fields[idx].fieldName %>(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>)<% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %>
             .<%= fields[idx].fieldName %>ContentType(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE)<% } %><% } %>;
         <%_ } else { _%>
-        <%= asEntity(entityClass) %> <%= asEntity(entityInstance) %> = new <%= asEntity(entityClass) %>();
+        <%= persistClass %> <%= persistInstance %> = new <%= persistClass %>();
             <%_ for (idx in fields) { if (fields[idx].id) continue;_%>
-        <%= asEntity(entityInstance) %>.set<%= fields[idx].fieldInJavaBeanMethod %>(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>);
+        <%= persistInstance %>.set<%= fields[idx].fieldInJavaBeanMethod %>(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>);
                 <%_ if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { _%>
-        <%= asEntity(entityInstance) %>.set<%= fields[idx].fieldInJavaBeanMethod %>ContentType(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE);
+        <%= persistInstance %>.set<%= fields[idx].fieldInJavaBeanMethod %>ContentType(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE);
                 <%_ } _%>
             <%_ } _%>
         <%_ } _%>
         <%_
         const alreadyGeneratedEntities = []
         for (idx in relationships) {
+            const relationship = relationships[idx];
             const relationshipValidate = relationships[idx].relationshipValidate;
             const otherEntityName = relationships[idx].otherEntityName;
             const otherEntityNameCapitalized = relationships[idx].otherEntityNameCapitalized;
@@ -395,7 +397,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         // Add required entity
             <%_ if (alreadyGeneratedEntities.indexOf(otherEntityName) == -1) { _%>
     <%_ if (otherEntityName === 'user') { // TODO or other entity has no unique fields _%>
-        <%= asEntity(otherEntityNameCapitalized) %> <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.createEntity(transactionManager, em);
+        <%= relationship.otherEntity.persistClass %> <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.createEntity(transactionManager, em);
                 <%_ if (databaseType === 'sql' && !reactive) { _%>
         transactionManager.executeWrite(status -> {
                 em.persist(<%= otherEntityName %>);
@@ -407,7 +409,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%= otherEntityName %>.setId("fixed-id-for-tests");
                 <%_ } _%>
     <%_ } else { _%>
-        <%= asEntity(otherEntityNameCapitalized) %> <%= otherEntityName %>;
+        <%= relationship.otherEntity.persistClass %> <%= otherEntityName %>;
         <%_ if (databaseType === 'sql' && !reactive) { _%>
         if (TestUtil.findAll(transactionManager, em, <%= otherEntityNameCapitalized %>.class).isEmpty()) {
             <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.createEntity(transactionManager, em);
@@ -428,18 +430,18 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     <%_ } _%>
             <%_ } _%>
             <%_ if (relationshipType === 'many-to-many' || relationshipType === 'one-to-many') { _%>
-        <%= asEntity(entityInstance) %>.get<%= relationshipNameCapitalizedPlural %>().add(<%= otherEntityName %>);
+        <%= persistInstance %>.get<%= relationshipNameCapitalizedPlural %>().add(<%= otherEntityName %>);
             <%_ } else { _%>
-        <%= asEntity(entityInstance) %>.set<%= relationshipNameCapitalized %>(<%= otherEntityName %>);
+        <%= persistInstance %>.set<%= relationshipNameCapitalized %>(<%= otherEntityName %>);
             <%_ } _%>
         <%_ alreadyGeneratedEntities.push(otherEntityName) _%>
         <%_ } } _%>
-        return <%= asEntity(entityInstance) %>;
+        return <%= persistInstance %>;
     }
     <%_ if (databaseType === 'sql' && !reactive) { _%>
 
     /**
-     * Delete all <%= asEntity(entityInstance) %> entities.
+     * Delete all <%= persistInstance %> entities.
      *
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
@@ -470,7 +472,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         int databaseSizeBeforeCreate = <%= entityInstance %>Repository.findAll().size();
 
         <%_ if (usesDto) { _%>
-        <%= asDto(entityClass) %> <%= asDto(entityInstance) %> = <%= entityInstance %>Mapper.toDto(<%= asEntity(entityInstance) %>);
+        <%= dtoClass %> <%= dtoIntance %> = <%= entityInstance %>Mapper.toDto(<%= persistInstance %>);
         <%_ } _%>
 
         // Create the <%= entityClass %>
@@ -479,9 +481,9 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.CREATED.getCode());
 
         // Validate the <%= entityClass %> in the database
-        List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
+        List<<%= persistClass %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
         assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeCreate + 1);
-        <%= asEntity(entityClass) %> test<%= entityClass %> = <%= entityInstance %>List.get(<%= entityInstance %>List.size() - 1);
+        <%= persistClass %> test<%= entityClass %> = <%= entityInstance %>List.get(<%= entityInstance %>List.size() - 1);
 <%- include('../../partials_entity/validate_entity_fields_template', {isUpdate: false}); -%>
     }
 
@@ -490,9 +492,9 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         int databaseSizeBeforeCreate = <%= entityInstance %>Repository.findAll().size();
 
         // Create the <%= entityClass %> with an existing ID
-        <%= asEntity(entityInstance) %>.setId(<% if (databaseType === 'sql' && hasOauthUser === true) { %>UUID.randomUUID().toString()<% } else if (databaseType === 'sql') { %>1L<% } else if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>"existing_id"<% } else if (databaseType === 'cassandra') { %>UUID.randomUUID()<% } %>);
+        <%= persistInstance %>.setId(<% if (databaseType === 'sql' && hasOauthUser === true) { %>UUID.randomUUID().toString()<% } else if (databaseType === 'sql') { %>1L<% } else if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>"existing_id"<% } else if (databaseType === 'cassandra') { %>UUID.randomUUID()<% } %>);
         <%_ if (usesDto) { _%>
-        <%= asDto(entityClass) %> <%= asDto(entityInstance) %> = <%= entityInstance %>Mapper.toDto(<%= asEntity(entityInstance) %>);
+        <%= dtoClass %> <%= dtoIntance %> = <%= entityInstance %>Mapper.toDto(<%= persistInstance %>);
         <%_ } _%>
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -503,12 +505,12 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
         // Validate the <%= entityClass %> in the database
-        List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
+        List<<%= persistClass %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
         assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeCreate);
         <%_ if (searchEngine === 'elasticsearch') { _%>
 
         // Validate the <%= entityClass %> in Elasticsearch
-        verify(mock<%= entityClass %>SearchRepository, times(0)).save(<%= asEntity(entityInstance) %>);
+        verify(mock<%= entityClass %>SearchRepository, times(0)).save(<%= persistInstance %>);
         <%_ } _%>
     }
 
@@ -522,10 +524,10 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     public void check<%= fields[idx].fieldInJavaBeanMethod %>IsRequired() throws Exception {
         int databaseSizeBeforeTest = <%= entityInstance %>Repository.findAll().size();
         // set the field null
-        <%= asEntity(entityInstance) %>.set<%= fields[idx].fieldInJavaBeanMethod %>(null);
+        <%= persistInstance %>.set<%= fields[idx].fieldInJavaBeanMethod %>(null);
 
         // Create the <%= entityClass %>, which fails.<% if (usesDto) { %>
-        <%= asDto(entityClass) %> <%= asDto(entityInstance) %> = <%= entityInstance %>Mapper.toDto(<%= asEntity(entityInstance) %>);<% } %>
+        <%= dtoClass %> <%= dtoIntance %> = <%= entityInstance %>Mapper.toDto(<%= persistInstance %>);<% } %>
 
         @SuppressWarnings("unchecked")
         HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.POST("/api/<%= entityApiUrl %>", <%= httpEntityInstance %>), <%= httpEntityClass %>.class)
@@ -533,7 +535,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
-        List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
+        List<<%= persistClass %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
         assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeTest);
     }
 <%_ } } } _%>
@@ -543,9 +545,9 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     public void getAll<%= entityClassPlural %>() throws Exception {
         // Initialize the database
         <%_ if (databaseType === 'cassandra') { _%>
-        <%= asEntity(entityInstance) %>.setId(UUID.randomUUID());
+        <%= persistInstance %>.setId(UUID.randomUUID());
         <%_ } _%>
-        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= persistInstance %>);
 
         // Get the <%= entityInstance %>List w/ all the <%= entityInstancePlural %>
         List<<%= httpEntityClass %>> <%= entityInstancePlural %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>?eagerload=true"), Argument.listOf(<%= httpEntityClass %>.class)).blockingFirst();
@@ -558,9 +560,9 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     public void get<%= entityClass %>() throws Exception {
         // Initialize the database
         <%_ if (databaseType === 'cassandra') { _%>
-        <%= asEntity(entityInstance) %>.setId(UUID.randomUUID());
+        <%= persistInstance %>.setId(UUID.randomUUID());
         <%_ } _%>
-        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= persistInstance %>);
 
         // Get the <%= entityInstance %>
         <%= httpEntityClass %> test<%= entityClass %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>/" + <%= entityInstance %>.getId()), <%= httpEntityClass %>.class).blockingFirst();
@@ -583,45 +585,45 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     public void update<%= entityClass %>() throws Exception {
         // Initialize the database
         <%_ if (databaseType === 'cassandra') { _%>
-        <%= asEntity(entityInstance) %>.setId(UUID.randomUUID());
+        <%= persistInstance %>.setId(UUID.randomUUID());
         <%_ } _%>
     <%_ if (searchEngine === 'elasticsearch') { _%>
         // As the test used the service layer, reset the Elasticsearch mock repository
         reset(mock<%= entityClass %>SearchRepository);
     <%_ } _%>
-        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= persistInstance %>);
 
         int databaseSizeBeforeUpdate = <%= entityInstance %>Repository.findAll().size();
 
         // Update the <%= entityInstance %>
-        <%= asEntity(entityClass) %> updated<%= asEntity(entityClass) %> = <%= entityInstance %>Repository.findById(<%= asEntity(entityInstance) %>.getId()).get();
+        <%= persistClass %> updated<%= persistClass %> = <%= entityInstance %>Repository.findById(<%= persistInstance %>.getId()).get();
 
         <%_ if (fluentMethods && fields.length > 0) { _%>
-        updated<%= asEntity(entityClass) %><% for (idx in fields) { if (fields[idx].id) continue; %>
+        updated<%= persistClass %><% for (idx in fields) { if (fields[idx].id) continue; %>
             .<%= fields[idx].fieldName %>(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>)<% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %>
             .<%= fields[idx].fieldName %>ContentType(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE)<% } %><% } %>;
         <%_ } else { _%>
             <%_ for (idx in fields) { if (fields[idx].id) continue; _%>
-        updated<%= asEntity(entityClass) %>.set<%= fields[idx].fieldInJavaBeanMethod %>(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
+        updated<%= persistClass %>.set<%= fields[idx].fieldInJavaBeanMethod %>(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>);
                 <%_ if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { _%>
-        updated<%= asEntity(entityClass) %>.set<%= fields[idx].fieldInJavaBeanMethod %>ContentType(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE);
+        updated<%= persistClass %>.set<%= fields[idx].fieldInJavaBeanMethod %>ContentType(<%= 'UPDATED_' + fields[idx].fieldNameUnderscored.toUpperCase() %>_CONTENT_TYPE);
                 <%_ } _%>
             <%_ } _%>
         <%_ } _%>
         <%_ if (usesDto) { _%>
-        <%= asDto(entityClass) %> updated<%= asDto(entityClass) %> = <%= entityInstance %>Mapper.toDto(updated<%= asEntity(entityClass) %>);
+        <%= dtoClass %> updated<%= dtoClass %> = <%= entityInstance %>Mapper.toDto(updated<%= persistClass %>);
         <%_ } _%>
 
         @SuppressWarnings("unchecked")
-        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>/" + <%= asEntity(entityInstance) %>.getId(), updated<%= httpEntityClass %>), <%= httpEntityClass %>.class)
+        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>/" + <%= persistInstance %>.getId(), updated<%= httpEntityClass %>), <%= httpEntityClass %>.class)
             .onErrorReturn(t -> (HttpResponse<<%= httpEntityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.OK.getCode());
 
         // Validate the <%= entityClass %> in the database
-        List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
+        List<<%= persistClass %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
         assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeUpdate);
-        <%= asEntity(entityClass) %> test<%= entityClass %> = <%= entityInstance %>List.get(<%= entityInstance %>List.size() - 1);
+        <%= persistClass %> test<%= entityClass %> = <%= entityInstance %>List.get(<%= entityInstance %>List.size() - 1);
 <%- include('../../partials_entity/validate_entity_fields_template', {isUpdate: true}); -%>
     }
 
@@ -630,22 +632,22 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         int databaseSizeBeforeUpdate = <%= entityInstance %>Repository.findAll().size();
 
         // Create the <%= entityClass %><% if (usesDto) { %>
-        <%= asDto(entityClass) %> <%= asDto(entityInstance) %> = <%= entityInstance %>Mapper.toDto(<%= asEntity(entityInstance) %>);<% } %>
+        <%= dtoClass %> <%= dtoIntance %> = <%= entityInstance %>Mapper.toDto(<%= persistInstance %>);<% } %>
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         @SuppressWarnings("unchecked")
-        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>/" + <%= asEntity(entityInstance) %>.getId(), <%= httpEntityInstance %>), <%= httpEntityClass %>.class)
+        HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.PUT("/api/<%= entityApiUrl %>/" + <%= persistInstance %>.getId(), <%= httpEntityInstance %>), <%= httpEntityClass %>.class)
             .onErrorReturn(t -> (HttpResponse<<%= httpEntityClass %>>) ((HttpClientResponseException) t).getResponse()).blockingFirst();
 
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.BAD_REQUEST.getCode());
 
         // Validate the <%= entityClass %> in the database
-        List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
+        List<<%= persistClass %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
         assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeUpdate);
         <%_ if (searchEngine === 'elasticsearch') { _%>
 
         // Validate the <%= entityClass %> in Elasticsearch
-        verify(mock<%= entityClass %>SearchRepository, times(0)).save(<%= asEntity(entityInstance) %>);
+        verify(mock<%= entityClass %>SearchRepository, times(0)).save(<%= persistInstance %>);
         <%_ } _%>
     }
 
@@ -653,9 +655,9 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     public void delete<%= entityClass %>() throws Exception {
         // Initialize the database with one entity
         <%_ if (databaseType === 'cassandra') { _%>
-        <%= asEntity(entityInstance) %>.setId(UUID.randomUUID());
+        <%= persistInstance %>.setId(UUID.randomUUID());
         <%_ } _%>
-        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= asEntity(entityInstance) %>);
+        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= persistInstance %>);
 
         int databaseSizeBeforeDelete = <%= entityInstance %>Repository.findAll().size();
 
@@ -667,12 +669,12 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         assertThat(response.status().getCode()).isEqualTo(HttpStatus.NO_CONTENT.getCode());
 
             // Validate the database is now empty
-        List<<%= asEntity(entityClass) %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
+        List<<%= persistClass %>> <%= entityInstance %>List = <%= entityInstance %>Repository.findAll();
         assertThat(<%= entityInstance %>List).hasSize(databaseSizeBeforeDelete - 1);
         <%_ if (searchEngine === 'elasticsearch') { _%>
 
         // Validate the <%= entityClass %> in Elasticsearch
-        verify(mock<%= entityClass %>SearchRepository, times(1)).deleteById(<%= asEntity(entityInstance) %>.getId());
+        verify(mock<%= entityClass %>SearchRepository, times(1)).deleteById(<%= persistInstance %>.getId());
         <%_ } _%>
     }
 <%_ } _%>
@@ -680,14 +682,14 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     @Test
     public void equalsVerifier() throws Exception {
         TestUtil.equalsVerifier(<%= entityClass %>.class);
-        <%= entityClass %> <%= asEntity(entityInstance) %>1 = new <%= entityClass %>();
-        <%= asEntity(entityInstance) %>1.setId(1L);
-        <%= entityClass %> <%= asEntity(entityInstance) %>2 = new <%= entityClass %>();
-        <%= asEntity(entityInstance) %>2.setId(<%= asEntity(entityInstance) %>1.getId());
-        assertThat(<%= asEntity(entityInstance) %>1).isEqualTo(<%= asEntity(entityInstance) %>2);
-        <%= asEntity(entityInstance) %>2.setId(2L);
-        assertThat(<%= asEntity(entityInstance) %>1).isNotEqualTo(<%= asEntity(entityInstance) %>2);
-        <%= asEntity(entityInstance) %>1.setId(null);
-        assertThat(<%= asEntity(entityInstance) %>1).isNotEqualTo(<%= asEntity(entityInstance) %>2);
+        <%= entityClass %> <%= persistInstance %>1 = new <%= entityClass %>();
+        <%= persistInstance %>1.setId(1L);
+        <%= entityClass %> <%= persistInstance %>2 = new <%= entityClass %>();
+        <%= persistInstance %>2.setId(<%= persistInstance %>1.getId());
+        assertThat(<%= persistInstance %>1).isEqualTo(<%= persistInstance %>2);
+        <%= persistInstance %>2.setId(2L);
+        assertThat(<%= persistInstance %>1).isNotEqualTo(<%= persistInstance %>2);
+        <%= persistInstance %>1.setId(null);
+        assertThat(<%= persistInstance %>1).isNotEqualTo(<%= persistInstance %>2);
     }
 }
