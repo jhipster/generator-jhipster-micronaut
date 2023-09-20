@@ -7,9 +7,7 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
-      customizeReactForMicronaut({ application: { clientFrameworkReact, authenticationTypeJwt, authenticationTypeOauth2 } }) {
-        if (!clientFrameworkReact) return;
-
+      customizeReactForMicronaut({ application: { authenticationTypeJwt } }) {
         // Update home with mhipster
         this.editFile('src/main/webapp/app/modules/home/home.tsx', content =>
           content

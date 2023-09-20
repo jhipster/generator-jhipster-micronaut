@@ -1,9 +1,9 @@
-import { TEMPLATES_WEBAPP_SOURCES_DIR } from 'generator-jhipster';
+import { clientApplicationTemplatesBlock } from 'generator-jhipster/generators/client/support';
 
 export const angularFiles = {
   angularMain: [
-    {
-      path: `${TEMPLATES_WEBAPP_SOURCES_DIR}app/admin/configuration/`,
+    clientApplicationTemplatesBlock({
+      relativePath: 'admin/configuration/',
       templates: [
         'configuration.component.html',
         'configuration.component.ts',
@@ -14,6 +14,6 @@ export const angularFiles = {
         'configuration.component.spec.ts',
         'configuration.service.spec.ts',
       ],
-    },
+    }),
   ],
 };
