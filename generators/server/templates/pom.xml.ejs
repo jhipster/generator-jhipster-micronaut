@@ -47,9 +47,9 @@ _%>
         <jdk.version><%= JAVA_VERSION %></jdk.version>
         <release.version><%= JAVA_VERSION %></release.version>
 <%_ if (!skipClient) { _%>
-        <node.version>v<%= NODE_VERSION %></node.version>
+        <node.version>v<%= nodeVersion %></node.version>
     <%_ if (clientPackageManager === 'npm') { _%>
-        <npm.version><%= NPM_VERSION %></npm.version>
+        <npm.version><%= nodeDependencies.npm %></npm.version>
     <%_ } _%>
 <%_ } _%>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
