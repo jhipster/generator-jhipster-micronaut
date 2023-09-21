@@ -54,6 +54,9 @@ export default class extends BaseGenerator {
           },
         });
       },
+      async generatorsInfo() {
+        console.log(this.env.getGeneratorsMeta());
+      },
       async jhipsterInfo() {
         await this.composeWithJHipster('info');
       },
