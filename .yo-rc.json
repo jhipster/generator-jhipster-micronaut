@@ -66,6 +66,12 @@
         "sbs": false,
         "written": true
       },
+      "liquibase": {
+        "command": false,
+        "priorities": [],
+        "sbs": true,
+        "written": true
+      },
       "micronaut-cache": {
         "command": false,
         "priorities": ["preparing", "writing", "postWriting"],
