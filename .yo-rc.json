@@ -42,6 +42,12 @@
         "sbs": true,
         "written": true
       },
+      "cypress": {
+        "command": false,
+        "priorities": ["postWriting"],
+        "sbs": true,
+        "written": true
+      },
       "docker": {
         "command": false,
         "priorities": [],
@@ -109,6 +115,6 @@
     "projectName": "Micronaut Blueprint",
     "sampleWritten": true,
     "skipCommitHook": true,
-    "subGenerators": ["angular", "app", "client", "common", "heroku", "react", "server", "micronaut-cache"]
+    "subGenerators": ["angular", "app", "client", "common", "cypress", "heroku", "react", "server", "micronaut-cache"]
   }
 }
