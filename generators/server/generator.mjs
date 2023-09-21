@@ -56,8 +56,7 @@ export default class extends ServerGenerator {
         if (buildTool === 'gradle') {
           await this.composeWithJHipster(GENERATOR_GRADLE);
         } else if (buildTool === 'maven') {
-          // Disable sort while migrating to v8.
-          (await this.composeWithJHipster(GENERATOR_MAVEN)).sortPomFile = false;
+          await this.composeWithJHipster(GENERATOR_MAVEN);
         } else {
           throw new Error(`Build tool ${buildTool} is not supported`);
         }
