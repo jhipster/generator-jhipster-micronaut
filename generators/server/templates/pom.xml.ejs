@@ -99,7 +99,7 @@ _%>
         https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
         <javassist.version><%= versions.javassist %></javassist.version>
         <jakarta-inject.version><%= versions.jakartaInject %></jakarta-inject.version>
-        <javax-mail.version><%= versions.javaxMail %></javax-mail.version>
+        <jakarta-mail.version><%= versions.jakartaMail %></jakarta-mail.version>
         <%_ if (!skipUserManagement) { _%>
         <jbcrypt.version><%= versions.jbcrypt %></jbcrypt.version>
         <%_ } _%>
@@ -553,12 +553,12 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>jakarta.mail</artifactId>
-            <version>${javax-mail.version}</version>
+            <version>${jakarta-mail.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sun.activation</groupId>
             <artifactId>jakarta.activation</artifactId>
-            <version>${javax-mail.version}</version>
+            <version>${jakarta-mail.version}</version>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
