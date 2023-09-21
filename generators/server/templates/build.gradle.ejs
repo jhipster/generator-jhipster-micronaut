@@ -260,7 +260,7 @@ configurations {
 repositories {
     mavenLocal()
     mavenCentral()
-    <%_ if (JHIPSTER_DEPENDENCIES_VERSION.endsWith('-SNAPSHOT')) { _%>
+    <%_ if (jhipsterDependenciesVersion.endsWith('-SNAPSHOT')) { _%>
     maven {
         url "https://oss.sonatype.org/content/repositories/snapshots/"
         mavenContent {

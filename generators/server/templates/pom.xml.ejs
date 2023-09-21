@@ -41,7 +41,7 @@ _%>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
-        <%_ if (JHIPSTER_DEPENDENCIES_VERSION.endsWith('-SNAPSHOT')) { _%>
+        <%_ if (jhipsterDependenciesVersion.endsWith('-SNAPSHOT')) { _%>
         <repository>
             <id>ossrh-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
@@ -140,6 +140,8 @@ _%>
         <git-commit-id-plugin.version>4.0.2</git-commit-id-plugin.version>
         <jacoco-maven-plugin.version><%= javaDependencies['jacoco-maven-plugin'] %></jacoco-maven-plugin.version>
         <jib-maven-plugin.version><%= javaDependencies['jib-maven-plugin'] %></jib-maven-plugin.version>
+        <jib-maven-plugin.image><%- dockerContainers.javaJre %></jib-maven-plugin.image>
+        <jib-maven-plugin.architecture>amd64</jib-maven-plugin.architecture>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>

@@ -56,7 +56,8 @@ export default class extends ServerGenerator {
         if (buildTool === 'gradle') {
           await this.composeWithJHipster(GENERATOR_GRADLE);
         } else if (buildTool === 'maven') {
-          await this.composeWithJHipster(GENERATOR_MAVEN);
+          // Disable sort while migrating to v8.
+          (await this.composeWithJHipster(GENERATOR_MAVEN)).sortPomFile = false;
         } else {
           throw new Error(`Build tool ${buildTool} is not supported`);
         }
@@ -118,7 +119,7 @@ export default class extends ServerGenerator {
         application.MN_CONSTANTS = mnConstants;
         application.GRADLE_VERSION = mnConstants.GRADLE_VERSION;
         application.DOCKER_REDIS = mnConstants.DOCKER_REDIS;
-        application.JHIPSTER_DEPENDENCIES_VERSION = '8.0.0-SNAPSHOT';
+        application.jhipsterDependenciesVersion = '7.9.3';
         // TODO implement
         application.fieldsContainOwnerManyToMany = undefined;
       },
