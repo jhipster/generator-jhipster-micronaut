@@ -1,5 +1,11 @@
 import ServerGenerator from 'generator-jhipster/generators/server';
-import { GENERATOR_DOCKER, GENERATOR_GRADLE, GENERATOR_LANGUAGES, GENERATOR_MAVEN } from 'generator-jhipster/generators';
+import {
+  GENERATOR_DOCKER,
+  GENERATOR_GRADLE,
+  GENERATOR_LANGUAGES,
+  GENERATOR_LIQUIBASE,
+  GENERATOR_MAVEN,
+} from 'generator-jhipster/generators';
 import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
 import mnConstants from '../constants.cjs';
 import { writeFiles } from './files.mjs';
@@ -65,10 +71,11 @@ export default class extends ServerGenerator {
         if (enableTranslation) {
           await this.composeWithJHipster(GENERATOR_LANGUAGES);
         }
+        if (databaseType === 'sql') {
+          await this.composeWithJHipster(GENERATOR_LIQUIBASE);
+        }
         /*
-        if (databaseType === SQL) {
-          await this.composeWithJHipster(GENERATOR_SPRING_DATA_RELATIONAL);
-        } else if (databaseType === CASSANDRA) {
+        else if (databaseType === CASSANDRA) {
           await this.composeWithJHipster(GENERATOR_SPRING_DATA_CASSANDRA);
         } else if (databaseType === COUCHBASE) {
           await this.composeWithJHipster(GENERATOR_SPRING_DATA_COUCHBASE);
@@ -117,6 +124,9 @@ export default class extends ServerGenerator {
         application.gradleVersion = mnConstants.GRADLE_VERSION;
         application.dockerContainers.redis = mnConstants.DOCKER_REDIS;
         application.jhipsterDependenciesVersion = '7.9.3';
+
+        // Add liquibase h2 database references
+        application.liquibaseAddH2Properties = true;
       },
 
       registerSpringFactory: undefined,
