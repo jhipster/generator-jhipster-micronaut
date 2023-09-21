@@ -22,7 +22,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        //jhipster-needle-gradle-buildscript-dependency - JHipster will add additional gradle build script plugins here
+        // jhipster-needle-gradle-buildscript-dependency - JHipster will add additional gradle build script plugins here
     }
 }
 
@@ -45,7 +45,7 @@ plugins {
     <%_ } _%>
     id "org.sonarqube"
     id "com.github.johnrengelman.shadow"
-    //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
+    // jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
 graalvmNative.toolchainDetection = false
@@ -74,7 +74,7 @@ apply from: "gradle/sonar.gradle"
 <%_ if (enableSwaggerCodegen) { _%>
 apply from: "gradle/swagger.gradle"
 <%_ } _%>
-//jhipster-needle-gradle-apply-from - JHipster will add additional gradle scripts to be applied here
+// jhipster-needle-gradle-apply-from - JHipster will add additional gradle scripts to be applied here
 
 if (project.hasProperty("prod") || project.hasProperty("gae")) {
     apply from: "gradle/profile_prod.gradle"
@@ -268,7 +268,7 @@ repositories {
         }
     }
     <%_ } _%>
-    //jhipster-needle-gradle-repositories - JHipster will add additional repositories
+    // jhipster-needle-gradle-repositories - JHipster will add additional repositories
 }
 
 dependencies {
@@ -561,7 +561,7 @@ dependencies {
     implementation("io.micronaut.rxjava3:micronaut-rxjava3")
     implementation("io.micronaut.rxjava3:micronaut-rxjava3-http-client:$rxJava3Version")
 
-    //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
+    // jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
 
 if (project.hasProperty("gae")) {
