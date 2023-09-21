@@ -15,7 +15,7 @@ public class RedisTestContainerExtension implements BeforeAllCallback {
     @Override
     public void beforeAll(ExtensionContext extensionContext) throws Exception {
         if (!started.get()) {
-            redis = new GenericContainer("<%= DOCKER_REDIS %>").withExposedPorts(6379);
+            redis = new GenericContainer("<%= dockerContainers.redis %>").withExposedPorts(6379);
             redis.start();
             System.setProperty(
                 "jhipster.cache.redis.server",

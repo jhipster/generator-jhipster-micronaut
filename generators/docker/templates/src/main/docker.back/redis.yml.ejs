@@ -15,6 +15,6 @@
 version: '2'
 services:
     <%= baseName.toLowerCase() %>-redis:
-        image: <%= DOCKER_REDIS %>
+        image: <%= dockerContainers.redis %>
         ports:
             - "6379:6379"

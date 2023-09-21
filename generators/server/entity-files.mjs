@@ -28,7 +28,7 @@ export const entityFiles = {
   domain: [
     javaMainPackageTemplatesBlock({
       condition: generator =>
-        !generator.reactive && generator.databaseTypeSql && generator.prodDatabaseTypePostgres && generator.fieldsContainImageBlob,
+        !generator.reactive && generator.databaseTypeSql && generator.prodDatabaseTypePostgresql && generator.fieldsContainImageBlob,
       templates: ['domain/_PersistClass_.java.jhi.micronaut'],
     }),
     javaMainPackageTemplatesBlock({

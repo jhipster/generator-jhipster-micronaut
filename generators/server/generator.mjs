@@ -116,8 +116,8 @@ export default class extends ServerGenerator {
         application.hipster = 'jhipster_family_member_4';
         application.addSpringMilestoneRepository = false;
         application.MN_CONSTANTS = mnConstants;
-        application.GRADLE_VERSION = mnConstants.GRADLE_VERSION;
-        application.DOCKER_REDIS = mnConstants.DOCKER_REDIS;
+        application.gradleVersion = mnConstants.GRADLE_VERSION;
+        application.dockerContainers.redis = mnConstants.DOCKER_REDIS;
         application.jhipsterDependenciesVersion = '7.9.3';
       },
 
