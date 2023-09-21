@@ -33,11 +33,11 @@ jobs:
           - gradle-ms-eureka-oauth
           - jdl-default-app
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: generator-jhipster-micronaut
           fetch-depth: 2
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: jhipster/generator-jhipster
           ref: v7.9.3
@@ -54,7 +54,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: '17'
       - name: 'Install blueprint'
         run: npm install && npm link
         working-directory: ${{ github.workspace }}/generator-jhipster-micronaut
