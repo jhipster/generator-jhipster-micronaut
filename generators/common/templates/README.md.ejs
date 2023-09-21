@@ -139,12 +139,12 @@ To benefit from TypeScript type definitions from [DefinitelyTyped][] repository 
 
 Then you would import the JS and CSS files specified in library's installation instructions so that [Webpack][] knows about them:
 <%_ if (clientFrameworkAngular) { _%>
-Edit [<%= CLIENT_MAIN_SRC_DIR %>app/vendor.ts](<%= CLIENT_MAIN_SRC_DIR %>app/vendor.ts) file:
+Edit [<%= clientSrcDir %>app/vendor.ts](<%= clientSrcDir %>app/vendor.ts) file:
 ~~~
 import 'leaflet/dist/leaflet.js';
 ~~~
 
-Edit [<%= CLIENT_MAIN_SRC_DIR %>content/scss/vendor.scss](<%= CLIENT_MAIN_SRC_DIR %>content/scss/vendor.scss) file:
+Edit [<%= clientSrcDir %>content/scss/vendor.scss](<%= clientSrcDir %>content/scss/vendor.scss) file:
 ~~~
 @import '~leaflet/dist/leaflet.css';
 ~~~
@@ -165,9 +165,9 @@ For example, the following command:
 
 will generate few files:
 
-    create <%= CLIENT_MAIN_SRC_DIR %>app/my-component/my-component.component.html
-    create <%= CLIENT_MAIN_SRC_DIR %>app/my-component/my-component.component.ts
-    update <%= CLIENT_MAIN_SRC_DIR %>app/app.module.ts
+    create <%= clientSrcDir %>app/my-component/my-component.component.html
+    create <%= clientSrcDir %>app/my-component/my-component.component.ts
+    update <%= clientSrcDir %>app/app.module.ts
 <%_ } _%>
 <%_ if (enableSwaggerCodegen) { _%>
 ### Doing API-First development using openapi-generator

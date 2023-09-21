@@ -60,13 +60,13 @@ task webapp(type: <%= this._.upperFirst(clientPackageManager) %>Task) {
     inputs.files("package-lock.json")
     <%_ } _%>
     inputs.files("build.gradle")
-    inputs.dir("<%= CLIENT_MAIN_SRC_DIR %>")
+    inputs.dir("<%= clientSrcDir %>")
 
     def webpackDevFiles = fileTree("<%= CLIENT_WEBPACK_DIR %>/")
     webpackDevFiles.exclude("webpack.prod.js")
     inputs.files(webpackDevFiles)
 
-    outputs.dir("<%= CLIENT_DIST_DIR %>")
+    outputs.dir("<%= clientDistDir %>")
 
     dependsOn <%= clientPackageManager %><%_ if (clientPackageManager === 'npm') { _%>Install<%_ } _%>
 
