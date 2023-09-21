@@ -49,7 +49,7 @@ _%>
     }
 <%_ } else { _%>
     <%_ if (pagination === 'no') { _%>
-    public Iterable<<%= instanceType %>> getAll<%= entityClassPlural %>(HttpRequest request<% if (fieldsContainNoOwnerOneToOne) { %>, @Nullable String filter<% } %><% if (fieldsContainOwnerManyToMany && fieldsContainNoOwnerOneToOne) { %>,<% } %><% if (fieldsContainOwnerManyToMany) { %>, @Nullable Boolean eagerload<% } %>) {<%- include('get_all_stream_template', {viaService: viaService}); -%>
+    public Iterable<<%= instanceType %>> getAll<%= entityClassPlural %>(HttpRequest request<% if (fieldsContainNoOwnerOneToOne) { %>, @Nullable String filter<% } %><% if (fieldsContainOwnerManyToMany) { %>, @Nullable Boolean eagerload<% } %>) {<%- include('get_all_stream_template', {viaService: viaService}); -%>
         log.debug("REST request to get all <%= entityClassPlural %>");<% if (viaService) { %>
         return <%= entityInstance %>Service.findAll();<% } else if (dto === 'mapstruct') { %>
         List<<%= persistClass %>> <%= entityInstancePlural %> = <%= entityInstance %>Repository.<% if (fieldsContainOwnerManyToMany) { %>findAllWithEagerRelationships<% } else { %>findAll<% } %>();
