@@ -8,8 +8,6 @@ export const angularFiles = {
         'configuration.component.html',
         'configuration.component.ts',
         'configuration.filter.ts',
-        'configuration.module.ts',
-        'configuration.route.ts',
         'configuration.service.ts',
         'configuration.component.spec.ts',
         'configuration.service.spec.ts',
