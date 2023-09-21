@@ -20,7 +20,7 @@ package <%= packageName %>.service;
 
 <%_
 const instanceType = (dto === 'mapstruct') ? dtoClass : persistClass;
-const instanceName = (dto === 'mapstruct') ? dtoIntance : persistInstance;
+const instanceName = (dto === 'mapstruct') ? dtoInstance : persistInstance;
 _%>
 <%_ if (dto === 'mapstruct') { _%>
 import <%= packageName %>.service.dto.<%= dtoClass %>;

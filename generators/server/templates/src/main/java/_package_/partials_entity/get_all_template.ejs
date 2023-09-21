@@ -18,7 +18,7 @@
 -%>
 <%_
     const instanceType = (dto === 'mapstruct') ? dtoClass : persistClass;
-    const instanceName = (dto === 'mapstruct') ? dtoIntance : persistInstance;
+    const instanceName = (dto === 'mapstruct') ? dtoInstance : persistInstance;
     const mapper = entityInstance + 'Mapper';
     const entityListToDtoListReference = mapper + '.' + 'toDto';
     const entityToDtoReference = mapper + '::'+ 'toDto';

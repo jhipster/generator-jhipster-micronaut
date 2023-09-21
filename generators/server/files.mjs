@@ -363,10 +363,12 @@ export const serverFiles = {
       ],
     }),
     javaMainPackageTemplatesBlock({
+      condition: ctx => ctx.generateBuiltInUserEntity,
       renameTo: (data, file) => moveToJavaPackageSrcDir(data, file).replace('/UserDTO.java', `/${data.user.dtoClass}.java`),
       templates: ['service/dto/UserDTO.java'],
     }),
     javaMainPackageTemplatesBlock({
+      condition: ctx => ctx.generateBuiltInUserEntity,
       renameTo: (data, file) => moveToJavaPackageSrcDir(data, file).replace('/AdminUserDTO.java', `/${data.user.adminUserDto}.java`),
       templates: ['service/dto/AdminUserDTO.java'],
     }),

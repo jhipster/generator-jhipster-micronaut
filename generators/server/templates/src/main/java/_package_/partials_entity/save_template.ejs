@@ -17,7 +17,7 @@
  limitations under the License.
 -%>
 <%_ const instanceType = (dto === 'mapstruct') ? dtoClass : persistClass;
-const instanceName = (dto === 'mapstruct') ? dtoIntance : persistInstance;
+const instanceName = (dto === 'mapstruct') ? dtoInstance : persistInstance;
 const mapper = entityInstance  + 'Mapper';
 const dtoToEntity = mapper + '.' + 'toEntity';
 const entityToDto = mapper + '.' + 'toDto';

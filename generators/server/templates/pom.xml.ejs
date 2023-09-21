@@ -98,7 +98,7 @@ _%>
         <!-- The javassist version should match the one managed by
         https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
         <javassist.version><%= versions.javassist %></javassist.version>
-        <jakarta-inject.version>2.0.1</jakarta-inject.version>
+        <jakarta-inject.version><%= versions.jakartaInject %></jakarta-inject.version>
         <javax-mail.version><%= versions.javaxMail %></javax-mail.version>
         <%_ if (!skipUserManagement) { _%>
         <jbcrypt.version><%= versions.jbcrypt %></jbcrypt.version>

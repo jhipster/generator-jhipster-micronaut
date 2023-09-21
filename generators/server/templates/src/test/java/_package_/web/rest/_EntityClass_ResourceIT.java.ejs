@@ -39,7 +39,7 @@ for (idx in relationships) {
 
 const usesDto = dto === 'mapstruct';
 const httpEntityClass = usesDto ? dtoClass : entityClass;
-const httpEntityInstance = usesDto ? dtoIntance : entityInstance;
+const httpEntityInstance = usesDto ? dtoInstance : entityInstance;
 
 _%>
 <%_ if (databaseType === 'cassandra') { _%>
@@ -472,7 +472,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         int databaseSizeBeforeCreate = <%= entityInstance %>Repository.findAll().size();
 
         <%_ if (usesDto) { _%>
-        <%= dtoClass %> <%= dtoIntance %> = <%= entityInstance %>Mapper.toDto(<%= persistInstance %>);
+        <%= dtoClass %> <%= dtoInstance %> = <%= entityInstance %>Mapper.toDto(<%= persistInstance %>);
         <%_ } _%>
 
         // Create the <%= entityClass %>
@@ -494,7 +494,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         // Create the <%= entityClass %> with an existing ID
         <%= persistInstance %>.setId(<% if (databaseTypeSql && hasOauthUser === true) { %>UUID.randomUUID().toString()<% } else if (databaseTypeSql) { %>1L<% } else if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>"existing_id"<% } else if (databaseType === 'cassandra') { %>UUID.randomUUID()<% } %>);
         <%_ if (usesDto) { _%>
-        <%= dtoClass %> <%= dtoIntance %> = <%= entityInstance %>Mapper.toDto(<%= persistInstance %>);
+        <%= dtoClass %> <%= dtoInstance %> = <%= entityInstance %>Mapper.toDto(<%= persistInstance %>);
         <%_ } _%>
 
         // An entity with an existing ID cannot be created, so this API call must fail
@@ -527,7 +527,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%= persistInstance %>.set<%= fields[idx].fieldInJavaBeanMethod %>(null);
 
         // Create the <%= entityClass %>, which fails.<% if (usesDto) { %>
-        <%= dtoClass %> <%= dtoIntance %> = <%= entityInstance %>Mapper.toDto(<%= persistInstance %>);<% } %>
+        <%= dtoClass %> <%= dtoInstance %> = <%= entityInstance %>Mapper.toDto(<%= persistInstance %>);<% } %>
 
         @SuppressWarnings("unchecked")
         HttpResponse<<%= httpEntityClass %>> response = client.exchange(HttpRequest.POST("/api/<%= entityApiUrl %>", <%= httpEntityInstance %>), <%= httpEntityClass %>.class)
@@ -632,7 +632,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         int databaseSizeBeforeUpdate = <%= entityInstance %>Repository.findAll().size();
 
         // Create the <%= entityClass %><% if (usesDto) { %>
-        <%= dtoClass %> <%= dtoIntance %> = <%= entityInstance %>Mapper.toDto(<%= persistInstance %>);<% } %>
+        <%= dtoClass %> <%= dtoInstance %> = <%= entityInstance %>Mapper.toDto(<%= persistInstance %>);<% } %>
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         @SuppressWarnings("unchecked")
