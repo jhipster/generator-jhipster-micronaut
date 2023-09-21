@@ -27,7 +27,7 @@ services:
 <%_ if (databaseTypeSql) {
 const databaseName = prodDatabaseTypeMysql || prodDatabaseTypeMariadb ? baseName.toLowerCase() : baseName;
 _%>
-      - JDBC_URL=<%- getJDBCUrl(prodDatabaseType, { hostname: `${baseName.toLowerCase()}-${prodDatabaseType}`, databaseName: databaseName }) %>
+      - JDBC_URL=<%- this.getJDBCUrl(prodDatabaseType, { hostname: `${baseName.toLowerCase()}-${prodDatabaseType}`, databaseName: databaseName }) %>
 <%_ } _%>
 <%_ if (prodDatabaseTypeMysql || prodDatabaseTypeMariadb) { _%>
       - JDBC_PASSWORD=password

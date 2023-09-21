@@ -1,4 +1,5 @@
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
+import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
 import { javaMainPackageTemplatesBlock } from 'generator-jhipster/generators/java/support';
 
 export default class extends BaseApplicationGenerator {
@@ -13,19 +14,13 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
       addNeedles({ source, application }) {
-        /*
-        if (
-          (.cacheProviderEhcache ||
-          (application as any).cacheProviderCaffeine ||
-          (application as any).cacheProviderRedis
-        ) {
+        if (application.cacheProviderEhcache || application.cacheProviderCaffeine || application.cacheProviderRedis) {
           const cacheConfigurationFile = `${application.javaPackageSrcDir}config/CacheConfiguration.java`;
-          const needle = `${(application as any).cacheProvider}-add-entry`;
-          const useJcacheConfiguration = (application as any).cacheProviderRedis;
+          const needle = `${application.cacheProvider}-add-entry`;
           const addEntryToCacheCallback = entry =>
             createNeedleCallback({
               needle,
-              contentToAdd: `createCache(cm, ${entry}${useJcacheConfiguration ? ', jcacheConfiguration' : ''});`,
+              contentToAdd: `createCache(cm, ${entry});`,
             });
 
           source.addEntryToCache = ({ entry }) => this.editFile(cacheConfigurationFile, addEntryToCacheCallback(entry));
@@ -39,13 +34,7 @@ export default class extends BaseApplicationGenerator {
                 .map(rel => addEntryToCacheCallback(`${entry} + ".${rel.propertyName}"`)),
             );
           };
-        } else {
-          // Add noop
-          source.addEntryToCache = () => {};
-          // Add noop
-          source.addEntityToCache = () => {};
         }
-        */
       },
     });
   }
@@ -77,7 +66,7 @@ export default class extends BaseApplicationGenerator {
             const { entityAbsoluteClass } = entity;
             source.addEntityToCache?.({
               entityAbsoluteClass,
-              relationships: this.relationships,
+              relationships: entity.relationships,
             });
           }
         }

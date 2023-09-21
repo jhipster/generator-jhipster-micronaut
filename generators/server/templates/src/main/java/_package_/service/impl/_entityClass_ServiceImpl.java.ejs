@@ -61,7 +61,7 @@ import <%= packageName %>.service.mapper.<%= entityClass %>Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-<%_ if (pagination !== 'no' || fieldsContainOwnerManyToMany === true) { _%>
+<%_ if (pagination !== 'no' || fieldsContainOwnerManyToMany) { _%>
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 <%_ } _%>
@@ -149,7 +149,7 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     public <% if (pagination !== 'no') { %>Page<<%= instanceType %><% } else { %>List<<%= instanceType %><% } %>> findAll(<% if (pagination !== 'no') { %>Pageable pageable<% } %>) {
         log.debug("Request to get all <%= entityClassPlural %>");
         <%_ if (pagination === 'no') { _%>
-        return <%= entityInstance %>Repository.<% if (fieldsContainOwnerManyToMany === true) { %>findAllWithEagerRelationships<% } else { %>findAll<% } %>()<% if (dto === 'mapstruct') { %>.stream()
+        return <%= entityInstance %>Repository.<% if (fieldsContainOwnerManyToMany) { %>findAllWithEagerRelationships<% } else { %>findAll<% } %>()<% if (dto === 'mapstruct') { %>.stream()
             .map(<%= entityToDtoReference %>)
             .collect(Collectors.toCollection(LinkedList::new))<% } %>;
         <%_ } else { _%>
@@ -169,7 +169,7 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
             .map(<%= entityToDtoReference %>)<% } %>;
     }
     <%_ } _%>
-    <%_ if (fieldsContainOwnerManyToMany === true) { _%>
+    <%_ if (fieldsContainOwnerManyToMany) { _%>
 
     /**
      * Get all the <%= entityInstancePlural %> with eager load of many-to-many relationships.

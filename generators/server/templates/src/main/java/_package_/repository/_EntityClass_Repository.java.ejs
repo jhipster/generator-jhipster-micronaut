@@ -88,7 +88,7 @@ public interface <%= entityClass %>Repository extends <% if (databaseTypeSql) { 
     @Query("select <%= entityInstance %> from <%= persistClass %> <%= entityInstance %> where <%= entityInstance %>.<%= relationships[idx].relationshipFieldName %>.login = :username ")
     public List<<%= persistClass %>> findBy<%= relationships[idx].relationshipNameCapitalized %>IsCurrentUser(String username);
     <%_ } } _%>
-    <%_ if (fieldsContainOwnerManyToMany === true) {
+    <%_ if (fieldsContainOwnerManyToMany) {
         if (databaseTypeSql) { _%>
 
     @Query(value = "select distinct <%= entityInstance %>_ from <%= persistClass %> <%= entityInstance %>_<% for (idx in relationships) {

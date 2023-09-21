@@ -120,8 +120,6 @@ export default class extends ServerGenerator {
         application.GRADLE_VERSION = mnConstants.GRADLE_VERSION;
         application.DOCKER_REDIS = mnConstants.DOCKER_REDIS;
         application.jhipsterDependenciesVersion = '7.9.3';
-        // TODO implement
-        application.fieldsContainOwnerManyToMany = undefined;
       },
 
       registerSpringFactory: undefined,
@@ -151,9 +149,20 @@ export default class extends ServerGenerator {
     });
   }
 
+  get [ServerGenerator.CONFIGURING_EACH_ENTITY]() {
+    return this.asConfiguringEachEntityTaskGroup({
+      ...super.configuringEachEntity,
+    });
+  }
+
   get [ServerGenerator.DEFAULT]() {
     return this.asDefaultTaskGroup({
       ...super.default,
+      relationships({ entities }) {
+        for (const entity of entities) {
+          entity.fieldsContainOwnerManyToMany = entity => entity.relationships.some(rel => rel.ownerSide && rel.relationshipManyToMany);
+        }
+      },
     });
   }
 

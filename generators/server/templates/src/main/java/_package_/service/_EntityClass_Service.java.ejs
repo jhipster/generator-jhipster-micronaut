@@ -27,7 +27,7 @@ import <%= packageName %>.service.dto.<%= dtoClass %>;
 <%_ } else { _%>
 import <%= packageName %>.domain.<%= persistClass %>;
 <%_ } _%>
-<%_ if (pagination !== 'no' || fieldsContainOwnerManyToMany === true) { _%>
+<%_ if (pagination !== 'no' || fieldsContainOwnerManyToMany) { _%>
 
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
@@ -81,7 +81,7 @@ public interface <%= entityClass %>Service {
     List<<%= instanceType %>> findAllWhere<%= relationships[idx].relationshipNameCapitalized %>IsNull();
 <% } } -%>
 
-    <%_ if (fieldsContainOwnerManyToMany === true) { _%>
+    <%_ if (fieldsContainOwnerManyToMany) { _%>
     /**
      * Get all the <%= entityInstancePlural %> with eager load of many-to-many relationships.
      *
