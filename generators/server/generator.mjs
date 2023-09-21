@@ -172,6 +172,7 @@ export default class extends ServerGenerator {
   }
 
   get [ServerGenerator.WRITING_ENTITIES]() {
+    const { writeEnumFiles } = super.writingEntities;
     return this.asWritingTaskGroup({
       async writeMicronautServerFiles({ application, entities }) {
         const rootTemplatesPath = application.reactive ? ['reactive', ''] : undefined;
@@ -183,6 +184,7 @@ export default class extends ServerGenerator {
           });
         }
       },
+      writeEnumFiles,
     });
   }
 
