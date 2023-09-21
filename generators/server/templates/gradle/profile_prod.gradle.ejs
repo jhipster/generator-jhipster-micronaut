@@ -17,7 +17,7 @@
  limitations under the License.
 -%>
 dependencies {
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     testImplementation "com.h2database:h2"
     <%_ } _%>
 }

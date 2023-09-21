@@ -32,7 +32,7 @@ for (idx in relationships) {
         mapsIdEntity = mapsIdAssoc.otherEntityNameCapitalized;
         mapsIdEntityInstance =  mapsIdEntity.charAt(0).toLowerCase() + mapsIdEntity.slice(1);
         mapsIdRepoInstance = `${mapsIdEntityInstance}Repository`;
-        hasOauthUser = relationships[idx].otherEntityName === 'user' && authenticationType === 'oauth2';
+        hasOauthUser = relationships[idx].otherEntityName === 'user' && authenticationTypeOauth2;
         break;
     }
 }
@@ -79,7 +79,7 @@ import io.micronaut.rxjava3.http.client.Rx3HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
 import io.micronaut.transaction.SynchronousTransactionManager;
 import io.micronaut.transaction.TransactionOperations;
 <%_ } _%>
@@ -93,7 +93,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 <%_ } _%>
 
 import jakarta.inject.Inject;
-<%_ if (databaseType === 'sql' && !reactive) { _%>
+<%_ if (databaseTypeSql && !reactive) { _%>
 import javax.persistence.EntityManager;
 <%_ } _%>
 <% if (anyFieldIsBigDecimal) { %>
@@ -109,11 +109,11 @@ import java.time.temporal.ChronoUnit;<% } %>
 <%_ if (searchEngine === 'elasticsearch') { _%>
 import java.util.Collections;
 <%_ } _%>
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
 import java.sql.Connection;
 <%_ } _%>
 import java.util.List;
-<%_ if (databaseType === 'cassandra' || fieldsContainUUID === true || (databaseType === 'sql' && hasOauthUser === true)) { _%>
+<%_ if (databaseType === 'cassandra' || fieldsContainUUID === true || (databaseTypeSql && hasOauthUser === true)) { _%>
 import java.util.UUID;
 <%_ } _%>
 
@@ -320,7 +320,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     <%_ } _%>
     @Inject
     private <%= entityClass %>Repository <%= entityInstance %>Repository;
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
 
     @Inject
     private EntityManager em;
@@ -355,7 +355,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
 
     @AfterEach
     public void cleanUpTest() {
-        <%_ if (databaseType === 'sql' && !reactive) { _%>
+        <%_ if (databaseTypeSql && !reactive) { _%>
         deleteAll(transactionManager, em);
         <%_ } else { _%>
         <%= persistInstance %>Repository.deleteAll();
@@ -368,7 +368,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static <%= persistClass %> createEntity(<% if (databaseType === 'sql') { %>TransactionOperations<Connection> transactionManager, EntityManager em<% } %>) {
+    public static <%= persistClass %> createEntity(<% if (databaseTypeSql) { %>TransactionOperations<Connection> transactionManager, EntityManager em<% } %>) {
         <%_ if (fluentMethods) { _%>
         <%= persistClass %> <%= persistInstance %> = new <%= persistClass %>()<% for (idx in fields) { if (fields[idx].id) continue;%>
             .<%= fields[idx].fieldName %>(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>)<% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %>
@@ -398,7 +398,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
             <%_ if (alreadyGeneratedEntities.indexOf(otherEntityName) == -1) { _%>
     <%_ if (otherEntityName === 'user') { // TODO or other entity has no unique fields _%>
         <%= relationship.otherEntity.persistClass %> <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.createEntity(transactionManager, em);
-                <%_ if (databaseType === 'sql' && !reactive) { _%>
+                <%_ if (databaseTypeSql && !reactive) { _%>
         transactionManager.executeWrite(status -> {
                 em.persist(<%= otherEntityName %>);
                 em.flush();
@@ -410,7 +410,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
                 <%_ } _%>
     <%_ } else { _%>
         <%= relationship.otherEntity.persistClass %> <%= otherEntityName %>;
-        <%_ if (databaseType === 'sql' && !reactive) { _%>
+        <%_ if (databaseTypeSql && !reactive) { _%>
         if (TestUtil.findAll(transactionManager, em, <%= otherEntityNameCapitalized %>.class).isEmpty()) {
             <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.createEntity(transactionManager, em);
             transactionManager.executeWrite(status -> {
@@ -422,7 +422,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
             <%= otherEntityName %> = TestUtil.findAll(transactionManager, em, <%= otherEntityNameCapitalized %>.class).get(0);
         }
         <%_ } else { _%>
-        <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.createEntity(<% if (databaseType === 'sql') { %>transactionManager, em<% } %>));
+        <%= otherEntityName %> = <%= otherEntityNameCapitalized %>ResourceIT.createEntity(<% if (databaseTypeSql) { %>transactionManager, em<% } %>));
         <%_ } _%>
         <%_ if (databaseType === 'mongodb') { _%>
         <%= otherEntityName %>.setId("fixed-id-for-tests");
@@ -438,7 +438,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ } } _%>
         return <%= persistInstance %>;
     }
-    <%_ if (databaseType === 'sql' && !reactive) { _%>
+    <%_ if (databaseTypeSql && !reactive) { _%>
 
     /**
      * Delete all <%= persistInstance %> entities.
@@ -492,7 +492,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         int databaseSizeBeforeCreate = <%= entityInstance %>Repository.findAll().size();
 
         // Create the <%= entityClass %> with an existing ID
-        <%= persistInstance %>.setId(<% if (databaseType === 'sql' && hasOauthUser === true) { %>UUID.randomUUID().toString()<% } else if (databaseType === 'sql') { %>1L<% } else if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>"existing_id"<% } else if (databaseType === 'cassandra') { %>UUID.randomUUID()<% } %>);
+        <%= persistInstance %>.setId(<% if (databaseTypeSql && hasOauthUser === true) { %>UUID.randomUUID().toString()<% } else if (databaseTypeSql) { %>1L<% } else if (databaseType === 'mongodb' || databaseType === 'couchbase') { %>"existing_id"<% } else if (databaseType === 'cassandra') { %>UUID.randomUUID()<% } %>);
         <%_ if (usesDto) { _%>
         <%= dtoClass %> <%= dtoIntance %> = <%= entityInstance %>Mapper.toDto(<%= persistInstance %>);
         <%_ } _%>
@@ -547,7 +547,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ if (databaseType === 'cassandra') { _%>
         <%= persistInstance %>.setId(UUID.randomUUID());
         <%_ } _%>
-        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= persistInstance %>);
+        <%= entityInstance %>Repository.save<% if (databaseTypeSql) { %>AndFlush<% } %>(<%= persistInstance %>);
 
         // Get the <%= entityInstance %>List w/ all the <%= entityInstancePlural %>
         List<<%= httpEntityClass %>> <%= entityInstancePlural %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>?eagerload=true"), Argument.listOf(<%= httpEntityClass %>.class)).blockingFirst();
@@ -562,7 +562,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ if (databaseType === 'cassandra') { _%>
         <%= persistInstance %>.setId(UUID.randomUUID());
         <%_ } _%>
-        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= persistInstance %>);
+        <%= entityInstance %>Repository.save<% if (databaseTypeSql) { %>AndFlush<% } %>(<%= persistInstance %>);
 
         // Get the <%= entityInstance %>
         <%= httpEntityClass %> test<%= entityClass %> = client.retrieve(HttpRequest.GET("/api/<%= entityApiUrl %>/" + <%= entityInstance %>.getId()), <%= httpEntityClass %>.class).blockingFirst();
@@ -591,7 +591,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         // As the test used the service layer, reset the Elasticsearch mock repository
         reset(mock<%= entityClass %>SearchRepository);
     <%_ } _%>
-        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= persistInstance %>);
+        <%= entityInstance %>Repository.save<% if (databaseTypeSql) { %>AndFlush<% } %>(<%= persistInstance %>);
 
         int databaseSizeBeforeUpdate = <%= entityInstance %>Repository.findAll().size();
 
@@ -657,7 +657,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
         <%_ if (databaseType === 'cassandra') { _%>
         <%= persistInstance %>.setId(UUID.randomUUID());
         <%_ } _%>
-        <%= entityInstance %>Repository.save<% if (databaseType === 'sql') { %>AndFlush<% } %>(<%= persistInstance %>);
+        <%= entityInstance %>Repository.save<% if (databaseTypeSql) { %>AndFlush<% } %>(<%= persistInstance %>);
 
         int databaseSizeBeforeDelete = <%= entityInstance %>Repository.findAll().size();
 

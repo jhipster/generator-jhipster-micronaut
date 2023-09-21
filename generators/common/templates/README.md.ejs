@@ -77,7 +77,7 @@ specifying a newer version in [package.json](package.json). You can also run `<%
 Add the `help` flag on any command to see how you can use it. For example, `<%= clientPackageManager %> help update`.
 
 The `<%= clientPackageManager %> run` command will list all of the scripts available to run for this project.
-<%_ if (authenticationType === 'oauth2') { _%>
+<%_ if (authenticationTypeOauth2) { _%>
 
 ## OAuth 2.0 / OpenID Connect
 
@@ -297,7 +297,7 @@ For more information refer to [Using Docker and Docker-Compose][], this page als
 [Micronaut]: https://micronaut.io
 [JHipster Homepage and latest documentation]: <%= DOCUMENTATION_URL %>
 [JHipster <%= jhipsterVersion %> archive]: <%= DOCUMENTATION_ARCHIVE_URL %>
-<% if (applicationType === 'gateway' || applicationType === 'microservice' || applicationType === 'uaa') { %>[Doing microservices with JHipster]: <%= DOCUMENTATION_ARCHIVE_URL %>/microservices-architecture/<% } %>
+<% if (applicationTypeGateway || applicationTypeMicroservice || applicationType === 'uaa') { %>[Doing microservices with JHipster]: <%= DOCUMENTATION_ARCHIVE_URL %>/microservices-architecture/<% } %>
 <%_ if (applicationType === 'uaa') { _%>[Using UAA for Microservice Security]: <%= DOCUMENTATION_ARCHIVE_URL %>/using-uaa/<%_ } _%>
 [Using JHipster in development]: <%= DOCUMENTATION_ARCHIVE_URL %>/development/
 <%_ if (serviceDiscoveryType === 'eureka') { _%>

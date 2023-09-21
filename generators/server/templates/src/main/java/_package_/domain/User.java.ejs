@@ -32,7 +32,7 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     @Id
         <%_ if (authenticationType !== 'oauth2' && (prodDatabaseType === 'mysql' || prodDatabaseType === 'mariadb')) { _%>
     @GeneratedValue(strategy = GenerationType.IDENTITY)

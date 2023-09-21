@@ -64,17 +64,17 @@ export const serverFiles = {
       templates: [{ file: generator => `${generator.prodDatabaseType}.yml`, useBluePrint: true }],
     },
     {
-      condition: generator => generator.prodDatabaseType === 'mongodb',
+      condition: generator => generator.databaseTypeMongodb,
       path: DOCKER_DIR,
       templates: ['mongodb-cluster.yml', 'mongodb/MongoDB.Dockerfile', 'mongodb/scripts/init_replicaset.js'],
     },
     {
-      condition: generator => generator.prodDatabaseType === 'couchbase',
+      condition: generator => generator.databaseTypeCouchbase,
       path: DOCKER_DIR,
       templates: ['couchbase-cluster.yml', 'couchbase/Couchbase.Dockerfile', 'couchbase/scripts/configure-node.sh'],
     },
     {
-      condition: generator => generator.prodDatabaseType === 'cassandra',
+      condition: generator => generator.databaseTypeCassandra,
       path: DOCKER_DIR,
       templates: [
         // docker-compose files
@@ -151,7 +151,7 @@ export const serverFiles = {
       templates: ['swagger-editor.yml'],
     },
     {
-      condition: generator => generator.authenticationType === 'oauth2' && generator.applicationType !== 'microservice',
+      condition: generator => generator.authenticationTypeOauth2 && generator.applicationType !== 'microservice',
       path: DOCKER_DIR,
       templates: ['keycloak.yml', { file: 'config/realm-config/jhipster-realm.json', renameTo: () => 'realm-config/jhipster-realm.json' }],
     },
@@ -211,7 +211,7 @@ export const serverFiles = {
     javaMainPackageTemplatesBlock({
       condition: generator =>
         generator.databaseType === 'mongodb' &&
-        (!generator.skipUserManagement || (generator.skipUserManagement && generator.authenticationType === 'oauth2')),
+        (!generator.skipUserManagement || (generator.skipUserManagement && generator.authenticationTypeOauth2)),
       templates: ['config/dbmigrations/InitialSetupMigration.kt'],
     }),
     javaMainResourceTemplatesBlock({
@@ -220,7 +220,7 @@ export const serverFiles = {
     }),
     javaMainResourceTemplatesBlock({
       condition: generator =>
-        generator.databaseType === 'couchbase' && (!generator.skipUserManagement || generator.authenticationType === 'oauth2'),
+        generator.databaseType === 'couchbase' && (!generator.skipUserManagement || generator.authenticationTypeOauth2),
       templates: [
         'config/couchmove/changelog/V0.1__initial_setup/ROLE_ADMIN.json',
         'config/couchmove/changelog/V0.1__initial_setup/ROLE_USER.json',
@@ -243,7 +243,7 @@ export const serverFiles = {
       condition: generator =>
         generator.databaseType === 'cassandra' &&
         generator.applicationType !== 'microservice' &&
-        (!generator.skipUserManagement || generator.authenticationType === 'oauth2'),
+        (!generator.skipUserManagement || generator.authenticationTypeOauth2),
       templates: [
         { file: 'config/cql/changelog/create-tables.cql', renameTo: () => 'config/cql/changelog/00000000000000_create-tables.cql' },
         {
@@ -293,13 +293,13 @@ export const serverFiles = {
   ],
   serverJavaDomain: [
     javaMainPackageTemplatesBlock({
-      condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
+      condition: generator => !generator.skipUserManagement || generator.authenticationTypeOauth2,
       templates: ['domain/Authority.java', 'domain/User.java'],
     }),
   ],
   serverJavaRepository: [
     javaMainPackageTemplatesBlock({
-      condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
+      condition: generator => !generator.skipUserManagement || generator.authenticationTypeOauth2,
       templates: ['repository/AuthorityRepository.java', 'repository/UserRepository.java'],
     }),
   ],
@@ -327,11 +327,11 @@ export const serverFiles = {
       ],
     }),
     javaMainPackageTemplatesBlock({
-      condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
+      condition: generator => !generator.skipUserManagement || generator.authenticationTypeOauth2,
       templates: ['security/Logout.java', 'security/UserNotActivatedException.java'],
     }),
     javaMainPackageTemplatesBlock({
-      condition: generator => generator.authenticationType === 'oauth2',
+      condition: generator => generator.authenticationTypeOauth2,
       templates: [
         'security/ApiLogoutController.java',
         'security/JHipsterOpenIdUserDetailsMapper.java',
@@ -413,7 +413,7 @@ export const serverFiles = {
       ],
     }),
     javaMainPackageTemplatesBlock({
-      condition: generator => !generator.skipUserManagement || generator.authenticationType === 'oauth2',
+      condition: generator => !generator.skipUserManagement || generator.authenticationTypeOauth2,
       templates: ['web/rest/AccountResource.java'],
     }),
     javaMainPackageTemplatesBlock({

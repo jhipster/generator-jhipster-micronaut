@@ -3,13 +3,13 @@ package <%=packageName%>.web.rest;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
 import io.micronaut.transaction.TransactionOperations;
 <%_ } _%>
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,7 +18,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 <%_ } _%>
 import java.io.IOException;
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
 import java.sql.Connection;
 <%_ } _%>
 import java.util.List;
@@ -84,7 +84,7 @@ public final class TestUtil {
         assertThat(domainObject1.hashCode()).isEqualTo(domainObject2.hashCode());
     }
 
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
 /**
      * Makes a an executes a query to the EntityManager finding all stored objects.
      * @param <T> The type of objects to be searched

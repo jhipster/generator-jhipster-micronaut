@@ -61,7 +61,7 @@ import <%= packageName %>.service.mapper.<%= entityClass %>Mapper;
  * in a way that all the filters must apply.
  * It returns a {@link List} of {@link <%= instanceType %>} or a {@link Page} of {@link <%= instanceType %>} which fulfills the criteria.
  */
-@Singleton<% if (databaseType === 'sql') { %>
+@Singleton<% if (databaseTypeSql) { %>
 @ReadOnly
 @Transactional<% } %>
 public class <%= serviceClassName %> extends QueryService<<%= persistClass %>> {

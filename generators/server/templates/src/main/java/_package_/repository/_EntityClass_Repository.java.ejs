@@ -24,7 +24,7 @@ import <%= packageName %>.domain.<%= persistClass %>;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 <%_ } _%>
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
 
 import io.micronaut.data.annotation.Query;
 import io.micronaut.data.annotation.Repository;
@@ -50,7 +50,7 @@ import io.micronaut.data.jpa.repository.JpaRepository;
 // import org.springframework.data.cassandra.repository.CassandraRepository;
 <%_ } _%>
 <%_
-if (databaseType === 'sql' || databaseType === 'mongodb' || databaseType === 'couchbase') {
+if (databaseTypeSql || databaseType === 'mongodb' || databaseType === 'couchbase') {
     let importList = fieldsContainOwnerManyToMany;
     for (r of relationships) {
         if (r.relationshipType === 'many-to-one' && r.otherEntityName === 'user') {
@@ -80,16 +80,16 @@ import java.util.UUID;
 @SuppressWarnings("unused")
 <%_ } _%>
 @Repository
-public interface <%= entityClass %>Repository extends <% if (databaseType === 'sql') { %>JpaRepository<% } %><% if (databaseType === 'mongodb') { %>MongoRepository<% } %><% if (databaseType === 'cassandra') { %>CassandraRepository<% } %><% if (databaseType === 'couchbase') { %>N1qlCouchbaseRepository<% } %><<%= persistClass %>, <%= primaryKey.type %>><% if (jpaMetamodelFiltering) { %>, JpaSpecificationExecutor<<%= persistClass %>><% } %> {
+public interface <%= entityClass %>Repository extends <% if (databaseTypeSql) { %>JpaRepository<% } %><% if (databaseType === 'mongodb') { %>MongoRepository<% } %><% if (databaseType === 'cassandra') { %>CassandraRepository<% } %><% if (databaseType === 'couchbase') { %>N1qlCouchbaseRepository<% } %><<%= persistClass %>, <%= primaryKey.type %>><% if (jpaMetamodelFiltering) { %>, JpaSpecificationExecutor<<%= persistClass %>><% } %> {
 
     <%_ for (idx in relationships) {
-        if (relationships[idx].relationshipType === 'many-to-one' && relationships[idx].otherEntityName === 'user' && databaseType === 'sql') { _%>
+        if (relationships[idx].relationshipType === 'many-to-one' && relationships[idx].otherEntityName === 'user' && databaseTypeSql) { _%>
 
     @Query("select <%= entityInstance %> from <%= persistClass %> <%= entityInstance %> where <%= entityInstance %>.<%= relationships[idx].relationshipFieldName %>.login = :username ")
     public List<<%= persistClass %>> findBy<%= relationships[idx].relationshipNameCapitalized %>IsCurrentUser(String username);
     <%_ } } _%>
     <%_ if (fieldsContainOwnerManyToMany === true) {
-        if (databaseType === 'sql') { _%>
+        if (databaseTypeSql) { _%>
 
     @Query(value = "select distinct <%= entityInstance %>_ from <%= persistClass %> <%= entityInstance %>_<% for (idx in relationships) {
     if (relationships[idx].relationshipType === 'many-to-many' && relationships[idx].ownerSide === true) { %> left join fetch <%= entityInstance %>_.<%= relationships[idx].relationshipFieldNamePlural %><% } } %>",

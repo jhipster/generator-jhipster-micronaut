@@ -14,7 +14,7 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Replaces;
 import io.micronaut.context.annotation.Requires;
-<%_ if (authenticationType === 'oauth2') { _%>
+<%_ if (authenticationTypeOauth2) { _%>
 import io.micronaut.http.HttpHeaders;
 <%_ } _%>
 import io.micronaut.http.HttpRequest;
@@ -49,7 +49,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 <%_ } _%>
 @MicronautTest
 @Property(name = "spec.name", value = "JWTFilterTest")
-<%_ if (authenticationType === 'oauth2') { _%>
+<%_ if (authenticationTypeOauth2) { _%>
 @Property(name = "micronaut.http.client.follow-redirects", value = "false")
 <%_ } _%>
 public class JWTFilterTest {
@@ -58,7 +58,7 @@ public class JWTFilterTest {
 
     @Test
     public void testJWTFilter() throws Exception {
-        <%_ if (authenticationType === 'oauth2') { _%>
+        <%_ if (authenticationTypeOauth2) { _%>
 
         HttpResponse<?> response = client.exchange(HttpRequest.POST("/api/authenticate", new UsernamePasswordCredentials("test-user", "test-password"))).blockingFirst();
         HttpHeaders headers = response.getHeaders();

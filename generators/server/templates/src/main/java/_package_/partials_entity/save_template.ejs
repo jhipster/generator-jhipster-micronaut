@@ -27,7 +27,7 @@ let resultEntity;
 let mapsIdEntityInstance;
 let mapsIdRepoInstance;
 let otherEntityName;
-let dataTypeName = (isUsingMapsId === true && mapsIdAssoc.otherEntityName === 'user' && authenticationType === 'oauth2') ? 'String' : 'long';
+let dataTypeName = (isUsingMapsId === true && mapsIdAssoc.otherEntityName === 'user' && authenticationTypeOauth2) ? 'String' : 'long';
 
 if (isUsingMapsId === true) {
     mapsIdEntityInstance = mapsIdAssoc.otherEntityNameCapitalized.charAt(0).toLowerCase() + mapsIdAssoc.otherEntityNameCapitalized.slice(1);

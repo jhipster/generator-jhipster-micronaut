@@ -33,7 +33,7 @@ management:
       prometheus:
         enabled: false
 
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
 <%_
     const dbUrlConfig = {
       databaseName: baseName,

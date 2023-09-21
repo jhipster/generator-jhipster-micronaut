@@ -88,7 +88,7 @@ export const entityFiles = {
     javaTestPackageTemplatesBlock({
       condition: generator =>
         generator.dto === 'mapstruct' &&
-        (generator.databaseType === 'sql' || generator.databaseType === 'mongodb' || generator.databaseType === 'couchbase'),
+        (generator.databaseTypeSql || generator.databaseType === 'mongodb' || generator.databaseType === 'couchbase'),
       templates: ['service/mapper/_EntityClass_MapperTest.java'],
     }),
   ],

@@ -62,7 +62,7 @@ testcontainers_version=<%= versions.testcontainers %>
 liquibase_hibernate5_version=<%=versions.liquibaseHibernate5%>
 liquibaseTaskPrefix=liquibase
 
-<%_ if (databaseType === 'sql' || authenticationType === 'uaa') { _%>
+<%_ if (databaseTypeSql || authenticationType === 'uaa') { _%>
 jaxb_runtime_version=2.3.2
 <%_ } _%>
 
@@ -73,7 +73,7 @@ git_properties_plugin_version=2.4.1
 gradle_node_plugin_version=2.2.4
 <%_ } _%>
 apt_plugin_version=0.21
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
 liquibase_plugin_version=2.0.3
 <%_ } _%>
 sonarqube_plugin_version=2.8

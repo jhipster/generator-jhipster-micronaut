@@ -257,7 +257,7 @@ public class <%= entityClass %>Resource {
      */
     @Get("/<%= entityApiUrl %><% if (!jpaMetamodelFiltering && fieldsContainOwnerManyToMany) { _%>{?eagerload}<% } %>")
     @ExecuteOn(TaskExecutors.IO)
-    <%_ if (databaseType === 'sql' && isUsingMapsId === true && !viaService) { _%>
+    <%_ if (databaseTypeSql && isUsingMapsId === true && !viaService) { _%>
     @ReadOnly
     @Transactional
     <%_ } _%>
@@ -270,7 +270,7 @@ public class <%= entityClass %>Resource {
      */
     @Get(value = "/<%= entityApiUrl %>", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     @ExecuteOn(TaskExecutors.IO)
-    <%_ if (databaseType === 'sql' && isUsingMapsId === true && !viaService) { _%>
+    <%_ if (databaseTypeSql && isUsingMapsId === true && !viaService) { _%>
     @ReadOnly
     @Transactional
     <%_ } _%>
@@ -292,7 +292,7 @@ public class <%= entityClass %>Resource {
      */
     @Get("/<%= entityApiUrl %>/{id}")
     @ExecuteOn(TaskExecutors.IO)
-    <%_ if (databaseType === 'sql' && isUsingMapsId === true && !viaService) { _%>
+    <%_ if (databaseTypeSql && isUsingMapsId === true && !viaService) { _%>
     @ReadOnly
     @Transactional
     <%_ } _%>

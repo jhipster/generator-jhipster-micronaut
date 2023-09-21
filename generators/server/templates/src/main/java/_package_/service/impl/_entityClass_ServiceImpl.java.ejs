@@ -66,7 +66,7 @@ import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 <%_ } _%>
 import jakarta.inject.Singleton;
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
 import javax.transaction.Transactional;
 import io.micronaut.transaction.annotation.ReadOnly;
 <%_ } _%>
@@ -98,7 +98,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 /**
  * Service Implementation for managing {@link <%= persistClass %>}.
  */
-@Singleton<% if (databaseType === 'sql') { %>
+@Singleton<% if (databaseTypeSql) { %>
 @Transactional<% } %>
 public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> implements <%= entityClass %>Service<% } %> {
 
@@ -142,7 +142,7 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     <%_ if (service === 'serviceImpl') { _%>
     @Override
     <%_ } _%>
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     @ReadOnly
     @Transactional
     <%_ } _%>
@@ -190,7 +190,7 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     <%_ if (service === 'serviceImpl') { _%>
     @Override
     <%_ } _%>
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     @ReadOnly
     @Transactional
     <%_ } _%>
@@ -222,7 +222,7 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     <%_ if (service === 'serviceImpl') { _%>
     @Override
     <%_ } _%>
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     @ReadOnly
     @Transactional
     <%_ } _%>

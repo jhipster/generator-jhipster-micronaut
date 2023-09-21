@@ -46,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @Property(name = "micronaut.security.enabled", value = "false")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserServiceIT {
-    <%_ if (authenticationType === 'oauth2') { _%>
+    <%_ if (authenticationTypeOauth2) { _%>
 
     private static final String DEFAULT_ID = "id1";
     <%_ } _%>

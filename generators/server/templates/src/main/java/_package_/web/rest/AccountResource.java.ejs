@@ -18,7 +18,7 @@ limitations under the License.
 -%>
 package <%= packageName %>.web.rest;
 
-<%_ if (authenticationType === 'oauth2') { _%>
+<%_ if (authenticationTypeOauth2) { _%>
 import <%=packageName%>.service.UserService;
 import <%=packageName%>.service.dto.<%= user.adminUserDto %>;
 

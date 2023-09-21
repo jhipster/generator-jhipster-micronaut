@@ -30,7 +30,7 @@ import io.micronaut.rxjava3.http.client.Rx3HttpClient;
 import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
 import io.micronaut.transaction.SynchronousTransactionManager;
 import io.micronaut.transaction.TransactionOperations;
 <%_ } _%>
@@ -43,10 +43,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import jakarta.inject.Inject;
-<%_ if (databaseType === 'sql' && !reactive) { _%>
+<%_ if (databaseTypeSql && !reactive) { _%>
 import javax.persistence.EntityManager;
 <%_ } _%>
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
 import java.sql.Connection;
 <%_ } _%>
 import java.time.Instant;
@@ -97,7 +97,7 @@ public class UserResourceIT {
 
     @Inject
     AuthorityRepository authorityRepository;
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
 
     @Inject
     private EntityManager em;
@@ -119,7 +119,7 @@ public class UserResourceIT {
 
     private User user;
 
-    public static User createEntity(<% if (databaseType === 'sql') { %>TransactionOperations<Connection> transactionManager, EntityManager em<% } %>) {
+    public static User createEntity(<% if (databaseTypeSql) { %>TransactionOperations<Connection> transactionManager, EntityManager em<% } %>) {
         User user = new User();
         user.setLogin(DEFAULT_LOGIN + RandomStringUtils.randomAlphabetic(5));
         <%_ if (authenticationType !== 'oauth2') { _%>
@@ -135,7 +135,7 @@ public class UserResourceIT {
         user.setLangKey(DEFAULT_LANGKEY);
         return user;
     }
-    <%_ if (databaseType === 'sql' && !reactive) { _%>
+    <%_ if (databaseTypeSql && !reactive) { _%>
 
     /**
         * Delete all User entities.

@@ -40,7 +40,7 @@ plugins {
     <%_ if (!skipClient) { _%>
     id "com.github.node-gradle.node"
     <%_ } _%>
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     id "org.liquibase.gradle"
     <%_ } _%>
     id "org.sonarqube"
@@ -100,7 +100,7 @@ if (project.hasProperty("gae")) {
     appengineStage.dependsOn thinResolve
 }
 
-<%_ if (serviceDiscoveryType || applicationType === 'gateway' || applicationType === 'microservice' || applicationType === 'uaa') { _%>
+<%_ if (serviceDiscoveryType || applicationTypeGateway || applicationTypeMicroservice || applicationType === 'uaa') { _%>
 if (project.hasProperty("zipkin")) {
     apply from: "gradle/zipkin.gradle"
 }
@@ -202,7 +202,7 @@ task cucumberTestReport(type: TestReport) {
 }
 
 <%_ } _%>
-<%_ if (databaseType === 'sql') { 
+<%_ if (databaseTypeSql) { 
         const { sqlDb } = MN_CONSTANTS;
         const devDbInfo = sqlDb[devDatabaseType];
 _%>
@@ -234,7 +234,7 @@ liquibase {
             defaultSchemaName "<% if (devDatabaseType === 'mysql') { %><%= baseName %><% } else if (devDatabaseType === 'postgresql') { %><% } %>"
             logLevel "debug"
             classpath "$buildDir/classes/java/main"
-            <%_ if (authenticationType === 'oauth2') { _%>
+            <%_ if (authenticationTypeOauth2) { _%>
             excludeObjects "oauth_access_token, oauth_approvals, oauth_client_details, oauth_client_token, oauth_code, oauth_refresh_token"
             <%_ } _%>
         }
@@ -278,7 +278,7 @@ dependencies {
     }
 
     annotationProcessor "io.micronaut:micronaut-validation"
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     annotationProcessor "io.micronaut.data:micronaut-data-processor"
     <%_ } _%>
     annotationProcessor "io.micronaut.openapi:micronaut-openapi"
@@ -303,14 +303,14 @@ dependencies {
     implementation "net.logstash.logback:logstash-logback-encoder"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-hppc"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5"
     <%_ } _%>
     implementation "com.fasterxml.jackson.core:jackson-annotations"
     implementation "com.fasterxml.jackson.module:jackson-module-jaxb-annotations"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml"
     implementation "com.fasterxml.jackson.core:jackson-databind"
-    <%_ if (applicationType === 'gateway' && authenticationType === 'uaa') { _%>
+    <%_ if (applicationTypeGateway && authenticationType === 'uaa') { _%>
     implementation "org.apache.httpcomponents:httpclient"
     <%_ } _%>
     <%_ if (cacheProvider === 'hazelcast') { _%>
@@ -343,15 +343,15 @@ dependencies {
         <%_ } _%>
     testImplementation "org.testcontainers:testcontainers:$testcontainers_version"
     <%_ } _%>
-    <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'redis'].includes(cacheProvider) || applicationType === 'gateway') { _%>
+    <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'redis'].includes(cacheProvider) || applicationTypeGateway) { _%>
     implementation "io.micronaut.cache:micronaut-cache-core"
     implementation "javax.cache:cache-api"
     <%_ } _%>
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     implementation "org.hibernate:hibernate-core"
     implementation "com.zaxxer:HikariCP"
     <%_ } _%>
-    <%_ if (databaseType === 'cassandra' || applicationType === 'gateway') { _%>
+    <%_ if (databaseType === 'cassandra' || applicationTypeGateway) { _%>
     implementation "commons-codec:commons-codec"
     <%_ } _%>
     <%_ if (enableSwaggerCodegen) { _%>
@@ -379,7 +379,7 @@ dependencies {
     implementation "org.hibernate:hibernate-jcache"
         <%_ } _%>
     <%_ } _%>
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     implementation "org.hibernate:hibernate-entitymanager"
     implementation "org.hibernate.validator:hibernate-validator"
     implementation "org.liquibase:liquibase-core"
@@ -460,12 +460,12 @@ dependencies {
     implementation "com.datastax.cassandra:cassandra-driver-extras"
     implementation "com.datastax.cassandra:cassandra-driver-mapping"
     <%_ } _%>
-    <%_ if (applicationType === 'gateway') { _%>
+    <%_ if (applicationTypeGateway) { _%>
 
     implementation "com.github.vladimir-bukhtoyarov:bucket4j-core"
     implementation "com.github.vladimir-bukhtoyarov:bucket4j-jcache"
     <%_ } _%>
-    <%_ if (applicationType === 'microservice' || applicationType === 'gateway' || applicationType === 'uaa') { _%>
+    <%_ if (applicationTypeMicroservice || applicationTypeGateway || applicationType === 'uaa') { _%>
 
     <%_ } _%>
     <%_ if (serviceDiscoveryType === 'eureka') { _%>
@@ -477,17 +477,17 @@ dependencies {
     <%_ if (authenticationType === 'uaa') { _%>
 
     <%_ } _%>
-    <%_ if (applicationType === 'microservice' || applicationType === 'gateway' || applicationType === 'uaa') { _%>
+    <%_ if (applicationTypeMicroservice || applicationTypeGateway || applicationType === 'uaa') { _%>
 
     <%_ } _%>
 
-    <%_ if (authenticationType === 'oauth2') { _%>
+    <%_ if (authenticationTypeOauth2) { _%>
 
     <%_ } _%>
 
     <%_ if (authenticationType === 'uaa') { _%>
 
-    <% if (databaseType === 'sql') { %>implementation<% } else { %>runtimeOnly<% } %> "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
+    <% if (databaseTypeSql) { %>implementation<% } else { %>runtimeOnly<% } %> "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
     <%_ } _%>
     <%_ if (databaseType === 'mongodb') { _%>
     implementation "com.github.mongobee:mongobee"
@@ -517,7 +517,7 @@ dependencies {
     <%_ } _%>
     implementation "org.mapstruct:mapstruct:${mapstruct_version}"
     annotationProcessor "org.mapstruct:mapstruct-processor:$mapstruct_version"
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     annotationProcessor "org.hibernate:hibernate-jpamodelgen:$hibernate_version"
     annotationProcessor "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
     <%_ } _%>
@@ -544,7 +544,7 @@ dependencies {
     <%_ if (databaseType === 'couchbase') { _%>
     testImplementation "org.testcontainers:couchbase"
     <%_ } _%>
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     testImplementation "com.h2database:h2"
     <%_ } _%>
     <%_ if (devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') { _%>

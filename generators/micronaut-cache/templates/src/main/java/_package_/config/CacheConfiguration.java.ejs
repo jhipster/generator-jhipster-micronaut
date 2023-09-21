@@ -113,7 +113,7 @@ public class CacheConfiguration {
     }
 
     private void customizeCacheManager(CacheManager cm) {
-        <%_ if (!skipUserManagement || (authenticationType === 'oauth2' && databaseType !== 'no')) { _%>
+        <%_ if (!skipUserManagement || (authenticationTypeOauth2 && databaseType !== 'no')) { _%>
         createCache(cm, <%=packageName%>.repository.UserRepository.USERS_CACHE);
           <%_ if (enableHibernateCache) { _%>
         createCache(cm, <%=packageName%>.domain.User.class.getName());
