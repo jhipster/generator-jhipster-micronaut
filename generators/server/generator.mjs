@@ -48,7 +48,9 @@ export default class extends ServerGenerator {
   get [ServerGenerator.CONFIGURING]() {
     return this.asConfiguringTaskGroup({
       ...super.configuring,
-      async configuringTemplateTask() {},
+      async configuringTemplateTask() {
+        this.jhipsterConfig.backendType = 'micronaut';
+      },
     });
   }
 
