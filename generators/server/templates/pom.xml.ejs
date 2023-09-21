@@ -108,6 +108,7 @@ _%>
         <logback.version><%= versions.logback %></logback.version>
         <mapstruct.version><%= versions.mapstruct %></mapstruct.version>
         <mockito.version><%= versions.mockito %></mockito.version>
+        <netty.version><%= versions.netty %></netty.version>
         <problem.version><%= versions.problem %></problem.version>
         <jackson.version><%= versions.jackson %></jackson.version>
 <%_ if (cacheProvider === 'caffeine') { _%>
@@ -426,7 +427,6 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-http-client</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.micronaut</groupId>
@@ -585,6 +585,18 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <scope>compile</scope>
             <version>${micronaut.version}</version>
           </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-codec</artifactId>
+            <version>${netty.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-common</artifactId>
+            <version>${netty.version}</version>
+            <scope>test</scope>
+        </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
     <build>

@@ -55,6 +55,7 @@ module.exports = {
     micronautData: '3.10.0',
     micronautDiscoveryClient: '3.3.1',
     micronautOpenApi: '4.8.7',
+    netty: '4.1.97.Final',
     rxJava3: '2.3.0',
     hibernate: '5.6.15.Final',
     prometheusSimpleclient: '0.16.0',
