@@ -360,18 +360,15 @@ export const serverFiles = {
         'service/mapper/UserMapper.java',
         'service/MailSenderFactory.java',
         'service/MailService.java',
-        'service/UserService.java',
       ],
     }),
     javaMainPackageTemplatesBlock({
       condition: ctx => ctx.generateBuiltInUserEntity,
-      renameTo: (data, file) => moveToJavaPackageSrcDir(data, file).replace('/UserDTO.java', `/${data.user.dtoClass}.java`),
-      templates: ['service/dto/UserDTO.java'],
-    }),
-    javaMainPackageTemplatesBlock({
-      condition: ctx => ctx.generateBuiltInUserEntity,
-      renameTo: (data, file) => moveToJavaPackageSrcDir(data, file).replace('/AdminUserDTO.java', `/${data.user.adminUserDto}.java`),
-      templates: ['service/dto/AdminUserDTO.java'],
+      renameTo: (data, file) =>
+        moveToJavaPackageSrcDir(data, file)
+          .replace('/UserDTO.java', `/${data.user.dtoClass}.java`)
+          .replace('/AdminUserDTO.java', `/${data.user.adminUserDto}.java`),
+      templates: ['service/UserService.java', 'service/dto/UserDTO.java', 'service/dto/AdminUserDTO.java'],
     }),
   ],
   serverJavaUtil: [

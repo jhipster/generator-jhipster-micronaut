@@ -7,8 +7,10 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
-      hibernate5() {
-        this.editFile('pom.xml', content => content.replace('liquibase-hibernate6', 'liquibase-hibernate5'));
+      hibernate5({ application }) {
+        if (application.buildToolMaven) {
+          this.editFile('pom.xml', { ignoreNonExisting: true }, content => content.replace('liquibase-hibernate6', 'liquibase-hibernate5'));
+        }
       },
     });
   }
