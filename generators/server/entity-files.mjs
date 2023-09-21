@@ -83,7 +83,7 @@ export const entityFiles = {
     javaMainPackageTemplatesBlock({
       condition: generator => generator.service === 'serviceClass',
       relativePath: '_entityPackage_/',
-      renameTo: (ctx, file) => moveToJavaEntityPackageSrcDir(ctx, file.replace('Impl.java', '.java').replace('/impl/', '/')),
+      renameTo: (_ctx, file) => file.replace('Impl.java', '.java').replace('/impl/', '/'),
       templates: ['service/impl/_EntityClass_ServiceImpl.java'],
     }),
   ],
@@ -91,7 +91,11 @@ export const entityFiles = {
     javaMainPackageTemplatesBlock({
       condition: generator => generator.dto === 'mapstruct',
       relativePath: '_entityPackage_/',
-      templates: ['service/dto/_DtoClass_.java', 'service/mapper/EntityMapper.java', 'service/mapper/_EntityClass_Mapper.java'],
+      templates: ['service/dto/_DtoClass_.java', 'service/mapper/_EntityClass_Mapper.java'],
+    }),
+    javaMainPackageTemplatesBlock({
+      condition: generator => generator.dto === 'mapstruct',
+      templates: ['service/mapper/EntityMapper.java'],
     }),
     javaTestPackageTemplatesBlock({
       condition: generator => generator.dto === 'mapstruct',
