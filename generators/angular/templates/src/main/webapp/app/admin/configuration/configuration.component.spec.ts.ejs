@@ -16,32 +16,33 @@ distributed under the License is distributed on an "AS IS" BASIS,
     See the License for the specific language governing permissions and
 limitations under the License.
 -%>
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
-import ConfigurationComponent from 'app/admin/configuration/configuration.component';
-import { ConfigurationService } from 'app/admin/configuration/configuration.service';
+import ConfigurationComponent from './configuration.component';
+import { ConfigurationService } from './configuration.service';
 
 describe('ConfigurationComponent', () => {
   let comp: ConfigurationComponent;
   let fixture: ComponentFixture<ConfigurationComponent>;
   let service: ConfigurationService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      declarations: [ConfigurationComponent],
-      providers: [ConfigurationService]
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientTestingModule, ConfigurationComponent],
+        providers: [ConfigurationService],
+      })
+        .overrideTemplate(ConfigurationComponent, '')
+        .compileComponents();
     })
-      .overrideTemplate(ConfigurationComponent, '')
-      .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConfigurationComponent);
     comp = fixture.componentInstance;
-    service = fixture.debugElement.injector.get(ConfigurationService);
+    service = TestBed.inject(ConfigurationService);
   });
 
   describe('OnInit', () => {
