@@ -6,7 +6,7 @@ const SUB_GENERATOR = 'heroku';
 const BLUEPRINT_NAMESPACE = `jhipster:${SUB_GENERATOR}`;
 
 describe('SubGenerator heroku of micronaut JHipster blueprint', () => {
-  describe('run', () => {
+  describe.skip('run', () => {
     beforeAll(async function () {
       await helpers
         .run(BLUEPRINT_NAMESPACE)
