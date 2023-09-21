@@ -16,17 +16,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-pluginManagement {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-        // jhipster-needle-gradle-plugin-management-repositories - JHipster will add additional entries here
-    }
-    plugins {
-        // jhipster-needle-gradle-plugin-management-plugins - JHipster will add additional entries here
-    }
-}
-
 plugins {
     id "io.micronaut.application"
     id "java"
@@ -47,6 +36,11 @@ plugins {
     id "org.sonarqube"
     id "com.github.johnrengelman.shadow"
     // jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
+}
+
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
 }
 
 graalvmNative.toolchainDetection = false

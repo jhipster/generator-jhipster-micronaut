@@ -18,6 +18,11 @@
 -%>
 
 pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        // jhipster-needle-gradle-plugin-management-repositories - JHipster will add additional entries here
+    }
     plugins {
         id "io.micronaut.application" version "${micronaut_plugin_version}"
         id 'com.gorylenko.gradle-git-properties' version "${git_properties_plugin_version}"
@@ -32,6 +37,7 @@ pluginManagement {
         <%_ } _%>
         id 'org.sonarqube' version "${sonarqube_plugin_version}"
         id 'com.github.johnrengelman.shadow' version "${shadow_plugin_version}"
+        // jhipster-needle-gradle-plugin-management-plugins - JHipster will add additional entries here
     }
 }
 
