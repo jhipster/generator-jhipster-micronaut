@@ -120,15 +120,19 @@ export default class extends ServerGenerator {
       ...super.preparing,
 
       prepareForTemplates({ application }) {
+        // Use Micronaut specific hipster
         application.hipster = 'jhipster_family_member_4';
+        // Workaround
         application.addSpringMilestoneRepository = false;
         application.MN_CONSTANTS = mnConstants;
         application.gradleVersion = mnConstants.GRADLE_VERSION;
         application.dockerContainers.redis = mnConstants.DOCKER_REDIS;
         application.jhipsterDependenciesVersion = '7.9.3';
-
-        // Add liquibase h2 database references
+        // Revert to java 11 to fix redis.
+        application.JAVA_VERSION = '11';
+        // Add liquibase h2 database references.
         application.liquibaseAddH2Properties = true;
+        // Micronaut is a java project.
         application.backendTypeJavaAny = true;
       },
 
@@ -219,6 +223,15 @@ export default class extends ServerGenerator {
           });
         } else if (application.buildToolGradle) {
           this.editFile('package.json', contents => contents.replaceAll(' bootJar ', ' shadowJar '));
+        }
+        if (application.cacheProviderRedis) {
+          this.packageJson.merge({
+            scripts: {
+              'ci:e2e:server:start': `${this.packageJson.getPath(
+                'scripts.ci:e2e:server:start',
+              )} --add-opens java.base/java.util=ALL-UNNAMED`,
+            },
+          });
         }
       },
     });
