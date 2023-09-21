@@ -200,12 +200,6 @@ exports[`SubGenerator client of micronaut JHipster blueprint > run > should succ
   "src/main/webapp/app/admin/configuration/configuration.model.ts": {
     "state": "deleted",
   },
-  "src/main/webapp/app/admin/configuration/configuration.module.ts": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/app/admin/configuration/configuration.route.ts": {
-    "stateCleared": "modified",
-  },
   "src/main/webapp/app/admin/configuration/configuration.service.spec.ts": {
     "stateCleared": "modified",
   },
