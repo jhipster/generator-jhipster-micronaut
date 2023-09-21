@@ -16,7 +16,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { javaMainPackageTemplatesBlock, javaTestPackageTemplatesBlock } from 'generator-jhipster/generators/java/support';
+import {
+  javaMainPackageTemplatesBlock,
+  javaTestPackageTemplatesBlock,
+  moveToJavaEntityPackageSrcDir,
+} from 'generator-jhipster/generators/java/support';
 
 const TEST_DIR = 'src/test/';
 
@@ -68,12 +72,8 @@ export const entityFiles = {
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.service === 'serviceClass',
-      templates: [
-        {
-          file: 'service/impl/_EntityClass_ServiceImpl.java',
-          renameTo: generator => `${generator.entityAbsoluteFolder}/service/${generator.entityClass}Service.java`,
-        },
-      ],
+      renameTo: (ctx, file) => moveToJavaEntityPackageSrcDir(ctx, file.replace('Impl.java', '.java').replace('/impl/', '/')),
+      templates: ['service/impl/_EntityClass_ServiceImpl.java'],
     }),
   ],
   mapstruct: [
