@@ -12,6 +12,15 @@ export default class extends BaseApplicationGenerator {
           this.editFile('pom.xml', { ignoreNonExisting: true }, content => content.replace('liquibase-hibernate6', 'liquibase-hibernate5'));
         }
       },
+      micronautLiquibase({ application, source }) {
+        if (application.buildToolGradle) {
+          source.addGradleDependency?.({
+            groupId: 'io.micronaut.liquibase',
+            artifactId: 'micronaut-liquibase',
+            scope: 'implementation',
+          });
+        }
+      },
     });
   }
 }
