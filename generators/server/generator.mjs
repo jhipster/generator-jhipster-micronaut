@@ -203,17 +203,16 @@ export default class extends ServerGenerator {
   get [ServerGenerator.POST_WRITING_ENTITIES]() {
     return this.asPostWritingEntitiesTaskGroup({
       customizeMapstruct({ entities, application }) {
-        for (const entity of entities.filter(entity => !entity.skipServer && !entity.builtIn)) {
-          if (entity.dto !== 'mapstruct') return;
+        for (const entity of entities.filter(entity => !entity.skipServer && !entity.builtIn && entity.dtoMapstruct)) {
           this.editFile(
-            `src/main/java/${entity.entityAbsoluteFolder}/service/dto/${entity.restClass}.java`,
+            `src/main/java/${entity.entityAbsoluteFolder}/service/dto/${entity.dtoClass}.java`,
             content =>
               content.replace(
                 'import java.io.Serializable;',
                 `import io.micronaut.core.annotation.Introspected;
 import java.io.Serializable;`,
               ),
-            content => content.replace('jakarta', 'javax'),
+            content => content.replaceAll('jakarta.', 'javax.'),
             content =>
               content.replace(
                 '\npublic class',
