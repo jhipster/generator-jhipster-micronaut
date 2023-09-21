@@ -189,6 +189,14 @@ export default class extends ServerGenerator {
   get [ServerGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
       ...super.postWriting,
+      disableJavadocTest() {
+        this.packageJson.merge({
+          scripts: {
+            'backend:nohttp:test': '',
+            'backend:doc:test': '',
+          },
+        });
+      },
     });
   }
 
@@ -205,6 +213,7 @@ export default class extends ServerGenerator {
                 `import io.micronaut.core.annotation.Introspected;
 import java.io.Serializable;`,
               ),
+            content => content.replace('jakarta', 'javax'),
             content =>
               content.replace(
                 '\npublic class',
