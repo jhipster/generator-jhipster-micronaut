@@ -6,7 +6,7 @@ import {
   GENERATOR_LIQUIBASE,
   GENERATOR_MAVEN,
 } from 'generator-jhipster/generators';
-import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
+import { createNeedleCallback, createBase64Secret } from 'generator-jhipster/generators/base/support';
 import mnConstants from '../constants.cjs';
 import { writeFiles } from './files.mjs';
 
@@ -47,6 +47,9 @@ export default class extends ServerGenerator {
       ...super.configuring,
       async configuringTemplateTask() {
         this.jhipsterConfig.backendType = 'Micronaut';
+        if (this.jhipsterConfigWithDefaults.authenticationType === 'oauth2') {
+          this.jhipsterConfig.jwtSecretKey = this.jhipsterConfig.jwtSecretKey ?? createBase64Secret(64, this.options.reproducibleTests);
+        }
       },
     });
   }
