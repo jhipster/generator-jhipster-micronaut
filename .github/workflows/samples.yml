@@ -59,7 +59,7 @@ jobs:
         run: npm install && npm link
         working-directory: ${{ github.workspace }}/generator-jhipster-micronaut
       - name: 'Generate Project'
-        run: mhipster jdl ../generator-jhipster-micronaut/test-integration/samples/${{ matrix.app-type }}.jdl --skip-jhipster-dependencies --force
+        run: mhipster generate-sample ${{ matrix.app-type }} --skip-jhipster-dependencies --force
       - name: 'Start Dependency Containers'
         run: npm run ci:e2e:prepare
       - name: 'Run Server Tests'
