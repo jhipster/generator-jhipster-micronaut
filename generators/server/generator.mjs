@@ -49,7 +49,7 @@ export default class extends ServerGenerator {
     return this.asConfiguringTaskGroup({
       ...super.configuring,
       async configuringTemplateTask() {
-        this.jhipsterConfig.backendType = 'micronaut';
+        this.jhipsterConfig.backendType = 'Micronaut';
       },
     });
   }
@@ -129,6 +129,7 @@ export default class extends ServerGenerator {
 
         // Add liquibase h2 database references
         application.liquibaseAddH2Properties = true;
+        application.backendTypeJavaAny = true;
       },
 
       registerSpringFactory: undefined,

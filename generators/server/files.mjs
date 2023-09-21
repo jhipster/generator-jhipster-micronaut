@@ -312,9 +312,10 @@ export const serverFiles = {
         },
       ],
     },
+    */
     javaMainPackageTemplatesBlock({
       templates: ['web/rest/SwaggerResource.java'],
-    }),*/
+    }),
   ],
   serverJavaSecurity: [
     javaMainPackageTemplatesBlock({
