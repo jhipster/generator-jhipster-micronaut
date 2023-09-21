@@ -35,7 +35,7 @@ _%>
     dbUser = baseName;
     dbUrlConfig.databaseName = lowercaseBaseName;
     if (devDatabaseType === 'h2Disk' && buildTool === 'gradle') {
-      dbUrlConfig.localDirectory = `./${BUILD_DIR}/h2db/db`;
+      dbUrlConfig.localDirectory = `./${temporaryDir}/h2db/db`;
     }
     if (devDatabaseType === 'h2Disk' && buildTool === 'maven') {
       dbUrlConfig.localDirectory = `./h2db/db`;
