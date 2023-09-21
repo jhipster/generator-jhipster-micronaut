@@ -210,7 +210,7 @@ export default class extends ServerGenerator {
           this.packageJson.merge({
             scripts: {
               // jhipster generates e2e.jar
-              'postci:e2e:package': 'cp target/*.$npm_package_config_packaging target/e2e.$npm_package_config_packaging',
+              'postci:e2e:package': 'cp target/*-shaded.$npm_package_config_packaging target/e2e.$npm_package_config_packaging',
             },
           });
         }
