@@ -199,13 +199,21 @@ export default class extends ServerGenerator {
   get [ServerGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
       ...super.postWriting,
-      disableJavadocTest() {
+      packageJsonCustomizations({ application }) {
         this.packageJson.merge({
           scripts: {
             'backend:nohttp:test': '',
             'backend:doc:test': '',
           },
         });
+        if (application.buildToolMaven) {
+          this.packageJson.merge({
+            scripts: {
+              // jhipster generates e2e.jar
+              'postci:e2e:package': 'cp target/*.$npm_package_config_packaging target/e2e.$npm_package_config_packaging',
+            },
+          });
+        }
       },
     });
   }
