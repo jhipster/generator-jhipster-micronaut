@@ -62,7 +62,7 @@ export default class extends ServerGenerator {
         if (buildTool === 'gradle') {
           await this.composeWithJHipster(GENERATOR_GRADLE);
         } else if (buildTool === 'maven') {
-          await this.composeWithJHipster(GENERATOR_MAVEN);
+          (await this.composeWithJHipster(GENERATOR_MAVEN)).sortPomFile = false;
         } else {
           throw new Error(`Build tool ${buildTool} is not supported`);
         }
@@ -217,6 +217,8 @@ export default class extends ServerGenerator {
                 'mv target/original*.jar target/original.jar.back && cp target/*.$npm_package_config_packaging target/e2e.$npm_package_config_packaging',
             },
           });
+        } else if (application.buildToolGradle) {
+          this.editFile('package.json', contents => contents.replaceAll(' bootJar ', ' shadowJar '));
         }
       },
     });
