@@ -42,24 +42,10 @@
         "sbs": true,
         "written": true
       },
-      "entity-server": {
+      "docker": {
         "command": false,
-        "priorities": [
-          "initializing",
-          "prompting",
-          "configuring",
-          "composing",
-          "loading",
-          "preparing",
-          "preparingFields",
-          "preparingRelationships",
-          "default",
-          "writing",
-          "postWriting",
-          "install",
-          "end"
-        ],
-        "sbs": false,
+        "priorities": [],
+        "sbs": true,
         "written": true
       },
       "heroku": {
@@ -77,6 +63,12 @@
           "install",
           "end"
         ],
+        "sbs": false,
+        "written": true
+      },
+      "micronaut-cache": {
+        "command": false,
+        "priorities": ["preparing", "writing", "postWriting"],
         "sbs": false,
         "written": true
       },
@@ -103,12 +95,6 @@
         ],
         "sbs": false,
         "written": true
-      },
-      "spring-cache": {
-        "command": false,
-        "priorities": ["preparing", "writing", "postWriting"],
-        "sbs": false,
-        "written": true
       }
     },
     "jhipsterVersion": "8.0.0-beta.3",
@@ -117,6 +103,6 @@
     "projectName": "Micronaut Blueprint",
     "sampleWritten": true,
     "skipCommitHook": true,
-    "subGenerators": ["angular", "app", "client", "common", "heroku", "react", "server", "spring-cache"]
+    "subGenerators": ["angular", "app", "client", "common", "heroku", "react", "server", "micronaut-cache"]
   }
 }
