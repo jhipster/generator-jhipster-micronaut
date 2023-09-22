@@ -30,25 +30,25 @@ export const entityFiles = {
       condition: generator =>
         !generator.reactive && generator.databaseTypeSql && generator.prodDatabaseTypePostgresql && generator.fieldsContainImageBlob,
       relativePath: '_entityPackage_/',
-      templates: ['domain/_PersistClass_.java.jhi.micronaut'],
+      templates: ['domain/_persistClass_.java.jhi.micronaut'],
     }),
     javaMainPackageTemplatesBlock({
       relativePath: '_entityPackage_/',
-      templates: ['domain/_PersistClass_.java.jhi', 'domain/_PersistClass_.java.jhi.javax_validation'],
+      templates: ['domain/_persistClass_.java.jhi', 'domain/_persistClass_.java.jhi.javax_validation'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.databaseTypeSql && !generator.reactive,
       relativePath: '_entityPackage_/',
-      templates: ['domain/_PersistClass_.java.jhi.javax_persistence'],
+      templates: ['domain/_persistClass_.java.jhi.javax_persistence'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.databaseTypeSql && !generator.reactive && generator.enableHibernateCache,
       relativePath: '_entityPackage_/',
-      templates: ['domain/_PersistClass_.java.jhi.hibernate_cache'],
+      templates: ['domain/_persistClass_.java.jhi.hibernate_cache'],
     }),
     javaTestPackageTemplatesBlock({
       relativePath: '_entityPackage_/',
-      templates: ['domain/_PersistClass_Test.java'],
+      templates: ['domain/_persistClass_Test.java'],
     }),
   ],
   server: [
@@ -87,7 +87,7 @@ export const entityFiles = {
     javaMainPackageTemplatesBlock({
       condition: generator => generator.dto === 'mapstruct',
       relativePath: '_entityPackage_/',
-      templates: ['service/dto/_DtoClass_.java', 'service/mapper/_entityClass_Mapper.java'],
+      templates: ['service/dto/_dtoClass_.java', 'service/mapper/_entityClass_Mapper.java'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.dto === 'mapstruct',
@@ -97,7 +97,7 @@ export const entityFiles = {
     javaTestPackageTemplatesBlock({
       condition: generator => generator.dto === 'mapstruct',
       relativePath: '_entityPackage_/',
-      templates: ['service/dto/_DtoClass_Test.java'],
+      templates: ['service/dto/_dtoClass_Test.java'],
     }),
     javaTestPackageTemplatesBlock({
       condition: generator =>
