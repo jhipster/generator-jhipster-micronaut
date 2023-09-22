@@ -13,7 +13,7 @@
         "written": true
       },
       "app": {
-        "command": true,
+        "command": false,
         "priorities": [
           "initializing",
           "prompting",
