@@ -3,10 +3,6 @@ const commonFiles = {
     {
       templates: [
         'README.md',
-        {
-          file: 'gitignore',
-          renameTo: () => '.gitignore',
-        },
       ],
     },
   ],
