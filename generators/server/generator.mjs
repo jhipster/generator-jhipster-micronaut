@@ -172,6 +172,36 @@ export default class extends ServerGenerator {
     });
   }
 
+  get [ServerGenerator.LOADING_ENTITIES]() {
+    return this.asLoadingEntitiesTaskGroup({
+      ...super.loadingEntities,
+    });
+  }
+
+  get [ServerGenerator.PREPARING_EACH_ENTITY]() {
+    return this.asPreparingEachEntityTaskGroup({
+      ...super.preparingEachEntity,
+    });
+  }
+
+  get [ServerGenerator.PREPARING_EACH_ENTITY_FIELD]() {
+    return this.asPreparingEachEntityFieldTaskGroup({
+      ...super.preparingEachEntityField,
+    });
+  }
+
+  get [ServerGenerator.PREPARING_EACH_ENTITY_RELATIONSHIP]() {
+    return this.asPreparingEachEntityRelationshipTaskGroup({
+      ...super.preparingEachEntityRelationship,
+    });
+  }
+
+  get [ServerGenerator.POST_PREPARING_EACH_ENTITY]() {
+    return this.asPostPreparingEachEntityTaskGroup({
+      ...super.postPreparingEachEntity,
+    });
+  }
+
   get [ServerGenerator.DEFAULT]() {
     return this.asDefaultTaskGroup({
       ...super.default,
@@ -279,6 +309,12 @@ public class`,
   get [ServerGenerator.INSTALL]() {
     return this.asInstallTaskGroup({
       ...super.install,
+    });
+  }
+
+  get [ServerGenerator.POST_INSTALL]() {
+    return this.asPostInstallTaskGroup({
+      ...super.postInstall,
     });
   }
 

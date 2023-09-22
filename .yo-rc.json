@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "additionalSubGenerators": "",
+    "additionalSubGenerators": "micronaut-cache",
     "baseName": "micronaut",
     "cli": true,
     "cliName": "mhipster",
@@ -81,10 +81,20 @@
           "composing",
           "loading",
           "preparing",
+          "configuringEachEntity",
+          "loadingEntities",
+          "preparingEachEntity",
+          "preparingEachEntityField",
+          "preparingEachEntityRelationship",
+          "postPreparingEachEntity",
           "default",
           "writing",
+          "writingEntities",
           "postWriting",
+          "postWritingEntities",
+          "loadingTranslations",
           "install",
+          "postInstall",
           "end"
         ],
         "sbs": false,
@@ -97,6 +107,6 @@
     "projectName": "Micronaut Blueprint",
     "sampleWritten": true,
     "skipCommitHook": true,
-    "subGenerators": ["angular", "client", "common", "cypress", "heroku", "react", "server", "micronaut-cache"]
+    "subGenerators": ["angular", "client", "common", "cypress", "heroku", "react", "server"]
   }
 }
