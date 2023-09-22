@@ -16,10 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {
-  javaMainPackageTemplatesBlock,
-  javaTestPackageTemplatesBlock,
-} from 'generator-jhipster/generators/java/support';
+import { javaMainPackageTemplatesBlock, javaTestPackageTemplatesBlock } from 'generator-jhipster/generators/java/support';
 
 const TEST_DIR = 'src/test/';
 
