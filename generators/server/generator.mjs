@@ -40,6 +40,7 @@ export default class extends ServerGenerator {
   get [ServerGenerator.PROMPTING]() {
     return this.asPromptingTaskGroup({
       ...super.prompting,
+      // TODO move generator-jhipster prompts to command and customize micronaut's command based on generator-jhipster
       async promptingTemplateTask() {},
     });
   }
