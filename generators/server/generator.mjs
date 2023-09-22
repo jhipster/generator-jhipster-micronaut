@@ -14,6 +14,8 @@ import command from './command.mjs';
 import { entityFiles } from './entity-files.mjs';
 
 export default class extends ServerGenerator {
+  command = command;
+
   constructor(args, opts, features) {
     super(args, opts, {
       ...features,
