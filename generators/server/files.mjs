@@ -40,6 +40,7 @@ const shouldSkipUserManagement = generator =>
  * For any other config an object { file:.., method:.., template:.. } can be used
  */
 export const serverFiles = {
+  readme: [{ templates: ['README.md.jhi.micronaut'] }],
   jib: baseServerFiles.jib,
   /*docker: [
     {
