@@ -1,3 +1,4 @@
+import { GENERATOR_BOOTSTRAP_APPLICATION } from 'generator-jhipster/generators';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
 import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
 import { javaMainPackageTemplatesBlock } from 'generator-jhipster/generators/java/support';
@@ -9,6 +10,10 @@ export default class extends BaseApplicationGenerator {
       // Dropped it once migration is done.
       jhipster7Migration: true,
     });
+  }
+
+  async beforeQueue() {
+    await this.dependsOnJHipster(GENERATOR_BOOTSTRAP_APPLICATION);
   }
 
   get [BaseApplicationGenerator.PREPARING]() {

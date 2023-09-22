@@ -2,18 +2,17 @@ import { beforeAll, describe, expect, it } from 'vitest';
 
 import { defaultHelpers as helpers, result } from 'generator-jhipster/testing';
 
-const SUB_GENERATOR = 'spring-cache';
-const BLUEPRINT_NAMESPACE = `jhipster:${SUB_GENERATOR}`;
+const SUB_GENERATOR = 'micronaut-cache';
+const SUB_GENERATOR_NAMESPACE = `jhipster-micronaut:${SUB_GENERATOR}`;
 
-describe('SubGenerator spring-cache of micronaut JHipster blueprint', () => {
+describe('SubGenerator micronaut-cache of micronaut JHipster blueprint', () => {
   describe('run', () => {
     beforeAll(async function () {
       await helpers
-        .run(BLUEPRINT_NAMESPACE)
+        .run(SUB_GENERATOR_NAMESPACE)
         .withJHipsterConfig()
         .withOptions({
           ignoreNeedlesError: true,
-          blueprint: 'micronaut',
         })
         .withJHipsterLookup()
         .withParentBlueprintLookup();
