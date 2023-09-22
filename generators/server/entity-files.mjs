@@ -19,7 +19,6 @@
 import {
   javaMainPackageTemplatesBlock,
   javaTestPackageTemplatesBlock,
-  moveToJavaEntityPackageSrcDir,
 } from 'generator-jhipster/generators/java/support';
 
 const TEST_DIR = 'src/test/';
@@ -95,6 +94,7 @@ export const entityFiles = {
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.dto === 'mapstruct',
+      relativePath: '_entityPackage_/',
       templates: ['service/mapper/EntityMapper.java'],
     }),
     javaTestPackageTemplatesBlock({

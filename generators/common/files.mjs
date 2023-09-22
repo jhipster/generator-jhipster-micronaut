@@ -1,9 +1,7 @@
 const commonFiles = {
   global: [
     {
-      templates: [
-        'README.md',
-      ],
+      templates: ['README.md'],
     },
   ],
 };

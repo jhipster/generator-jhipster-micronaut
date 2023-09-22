@@ -23,7 +23,6 @@ import {
   javaMainResourceTemplatesBlock,
   javaTestResourceTemplatesBlock,
 } from 'generator-jhipster/generators/java/support';
-import { moveToJavaPackageSrcDir } from 'generator-jhipster/generators/server/support';
 
 /* Constants use throughout */
 import { JAVA_SERVER_TEST_RESOURCES_DIR as SERVER_TEST_RES_DIR } from 'generator-jhipster';
