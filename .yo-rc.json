@@ -12,24 +12,6 @@
         "sbs": true,
         "written": true
       },
-      "app": {
-        "command": false,
-        "priorities": [
-          "initializing",
-          "prompting",
-          "configuring",
-          "composing",
-          "loading",
-          "preparing",
-          "default",
-          "writing",
-          "postWriting",
-          "install",
-          "end"
-        ],
-        "sbs": false,
-        "written": true
-      },
       "client": {
         "command": false,
         "priorities": ["writing"],
@@ -115,6 +97,6 @@
     "projectName": "Micronaut Blueprint",
     "sampleWritten": true,
     "skipCommitHook": true,
-    "subGenerators": ["angular", "app", "client", "common", "cypress", "heroku", "react", "server", "micronaut-cache"]
+    "subGenerators": ["angular", "client", "common", "cypress", "heroku", "react", "server", "micronaut-cache"]
   }
 }
