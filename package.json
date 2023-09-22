@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "chalk": "^5.3.0",
-    "generator-jhipster": "github:mshima/generator-jhipster#skip_ci-micronaut-blueprint",
+    "generator-jhipster": "github:mshima/generator-jhipster#skip_ci-app_prompts",
     "os": "^0.1.2"
   },
   "devDependencies": {
