@@ -54,40 +54,40 @@ export const entityFiles = {
   server: [
     javaMainPackageTemplatesBlock({
       relativePath: '_entityPackage_/',
-      templates: ['repository/_EntityClass_Repository.java', 'web/rest/_EntityClass_Resource.java'],
+      templates: ['repository/_entityClass_Repository.java', 'web/rest/_entityClass_Resource.java'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.jpaMetamodelFiltering,
       relativePath: '_entityPackage_/',
-      templates: ['service/dto/_EntityClass_Criteria.java', 'service/_EntityClass_QueryService.java'],
+      templates: ['service/dto/_entityClass_Criteria.java', 'service/_entityClass_QueryService.java'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.searchEngine === 'elasticsearch',
       relativePath: '_entityPackage_/',
-      templates: ['repository/search/_EntityClass_SearchRepository.java'],
+      templates: ['repository/search/_entityClass_SearchRepository.java'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.reactive && ['mongodb', 'cassandra', 'couchbase'].includes(generator.databaseType),
       relativePath: '_entityPackage_/',
-      templates: ['repository/reactive/_EntityClass_ReactiveRepository.java'],
+      templates: ['repository/reactive/_entityClass_ReactiveRepository.java'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.service === 'serviceImpl',
       relativePath: '_entityPackage_/',
-      templates: ['service/_EntityClass_Service.java', 'service/impl/_EntityClass_ServiceImpl.java'],
+      templates: ['service/_entityClass_Service.java', 'service/impl/_entityClass_ServiceImpl.java'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.service === 'serviceClass',
       relativePath: '_entityPackage_/',
       renameTo: (_ctx, file) => file.replace('Impl.java', '.java').replace('/impl/', '/'),
-      templates: ['service/impl/_EntityClass_ServiceImpl.java'],
+      templates: ['service/impl/_entityClass_ServiceImpl.java'],
     }),
   ],
   mapstruct: [
     javaMainPackageTemplatesBlock({
       condition: generator => generator.dto === 'mapstruct',
       relativePath: '_entityPackage_/',
-      templates: ['service/dto/_DtoClass_.java', 'service/mapper/_EntityClass_Mapper.java'],
+      templates: ['service/dto/_DtoClass_.java', 'service/mapper/_entityClass_Mapper.java'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.dto === 'mapstruct',
@@ -104,7 +104,7 @@ export const entityFiles = {
         generator.dto === 'mapstruct' &&
         (generator.databaseTypeSql || generator.databaseType === 'mongodb' || generator.databaseType === 'couchbase'),
       relativePath: '_entityPackage_/',
-      templates: ['service/mapper/_EntityClass_MapperTest.java'],
+      templates: ['service/mapper/_entityClass_MapperTest.java'],
     }),
   ],
   test: [
@@ -112,18 +112,18 @@ export const entityFiles = {
       // TODO: add test for reactive
       condition: generator => !generator.reactive,
       relativePath: '_entityPackage_/',
-      templates: ['web/rest/_EntityClass_ResourceIT.java'],
+      templates: ['web/rest/_entityClass_ResourceIT.java'],
     }),
     javaTestPackageTemplatesBlock({
       condition: generator => generator.searchEngine === 'elasticsearch',
       relativePath: '_entityPackage_/',
-      templates: ['repository/search/_EntityClass_SearchRepositoryMockConfiguration.java'],
+      templates: ['repository/search/_entityClass_SearchRepositoryMockConfiguration.java'],
     }),
     {
       condition: generator => generator.gatlingTests,
       path: TEST_DIR,
       relativePath: '_entityPackage_/',
-      templates: ['gatling/user-files/simulations/_EntityClass_GatlingTest.scala'],
+      templates: ['gatling/user-files/simulations/_entityClass_GatlingTest.scala'],
     },
   ],
 };
