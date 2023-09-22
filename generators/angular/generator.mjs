@@ -9,7 +9,7 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async writingTemplateTask({ application }) {
-        this.deleteDestination(`src/main/webapp/app/admin/configuration`);
+        this.deleteDestination(`src/main/webapp/app/admin/configuration/configuration.model.ts`);
         await this.writeFiles({
           sections: angularFiles,
           context: application,
