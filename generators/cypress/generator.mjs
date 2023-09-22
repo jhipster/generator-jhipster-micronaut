@@ -9,6 +9,9 @@ export default class extends BaseApplicationGenerator {
     return this.asPostWritingTaskGroup({
       customizeCypress({ application }) {
         this.editFile(`${application.cypressDir}e2e/administration/administration.cy.ts`, content =>
+          content.replaceAll('info.activeProfiles', "info['active-profiles']"),
+        );
+        this.editFile(`${application.cypressDir}e2e/administration/administration.cy.ts`, content =>
           content.replace("describe('/docs'", "describe.skip('/docs'"),
         );
         if (application.authenticationTypeJwt) {
