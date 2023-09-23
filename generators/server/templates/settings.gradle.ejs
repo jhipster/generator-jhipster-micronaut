@@ -18,6 +18,11 @@
 -%>
 
 pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        // jhipster-needle-gradle-plugin-management-repositories - JHipster will add additional entries here
+    }
     plugins {
         id "io.micronaut.application" version "${micronaut_plugin_version}"
         id 'com.gorylenko.gradle-git-properties' version "${git_properties_plugin_version}"
@@ -27,11 +32,9 @@ pluginManagement {
         <%_ if (!skipClient) { _%>
         id 'com.github.node-gradle.node' version "${gradle_node_plugin_version}"
         <%_ } _%>
-        <%_ if (databaseType === 'sql') { _%>
-        id 'org.liquibase.gradle' version "${liquibase_plugin_version}"
-        <%_ } _%>
         id 'org.sonarqube' version "${sonarqube_plugin_version}"
         id 'com.github.johnrengelman.shadow' version "${shadow_plugin_version}"
+        // jhipster-needle-gradle-plugin-management-plugins - JHipster will add additional entries here
     }
 }
 

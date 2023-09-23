@@ -1,0 +1,58 @@
+application {
+  config {
+    applicationType monolith
+    authenticationType oauth2
+    baseName jhipster
+    blueprints [generator-jhipster-micronaut]
+    buildTool gradle
+    cacheProvider ehcache
+    clientFramework angular
+    clientPackageManager npm
+    clientTheme litera
+    clientThemeVariant primary
+    creationTimestamp 1591144151372
+    databaseType sql
+    devDatabaseType postgresql
+    dtoSuffix DTO
+    embeddableLaunchScript false
+    enableHibernateCache false
+    enableSwaggerCodegen false
+    enableTranslation true
+    jhiPrefix jhi
+    languages [en]
+    nativeLanguage en
+    packageName com.mycompany.myapp
+    prodDatabaseType postgresql
+    serverPort 8080
+    skipClient false
+    skipServer false
+    skipUserManagement true
+    testFrameworks [cypress]
+  }
+
+  entities BankAccount, Label, Operation
+}
+
+entity BankAccount {
+  name String required,
+  balance BigDecimal required
+}
+entity Label {
+  label String required minlength(3)
+}
+entity Operation {
+  date Instant required,
+  description String,
+  amount BigDecimal required
+}
+relationship OneToMany {
+  BankAccount{operation} to Operation{bankAccount(name)}
+}
+relationship ManyToOne {
+  BankAccount{user(login)} to User
+}
+relationship ManyToMany {
+  Operation{label(label)} to Label{operation}
+}
+
+paginate Operation with infinite-scroll

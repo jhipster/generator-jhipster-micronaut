@@ -1,16 +1,37 @@
 <%_
 const { versions } = MN_CONSTANTS;
 _%>
+<%#
+ Copyright 2013-2023 the original author or authors from the JHipster project.
+
+ This file is part of the JHipster project, see https://www.jhipster.tech/
+ for more information.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-%>
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId><%=packageName%></groupId>
+    <groupId><%= packageName %></groupId>
     <artifactId><%= dasherizedBaseName %></artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version><%= projectVersion %></version>
     <packaging>jar</packaging>
     <name><%= humanizedBaseName %></name>
+    <description><%= projectDescription %></description>
 
     <parent>
         <groupId>io.micronaut</groupId>
@@ -20,7 +41,7 @@ _%>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
-        <%_ if (JHIPSTER_DEPENDENCIES_VERSION.endsWith('-SNAPSHOT')) { _%>
+        <%_ if (jhipsterDependenciesVersion.endsWith('-SNAPSHOT')) { _%>
         <repository>
             <id>ossrh-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
@@ -45,9 +66,9 @@ _%>
         <jdk.version><%= JAVA_VERSION %></jdk.version>
         <release.version><%= JAVA_VERSION %></release.version>
 <%_ if (!skipClient) { _%>
-        <node.version>v<%= NODE_VERSION %></node.version>
+        <node.version>v<%= nodeVersion %></node.version>
     <%_ if (clientPackageManager === 'npm') { _%>
-        <npm.version><%= NPM_VERSION %></npm.version>
+        <npm.version><%= nodeDependencies.npm %></npm.version>
     <%_ } _%>
 <%_ } _%>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -60,14 +81,14 @@ _%>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <run.addResources>false</run.addResources>
         <!-- These remain empty unless the corresponding profile is active -->
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
         <profile.no-liquibase />
 <%_ } _%>
         <profile.api-docs />
         <profile.tls />
 
         <!-- Dependency versions -->
-        <jhipster-dependencies.version><%= JHIPSTER_DEPENDENCIES_VERSION %></jhipster-dependencies.version>
+        <jhipster-dependencies.version><%= jhipsterDependenciesVersion %></jhipster-dependencies.version>
         <micronaut.version><%= versions.micronaut %></micronaut.version>
         <micronaut-data.version><%= versions.micronautData %></micronaut-data.version>
         <micronaut-discovery-client.version><%= versions.micronautDiscoveryClient %></micronaut-discovery-client.version>
@@ -77,8 +98,8 @@ _%>
         <!-- The javassist version should match the one managed by
         https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
         <javassist.version><%= versions.javassist %></javassist.version>
-        <javax-inject.version><%= versions.javaxInject %></javax-inject.version>
-        <javax-mail.version><%= versions.javaxMail %></javax-mail.version>
+        <jakarta-inject.version><%= versions.jakartaInject %></jakarta-inject.version>
+        <jakarta-mail.version><%= versions.jakartaMail %></jakarta-mail.version>
         <%_ if (!skipUserManagement) { _%>
         <jbcrypt.version><%= versions.jbcrypt %></jbcrypt.version>
         <%_ } _%>
@@ -87,11 +108,15 @@ _%>
         <logback.version><%= versions.logback %></logback.version>
         <mapstruct.version><%= versions.mapstruct %></mapstruct.version>
         <mockito.version><%= versions.mockito %></mockito.version>
+        <netty.version><%= versions.netty %></netty.version>
         <problem.version><%= versions.problem %></problem.version>
         <jackson.version><%= versions.jackson %></jackson.version>
 <%_ if (cacheProvider === 'caffeine') { _%>
         <caffeine.version><%= versions.caffeine %></caffeine.version>
         <typesafe.version>1.4.0</typesafe.version>
+<%_ } _%>
+<%_ if (cacheProviderEhcache) { _%>
+        <ehcache.version>3.10.8</ehcache.version>
 <%_ } _%>
         <testcontainers.version><%= versions.testcontainers %></testcontainers.version>
         <!-- Plugin versions -->
@@ -114,8 +139,10 @@ _%>
         <frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
 <%_ } _%>
         <git-commit-id-plugin.version>4.0.2</git-commit-id-plugin.version>
-        <jacoco-maven-plugin.version><%= JACOCO_VERSION %></jacoco-maven-plugin.version>
-        <jib-maven-plugin.version><%= JIB_VERSION %></jib-maven-plugin.version>
+        <jacoco-maven-plugin.version><%= javaDependencies['jacoco-maven-plugin'] %></jacoco-maven-plugin.version>
+        <jib-maven-plugin.version><%= javaDependencies['jib-maven-plugin'] %></jib-maven-plugin.version>
+        <jib-maven-plugin.image><%- dockerContainers.javaJre %></jib-maven-plugin.image>
+        <jib-maven-plugin.architecture>amd64</jib-maven-plugin.architecture>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
@@ -220,10 +247,6 @@ _%>
             <artifactId>HikariCP</artifactId>
         </dependency>
         <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
@@ -233,9 +256,9 @@ _%>
             <version>${logback.version}</version>
         </dependency>
         <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <version>${javax-inject.version}</version>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+            <version>${jakarta-inject.version}</version>
         </dependency>
 <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) { _%>
         <dependency>
@@ -286,6 +309,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         <dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
+            <version>${ehcache.version}</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.cache</groupId>
@@ -403,7 +427,6 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-http-client</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.micronaut</groupId>
@@ -530,12 +553,12 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>jakarta.mail</artifactId>
-            <version>${javax-mail.version}</version>
+            <version>${jakarta-mail.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sun.activation</groupId>
             <artifactId>jakarta.activation</artifactId>
-            <version>${javax-mail.version}</version>
+            <version>${jakarta-mail.version}</version>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
@@ -562,6 +585,16 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
             <scope>compile</scope>
             <version>${micronaut.version}</version>
           </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-codec</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-common</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
     <build>
@@ -838,13 +871,16 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                     <version>${jib-maven-plugin.version}</version>
                     <configuration>
                         <from>
-                            <image><%= DOCKER_JAVA_JRE %></image>
+                            <image>${jib-maven-plugin.image}</image>
+                            <platforms>
+                                <platform>
+                                    <architecture>${jib-maven-plugin.architecture}</architecture>
+                                    <os>linux</os>
+                                </platform>
+                            </platforms>
                         </from>
                         <to>
-                            <image><%= lowercaseBaseName %>:${project.version}</image>
-                            <tags>
-                                <tag>latest</tag>
-                            </tags>
+                            <image><%= baseName.toLowerCase() %>:latest</image>
                         </to>
                         <container>
                             <entrypoint>
@@ -853,7 +889,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                                 <arg>/entrypoint.sh</arg>
                             </entrypoint>
                             <ports>
-                                <port>8080</port>
+                                <port><%= serverPort %></port>
                             </ports>
                             <environment>
                                 <SPRING_OUTPUT_ANSI_ENABLED>ALWAYS</SPRING_OUTPUT_ANSI_ENABLED>
@@ -862,7 +898,7 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                             <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
                         </container>
                         <extraDirectories>
-                            <paths><%= MAIN_DIR %>jib</paths>
+                            <paths><%= dockerServicesDir %>jib</paths>
                             <permissions>
                                 <permission>
                                     <file>/entrypoint.sh</file>
@@ -873,48 +909,9 @@ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
                     </configuration>
                 </plugin>
                 <plugin>
-<%_
-    const { sqlDb } = MN_CONSTANTS;
-    const devDbInfo = sqlDb[devDatabaseType];
-_%>
                     <groupId>org.liquibase</groupId>
                     <artifactId>liquibase-maven-plugin</artifactId>
                     <version>${liquibase.version}</version>
-                    <configuration>
-                        <changeLogFile>${project.basedir}/src/main/resources/config/liquibase/master.xml</changeLogFile>
-                        <diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
-                        <driver><%= devDbInfo.driver %></driver>
-                        <url></url>
-                        <defaultSchemaName></defaultSchemaName>
-                        <username><%= baseName %></username>
-                        <password></password>
-                        <referenceUrl>hibernate:spring:<%=packageName%>.domain?dialect=<%= devDbInfo.dialect %>&amp;hibernate.physical_naming_strategy=<%=packageName%>.config.SnakeCasePhysicalNamingStrategy</referenceUrl>
-                        <verbose>true</verbose>
-                        <logging>debug</logging>
-                        <contexts>!test</contexts>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>io.github.jhipster</groupId>
-                            <artifactId>jhipster-framework</artifactId>
-                            <version>${jhipster-dependencies.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.hibernate</groupId>
-                            <artifactId>hibernate-core</artifactId>
-                            <version>${hibernate.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.javassist</groupId>
-                            <artifactId>javassist</artifactId>
-                            <version>${javassist.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.liquibase.ext</groupId>
-                            <artifactId>liquibase-hibernate5</artifactId>
-                            <version>${liquibase-hibernate5.version}</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>

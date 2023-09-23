@@ -49,7 +49,7 @@ jpa:
 micronaut:
   security:
     enabled: true
-<%_ if (authenticationType === 'oauth2') { _%>
+<%_ if (authenticationTypeOauth2) { _%>
     oauth2:
       enabled: false
 <%_ } _%>

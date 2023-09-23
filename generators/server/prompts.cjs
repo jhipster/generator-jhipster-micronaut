@@ -178,7 +178,7 @@ async function askForServerSideOpts() {
       default: 0,
     },
     {
-      when: answers => answers.databaseType === 'sql',
+      when: answers => answers.databaseTypeSql,
       type: 'list',
       name: 'prodDatabaseType',
       message: `Which ${chalk.yellow('*production*')} database would you like to use?`,
@@ -186,7 +186,7 @@ async function askForServerSideOpts() {
       default: 0,
     },
     {
-      when: answers => answers.databaseType === 'sql',
+      when: answers => answers.databaseTypeSql,
       type: 'list',
       name: 'devDatabaseType',
       message: `Which ${chalk.yellow('*development*')} database would you like to use?`,
@@ -231,7 +231,7 @@ async function askForServerSideOpts() {
     {
       when: answers =>
         ((answers.cacheProvider !== 'no' && answers.cacheProvider !== 'memcached') || applicationType === 'gateway') &&
-        answers.databaseType === 'sql',
+        answers.databaseTypeSql,
       type: 'confirm',
       name: 'enableHibernateCache',
       message: 'Do you want to use Hibernate 2nd level cache?',

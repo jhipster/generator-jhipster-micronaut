@@ -16,16 +16,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-buildscript {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-    }
-    dependencies {
-        //jhipster-needle-gradle-buildscript-dependency - JHipster will add additional gradle build script plugins here
-    }
-}
-
 plugins {
     id "io.micronaut.application"
     id "java"
@@ -40,12 +30,14 @@ plugins {
     <%_ if (!skipClient) { _%>
     id "com.github.node-gradle.node"
     <%_ } _%>
-    <%_ if (databaseType === 'sql') { _%>
-    id "org.liquibase.gradle"
-    <%_ } _%>
     id "org.sonarqube"
     id "com.github.johnrengelman.shadow"
-    //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
+    // jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
+}
+
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
 }
 
 graalvmNative.toolchainDetection = false
@@ -74,7 +66,7 @@ apply from: "gradle/sonar.gradle"
 <%_ if (enableSwaggerCodegen) { _%>
 apply from: "gradle/swagger.gradle"
 <%_ } _%>
-//jhipster-needle-gradle-apply-from - JHipster will add additional gradle scripts to be applied here
+// jhipster-needle-gradle-apply-from - JHipster will add additional gradle scripts to be applied here
 
 if (project.hasProperty("prod") || project.hasProperty("gae")) {
     apply from: "gradle/profile_prod.gradle"
@@ -100,7 +92,7 @@ if (project.hasProperty("gae")) {
     appengineStage.dependsOn thinResolve
 }
 
-<%_ if (serviceDiscoveryType || applicationType === 'gateway' || applicationType === 'microservice' || applicationType === 'uaa') { _%>
+<%_ if (serviceDiscoveryType || applicationTypeGateway || applicationTypeMicroservice || applicationType === 'uaa') { _%>
 if (project.hasProperty("zipkin")) {
     apply from: "gradle/zipkin.gradle"
 }
@@ -148,7 +140,7 @@ test {
     // uncomment if the tests reports are not generated
     // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484
     // ignoreFailures true
-    reports.html.enabled = false
+    reports.html.required = false
 }
 
 task integrationTest(type: Test) {
@@ -166,7 +158,7 @@ task integrationTest(type: Test) {
     // uncomment if the tests reports are not generated
     // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484
     // ignoreFailures true
-    reports.html.enabled = false
+    reports.html.required = false
 }
 <%_ if (cucumberTests) { _%>
 
@@ -178,7 +170,7 @@ task cucumberTest(type: Test) {
     // uncomment if the tests reports are not generated
     // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484
     // ignoreFailures true
-    reports.html.enabled = false
+    reports.html.required = false
 }
 
 check.dependsOn cucumberTest
@@ -202,7 +194,7 @@ task cucumberTestReport(type: TestReport) {
 }
 
 <%_ } _%>
-<%_ if (databaseType === 'sql') { 
+<%_ if (databaseTypeSql) { 
         const { sqlDb } = MN_CONSTANTS;
         const devDbInfo = sqlDb[devDatabaseType];
 _%>
@@ -210,40 +202,7 @@ if (!project.hasProperty("runList")) {
     project.ext.runList = "main"
 }
 
-project.ext.diffChangelogFile = "<%= SERVER_MAIN_RES_DIR %>config/liquibase/changelog/" + new Date().format("yyyyMMddHHmmss") + "_changelog.xml"
-
-liquibase {
-    activities {
-        main {
-            driver "<%= devDbInfo.driver %>"
-            url "<% if (devDatabaseType === 'mysql') { %>jdbc:mysql://localhost:3306/<%= baseName %><% } else if (devDatabaseType === 'mariadb') { %>jdbc:mariadb://localhost:3306/<%= baseName %><% } else if (devDatabaseType === 'postgresql') { %>jdbc:postgresql://localhost:5432/<%= baseName %><% } else if (devDatabaseType === 'h2Disk') { %>jdbc:h2:file:./build/h2db/db/<%= lowercaseBaseName %><% } else if (devDatabaseType === 'oracle') { %>jdbc:oracle:thin:@localhost:1521:<%= baseName %><% } else if (devDatabaseType === 'mssql') { %>jdbc:sqlserver://localhost:1433;database=<%= baseName %><% } %>"
-            username "<% if (devDatabaseType === 'mysql') { %>root<% } else if (devDatabaseType === 'postgresql' || devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') { %><%= baseName %><% } else if (devDatabaseType === 'mssql') { %>SA<% } %>"
-            password "<% if (devDatabaseType === 'mssql') { %>yourStrong(!)Password<% } %>"
-            changeLogFile "<%= SERVER_MAIN_RES_DIR %>config/liquibase/master.xml"
-            defaultSchemaName "<% if (devDatabaseType === 'mysql') { %><%= baseName %><% } else if (devDatabaseType === 'postgresql') { %><% } %>"
-            logLevel "debug"
-            classpath "<%= SERVER_MAIN_RES_DIR %>"
-        }
-        diffLog {
-            driver "<%= devDbInfo.driver %>"
-            url "<% if (devDatabaseType === 'mysql') { %>jdbc:mysql://localhost:3306/<%= baseName %><% } else if (devDatabaseType === 'mariadb') { %>jdbc:mariadb://localhost:3306/<%= baseName %><% } else if (devDatabaseType === 'postgresql') { %>jdbc:postgresql://localhost:5432/<%= baseName %><% } else if (devDatabaseType === 'h2Disk') { %>jdbc:h2:file:./build/h2db/db/<%= lowercaseBaseName %><% } else if (devDatabaseType === 'oracle') { %>jdbc:oracle:thin:@localhost:1521:<%= baseName %><% } else if (devDatabaseType === 'mssql') { %>jdbc:sqlserver://localhost:1433;database=<%= baseName %><% } %>"
-            username "<% if (devDatabaseType === 'mysql') { %>root<% } else if (devDatabaseType === 'postgresql' || devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') { %><%= baseName %><% } else if (devDatabaseType === 'mssql') { %>SA<% } %>"
-            password "<% if (devDatabaseType === 'mssql') { %>yourStrong(!)Password<% } %>"
-            changeLogFile project.ext.diffChangelogFile
-            referenceUrl "hibernate:spring:<%= packageName %>.domain?dialect=<%= devDbInfo.dialect %>&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
-            defaultSchemaName "<% if (devDatabaseType === 'mysql') { %><%= baseName %><% } else if (devDatabaseType === 'postgresql') { %><% } %>"
-            logLevel "debug"
-            classpath "$buildDir/classes/java/main"
-            <%_ if (authenticationType === 'oauth2') { _%>
-            excludeObjects "oauth_access_token, oauth_approvals, oauth_client_details, oauth_client_token, oauth_code, oauth_refresh_token"
-            <%_ } _%>
-        }
-    }
-
-    runList = project.ext.runList
-}
 <%_ } _%>
-
 shadowJar {
     mergeServiceFiles()
 }
@@ -260,7 +219,7 @@ configurations {
 repositories {
     mavenLocal()
     mavenCentral()
-    <%_ if (JHIPSTER_DEPENDENCIES_VERSION.endsWith('-SNAPSHOT')) { _%>
+    <%_ if (jhipsterDependenciesVersion.endsWith('-SNAPSHOT')) { _%>
     maven {
         url "https://oss.sonatype.org/content/repositories/snapshots/"
         mavenContent {
@@ -268,7 +227,7 @@ repositories {
         }
     }
     <%_ } _%>
-    //jhipster-needle-gradle-repositories - JHipster will add additional repositories
+    // jhipster-needle-gradle-repositories - JHipster will add additional repositories
 }
 
 dependencies {
@@ -278,7 +237,7 @@ dependencies {
     }
 
     annotationProcessor "io.micronaut:micronaut-validation"
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     annotationProcessor "io.micronaut.data:micronaut-data-processor"
     <%_ } _%>
     annotationProcessor "io.micronaut.openapi:micronaut-openapi"
@@ -296,21 +255,21 @@ dependencies {
         exclude group: "org.springframework.boot", module: "spring-boot-starter-validation"
     }
     implementation "org.simplejavamail:simple-java-mail:$simplejavamail_version"
-    implementation "jakarta.annotation:jakarta.annotation-api"
+    implementation "javax.annotation:javax.annotation-api"
     implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
     implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "net.logstash.logback:logstash-logback-encoder"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-hppc"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5"
     <%_ } _%>
     implementation "com.fasterxml.jackson.core:jackson-annotations"
     implementation "com.fasterxml.jackson.module:jackson-module-jaxb-annotations"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml"
     implementation "com.fasterxml.jackson.core:jackson-databind"
-    <%_ if (applicationType === 'gateway' && authenticationType === 'uaa') { _%>
+    <%_ if (applicationTypeGateway && authenticationType === 'uaa') { _%>
     implementation "org.apache.httpcomponents:httpclient"
     <%_ } _%>
     <%_ if (cacheProvider === 'hazelcast') { _%>
@@ -343,15 +302,15 @@ dependencies {
         <%_ } _%>
     testImplementation "org.testcontainers:testcontainers:$testcontainers_version"
     <%_ } _%>
-    <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'redis'].includes(cacheProvider) || applicationType === 'gateway') { _%>
+    <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'redis'].includes(cacheProvider) || applicationTypeGateway) { _%>
     implementation "io.micronaut.cache:micronaut-cache-core"
     implementation "javax.cache:cache-api"
     <%_ } _%>
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     implementation "org.hibernate:hibernate-core"
     implementation "com.zaxxer:HikariCP"
     <%_ } _%>
-    <%_ if (databaseType === 'cassandra' || applicationType === 'gateway') { _%>
+    <%_ if (databaseType === 'cassandra' || applicationTypeGateway) { _%>
     implementation "commons-codec:commons-codec"
     <%_ } _%>
     <%_ if (enableSwaggerCodegen) { _%>
@@ -379,13 +338,9 @@ dependencies {
     implementation "org.hibernate:hibernate-jcache"
         <%_ } _%>
     <%_ } _%>
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     implementation "org.hibernate:hibernate-entitymanager"
     implementation "org.hibernate.validator:hibernate-validator"
-    implementation "org.liquibase:liquibase-core"
-    liquibaseRuntime "org.liquibase:liquibase-core"
-    liquibaseRuntime "org.liquibase.ext:liquibase-hibernate5:${liquibase_hibernate5_version}"
-    liquibaseRuntime sourceSets.main.compileClasspath
     <%_ } _%>
 
     implementation "io.micronaut:micronaut-inject"
@@ -406,7 +361,6 @@ dependencies {
 
     compileOnly "org.graalvm.nativeimage:svm"
 
-    implementation "io.micronaut.liquibase:micronaut-liquibase"
     implementation "io.micronaut.sql:micronaut-jdbc-hikari"
     implementation "io.micronaut.jmx:micronaut-jmx"
     implementation "io.micronaut.micrometer:micronaut-micrometer-core"
@@ -422,9 +376,9 @@ dependencies {
     implementation "io.micronaut.discovery:micronaut-discovery-client:$micronaut_discovery_client_version"
 <%_ } _%>
 
-    implementation "javax.inject:javax.inject:${javax_inject_version}"
-    implementation "jakarta.mail:jakarta.mail-api:$javax_mail_version"
-    implementation "com.sun.mail:jakarta.mail:$javax_mail_version"
+    implementation "jakarta.inject:jakarta.inject-api:${jakarta_inject_version}"
+    implementation "jakarta.mail:jakarta.mail-api:$jakarta_mail_version"
+    implementation "com.sun.mail:jakarta.mail:$jakarta_mail_version"
     implementation "org.zalando:problem:$problem_version"
     implementation "org.zalando:problem-violations:$problem_version"
     implementation "org.zalando:jackson-datatype-problem:$problem_version"
@@ -460,12 +414,12 @@ dependencies {
     implementation "com.datastax.cassandra:cassandra-driver-extras"
     implementation "com.datastax.cassandra:cassandra-driver-mapping"
     <%_ } _%>
-    <%_ if (applicationType === 'gateway') { _%>
+    <%_ if (applicationTypeGateway) { _%>
 
     implementation "com.github.vladimir-bukhtoyarov:bucket4j-core"
     implementation "com.github.vladimir-bukhtoyarov:bucket4j-jcache"
     <%_ } _%>
-    <%_ if (applicationType === 'microservice' || applicationType === 'gateway' || applicationType === 'uaa') { _%>
+    <%_ if (applicationTypeMicroservice || applicationTypeGateway || applicationType === 'uaa') { _%>
 
     <%_ } _%>
     <%_ if (serviceDiscoveryType === 'eureka') { _%>
@@ -477,17 +431,17 @@ dependencies {
     <%_ if (authenticationType === 'uaa') { _%>
 
     <%_ } _%>
-    <%_ if (applicationType === 'microservice' || applicationType === 'gateway' || applicationType === 'uaa') { _%>
+    <%_ if (applicationTypeMicroservice || applicationTypeGateway || applicationType === 'uaa') { _%>
 
     <%_ } _%>
 
-    <%_ if (authenticationType === 'oauth2') { _%>
+    <%_ if (authenticationTypeOauth2) { _%>
 
     <%_ } _%>
 
     <%_ if (authenticationType === 'uaa') { _%>
 
-    <% if (databaseType === 'sql') { %>implementation<% } else { %>runtimeOnly<% } %> "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
+    <% if (databaseTypeSql) { %>implementation<% } else { %>runtimeOnly<% } %> "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
     <%_ } _%>
     <%_ if (databaseType === 'mongodb') { _%>
     implementation "com.github.mongobee:mongobee"
@@ -497,27 +451,21 @@ dependencies {
     implementation "com.couchbase.client:java-client"
     implementation "com.couchbase.client:encryption"
     <%_ } _%>
-    <%_ if (devDatabaseType === 'mysql' || prodDatabaseType === 'mysql') { _%>
+    <%_ if (prodDatabaseType === 'mysql') { _%>
     implementation "mysql:mysql-connector-java"
-    liquibaseRuntime "mysql:mysql-connector-java"
     <%_ } _%>
-    <%_ if (devDatabaseType === 'postgresql' || prodDatabaseType === 'postgresql') { _%>
+    <%_ if (prodDatabaseType === 'postgresql') { _%>
     implementation "org.postgresql:postgresql"
-    liquibaseRuntime "org.postgresql:postgresql"
     <%_ } _%>
-    <%_ if (devDatabaseType === 'mariadb' || prodDatabaseType === 'mariadb') { _%>
+    <%_ if (prodDatabaseType === 'mariadb') { _%>
     implementation "org.mariadb.jdbc:mariadb-java-client"
-    liquibaseRuntime "org.mariadb.jdbc:mariadb-java-client"
     <%_ } _%>
-    <%_ if (devDatabaseType === 'mssql' || prodDatabaseType === 'mssql') { _%>
+    <%_ if (prodDatabaseType === 'mssql') { _%>
     implementation "com.microsoft.sqlserver:mssql-jdbc"
-    implementation "com.github.sabomichal:liquibase-mssql"
-    liquibaseRuntime  "com.microsoft.sqlserver:mssql-jdbc"
-    liquibaseRuntime "com.github.sabomichal:liquibase-mssql"
     <%_ } _%>
     implementation "org.mapstruct:mapstruct:${mapstruct_version}"
     annotationProcessor "org.mapstruct:mapstruct-processor:$mapstruct_version"
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     annotationProcessor "org.hibernate:hibernate-jpamodelgen:$hibernate_version"
     annotationProcessor "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
     <%_ } _%>
@@ -544,15 +492,11 @@ dependencies {
     <%_ if (databaseType === 'couchbase') { _%>
     testImplementation "org.testcontainers:couchbase"
     <%_ } _%>
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     testImplementation "com.h2database:h2"
-    <%_ } _%>
-    <%_ if (devDatabaseType === 'h2Disk' || devDatabaseType === 'h2Memory') { _%>
-    liquibaseRuntime "com.h2database:h2"
     <%_ } _%>
     <%_ if (devDatabaseType === 'oracle' || prodDatabaseType === 'oracle') { _%>
     implementation "com.oracle.ojdbc:ojdbc8"
-    liquibaseRuntime "com.oracle.ojdbc:ojdbc8"
     <%_ } _%>
     <%_ if (messageBroker === 'kafka') { _%>
     testImplementation "org.testcontainers:kafka"
@@ -561,7 +505,7 @@ dependencies {
     implementation("io.micronaut.rxjava3:micronaut-rxjava3")
     implementation("io.micronaut.rxjava3:micronaut-rxjava3-http-client:$rxJava3Version")
 
-    //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
+    // jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
 
 if (project.hasProperty("gae")) {
@@ -581,7 +525,7 @@ task cleanResources(type: Delete) {
 }
 
 wrapper {
-    gradleVersion = "<%= GRADLE_VERSION %>"
+    gradleVersion = "<%= gradleVersion %>"
 }
 
 <%_ if (!skipClient) { _%>

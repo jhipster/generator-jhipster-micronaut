@@ -1,0 +1,59 @@
+<%#
+ Copyright 2019-2023 the original author or authors from the JHipster project.
+
+ This file is part of the JHipster project, see https://www.jhipster.tech/
+ for more information.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-%>
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+name: <%= baseName.toLowerCase() %>
+services:
+  app:
+    image: <%= baseName.toLowerCase() %>
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - MICRONAUT_ENVIRONMENTS=prod
+<%_ if (databaseTypeSql) {
+const databaseName = prodDatabaseTypeMysql || prodDatabaseTypeMariadb ? baseName.toLowerCase() : baseName;
+_%>
+      - JDBC_URL=<%- this.getJDBCUrl(prodDatabaseType, { hostname: `${baseName.toLowerCase()}-${prodDatabaseType}`, databaseName: databaseName }) %>
+<%_ } _%>
+<%_ if (prodDatabaseTypeMysql || prodDatabaseTypeMariadb) { _%>
+      - JDBC_PASSWORD=password
+<%_ } _%>
+<%_ if (authenticationTypeOauth2) { _%>
+      - MICRONAUT_SECURITY_OAUTH2_CLIENTS_OIDC_OPENID_ISSUER=http://keycloak:9080/auth/realms/jhipster
+  <%_ if (applicationTypeGateway || applicationTypeMonolith) { _%>
+      - MICRONAUT_SECURITY_OAUTH2_CLIENTS_OIDC_CLIENT_ID=web_app
+      - MICRONAUT_SECURITY_OAUTH2_CLIENTS_OIDC_CLIENT_SECRET=web_app
+  <%_ } _%>
+  <%_ if (applicationTypeMicroservice) { _%>
+      - MICRONAUT_SECURITY_OAUTH2_CLIENTS_OIDC_CLIENT_ID=internal
+      - MICRONAUT_SECURITY_OAUTH2_CLIENTS_OIDC_CLIENT_SECRET=internal
+  <%_ } _%>
+<%_ } _%>
+<%_ if (databaseTypeCassandra) { _%>
+      - SPRING_DATA_CASSANDRA_CONTACTPOINTS=<%= baseName.toLowerCase() %>-cassandra
+<%_ } _%>
+<%_ if (applicationTypeMonolith || applicationTypeGateway) { _%>
+    # If you want to expose these ports outside your dev PC,
+    # remove the "127.0.0.1:" prefix
+    ports:
+      - 127.0.0.1:<%= serverPort %>:<%= serverPort %>
+<%_ } _%>
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:<%= serverPort %>/management/health']
+      interval: 5s
+      timeout: 5s
+      retries: 40

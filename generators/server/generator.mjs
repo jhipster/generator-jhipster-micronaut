@@ -1,194 +1,326 @@
-import chalk from 'chalk';
-import os from 'os';
-import { utils as jhipsterUtils } from 'generator-jhipster';
-import ServerGenerator from 'generator-jhipster/esm/generators/server';
+import ServerGenerator from 'generator-jhipster/generators/server';
 import {
-  PRIORITY_PREFIX,
-  INITIALIZING_PRIORITY,
-  PROMPTING_PRIORITY,
-  CONFIGURING_PRIORITY,
-  COMPOSING_PRIORITY,
-  LOADING_PRIORITY,
-  PREPARING_PRIORITY,
-  DEFAULT_PRIORITY,
-  WRITING_PRIORITY,
-  POST_WRITING_PRIORITY,
-  INSTALL_PRIORITY,
-  END_PRIORITY,
-} from 'generator-jhipster/esm/priorities';
-
-import { writeFiles } from './files.cjs';
-import { askForModuleName, askForServerSideOpts } from './prompts.cjs';
+  GENERATOR_DOCKER,
+  GENERATOR_GRADLE,
+  GENERATOR_LANGUAGES,
+  GENERATOR_LIQUIBASE,
+  GENERATOR_MAVEN,
+} from 'generator-jhipster/generators';
+import { createNeedleCallback, createBase64Secret } from 'generator-jhipster/generators/base/support';
 import mnConstants from '../constants.cjs';
-import { extendGenerator } from '#lib/utils.mjs';
+import { writeFiles } from './files.mjs';
 
-const { getBase64Secret } = jhipsterUtils;
+import command from './command.mjs';
+import { entityFiles } from './entity-files.mjs';
 
-export default class extends extendGenerator(ServerGenerator) {
+export default class extends ServerGenerator {
+  command = command;
+
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, priorityArgs: true, ...features });
+    super(args, opts, {
+      ...features,
+      checkBlueprint: true,
+    });
 
-    if (this.options.help) return;
-
-    if (!this.options.jhipsterContext) {
-      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
+    if (!this.options.help) {
+      this.jhipsterTemplatesFolders.push(this.fetchFromInstalledJHipster('spring-data-relational/templates'));
     }
-
-    this.configOptions.backendName = 'Micronaut';
   }
 
-  async _postConstruct() {
-    await this.dependsOnJHipster('bootstrap-application');
+  get [ServerGenerator.INITIALIZING]() {
+    return this.asInitializingTaskGroup({
+      ...super.initializing,
+      async initializingTemplateTask() {
+        this.parseJHipsterArguments(command.arguments);
+        this.parseJHipsterOptions(command.options);
+      },
+    });
   }
 
-  get [INITIALIZING_PRIORITY]() {
-    return {
-      ...super._initializing(),
-    };
+  get [ServerGenerator.PROMPTING]() {
+    return this.asPromptingTaskGroup({
+      ...super.prompting,
+      // TODO move generator-jhipster prompts to command and customize micronaut's command based on generator-jhipster
+      async promptingTemplateTask() {},
+    });
   }
 
-  get [PROMPTING_PRIORITY]() {
-    return {
-      ...super._prompting(),
-      askForModuleName,
-      askForServerSideOpts,
-    };
-  }
-
-  get [CONFIGURING_PRIORITY]() {
-    return {
-      ...super._configuring(),
-
-      configureMicronaut() {
-        const { applicationType, authenticationType, jwtSecretKey } = this.jhipsterConfig;
-        if (applicationType !== 'monolith' && applicationType !== 'microservice') {
-          throw new Error('Application should be only monolith or microservice for this blueprint');
-        }
-        if (authenticationType === 'oauth2' && !jwtSecretKey) {
-          this.jhipsterConfig.jwtSecretKey = getBase64Secret.call(this, null, 64);
+  get [ServerGenerator.CONFIGURING]() {
+    return this.asConfiguringTaskGroup({
+      ...super.configuring,
+      async configuringTemplateTask() {
+        this.jhipsterConfig.backendType = 'Micronaut';
+        if (this.jhipsterConfigWithDefaults.authenticationType === 'oauth2') {
+          this.jhipsterConfig.jwtSecretKey = this.jhipsterConfig.jwtSecretKey ?? createBase64Secret(64, this.options.reproducibleTests);
         }
       },
-    };
+    });
   }
 
-  get [COMPOSING_PRIORITY]() {
-    return {
-      ...super._composing(),
-    };
-  }
+  get [ServerGenerator.COMPOSING]() {
+    return this.asComposingTaskGroup({
+      async composing() {
+        const { buildTool, enableTranslation, databaseType, messageBroker, searchEngine, testFrameworks, websocket, cacheProvider } =
+          this.jhipsterConfigWithDefaults;
+        if (buildTool === 'gradle') {
+          await this.composeWithJHipster(GENERATOR_GRADLE);
+        } else if (buildTool === 'maven') {
+          (await this.composeWithJHipster(GENERATOR_MAVEN)).sortPomFile = false;
+        } else {
+          throw new Error(`Build tool ${buildTool} is not supported`);
+        }
 
-  get [LOADING_PRIORITY]() {
-    return {
-      ...super._loading(),
-    };
-  }
+        await this.composeWithJHipster(GENERATOR_DOCKER);
 
-  get [PREPARING_PRIORITY]() {
-    return {
-      ...super._preparing(),
-
-      setupMnConstants() {
-        this.MN_CONSTANTS = mnConstants;
-        this.GRADLE_VERSION = mnConstants.GRADLE_VERSION;
-        this.DOCKER_REDIS = mnConstants.DOCKER_REDIS;
-        this.DOCKER_CONSUL_CONFIG_LOADER = 'jhipster/consul-config-loader:v0.4.1'; // overrides jhipster value until main generator is updated
-        this.JHIPSTER_DEPENDENCIES_VERSION = '7.9.3';
+        // We don't expose client/server to cli, composing with languages is used for test purposes.
+        if (enableTranslation) {
+          await this.composeWithJHipster(GENERATOR_LANGUAGES);
+        }
+        if (databaseType === 'sql') {
+          await this.composeWithJHipster(GENERATOR_LIQUIBASE);
+        }
+        /*
+        else if (databaseType === CASSANDRA) {
+          await this.composeWithJHipster(GENERATOR_SPRING_DATA_CASSANDRA);
+        } else if (databaseType === COUCHBASE) {
+          await this.composeWithJHipster(GENERATOR_SPRING_DATA_COUCHBASE);
+        } else if (databaseType === MONGODB) {
+          await this.composeWithJHipster(GENERATOR_SPRING_DATA_MONGODB);
+        } else if (databaseType === NEO4J) {
+          await this.composeWithJHipster(GENERATOR_SPRING_DATA_NEO4J);
+        }
+        if (messageBroker === KAFKA || messageBroker === PULSAR) {
+          await this.composeWithJHipster(GENERATOR_SPRING_CLOUD_STREAM);
+        }
+        if (searchEngine === ELASTICSEARCH) {
+          await this.composeWithJHipster(GENERATOR_SPRING_DATA_ELASTICSEARCH);
+        }
+        if (testFrameworks?.includes(CUCUMBER)) {
+          await this.composeWithJHipster(GENERATOR_CUCUMBER);
+        }
+        if (testFrameworks?.includes(GATLING)) {
+          await this.composeWithJHipster(GENERATOR_GATLING);
+        }
+        if (websocket === SPRING_WEBSOCKET) {
+          await this.composeWithJHipster(GENERATOR_SPRING_WEBSOCKET);
+        }
+        */
+        if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) {
+          await this.composeWithJHipster('jhipster-micronaut:micronaut-cache');
+        }
       },
-    };
+    });
   }
 
-  get [DEFAULT_PRIORITY]() {
-    return {
-      ...super._default(),
-    };
+  get [ServerGenerator.LOADING]() {
+    return this.asLoadingTaskGroup({
+      ...super.loading,
+    });
   }
 
-  get [WRITING_PRIORITY]() {
-    return {
-      ...writeFiles(),
-    };
+  get [ServerGenerator.PREPARING]() {
+    return this.asPreparingTaskGroup({
+      ...super.preparing,
+
+      prepareForTemplates({ application }) {
+        // Use Micronaut specific hipster
+        application.hipster = 'jhipster_family_member_4';
+        // Workaround
+        application.addSpringMilestoneRepository = false;
+        application.MN_CONSTANTS = mnConstants;
+        application.gradleVersion = mnConstants.GRADLE_VERSION;
+        application.dockerContainers.redis = mnConstants.DOCKER_REDIS;
+        application.jhipsterDependenciesVersion = '7.9.3';
+        // Revert to java 11 to fix redis.
+        application.JAVA_VERSION = '11';
+        // Add liquibase h2 database references.
+        application.liquibaseAddH2Properties = true;
+        // Micronaut is a java project.
+        application.backendTypeJavaAny = true;
+      },
+
+      registerSpringFactory: undefined,
+
+      addLogNeedles({ source, application }) {
+        source.addIntegrationTestAnnotation = ({ package: packageName, annotation }) =>
+          this.editFile(this.destinationPath(`${application.javaPackageTestDir}IntegrationTest.java`), content =>
+            addJavaAnnotation(content, { package: packageName, annotation }),
+          );
+        source.addLogbackMainLog = ({ name, level }) =>
+          this.editFile(
+            this.destinationPath(`${application.srcMainResources}logback.xml`),
+            createNeedleCallback({
+              needle: 'logback-add-log',
+              contentToAdd: `<logger name="${name}" level="${level}"/>`,
+            }),
+          );
+        source.addLogbackTestLog = ({ name, level }) =>
+          this.editFile(
+            this.destinationPath(`${application.srcTestResources}logback.xml`),
+            createNeedleCallback({
+              needle: 'logback-add-log',
+              contentToAdd: `<logger name="${name}" level="${level}"/>`,
+            }),
+          );
+      },
+    });
   }
 
-  get [POST_WRITING_PRIORITY]() {
-    return {
-      ...super._postWriting(),
+  get [ServerGenerator.CONFIGURING_EACH_ENTITY]() {
+    return this.asConfiguringEachEntityTaskGroup({
+      ...super.configuringEachEntity,
+    });
+  }
 
-      customizeScripts() {
+  get [ServerGenerator.LOADING_ENTITIES]() {
+    return this.asLoadingEntitiesTaskGroup({
+      ...super.loadingEntities,
+    });
+  }
+
+  get [ServerGenerator.PREPARING_EACH_ENTITY]() {
+    return this.asPreparingEachEntityTaskGroup({
+      ...super.preparingEachEntity,
+    });
+  }
+
+  get [ServerGenerator.PREPARING_EACH_ENTITY_FIELD]() {
+    return this.asPreparingEachEntityFieldTaskGroup({
+      ...super.preparingEachEntityField,
+    });
+  }
+
+  get [ServerGenerator.PREPARING_EACH_ENTITY_RELATIONSHIP]() {
+    return this.asPreparingEachEntityRelationshipTaskGroup({
+      ...super.preparingEachEntityRelationship,
+    });
+  }
+
+  get [ServerGenerator.POST_PREPARING_EACH_ENTITY]() {
+    return this.asPostPreparingEachEntityTaskGroup({
+      ...super.postPreparingEachEntity,
+    });
+  }
+
+  get [ServerGenerator.DEFAULT]() {
+    return this.asDefaultTaskGroup({
+      ...super.default,
+      relationships({ entities }) {
+        for (const entity of entities) {
+          entity.fieldsContainOwnerManyToMany = entity => entity.relationships.some(rel => rel.ownerSide && rel.relationshipManyToMany);
+        }
+      },
+    });
+  }
+
+  get [ServerGenerator.WRITING]() {
+    return this.asWritingTaskGroup({
+      ...writeFiles.call(this),
+    });
+  }
+
+  get [ServerGenerator.WRITING_ENTITIES]() {
+    const { writeEnumFiles } = super.writingEntities;
+    return this.asWritingTaskGroup({
+      async writeMicronautServerFiles({ application, entities }) {
+        const rootTemplatesPath = application.reactive ? ['reactive', ''] : undefined;
+        for (const entity of entities.filter(entity => !entity.skipServer && !entity.builtIn)) {
+          this.writeFiles({
+            sections: entityFiles,
+            context: { ...application, ...entity },
+            rootTemplatesPath,
+          });
+        }
+      },
+      writeEnumFiles,
+    });
+  }
+
+  get [ServerGenerator.POST_WRITING]() {
+    return this.asPostWritingTaskGroup({
+      ...super.postWriting,
+      packageJsonCustomizations({ application }) {
         this.packageJson.merge({
           scripts: {
-            // Remove 'npm run backend:doc:test && npm run backend:nohttp:test'
-            'ci:backend:test': 'npm run backend:info && npm run backend:unit:test -- -P$npm_package_config_default_environment',
+            'backend:nohttp:test': '',
+            'backend:doc:test': '',
           },
         });
+        if (application.buildToolMaven) {
+          this.packageJson.merge({
+            scripts: {
+              // jhipster generates e2e.jar
+              'postci:e2e:package':
+                'mv target/original*.jar target/original.jar.back && cp target/*.$npm_package_config_packaging target/e2e.$npm_package_config_packaging',
+            },
+          });
+        } else if (application.buildToolGradle) {
+          this.editFile('package.json', contents => contents.replaceAll(' bootJar ', ' shadowJar '));
+        }
+        if (application.cacheProviderRedis) {
+          this.packageJson.merge({
+            scripts: {
+              'ci:e2e:server:start': `${this.packageJson.getPath(
+                'scripts.ci:e2e:server:start',
+              )} --add-opens java.base/java.util=ALL-UNNAMED`,
+            },
+          });
+        }
       },
-      customizeLiquibase({
-        application: { devDatabaseTypeH2Any, prodDatabaseTypeMysql, prodDatabaseTypeMariadb, prodDatabaseTypePostgres },
-      }) {
-        // Micronaut uses h2 for tests, add liquibase h2 configuration.
-        if (!devDatabaseTypeH2Any) {
-          try {
-            this.editFile('src/main/resources/config/liquibase/master.xml', content =>
+    });
+  }
+
+  get [ServerGenerator.POST_WRITING_ENTITIES]() {
+    return this.asPostWritingEntitiesTaskGroup({
+      customizeMapstruct({ entities, application }) {
+        for (const entity of entities.filter(entity => !entity.skipServer && !entity.builtIn && entity.dtoMapstruct)) {
+          this.editFile(
+            `src/main/java/${entity.entityAbsoluteFolder}/service/dto/${entity.dtoClass}.java`,
+            content =>
               content.replace(
-                'xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">',
-                `xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <property name="now" value="now()" dbms="h2"/>
-    <property name="floatType" value="float4" dbms="h2"/>
-    <property name="uuidType" value="${prodDatabaseTypeMysql || prodDatabaseTypeMariadb ? 'varchar(36)' : 'uuid'}" dbms="h2"/>
-    <property name="datetimeType" value="datetime(6)" dbms="h2"/>
-    <property name="clobType" value="${prodDatabaseTypePostgres ? 'longvarchar' : 'clob'}" dbms="h2"/>
-    <property name="blobType" value="blob" dbms="h2"/>`
-              )
-            );
-          } catch {}
+                'import java.io.Serializable;',
+                `import io.micronaut.core.annotation.Introspected;
+import java.io.Serializable;`,
+              ),
+            content => content.replaceAll('jakarta.', 'javax.'),
+            content =>
+              content.replace(
+                '\npublic class',
+                `
+@Introspected
+public class`,
+              ),
+          );
+
+          const hasUserRelationship = entity.relationships.find(({ otherEntity }) => otherEntity === application.user);
+          let replacement = 'componentModel = "jsr330"';
+          if (hasUserRelationship) {
+            replacement += ', uses = UserMapper.class';
+          }
+
+          this.editFile(`src/main/java/${entity.entityAbsoluteFolder}/service/mapper/${entity.entityClass}Mapper.java`, content =>
+            content.replace('componentModel = "spring"', replacement),
+          );
         }
       },
-      customizeMaven({ application: { buildToolMaven } }) {
-        if (!buildToolMaven) return;
-        this.packageJson.merge({
-          scripts: {
-            'postci:e2e:package':
-              'rm target/original*.$npm_package_config_packaging && cp target/*.$npm_package_config_packaging target/e2e.$npm_package_config_packaging',
-          },
-        });
-      },
-
-      customizeGradle({ application: { buildToolGradle } }) {
-        if (!buildToolGradle) return;
-        this.packageJson.merge({
-          scripts: {
-            'java:jar': './gradlew shadowJar -x test -x integrationTest',
-            'java:war': './gradlew shadowWar -Pwar -x test -x integrationTest',
-            'java:docker': './gradlew shadowJar -Pprod jibDockerBuild',
-          },
-        });
-      },
-    };
+    });
   }
 
-  get [INSTALL_PRIORITY]() {
-    return {
-      ...super._install(),
-    };
+  get [ServerGenerator.INSTALL]() {
+    return this.asInstallTaskGroup({
+      ...super.install,
+    });
   }
 
-  get [END_PRIORITY]() {
-    return {
-      end() {
-        this.log(chalk.green.bold('\nServer application generated successfully.\n'));
+  get [ServerGenerator.POST_INSTALL]() {
+    return this.asPostInstallTaskGroup({
+      ...super.postInstall,
+    });
+  }
 
-        let executable = 'mvnw';
-        if (this.buildTool === 'gradle') {
-          executable = 'gradlew';
-        }
-
-        let logMsgComment = '';
-        if (os.platform() === 'win32') {
-          logMsgComment = ` (${chalk.yellow.bold(executable)} if using Windows Command Prompt)`;
-        }
-        this.log(
-          chalk.green(`Run your ${chalk.blue.bold('Micronaut')} application:\n ${chalk.yellow.bold(`./${executable}`)}${logMsgComment}`)
-        );
-      },
-    };
+  get [ServerGenerator.END]() {
+    return this.asEndTaskGroup({
+      ...super.end,
+    });
   }
 }

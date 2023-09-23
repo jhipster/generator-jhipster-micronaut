@@ -1,35 +1,23 @@
-import chalk from 'chalk';
-import CypressGenerator from 'generator-jhipster/esm/generators/cypress';
-import { PRIORITY_PREFIX, POST_WRITING_PRIORITY } from 'generator-jhipster/esm/priorities';
-import { extendGenerator } from '#lib/utils.mjs';
+import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
 
-export default class extends extendGenerator(CypressGenerator) {
+export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { taskPrefix: PRIORITY_PREFIX, priorityArgs: true, ...features });
-
-    if (this.options.help) return;
-
-    if (!this.options.jhipsterContext) {
-      throw new Error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints micronaut')}`);
-    }
-
-    this.sbsBlueprint = true;
+    super(args, opts, { ...features, sbsBlueprint: true });
   }
 
-  async _postConstruct() {
-    await this.dependsOnJHipster('bootstrap-application');
-  }
-
-  get [POST_WRITING_PRIORITY]() {
-    return {
-      customizeCypressForMicronaut({ application: { authenticationTypeJwt } }) {
-        this.editFile('src/test/javascript/cypress/e2e/administration/administration.cy.ts', content =>
-          content.replaceAll('info.activeProfiles', "info['active-profiles']")
+  get [BaseApplicationGenerator.POST_WRITING]() {
+    return this.asPostWritingTaskGroup({
+      customizeCypress({ application }) {
+        this.editFile(`${application.cypressDir}e2e/administration/administration.cy.ts`, content =>
+          content.replaceAll('info.activeProfiles', "info['active-profiles']"),
         );
-        if (authenticationTypeJwt) {
-          this.editFile('src/test/javascript/cypress/support/commands.ts', content => content.replaceAll('id_token', 'access_token'));
+        this.editFile(`${application.cypressDir}e2e/administration/administration.cy.ts`, content =>
+          content.replace("describe('/docs'", "describe.skip('/docs'"),
+        );
+        if (application.authenticationTypeJwt) {
+          this.editFile(`${application.cypressDir}support/commands.ts`, content => content.replaceAll('id_token', 'access_token'));
         }
       },
-    };
+    });
   }
 }

@@ -23,11 +23,11 @@ rootProject.name=<%= dasherizedBaseName %>
 profile=dev
 
 # Build properties
-node_version=<%= NODE_VERSION %>
-npm_version=<%= NPM_VERSION %>
+node_version=<%= nodeVersion %>
+npm_version=<%= nodeDependencies.npm %>
 
 # Dependency versions
-jhipster_dependencies_version=<%= JHIPSTER_DEPENDENCIES_VERSION %>
+jhipster_dependencies_version=<%= jhipsterDependenciesVersion %>
 micronautVersion=<%=versions.micronaut%>
 micronaut_data_version=<%=versions.micronautData%>
 micronaut_discovery_client_version=<%=versions.micronautDiscoveryClient%>
@@ -43,8 +43,8 @@ mockito_version=<%=versions.mockito%>
 <%_ if (!skipUserManagement) { _%>
 jbcrypt_version=<%=versions.jbcrypt%>
 <%_ } _%>
-javax_inject_version=<%=versions.javaxInject%>
-javax_mail_version=<%=versions.javaxMail%>
+jakarta_inject_version=<%= versions.jakartaInject %>
+jakarta_mail_version=<%=versions.jakartaMail%>
 simplejavamail_version=<%= versions.simplejavamail %>
 problem_version=<%=versions.problem%>
 <%_ if (searchEngine === 'elasticsearch') { _%>
@@ -62,7 +62,7 @@ testcontainers_version=<%= versions.testcontainers %>
 liquibase_hibernate5_version=<%=versions.liquibaseHibernate5%>
 liquibaseTaskPrefix=liquibase
 
-<%_ if (databaseType === 'sql' || authenticationType === 'uaa') { _%>
+<%_ if (databaseTypeSql || authenticationType === 'uaa') { _%>
 jaxb_runtime_version=2.3.2
 <%_ } _%>
 
@@ -73,7 +73,7 @@ git_properties_plugin_version=2.4.1
 gradle_node_plugin_version=2.2.4
 <%_ } _%>
 apt_plugin_version=0.21
-<%_ if (databaseType === 'sql') { _%>
+<%_ if (databaseTypeSql) { _%>
 liquibase_plugin_version=2.0.3
 <%_ } _%>
 sonarqube_plugin_version=2.8
