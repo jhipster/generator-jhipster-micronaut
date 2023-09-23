@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "chalk": "^5.3.0",
-    "generator-jhipster": "github:mshima/generator-jhipster#skip_ci-readme",
+    "generator-jhipster": "github:jhipster/generator-jhipster#main",
     "os": "^0.1.2"
   },
   "devDependencies": {
