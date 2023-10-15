@@ -34,7 +34,7 @@ export const entityFiles = {
     }),
     javaMainPackageTemplatesBlock({
       relativePath: '_entityPackage_/',
-      templates: ['domain/_persistClass_.java.jhi', 'domain/_persistClass_.java.jhi.javax_validation'],
+      templates: ['domain/_persistClass_.java.jhi.javax_validation'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.databaseTypeSql && !generator.reactive,
@@ -45,10 +45,6 @@ export const entityFiles = {
       condition: generator => generator.databaseTypeSql && !generator.reactive && generator.enableHibernateCache,
       relativePath: '_entityPackage_/',
       templates: ['domain/_persistClass_.java.jhi.hibernate_cache'],
-    }),
-    javaTestPackageTemplatesBlock({
-      relativePath: '_entityPackage_/',
-      templates: ['domain/_persistClass_Test.java'],
     }),
   ],
   server: [

@@ -299,6 +299,9 @@ exports[`SubGenerator angular of micronaut JHipster blueprint > run > should suc
   "src/main/webapp/app/admin/metrics/blocks/metrics-modal-threads/metrics-modal-threads.component.html": {
     "stateCleared": "modified",
   },
+  "src/main/webapp/app/admin/metrics/blocks/metrics-modal-threads/metrics-modal-threads.component.spec.ts": {
+    "stateCleared": "modified",
+  },
   "src/main/webapp/app/admin/metrics/blocks/metrics-modal-threads/metrics-modal-threads.component.ts": {
     "stateCleared": "modified",
   },

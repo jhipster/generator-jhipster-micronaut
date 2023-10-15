@@ -27,6 +27,12 @@ export default class extends ServerGenerator {
     }
   }
 
+  async beforeQueue() {
+    const javaGenerator = await this.dependsOnJHipster('java');
+    javaGenerator.useJakartaValidation = false;
+    await this.dependsOnJHipster('common');
+  }
+
   get [ServerGenerator.INITIALIZING]() {
     return this.asInitializingTaskGroup({
       ...super.initializing,
@@ -74,7 +80,8 @@ export default class extends ServerGenerator {
 
         // We don't expose client/server to cli, composing with languages is used for test purposes.
         if (enableTranslation) {
-          await this.composeWithJHipster(GENERATOR_LANGUAGES);
+          const languagesGenerator = await this.composeWithJHipster(GENERATOR_LANGUAGES);
+          languagesGenerator.writeJavaLanguageFiles = true;
         }
         if (databaseType === 'sql') {
           await this.composeWithJHipster(GENERATOR_LIQUIBASE);
