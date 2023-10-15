@@ -28,7 +28,8 @@ export default class extends ServerGenerator {
   }
 
   async beforeQueue() {
-    const javaGenerator = await this.dependsOnJHipster('java');
+    // TODO remove pass useJakartaValidation as options.
+    const javaGenerator = await this.dependsOnJHipster('java', { generatorOptions: { useJakartaValidation: false } });
     javaGenerator.useJakartaValidation = false;
     await this.dependsOnJHipster('common');
   }
