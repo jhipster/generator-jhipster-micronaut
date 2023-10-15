@@ -739,6 +739,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/java/com/mycompany/myapp/service/dto/AdminUserDTO.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/service/dto/EntityDTO.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/dto/PasswordChangeDTO.java": {
     "stateCleared": "modified",
   },
@@ -746,6 +749,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/dto/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/service/mapper/EntityMapper.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/mapper/UserMapper.java": {
@@ -1034,6 +1040,12 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/service/UserServiceIT.java": {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/service/dto/EntityDTOTest.java": {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/service/mapper/EntityMapperTest.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/service/mapper/UserMapperIT.java": {

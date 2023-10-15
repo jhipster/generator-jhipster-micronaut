@@ -35,6 +35,7 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
           [
             {
               name: 'Entity',
+              dto: 'mapstruct',
               fields: [
                 {
                   fieldName: 'name',

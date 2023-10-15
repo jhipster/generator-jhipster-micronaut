@@ -23,7 +23,12 @@ export default class extends ServerGenerator {
     });
 
     if (!this.options.help) {
-      this.jhipsterTemplatesFolders.push(this.fetchFromInstalledJHipster('spring-data-relational/templates'));
+      this.jhipsterTemplatesFolders.push(
+        // For _persistClass_.java.jhi.hibernate_cache file
+        this.fetchFromInstalledJHipster('spring-data-relational/templates'),
+        // For _global_partials_entity_/field_validators file
+        this.fetchFromInstalledJHipster('java/templates'),
+      );
     }
   }
 
