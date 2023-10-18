@@ -23,8 +23,20 @@ export default class extends ServerGenerator {
     });
 
     if (!this.options.help) {
-      this.jhipsterTemplatesFolders.push(this.fetchFromInstalledJHipster('spring-data-relational/templates'));
+      this.jhipsterTemplatesFolders.push(
+        // For _persistClass_.java.jhi.hibernate_cache file
+        this.fetchFromInstalledJHipster('spring-data-relational/templates'),
+        // For _global_partials_entity_/field_validators file
+        this.fetchFromInstalledJHipster('java/templates'),
+      );
     }
+  }
+
+  async beforeQueue() {
+    // TODO remove pass useJakartaValidation as options.
+    const javaGenerator = await this.dependsOnJHipster('java', { generatorOptions: { useJakartaValidation: false } });
+    javaGenerator.useJakartaValidation = false;
+    await this.dependsOnJHipster('common');
   }
 
   get [ServerGenerator.INITIALIZING]() {
@@ -74,7 +86,8 @@ export default class extends ServerGenerator {
 
         // We don't expose client/server to cli, composing with languages is used for test purposes.
         if (enableTranslation) {
-          await this.composeWithJHipster(GENERATOR_LANGUAGES);
+          const languagesGenerator = await this.composeWithJHipster(GENERATOR_LANGUAGES);
+          languagesGenerator.writeJavaLanguageFiles = true;
         }
         if (databaseType === 'sql') {
           await this.composeWithJHipster(GENERATOR_LIQUIBASE);
