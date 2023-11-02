@@ -11,7 +11,7 @@ const devBlueprintPath = join(packagePath, '.blueprint');
 
 (async () => {
   const { runJHipster, done, logger } = await import('generator-jhipster/cli');
-  const { getLogo } = await import('./logo.mjs');
+  const { getLogo } = await import('./logo.js');
   const executableName = Object.keys(bin)[0];
 
   runJHipster({

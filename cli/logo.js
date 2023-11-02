@@ -6,7 +6,6 @@ const {
   versions: { micronaut: MICRONAUT_VERSION },
 } = constants;
 
-// eslint-disable-next-line import/prefer-default-export
 export function getLogo() {
   const { version } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)));
 

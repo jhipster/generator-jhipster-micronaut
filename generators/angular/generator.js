@@ -1,5 +1,5 @@
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
-import { angularFiles } from './files.mjs';
+import { angularFiles } from './files.js';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {

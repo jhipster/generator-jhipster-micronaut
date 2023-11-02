@@ -7,21 +7,21 @@ import {
   GENERATOR_MAVEN,
 } from 'generator-jhipster/generators';
 import { createNeedleCallback, createBase64Secret } from 'generator-jhipster/generators/base/support';
+import { addJavaAnnotation } from 'generator-jhipster/generators/java/support';
 import mnConstants from '../constants.cjs';
-import { writeFiles } from './files.mjs';
+import { writeFiles } from './files.js';
 
-import command from './command.mjs';
-import { entityFiles } from './entity-files.mjs';
+import command from './command.js';
+import { entityFiles } from './entity-files.js';
 
 export default class extends ServerGenerator {
-  command = command;
-
   constructor(args, opts, features) {
     super(args, opts, {
       ...features,
       checkBlueprint: true,
     });
 
+    this.command = command;
     if (!this.options.help) {
       this.jhipsterTemplatesFolders.push(
         // For _persistClass_.java.jhi.hibernate_cache file
@@ -72,8 +72,7 @@ export default class extends ServerGenerator {
   get [ServerGenerator.COMPOSING]() {
     return this.asComposingTaskGroup({
       async composing() {
-        const { buildTool, enableTranslation, databaseType, messageBroker, searchEngine, testFrameworks, websocket, cacheProvider } =
-          this.jhipsterConfigWithDefaults;
+        const { buildTool, enableTranslation, databaseType, cacheProvider } = this.jhipsterConfigWithDefaults;
         if (buildTool === 'gradle') {
           await this.composeWithJHipster(GENERATOR_GRADLE);
         } else if (buildTool === 'maven') {
@@ -92,32 +91,6 @@ export default class extends ServerGenerator {
         if (databaseType === 'sql') {
           await this.composeWithJHipster(GENERATOR_LIQUIBASE);
         }
-        /*
-        else if (databaseType === CASSANDRA) {
-          await this.composeWithJHipster(GENERATOR_SPRING_DATA_CASSANDRA);
-        } else if (databaseType === COUCHBASE) {
-          await this.composeWithJHipster(GENERATOR_SPRING_DATA_COUCHBASE);
-        } else if (databaseType === MONGODB) {
-          await this.composeWithJHipster(GENERATOR_SPRING_DATA_MONGODB);
-        } else if (databaseType === NEO4J) {
-          await this.composeWithJHipster(GENERATOR_SPRING_DATA_NEO4J);
-        }
-        if (messageBroker === KAFKA || messageBroker === PULSAR) {
-          await this.composeWithJHipster(GENERATOR_SPRING_CLOUD_STREAM);
-        }
-        if (searchEngine === ELASTICSEARCH) {
-          await this.composeWithJHipster(GENERATOR_SPRING_DATA_ELASTICSEARCH);
-        }
-        if (testFrameworks?.includes(CUCUMBER)) {
-          await this.composeWithJHipster(GENERATOR_CUCUMBER);
-        }
-        if (testFrameworks?.includes(GATLING)) {
-          await this.composeWithJHipster(GENERATOR_GATLING);
-        }
-        if (websocket === SPRING_WEBSOCKET) {
-          await this.composeWithJHipster(GENERATOR_SPRING_WEBSOCKET);
-        }
-        */
         if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) {
           await this.composeWithJHipster('jhipster-micronaut:micronaut-cache');
         }

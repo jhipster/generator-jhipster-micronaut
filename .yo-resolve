@@ -1,3 +1,2 @@
-README.md
-cli/cli.cjs
-generators/{angular,client,cypress,common,docker,heroku,liquibase,micronaut-cache,react,server}/{command,generator,generator.spec}.mjs skip
+!package.json skip
+

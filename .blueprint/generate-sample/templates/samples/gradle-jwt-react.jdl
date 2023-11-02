@@ -51,7 +51,7 @@ relationship OneToMany {
   BankAccount{operation} to Operation{bankAccount(name)}
 }
 relationship ManyToOne {
-  BankAccount{user(login)} to User
+  BankAccount{user(login)} to User with builtInEntity
 }
 relationship ManyToMany {
   Operation{label(label)} to Label{operation}
