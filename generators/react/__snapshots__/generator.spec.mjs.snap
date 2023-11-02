@@ -20,7 +20,7 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
   ".husky/pre-commit": {
     "stateCleared": "modified",
   },
-  ".lintstagedrc.js": {
+  ".lintstagedrc.cjs": {
     "stateCleared": "modified",
   },
   ".prettierignore": {

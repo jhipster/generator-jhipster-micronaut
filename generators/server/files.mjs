@@ -281,7 +281,6 @@ export const serverFiles = {
         'config/JHipsterConfigurationEndpoint.java',
         'config/LoggingConfiguration.java',
         'config/MessagesBundleMessageSource.java',
-        'config/package-info.java',
         'config/SnakeCasePhysicalNamingStrategy.java',
         'config/metric/JHipsterMetricsEndpoint.java',
       ],
@@ -322,7 +321,6 @@ export const serverFiles = {
       templates: [
         'security/AuthoritiesConstants.java',
         'security/NotAuthenticatedResponse.java',
-        'security/package-info.java',
         'security/SecurityUtils.java',
         'security/SecurityHeaderFilter.java',
       ],
@@ -347,10 +345,7 @@ export const serverFiles = {
   serverJavaService: [
     javaMainPackageTemplatesBlock({
       templates: [
-        'service/dto/package-info.java',
-        'service/mapper/package-info.java',
         'service/util/RandomUtil.java',
-        'service/package-info.java',
       ],
     }),
     javaMainPackageTemplatesBlock({
@@ -387,10 +382,6 @@ export const serverFiles = {
         'web/rest/errors/BadRequestAlertException.java',
         'web/rest/errors/ErrorConstants.java',
         'web/rest/errors/FieldErrorVM.java',
-        'web/rest/errors/package-info.java',
-        // VM
-        'web/rest/vm/package-info.java',
-        'web/rest/package-info.java',
       ],
     }),
     javaMainPackageTemplatesBlock({

@@ -14,7 +14,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   ".husky/pre-commit": {
     "stateCleared": "modified",
   },
-  ".lintstagedrc.js": {
+  ".lintstagedrc.cjs": {
     "stateCleared": "modified",
   },
   ".mvn/jvm.config": {
@@ -544,7 +544,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   ".jhipster/Entity.json": {
     "stateCleared": "modified",
   },
-  ".lintstagedrc.js": {
+  ".lintstagedrc.cjs": {
     "stateCleared": "modified",
   },
   ".mvn/jvm.config": {
@@ -1022,6 +1022,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/domain/EntityTest.java": {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/domain/EntityTestSamples.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/security/DomainUserDetailsServiceIT.java": {
