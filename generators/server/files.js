@@ -344,9 +344,7 @@ export const serverFiles = {
   ],
   serverJavaService: [
     javaMainPackageTemplatesBlock({
-      templates: [
-        'service/util/RandomUtil.java',
-      ],
+      templates: ['service/util/RandomUtil.java'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement,

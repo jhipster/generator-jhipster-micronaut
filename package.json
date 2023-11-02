@@ -23,10 +23,6 @@
     "url": "https://sendilkumarn.com"
   },
   "type": "module",
-  "imports": {
-    "#lib/*": "./lib/*",
-    "#test-utils": "./test/utils.mjs"
-  },
   "bin": {
     "mhipster": "cli/cli.cjs"
   },

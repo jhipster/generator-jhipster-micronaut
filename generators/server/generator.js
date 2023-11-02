@@ -8,10 +8,10 @@ import {
 } from 'generator-jhipster/generators';
 import { createNeedleCallback, createBase64Secret } from 'generator-jhipster/generators/base/support';
 import mnConstants from '../constants.cjs';
-import { writeFiles } from './files.mjs';
+import { writeFiles } from './files.js';
 
-import command from './command.mjs';
-import { entityFiles } from './entity-files.mjs';
+import command from './command.js';
+import { entityFiles } from './entity-files.js';
 
 export default class extends ServerGenerator {
   command = command;

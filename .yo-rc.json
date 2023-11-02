@@ -18,12 +18,6 @@
         "sbs": true,
         "written": true
       },
-      "common": {
-        "command": false,
-        "priorities": ["writing"],
-        "sbs": true,
-        "written": true
-      },
       "cypress": {
         "command": false,
         "priorities": ["postWriting"],
@@ -102,11 +96,12 @@
       }
     },
     "jhipsterVersion": "8.0.0-beta.3",
+    "js": true,
     "localBlueprint": false,
     "prettierDefaultIndent": 2,
     "projectName": "Micronaut Blueprint",
     "sampleWritten": true,
     "skipCommitHook": true,
-    "subGenerators": ["angular", "client", "common", "cypress", "heroku", "react", "server"]
+    "subGenerators": ["angular", "client", "cypress", "heroku", "react", "server"]
   }
 }
