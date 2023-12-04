@@ -52,7 +52,7 @@ module.exports = {
     },
   },
   versions: {
-    micronaut: '4.2.0',
+    micronaut: '4.2.1',
     micronautData: '4.2.0',
     micronautDiscoveryClient: '4.2.0',
     micronautOpenApi: '4.2.0',
