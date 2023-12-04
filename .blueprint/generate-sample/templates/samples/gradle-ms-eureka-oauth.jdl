@@ -1,0 +1,52 @@
+application {
+  config {
+    applicationType microservice
+    authenticationType oauth2
+    baseName jhipster
+    blueprints [generator-jhipster-micronaut]
+    buildTool gradle
+    cacheProvider no
+    creationTimestamp 1591136652677
+    databaseType sql
+    devDatabaseType h2Memory
+    dtoSuffix DTO
+    embeddableLaunchScript false
+    enableHibernateCache false
+    enableSwaggerCodegen false
+    enableTranslation true
+    jhiPrefix jhi
+    languages [en]
+    nativeLanguage en
+    packageName com.mycompany.myapp
+    prodDatabaseType mysql
+    serverPort 8081
+    serviceDiscoveryType eureka
+    skipClient true
+    skipServer false
+    skipUserManagement true
+    testFrameworks []
+  }
+
+  entities BankAccount, Label, Operation
+}
+
+entity BankAccount {
+  name String required,
+  balance BigDecimal required
+}
+entity Label {
+  label String required minlength(3)
+}
+entity Operation {
+  date Instant required,
+  description String,
+  amount BigDecimal required
+}
+relationship OneToMany {
+  BankAccount{operation} to Operation{bankAccount(name)}
+}
+relationship ManyToMany {
+  Operation{label(label)} to Label{operation}
+}
+
+paginate Operation with infinite-scroll

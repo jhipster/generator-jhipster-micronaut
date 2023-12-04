@@ -1,0 +1,15 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  standalone: true,
+  name: 'keyStartsWith',
+})
+export class KeyStartsWith implements PipeTransform {
+  transform(input: any[] | null, filter: any): any[] {
+    if (input) {
+      return input.filter(entry => entry.key.indexOf(filter.toString().toLocaleLowerCase()) > -1);
+    } else {
+      return [];
+    }
+  }
+}

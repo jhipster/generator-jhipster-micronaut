@@ -1,8 +1,2 @@
-generators/client/generator.mjs skip
-generators/heroku/generator.spec.mjs skip
-generators/common/generator.mjs skip
-generators/entity/generator.mjs skip
-generators/entity-server/generator.mjs skip
-generators/heroku/generator.mjs skip
-generators/server/generator.mjs skip
-generators/app/generator.mjs skip
+!package.json skip
+

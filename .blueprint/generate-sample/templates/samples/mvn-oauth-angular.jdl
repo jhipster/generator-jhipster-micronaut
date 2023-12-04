@@ -1,0 +1,57 @@
+application {
+  config {
+    applicationType monolith
+    authenticationType oauth2
+    baseName space
+    blueprints [generator-jhipster-micronaut]
+    buildTool maven
+    cacheProvider ehcache
+    clientFramework angular
+    clientPackageManager npm
+    clientTheme litera
+    clientThemeVariant primary
+    creationTimestamp 1596598800266
+    databaseType sql
+    devDatabaseType postgresql
+    dtoSuffix DTO
+    embeddableLaunchScript false
+    enableHibernateCache false
+    enableSwaggerCodegen false
+    enableTranslation true
+    jhiPrefix jhi
+    languages [en, fr]
+    nativeLanguage en
+    packageName org.jhipster.space
+    prodDatabaseType postgresql
+    serverPort 8080
+    skipClient false
+    skipServer false
+    skipUserManagement true
+    testFrameworks [cypress]
+  }
+
+  entities Mission, SpaceEvent
+}
+
+entity Mission {
+  name String required,
+  description String
+}
+entity SpaceEvent {
+  name String required,
+  date LocalDate required,
+  description TextBlob required,
+  photo ImageBlob required,
+  type EventType required
+}
+enum EventType {
+  Launch,
+  Landing
+}
+
+relationship OneToOne {
+  SpaceEvent{mission(name)} to Mission
+}
+
+paginate Mission with pagination
+paginate SpaceEvent with infinite-scroll

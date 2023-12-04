@@ -33,11 +33,11 @@ jobs:
           - gradle-ms-eureka-oauth
           - jdl-default-app
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: generator-jhipster-micronaut
           fetch-depth: 2
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: jhipster/generator-jhipster
           ref: v7.9.3
@@ -59,7 +59,7 @@ jobs:
         run: npm install && npm link
         working-directory: ${{ github.workspace }}/generator-jhipster-micronaut
       - name: 'Generate Project'
-        run: mhipster jdl ../generator-jhipster-micronaut/test-integration/samples/${{ matrix.app-type }}.jdl --skip-jhipster-dependencies --force
+        run: mhipster generate-sample ${{ matrix.app-type }} --skip-jhipster-dependencies --force
       - name: 'Start Dependency Containers'
         run: npm run ci:e2e:prepare
       - name: 'Run Server Tests'

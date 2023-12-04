@@ -1,26 +1,15 @@
 {
   "generator-jhipster": {
-    "additionalSubGenerators": "",
+    "additionalSubGenerators": "micronaut-cache",
     "baseName": "micronaut",
     "cli": true,
+    "cliName": "mhipster",
     "entities": [],
     "generators": {
-      "app": {
-        "command": true,
-        "priorities": [
-          "initializing",
-          "prompting",
-          "configuring",
-          "composing",
-          "loading",
-          "preparing",
-          "default",
-          "writing",
-          "postWriting",
-          "install",
-          "end"
-        ],
-        "sbs": false,
+      "angular": {
+        "command": false,
+        "priorities": ["writing", "postWriting"],
+        "sbs": true,
         "written": true
       },
       "client": {
@@ -29,50 +18,16 @@
         "sbs": true,
         "written": true
       },
-      "common": {
+      "cypress": {
         "command": false,
-        "priorities": ["writing"],
+        "priorities": ["postWriting"],
         "sbs": true,
         "written": true
       },
-      "entity": {
+      "docker": {
         "command": false,
-        "priorities": [
-          "initializing",
-          "prompting",
-          "configuring",
-          "composing",
-          "loading",
-          "preparing",
-          "preparingFields",
-          "preparingRelationships",
-          "default",
-          "writing",
-          "postWriting",
-          "install",
-          "end"
-        ],
-        "sbs": false,
-        "written": true
-      },
-      "entity-server": {
-        "command": false,
-        "priorities": [
-          "initializing",
-          "prompting",
-          "configuring",
-          "composing",
-          "loading",
-          "preparing",
-          "preparingFields",
-          "preparingRelationships",
-          "default",
-          "writing",
-          "postWriting",
-          "install",
-          "end"
-        ],
-        "sbs": false,
+        "priorities": [],
+        "sbs": true,
         "written": true
       },
       "heroku": {
@@ -93,6 +48,24 @@
         "sbs": false,
         "written": true
       },
+      "liquibase": {
+        "command": false,
+        "priorities": [],
+        "sbs": true,
+        "written": true
+      },
+      "micronaut-cache": {
+        "command": false,
+        "priorities": ["preparing", "writing", "postWriting"],
+        "sbs": false,
+        "written": true
+      },
+      "react": {
+        "command": false,
+        "priorities": ["writing", "postWriting"],
+        "sbs": true,
+        "written": true
+      },
       "server": {
         "command": false,
         "priorities": [
@@ -102,32 +75,33 @@
           "composing",
           "loading",
           "preparing",
+          "configuringEachEntity",
+          "loadingEntities",
+          "preparingEachEntity",
+          "preparingEachEntityField",
+          "preparingEachEntityRelationship",
+          "postPreparingEachEntity",
           "default",
           "writing",
+          "writingEntities",
           "postWriting",
+          "postWritingEntities",
+          "loadingTranslations",
           "install",
+          "postInstall",
           "end"
-        ],
-        "sbs": false,
-        "written": true
-      },
-      "spring-cache": {
-        "command": false,
-        "priorities": [
-          "preparing",
-          "writing",
-          "postWriting"
         ],
         "sbs": false,
         "written": true
       }
     },
-    "jhipsterVersion": "8.0.0-beta.3",
+    "jhipsterVersion": "8.0.0",
+    "js": true,
     "localBlueprint": false,
     "prettierDefaultIndent": 2,
     "projectName": "Micronaut Blueprint",
     "sampleWritten": true,
     "skipCommitHook": true,
-    "subGenerators": ["app", "client", "common", "entity", "heroku", "server", "spring-cache"]
+    "subGenerators": ["angular", "client", "cypress", "heroku", "react", "server"]
   }
 }

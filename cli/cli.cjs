@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 
-const { dirname, basename, join } = require('path');
+import { runJHipster, done, logger } from 'generator-jhipster/cli';
+import { readFile } from 'fs/promises';
+import { fileURLToPath } from 'url';
+import { dirname, basename } from 'path';
+import { getLogo } from './logo.mjs';
 const { version, bin } = require('../package.json');
+
 
 // Get package name to use as namespace.
 // Allows blueprints to be aliased.
@@ -11,6 +16,7 @@ const devBlueprintPath = join(packagePath, '.blueprint');
 
 (async () => {
   const { runJHipster, done, logger } = await import('generator-jhipster/cli');
+  const { getLogo } = await import('./logo.js');
   const executableName = Object.keys(bin)[0];
 
   runJHipster({
@@ -21,8 +27,9 @@ const devBlueprintPath = join(packagePath, '.blueprint');
     blueprints: {
       [packageFolderName]: version,
     },
+    printLogo: () => {},
     printBlueprintLogo: () => {
-      console.log('===================== JHipster micronaut =====================');
+      console.log('===================== JHipster Micronaut =====================');
       console.log('');
     },
     lookups: [{ packagePaths: [packagePath], lookups: ['generators'] }],

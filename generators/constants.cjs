@@ -1,5 +1,5 @@
 /**
- * Copyright 2019-2021 the original author or authors from the JHipster project.
+ * Copyright 2019-2023 the original author or authors from the JHipster project.
  *
  * This file is part of the JHipster project, see https://www.jhipster.tech/
  * for more information.
@@ -19,7 +19,7 @@
 
 module.exports = {
   JAVA_VERSION: 17,
-  GRADLE_VERSION: '8.1.1',
+  GRADLE_VERSION: '8.5.0',
   DOCKER_REDIS: 'redis:6.0.10',
   sqlDb: {
     h2Disk: {
@@ -56,6 +56,7 @@ module.exports = {
     micronautData: '4.0.4',
     micronautDiscoveryClient: '4.0.1',
     micronautOpenApi: '4.8.7',
+    netty: '4.1.97.Final',
     rxJava3: '2.3.0',
     hibernate: '6.2.6.Final',
     prometheusSimpleclient: '0.16.0',

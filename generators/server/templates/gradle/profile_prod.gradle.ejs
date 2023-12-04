@@ -17,7 +17,7 @@
  limitations under the License.
 -%>
 dependencies {
-    <%_ if (databaseType === 'sql') { _%>
+    <%_ if (databaseTypeSql) { _%>
     testImplementation "com.h2database:h2"
     <%_ } _%>
 }
@@ -48,7 +48,7 @@ tasks.withType(JavaExec) {
 }
 
 <%_ if (!skipClient) { _%>
-task webapp(type: <%= _.upperFirst(clientPackageManager) %>Task, dependsOn: "<%= clientPackageManager %><%_ if (clientPackageManager === 'npm') { _%>Install<%_ } _%>") {
+task webapp(type: <%= this._.upperFirst(clientPackageManager) %>Task, dependsOn: "<%= clientPackageManager %><%_ if (clientPackageManager === 'npm') { _%>Install<%_ } _%>") {
     args = ["run", "webapp:prod"]
     environment = [APP_VERSION: project.version]
 }
