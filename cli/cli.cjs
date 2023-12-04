@@ -1,12 +1,6 @@
 #!/usr/bin/env node
-
-import { runJHipster, done, logger } from 'generator-jhipster/cli';
-import { readFile } from 'fs/promises';
-import { fileURLToPath } from 'url';
-import { dirname, basename } from 'path';
-import { getLogo } from './logo.mjs';
+const { dirname, basename, join } = require('path');
 const { version, bin } = require('../package.json');
-
 
 // Get package name to use as namespace.
 // Allows blueprints to be aliased.
@@ -27,7 +21,9 @@ const devBlueprintPath = join(packagePath, '.blueprint');
     blueprints: {
       [packageFolderName]: version,
     },
-    printLogo: () => {},
+    printLogo: () => {
+      getLogo();
+    },
     printBlueprintLogo: () => {
       console.log('===================== JHipster Micronaut =====================');
       console.log('');
