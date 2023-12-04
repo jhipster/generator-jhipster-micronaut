@@ -52,10 +52,10 @@ module.exports = {
     },
   },
   versions: {
-    micronaut: '4.0.3',
-    micronautData: '4.0.4',
-    micronautDiscoveryClient: '4.0.1',
-    micronautOpenApi: '4.8.7',
+    micronaut: '4.2.0',
+    micronautData: '4.2.0',
+    micronautDiscoveryClient: '4.2.0',
+    micronautOpenApi: '4.2.0',
     netty: '4.1.97.Final',
     rxJava3: '2.3.0',
     hibernate: '6.2.6.Final',
@@ -74,6 +74,6 @@ module.exports = {
     caffeine: '3.1.1',
     archunit: '0.23.1',
     simplejavamail: '7.5.0',
-    testcontainers: '1.17.3',
+    testcontainers: '1.19.3',
   },
 };
