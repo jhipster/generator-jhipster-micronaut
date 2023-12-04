@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: jhipster/generator-jhipster
-          ref: v7.9.3
+          ref: v8.0.0
           path: generator-jhipster
       - name: 'SETUP: environment'
         id: setup

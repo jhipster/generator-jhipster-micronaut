@@ -122,6 +122,7 @@ _%>
         <archunit-junit5.version><%- javaDependencies['archunit-junit5'] %></archunit-junit5.version>
         <testcontainers.version><%= versions.testcontainers %></testcontainers.version>
         <!-- Plugin versions -->
+        <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
         <maven-clean-plugin.version><%- javaDependencies['maven-clean-plugin'] %></maven-clean-plugin.version>
         <maven-compiler-plugin.version><%- javaDependencies['maven-compiler-plugin'] %></maven-compiler-plugin.version>
         <maven-javadoc-plugin.version><%- javaDependencies['maven-javadoc-plugin'] %></maven-javadoc-plugin.version>
@@ -135,13 +136,14 @@ _%>
         <maven-surefire-plugin.version><%- javaDependencies['maven-surefire-plugin'] %></maven-surefire-plugin.version>
         <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
         <maven-checkstyle-plugin.version><%- javaDependencies['maven-checkstyle-plugin'] %></maven-checkstyle-plugin.version>
+        <checksum-maven-plugin.version>1.11</checksum-maven-plugin.version>
         <maven-exec-plugin.version>3.1.1</maven-exec-plugin.version>
         <micronaut-plugin.version>4.2.0</micronaut-plugin.version>
         <spotless-maven-plugin.version><%- javaDependencies['spotless-maven-plugin'] %></spotless-maven-plugin.version>
         <modernizer-maven-plugin.version><%- javaDependencies['modernizer-maven-plugin'] %></modernizer-maven-plugin.version>
         <nohttp-checkstyle.version><%- javaDependencies['nohttp-checkstyle'] %></nohttp-checkstyle.version>
 <%_ if (!skipClient) { _%>
-        <frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
+        <frontend-maven-plugin.version>1.15.0</frontend-maven-plugin.version>
 <%_ } _%>
         <git-commit-id-maven-plugin.version><%- javaDependencies['git-commit-id-maven-plugin'] %></git-commit-id-maven-plugin.version>
         <jacoco-maven-plugin.version><%= javaDependencies['jacoco-maven-plugin'] %></jacoco-maven-plugin.version>
@@ -235,16 +237,6 @@ _%>
             <groupId>org.zalando</groupId>
             <artifactId>problem-violations</artifactId>
             <version>0.29.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.security</groupId>
-            <artifactId>micronaut-security</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.security</groupId>
-            <artifactId>micronaut-security-jwt</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.micronaut.validation</groupId>
