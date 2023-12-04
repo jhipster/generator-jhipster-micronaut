@@ -106,11 +106,12 @@ _%>
         <liquibase.version><%= versions.liquibase %></liquibase.version>
         <liquibase-hibernate5.version><%= versions.liquibaseHibernate5 %></liquibase-hibernate5.version>
         <logback.version><%= versions.logback %></logback.version>
-        <mapstruct.version><%= versions.mapstruct %></mapstruct.version>
+        <mapstruct.version><%- javaDependencies.mapstruct %></mapstruct.version>
         <mockito.version><%= versions.mockito %></mockito.version>
         <netty.version><%= versions.netty %></netty.version>
         <problem.version><%= versions.problem %></problem.version>
         <jackson.version><%= versions.jackson %></jackson.version>
+        <checkstyle.version><%- javaDependencies.checkstyle %></checkstyle.version>
 <%_ if (cacheProvider === 'caffeine') { _%>
         <caffeine.version><%= versions.caffeine %></caffeine.version>
         <typesafe.version>1.4.0</typesafe.version>
@@ -137,7 +138,8 @@ _%>
         <maven-exec-plugin.version>3.1.1</maven-exec-plugin.version>
         <micronaut-plugin.version>4.2.0</micronaut-plugin.version>
         <spotless-maven-plugin.version><%- javaDependencies['spotless-maven-plugin'] %></spotless-maven-plugin.version>
-
+        <modernizer-maven-plugin.version><%- javaDependencies['modernizer-maven-plugin'] %></modernizer-maven-plugin.version>
+        <nohttp-checkstyle.version><%- javaDependencies['nohttp-checkstyle'] %></nohttp-checkstyle.version>
 <%_ if (!skipClient) { _%>
         <frontend-maven-plugin.version>1.10.0</frontend-maven-plugin.version>
 <%_ } _%>
