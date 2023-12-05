@@ -33,6 +33,11 @@ jobs:
           - gradle-ms-eureka-oauth
           - jdl-default-app
     steps:
+      - uses: jhipster/actions/create-app-path@v0
+      - uses: jhipster/actions/setup-git@v0
+      - uses: jhipster/actions/restore-cache@v0
+        with:
+          npm: true
       - uses: actions/checkout@v4
         with:
           path: generator-jhipster-micronaut
@@ -52,6 +57,10 @@ jobs:
         env:
           JHI_PROFILE: dev
           JHI_PROJECT_VERSION: 3.0.0-git
+      - uses: jhipster/actions/compare-sample@v0
+        with:
+          generator-path: generator-jhipster-micronaut
+          cmd:  mhipster generate-sample ${{ matrix.app-type }} --skip-jhipster-dependencies --force --skip-install
       - name: 'Start Dependency Containers'
         run: npm run ci:e2e:prepare
       - name: 'Run Server Tests'
