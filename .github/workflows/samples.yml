@@ -60,7 +60,7 @@ jobs:
       - uses: jhipster/actions/compare-sample@v0
         with:
           generator-path: generator-jhipster-micronaut
-          cmd:  mhipster generate-sample ${{ matrix.app-type }} --skip-jhipster-dependencies --force --skip-install
+          cmd: mhipster generate-sample ${{ matrix.app-type }} --skip-jhipster-dependencies --force --skip-install
       - name: 'Start Dependency Containers'
         run: npm run ci:e2e:prepare
       - name: 'Run Server Tests'
