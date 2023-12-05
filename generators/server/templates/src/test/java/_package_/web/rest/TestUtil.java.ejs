@@ -99,6 +99,7 @@ public final class TestUtil {
             CriteriaQuery<T> cq = cb.createQuery(clss);
             Root<T> rootEntry = cq.from(clss);
             CriteriaQuery<T> all = cq.select(rootEntry);
+            em.joinTransaction();
             TypedQuery<T> allQuery = em.createQuery(all);
             return allQuery.getResultList();
         });
@@ -118,6 +119,7 @@ public final class TestUtil {
                 CriteriaDelete<T> query = cb.createCriteriaDelete(clss);
                 Root<T> root = query.from(clss);
                 query.where(root.isNotNull());
+                em.joinTransaction();
                 return em.createQuery(query).executeUpdate();
             });
         } catch (Exception e) {
