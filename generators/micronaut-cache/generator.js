@@ -65,7 +65,7 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING_ENTITIES]() {
     return this.asPostWritingTaskGroup({
-      addDependencies({ application, source}) {
+      addDependencies({ application, source }) {
         const definition = getCacheProviderMavenDefinition(application.cacheProvider, application.javaDependencies);
         source.addMavenDefinition?.(definition.base);
         if (application.enableHibernateCache && definition.hibernateCache) {
