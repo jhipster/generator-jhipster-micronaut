@@ -1,7 +1,7 @@
 package <%=packageName%>.service;
 
 import <%=packageName%>.domain.User;
-import <%=packageName%>.util.UserLocaleAwareThymeleafViewsRenderer;
+// import <%=packageName%>.util.UserLocaleAwareThymeleafViewsRenderer;
 import <%=packageName%>.util.JHipsterProperties;
 import io.micronaut.context.MessageSource;
 import io.micronaut.email.*;
@@ -30,7 +30,7 @@ public class MailService {
     private static final String BASE_URL = "baseUrl";
 
     private final JHipsterProperties jHipsterProperties;
-    
+
     private final EmailSender<?, ?> emailSender;
 
     private final MessageSource messageSource;
@@ -53,8 +53,8 @@ public class MailService {
 
         Map<String, Object> model = Map.of(
             USER, user,
-            BASE_URL, jHipsterProperties.getMail().getBaseUrl(),
-            UserLocaleAwareThymeleafViewsRenderer.LOCALE_KEY, user.getLangKey()
+            BASE_URL, jHipsterProperties.getMail().getBaseUrl()
+            // UserLocaleAwareThymeleafViewsRenderer.LOCALE_KEY, user.getLangKey()
         );
 
         doSendEmail(user.getEmail(), subject, new TemplateBody<>(BodyType.HTML, new ModelAndView<>(templateName, model)), true);
