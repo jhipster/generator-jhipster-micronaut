@@ -66,7 +66,7 @@ module.exports = {
     jbcrypt: '0.4',
     liquibase: '4.23.0',
     liquibaseHibernate6: '4.23.0',
-    logback: '1.2.11',
+    logback: '1.4.14',
     mapstruct: '1.5.2.Final',
     swaggerAnnotations: '2.2.2',
     mockito: '3.6.28',
