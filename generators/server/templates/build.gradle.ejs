@@ -387,9 +387,8 @@ dependencies {
     implementation("io.micronaut.email:micronaut-email-template")
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
 
-    implementation "org.zalando:problem:$problem_version"
     implementation "org.zalando:problem-violations:$problem_version"
-    implementation "org.zalando:jackson-datatype-problem:$problem_version"
+    implementation "org.zalando:jackson-datatype-problem:0.27.1"
     <%_ if (searchEngine === 'elasticsearch') { _%>
 
     // log4j2-mock needed to create embedded elasticsearch instance with SLF4J
