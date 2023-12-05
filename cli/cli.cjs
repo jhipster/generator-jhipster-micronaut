@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const { dirname, basename, join } = require('path');
 const { version, bin } = require('../package.json');
 
@@ -21,12 +22,9 @@ const devBlueprintPath = join(packagePath, '.blueprint');
     blueprints: {
       [packageFolderName]: version,
     },
-    printLogo: () => {
-      getLogo();
-    },
+    printLogo: () => {},
     printBlueprintLogo: () => {
-      console.log('===================== JHipster Micronaut =====================');
-      console.log('');
+      console.log(getLogo());
     },
     lookups: [{ packagePaths: [packagePath], lookups: ['generators'] }],
   }).catch(done);
