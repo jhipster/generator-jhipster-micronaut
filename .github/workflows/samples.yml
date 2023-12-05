@@ -37,20 +37,9 @@ jobs:
         with:
           path: generator-jhipster-micronaut
           fetch-depth: 2
-      - uses: actions/checkout@v4
-        with:
-          repository: jhipster/generator-jhipster
-          ref: v8.0.0
-          path: generator-jhipster
-      - name: 'SETUP: environment'
-        id: setup
-        uses: ./generator-jhipster/.github/actions/setup
-        with:
-          jdl-sample: ${{ matrix.app-type }}
-          application-environment: dev
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ steps.setup.outputs.node-version }}
+          node-version: '18'
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
@@ -60,6 +49,9 @@ jobs:
         working-directory: ${{ github.workspace }}/generator-jhipster-micronaut
       - name: 'Generate Project'
         run: mhipster generate-sample ${{ matrix.app-type }} --skip-jhipster-dependencies --force
+        env:
+          JHI_PROFILE: dev
+          JHI_PROJECT_VERSION: 3.0.0-git
       - name: 'Start Dependency Containers'
         run: npm run ci:e2e:prepare
       - name: 'Run Server Tests'
