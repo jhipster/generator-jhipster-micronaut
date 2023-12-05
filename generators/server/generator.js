@@ -24,7 +24,7 @@ export default class extends ServerGenerator {
     this.command = command;
     if (!this.options.help) {
       this.jhipsterTemplatesFolders.push(
-        // For _persistClass_.java.jhi.hibernate_cache file
+        // For _persistClass_.java.jhi.hibernate_cache/_persistClass_.java.jhi.jakarta_persistence file
         this.fetchFromInstalledJHipster('spring-data-relational/templates'),
         // For _global_partials_entity_/field_validators file
         this.fetchFromInstalledJHipster('java/templates'),
@@ -33,9 +33,7 @@ export default class extends ServerGenerator {
   }
 
   async beforeQueue() {
-    // TODO remove pass useJakartaValidation as options.
-    const javaGenerator = await this.dependsOnJHipster('java', { generatorOptions: { useJakartaValidation: false } });
-    javaGenerator.useJakartaValidation = false;
+    await this.dependsOnJHipster('java');
     await this.dependsOnJHipster('common');
   }
 

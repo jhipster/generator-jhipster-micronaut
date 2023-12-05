@@ -33,13 +33,9 @@ export const entityFiles = {
       templates: ['domain/_persistClass_.java.jhi.micronaut'],
     }),
     javaMainPackageTemplatesBlock({
-      relativePath: '_entityPackage_/',
-      templates: ['domain/_persistClass_.java.jhi.javax_validation'],
-    }),
-    javaMainPackageTemplatesBlock({
       condition: generator => generator.databaseTypeSql && !generator.reactive,
       relativePath: '_entityPackage_/',
-      templates: ['domain/_persistClass_.java.jhi.javax_persistence'],
+      templates: ['domain/_persistClass_.java.jhi.jakarta_persistence'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.databaseTypeSql && !generator.reactive && generator.enableHibernateCache,
