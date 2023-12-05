@@ -124,12 +124,11 @@ _%>
         <archunit-junit5.version><%- javaDependencies['archunit-junit5'] %></archunit-junit5.version>
         <testcontainers.version><%= versions.testcontainers %></testcontainers.version>
         <!-- Plugin versions -->
-        <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
+        <maven-antrun-plugin.version><%- javaDependencies['maven-antrun-plugin'] %></maven-antrun-plugin.version>
         <maven-clean-plugin.version><%- javaDependencies['maven-clean-plugin'] %></maven-clean-plugin.version>
         <maven-compiler-plugin.version><%- javaDependencies['maven-compiler-plugin'] %></maven-compiler-plugin.version>
         <maven-javadoc-plugin.version><%- javaDependencies['maven-javadoc-plugin'] %></maven-javadoc-plugin.version>
         <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
-        <!-- We can't go to 3.0.0-M2 as it has a regression. See https://issues.apache.org/jira/browse/MENFORCER-306 -->
         <maven-site-plugin.version><%- javaDependencies['maven-site-plugin'] %></maven-site-plugin.version>
         <maven-enforcer-plugin.version><%- javaDependencies['maven-enforcer-plugin'] %></maven-enforcer-plugin.version>        <maven-failsafe-plugin.version>3.0.0-M3</maven-failsafe-plugin.version>
         <maven-failsafe-plugin.version><%- javaDependencies['maven-failsafe-plugin'] %></maven-failsafe-plugin.version>
@@ -140,12 +139,12 @@ _%>
         <maven-checkstyle-plugin.version><%- javaDependencies['maven-checkstyle-plugin'] %></maven-checkstyle-plugin.version>
         <checksum-maven-plugin.version>1.11</checksum-maven-plugin.version>
         <maven-exec-plugin.version>3.1.1</maven-exec-plugin.version>
-        <micronaut-plugin.version>4.2.0</micronaut-plugin.version>
+        <micronaut-plugin.version><%= versions.micronaut %></micronaut-plugin.version>
         <spotless-maven-plugin.version><%- javaDependencies['spotless-maven-plugin'] %></spotless-maven-plugin.version>
         <modernizer-maven-plugin.version><%- javaDependencies['modernizer-maven-plugin'] %></modernizer-maven-plugin.version>
         <nohttp-checkstyle.version><%- javaDependencies['nohttp-checkstyle'] %></nohttp-checkstyle.version>
 <%_ if (!skipClient) { _%>
-        <frontend-maven-plugin.version>1.15.0</frontend-maven-plugin.version>
+        <frontend-maven-plugin.version><%- javaDependencies['frontend-maven-plugin'] %></frontend-maven-plugin.version>
 <%_ } _%>
         <git-commit-id-maven-plugin.version><%- javaDependencies['git-commit-id-maven-plugin'] %></git-commit-id-maven-plugin.version>
         <jacoco-maven-plugin.version><%= javaDependencies['jacoco-maven-plugin'] %></jacoco-maven-plugin.version>
