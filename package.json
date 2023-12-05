@@ -24,7 +24,6 @@
   },
   "type": "module",
   "bin": {
-    "jhipster-micronaut": "cli/cli.cjs",
     "mhipster": "cli/cli.cjs"
   },
   "files": [
