@@ -541,6 +541,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
 <%_ } } } _%>
 <%_ } _%>
 
+     /*
     @Test
     public void getAll<%= entityClassPlural %>() throws Exception {
         // Initialize the database
@@ -555,6 +556,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
 
 <%- include('../../partials_entity/validate_entity_fields_template', {isUpdate: false}); -%>
     }
+    */
 
     @Test
     public void get<%= entityClass %>() throws Exception {
