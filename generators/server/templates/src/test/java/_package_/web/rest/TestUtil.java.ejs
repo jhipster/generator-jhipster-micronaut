@@ -95,11 +95,11 @@ public final class TestUtil {
      */
     public static <T> List<T> findAll(TransactionOperations<Connection> transactionManager, EntityManager em, Class<T> clss) {
         return transactionManager.executeRead(status -> {
+            em.joinTransaction();
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<T> cq = cb.createQuery(clss);
             Root<T> rootEntry = cq.from(clss);
             CriteriaQuery<T> all = cq.select(rootEntry);
-            em.joinTransaction();
             TypedQuery<T> allQuery = em.createQuery(all);
             return allQuery.getResultList();
         });
@@ -115,11 +115,11 @@ public final class TestUtil {
     public static <T> void removeAll(TransactionOperations<Connection> transactionManager, EntityManager em, Class<T> clss) {
         try {
             transactionManager.executeWrite(status -> {
+                em.joinTransaction();
                 CriteriaBuilder cb = em.getCriteriaBuilder();
                 CriteriaDelete<T> query = cb.createCriteriaDelete(clss);
                 Root<T> root = query.from(clss);
                 query.where(root.isNotNull());
-                em.joinTransaction();
                 return em.createQuery(query).executeUpdate();
             });
         } catch (Exception e) {
