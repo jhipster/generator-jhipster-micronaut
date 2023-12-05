@@ -237,7 +237,7 @@ repositories {
 dependencies {
     // import JHipster dependencies BOM
     if (!project.hasProperty("gae")) {
-        implementation platform("tech.jhipster:jhipster-dependencies:${jhipster_dependencies_version}")
+        implementation platform("tech.jhipster:jhipster-dependencies:${jhipster_dependencies_version}") {
             exclude group: 'org.hibernate'
         }
     }
@@ -513,7 +513,7 @@ dependencies {
     <%_ } _%>
 
     implementation("io.micronaut.rxjava3:micronaut-rxjava3")
-    implementation("io.micronaut.rxjava3:micronaut-rxjava3-http-client:${rxJava3Version}")
+    implementation("io.micronaut.rxjava3:micronaut-rxjava3-http-client:$rxJava3Version")
 
     // jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
