@@ -8,6 +8,7 @@ import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTParser;
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.annotation.Replaces;
 import io.micronaut.security.config.AuthenticationModeConfiguration;
 import io.micronaut.security.oauth2.configuration.OpenIdAdditionalClaimsConfiguration;
 import io.micronaut.security.oauth2.endpoint.token.response.DefaultOpenIdAuthenticationMapper;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 @Singleton
 @Requires(classes = JWTParser.class)
 @Named("oidc")
+@Replaces(DefaultOpenIdAuthenticationMapper.class)
 public class JHipsterOpenIdUserDetailsMapper extends DefaultOpenIdAuthenticationMapper {
     private static final Logger LOG = LoggerFactory.getLogger(JHipsterOpenIdUserDetailsMapper.class);
     public static final String GROUPS_CLAIM = "groups";
@@ -50,7 +52,7 @@ public class JHipsterOpenIdUserDetailsMapper extends DefaultOpenIdAuthentication
     }
 
     private void syncWithIdp(JWT parsedJwt, List<String> roles) {
-        
+
         try {
             User user = new User();
             user.setId(parsedJwt.getJWTClaimsSet().getSubject());
