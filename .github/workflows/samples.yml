@@ -1,37 +1,46 @@
 name: Verify Sample Projects
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - 'main'
+      - '**maintenance'
+    paths-ignore:
+      - 'package*.json'
+  pull_request:
+    branches:
+      - '*'
 env:
   JHI_E2E_HEADLESS: true
 permissions:
   contents: read
 jobs:
+  build-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.build.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - id: build
+        run: |
+          npm install
+          npm link
+          mhipster github-build-matrix
   samples:
-    name: ${{ matrix.app-type }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.sample-name }}
+    runs-on: ubuntu-latest
+    needs: build-matrix
     defaults:
       run:
         working-directory: ${{ github.workspace }}/app
-    if: >-
-      !contains(github.event.head_commit.message, '[ci skip]') &&
-      !contains(github.event.head_commit.message, '[skip ci]') &&
-      !contains(github.event.pull_request.title, '[skip ci]') &&
-      !contains(github.event.pull_request.title, '[ci skip]') &&
-      (github.event.pull_request.draft == false || !contains(github.event.pull_request.labels.*.name, 'pr: skip-ci'))
     timeout-minutes: 30
     strategy:
       fail-fast: false
-      matrix:
-        os: [ubuntu-latest]
-        app-type:
-          - gradle-jwt-react
-          - mvn-jwt-angular
-          - mvn-jwt-redis-angular
-          - mvn-no-client
-          - mvn-oauth-angular
-          - gradle-oauth-angular
-          - mvn-ms-consul-jwt
-          - gradle-ms-eureka-oauth
-          - jdl-default-app
+      matrix: ${{fromJson(needs.build-matrix.outputs.matrix)}}
     steps:
       - uses: jhipster/actions/create-app-path@v0
       - uses: jhipster/actions/setup-git@v0
@@ -42,25 +51,25 @@ jobs:
         with:
           path: generator-jhipster-micronaut
           fetch-depth: 2
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      - uses: actions/setup-java@v3
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: ${{ matrix.java-version }}
       - name: 'Install blueprint'
         run: npm install && npm link
         working-directory: ${{ github.workspace }}/generator-jhipster-micronaut
       - name: 'Generate Project'
-        run: mhipster generate-sample ${{ matrix.app-type }} --skip-jhipster-dependencies --force
+        run: mhipster generate-sample ${{ matrix.sample-name }} --skip-jhipster-dependencies --force
         env:
           JHI_PROFILE: dev
           JHI_PROJECT_VERSION: 3.0.0-git
       - uses: jhipster/actions/compare-sample@v0
         with:
           generator-path: generator-jhipster-micronaut
-          cmd: mhipster generate-sample ${{ matrix.app-type }} --skip-jhipster-dependencies --force --skip-install
+          cmd: mhipster generate-sample ${{ matrix.sample-name }} --skip-jhipster-dependencies --force --skip-install
       - name: 'Start Dependency Containers'
         run: npm run ci:e2e:prepare
       - name: 'Run Server Tests'
@@ -76,10 +85,23 @@ jobs:
         uses: actions/upload-artifact@v3
         if: always() && steps.backend.outcome == 'failure'
         with:
-          name: log-${{ matrix.app-type }}
+          name: log-${{ matrix.sample-name }}
           path: |
-            ${{ github.workspace }}/app/build/test-results
+            ${{ github.workspace }}/app/build/test-results/**/*.xml
             ${{ github.workspace }}/app/target/surefire-reports
       - name: Dump docker logs
         if: always()
         uses: jwalton/gh-docker-logs@v2
+  check-samples:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: [samples]
+    if: always()
+    steps:
+      - run: |
+          echo '${{ toJSON(needs) }}'
+          if [ 'skipped' == '${{ needs.samples.result }}' ] || [ 'success' == '${{ needs.samples.result }}' ] || [ 'closed' == '${{ github.event.action }}' ]; then
+            exit 0
+          fi
+          exit 1
