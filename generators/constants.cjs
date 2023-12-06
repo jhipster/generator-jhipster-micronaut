@@ -75,6 +75,6 @@ module.exports = {
     archunit: '0.23.1',
     simplejavamail: '7.5.0',
     testcontainers: '1.19.3',
-    assertj: '3.24.2'
+    assertj: '3.24.2',
   },
 };
