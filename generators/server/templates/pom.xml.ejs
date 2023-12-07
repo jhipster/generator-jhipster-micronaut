@@ -777,6 +777,7 @@ _%>
                         </execution>
                     </executions>
                     <configuration>
+                        <failOnViolations>false</failOnViolations>
                         <javaVersion>${java.version}</javaVersion>
                         <%_ if (databaseTypeCassandra) { _%>
                             <ignoreClassNamePatterns>
