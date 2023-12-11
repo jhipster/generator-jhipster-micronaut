@@ -3,7 +3,7 @@ application {
     applicationType monolith
     authenticationType jwt
     baseName
-    blueprints [generator-jhipster-micronaut]
+    blueprint generator-jhipster-micronaut
     buildTool maven
     cacheProvider ehcache
     clientFramework angular
