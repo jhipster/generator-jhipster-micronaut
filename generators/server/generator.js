@@ -265,7 +265,6 @@ export default class extends ServerGenerator {
                 `import io.micronaut.core.annotation.Introspected;
 import java.io.Serializable;`,
               ),
-            content => content.replaceAll('jakarta.', 'javax.'),
             content =>
               content.replace(
                 '\npublic class',
