@@ -40,29 +40,10 @@ const databaseArtifactForDB = {
 
 export const getDatabaseDriverForDatabase = databaseType => databaseArtifactForDB[databaseType];
 
-export const getCommonMavenDefinition = ({ javaDependencies }) => ({
-  properties: [
-    { property: 'jaxb-runtime.version', value: javaDependencies['jaxb-runtime'] },
-    { property: 'validation-api.version', value: javaDependencies['validation-api'] },
-  ],
+export const getCommonMavenDefinition = () => ({
   dependencies: [
     { groupId: 'com.zaxxer', artifactId: 'HikariCP' },
-    { groupId: 'com.fasterxml.jackson.module', artifactId: 'jackson-module-jaxb-annotations' },
     // { groupId: 'org.testcontainers', artifactId: 'jdbc', scope: 'test' },
-  ],
-  annotationProcessors: [
-    // eslint-disable-next-line no-template-curly-in-string
-    { groupId: 'org.glassfish.jaxb', artifactId: 'jaxb-runtime', version: '${jaxb-runtime.version}' },
-  ],
-});
-
-export const getReactiveMavenDefinition = ({ javaDependencies }) => ({
-  properties: [{ property: 'commons-beanutils.version', value: javaDependencies['commons-beanutils'] }],
-  dependencies: [
-    // { groupId: 'org.springframework.boot', artifactId: 'spring-boot-starter-data-r2dbc' },
-    // eslint-disable-next-line no-template-curly-in-string
-    { groupId: 'commons-beanutils', artifactId: 'commons-beanutils', version: '${commons-beanutils.version}' },
-    { groupId: 'jakarta.persistence', artifactId: 'jakarta.persistence-api' },
   ],
 });
 
