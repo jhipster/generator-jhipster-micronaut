@@ -154,7 +154,7 @@ _%>
         <properties-maven-plugin.version><%- javaDependencies['properties-maven-plugin'] %></properties-maven-plugin.version>
         <sonar-maven-plugin.version><%- javaDependencies['sonar-maven-plugin'] %></sonar-maven-plugin.version>
 <%_ if (enableSwaggerCodegen) { _%>
-        <jackson-databind-nullable.version><%- <%= JACKSON_DATABIND_NULLABLE_VERSION %> %></jackson-databind-nullable.version>
+        <jackson-databind-nullable.version><%= javaDependencies['jackson-databind-nullable'] %></jackson-databind-nullable.version>
 <%_ } _%>
 
         <jacoco.reportFolder>${project.build.directory}/jacoco</jacoco.reportFolder>
