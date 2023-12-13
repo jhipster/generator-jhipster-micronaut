@@ -153,6 +153,10 @@ _%>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version><%- javaDependencies['properties-maven-plugin'] %></properties-maven-plugin.version>
         <sonar-maven-plugin.version><%- javaDependencies['sonar-maven-plugin'] %></sonar-maven-plugin.version>
+<%_ if (enableSwaggerCodegen) { _%>
+        <jackson-databind-nullable.version><%- <%= JACKSON_DATABIND_NULLABLE_VERSION %> %></jackson-databind-nullable.version>
+<%_ } _%>
+
         <jacoco.reportFolder>${project.build.directory}/jacoco</jacoco.reportFolder>
         <jacoco.utReportFile>${jacoco.reportFolder}/test.exec</jacoco.utReportFile>
         <jacoco.itReportFile>${jacoco.reportFolder}/integrationTest.exec</jacoco.itReportFile>
@@ -231,11 +235,6 @@ _%>
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-http-server-netty</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.problem</groupId>
-            <artifactId>micronaut-problem-json</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -371,8 +370,12 @@ _%>
             <artifactId>micronaut-jackson-databind</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-hppc</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -385,7 +388,14 @@ _%>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
-          </dependency>
+        </dependency>
+<%_ if (enableSwaggerCodegen) { _%>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${jackson-databind-nullable.version}</version>
+        </dependency>
+<%_ } _%>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>

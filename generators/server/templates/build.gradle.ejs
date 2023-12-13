@@ -264,15 +264,14 @@ dependencies {
     implementation "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
     implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "net.logstash.logback:logstash-logback-encoder"
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-hppc"
+
+    implementation "com.fasterxml.jackson.core:jackson-annotations"
+    implementation "com.fasterxml.jackson.core:jackson-databind"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
     <%_ if (databaseTypeSql) { _%>
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-hibernate6"
     <%_ } _%>
-    implementation "com.fasterxml.jackson.core:jackson-annotations"
-    implementation "com.fasterxml.jackson.module:jackson-module-jaxb-annotations"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml"
-    implementation "com.fasterxml.jackson.core:jackson-databind"
     implementation "io.micronaut:micronaut-jackson-databind"
     <%_ if (applicationTypeGateway) { _%>
     implementation "org.apache.httpcomponents:httpclient"
