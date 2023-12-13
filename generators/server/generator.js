@@ -14,6 +14,7 @@ import { writeFiles } from './files.js';
 import command from './command.js';
 import { entityFiles } from './entity-files.js';
 import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
+import constants from '../constants.cjs';
 
 export default class extends ServerGenerator {
   constructor(args, opts, features) {
@@ -225,7 +226,7 @@ export default class extends ServerGenerator {
       ...super.postWriting,
       sqlDependencies({ application, source }) {
         if (application.databaseTypeSql) {
-          source.addMavenDefinition?.(getImperativeMavenDefinition({ javaDependencies: application.javaDependencies }));
+          source.addMavenDefinition?.(getImperativeMavenDefinition({ javaDependencies: { hibernate: constants.versions.hibernate } }));
           source.addMavenDefinition?.(getCommonMavenDefinition());
           source.addMavenDependency?.(getDatabaseDriverForDatabase(application.prodDatabaseType).jdbc);
         }
