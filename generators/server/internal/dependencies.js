@@ -47,14 +47,13 @@ export const getCommonMavenDefinition = () => ({
   ],
 });
 
-export const getImperativeMavenDefinition = ({ javaDependencies }) => ({
-  properties: [{ property: 'hibernate.version', value: javaDependencies.hibernate }],
+export const getImperativeMavenDefinition = () => ({
   dependencies: [
     // { groupId: 'org.springframework.boot', artifactId: 'spring-boot-starter-data-jpa' },
     { groupId: 'com.fasterxml.jackson.datatype', artifactId: 'jackson-datatype-hibernate6' },
     // TODO drop forced version. Refer to https://github.com/jhipster/generator-jhipster/issues/22579
     // eslint-disable-next-line no-template-curly-in-string
-    { groupId: 'org.hibernate.orm', artifactId: 'hibernate-core', version: '${hibernate.version}' },
+    { groupId: 'org.hibernate.orm', artifactId: 'hibernate-core' },
     { groupId: 'org.hibernate.orm', artifactId: 'hibernate-jpamodelgen', scope: 'provided' },
     // { groupId: 'org.hibernate.validator', artifactId: 'hibernate-validator' },
     // { groupId: 'org.springframework.security', artifactId: 'spring-security-data' },
@@ -62,6 +61,6 @@ export const getImperativeMavenDefinition = ({ javaDependencies }) => ({
   ],
   annotationProcessors: [
     // eslint-disable-next-line no-template-curly-in-string
-    { groupId: 'org.hibernate.orm', artifactId: 'hibernate-jpamodelgen', version: '${hibernate.version}' },
+    { groupId: 'org.hibernate.orm', artifactId: 'hibernate-jpamodelgen' },
   ],
 });
