@@ -1,4 +1,5 @@
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
+import constants from '../constants.cjs';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
@@ -10,6 +11,7 @@ export default class extends BaseApplicationGenerator {
       micronautLiquibase({ application, source }) {
         if (application.buildToolMaven) {
           source.addMavenDefinition?.({
+            properties: [{ property: 'liquibase-hibernate6.version', value: constants.versions.liquibaseHibernate6 }],
             dependencies: [
               {
                 groupId: 'io.micronaut.liquibase',
@@ -19,6 +21,7 @@ export default class extends BaseApplicationGenerator {
               {
                 groupId: 'org.liquibase.ext',
                 artifactId: 'liquibase-hibernate6',
+                version: '${liquibase-hibernate6.version}',
                 scope: 'runtime',
               },
             ],
