@@ -56,7 +56,7 @@ export const getImperativeMavenDefinition = ({ javaDependencies }) => ({
     // eslint-disable-next-line no-template-curly-in-string
     { groupId: 'org.hibernate.orm', artifactId: 'hibernate-core', version: '${hibernate.version}' },
     { groupId: 'org.hibernate.orm', artifactId: 'hibernate-jpamodelgen', scope: 'provided' },
-    { groupId: 'org.hibernate.validator', artifactId: 'hibernate-validator' },
+    // { groupId: 'org.hibernate.validator', artifactId: 'hibernate-validator' },
     // { groupId: 'org.springframework.security', artifactId: 'spring-security-data' },
     { inProfile: 'IDE', groupId: 'org.hibernate.orm', artifactId: 'hibernate-jpamodelgen' },
   ],
