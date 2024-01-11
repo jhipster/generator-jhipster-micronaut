@@ -93,6 +93,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 <%_ } _%>
 
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 <%_ if (databaseTypeSql && !reactive) { _%>
 import jakarta.persistence.EntityManager;
 <%_ } _%>
@@ -136,7 +137,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 <%_ if (cacheProvider === 'redis') { _%>
 @ExtendWith(RedisTestContainerExtension.class)
 <%_ } _%>
-@MicronautTest()
+@MicronautTest(transactional = false)
 @Property(name = "micronaut.security.enabled", value = "false")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') { %>extends AbstractCassandraTest <% } %>{
@@ -542,6 +543,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
 <%_ } _%>
 
     @Test
+    @Transactional
     public void getAll<%= entityClassPlural %>() throws Exception {
         // Initialize the database
         <%_ if (databaseType === 'cassandra') { _%>
@@ -557,6 +559,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     }
 
     @Test
+    @Transactional
     public void get<%= entityClass %>() throws Exception {
         // Initialize the database
         <%_ if (databaseType === 'cassandra') { _%>
