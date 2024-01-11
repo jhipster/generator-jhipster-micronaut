@@ -9,6 +9,7 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.security.authentication.AuthenticationProvider;
 import io.micronaut.security.authentication.AuthenticationRequest;
 import io.micronaut.security.authentication.AuthenticationResponse;
+import io.micronaut.transaction.annotation.ReadOnly;
 import io.micronaut.validation.validator.Validator;
 import io.reactivex.rxjava3.core.Flowable;
 import jakarta.inject.Singleton;
@@ -39,6 +40,7 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider<Ht
     }
 
     @Override
+    @ReadOnly
     public Publisher<AuthenticationResponse> authenticate(
         @Nullable HttpRequest<?> httpRequest,
         AuthenticationRequest<?, ?> authenticationRequest
