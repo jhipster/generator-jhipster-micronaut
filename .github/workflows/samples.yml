@@ -80,15 +80,22 @@ jobs:
       - name: 'Build App'
         run: npm run ci:e2e:package
       - name: 'E2E Tests'
+        id: e2e
         run: npm run ci:e2e:run --if-present
       - name: 'BACKEND: Store failure logs'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always() && steps.backend.outcome == 'failure'
         with:
           name: log-${{ matrix.sample-name }}
           path: |
             ${{ github.workspace }}/app/build/test-results/**/*.xml
             ${{ github.workspace }}/app/target/surefire-reports
+      - name: 'E2E: Store failure screenshots'
+        uses: actions/upload-artifact@v4
+        if: always() && steps.e2e.outcome == 'failure'
+        with:
+          name: screenshots-${{ matrix.sample-name }}
+          path: ${{ github.workspace }}/app/**/cypress/screenshots
       - name: Dump docker logs
         if: always()
         uses: jwalton/gh-docker-logs@v2
