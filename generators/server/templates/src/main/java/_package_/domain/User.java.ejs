@@ -103,7 +103,7 @@ public class User implements Serializable {
 <%_ } _%>
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "<%= jhiTablePrefix %>_user_authority",
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
