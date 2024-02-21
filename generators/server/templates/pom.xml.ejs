@@ -458,7 +458,7 @@ _%>
             <artifactId>micronaut-security</artifactId>
             <scope>compile</scope>
         </dependency>
-        <%_ if (authenticationTypeJwt) { _%>
+        <%_ if (authenticationTypeJwt || authenticationTypeOauth2) { _%>
         <dependency>
             <groupId>io.micronaut.security</groupId>
             <artifactId>micronaut-security-jwt</artifactId>
