@@ -51,7 +51,7 @@ problem_version=<%=versions.problem%>
 log4j2_mock_version=0.0.2
 <%_ } _%>
 <%_ if (enableSwaggerCodegen) { _%>
-jackson_databind_nullable_version=<%= JACKSON_DATABIND_NULLABLE_VERSION %>
+jackson_databind_nullable_version=<%= javaDependencies['jackson-databind-nullable'] %>
 <%_ } _%>
 <%_ if (cacheProvider === 'caffeine') { _%>
 caffeine_version=<%=versions.caffeine%>
@@ -59,7 +59,7 @@ typesafe_config_version=1.4.0
 <%_ } _%>
 testcontainers_version=<%= versions.testcontainers %>
 
-liquibase_hibernate5_version=<%=versions.liquibaseHibernate5%>
+liquibase_hibernate6_version=<%=versions.liquibaseHibernate6%>
 liquibaseTaskPrefix=liquibase
 
 <%_ if (databaseTypeSql || authenticationType === 'uaa') { _%>
@@ -67,7 +67,7 @@ jaxb_runtime_version=2.3.2
 <%_ } _%>
 
 # gradle plugin version
-micronaut_plugin_version=3.7.9
+micronaut_plugin_version=4.0.2
 git_properties_plugin_version=2.4.1
 <%_ if (!skipClient) { _%>
 gradle_node_plugin_version=2.2.4

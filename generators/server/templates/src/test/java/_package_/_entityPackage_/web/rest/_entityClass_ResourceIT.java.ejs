@@ -93,8 +93,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 <%_ } _%>
 
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 <%_ if (databaseTypeSql && !reactive) { _%>
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 <%_ } _%>
 <% if (anyFieldIsBigDecimal) { %>
 import java.math.BigDecimal;<% } %><% if (anyFieldIsBlobDerived === true && databaseType === 'cassandra') { %>
@@ -542,6 +543,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
 <%_ } _%>
 
     @Test
+    @Transactional
     public void getAll<%= entityClassPlural %>() throws Exception {
         // Initialize the database
         <%_ if (databaseType === 'cassandra') { _%>
@@ -557,6 +559,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     }
 
     @Test
+    @Transactional
     public void get<%= entityClass %>() throws Exception {
         // Initialize the database
         <%_ if (databaseType === 'cassandra') { _%>

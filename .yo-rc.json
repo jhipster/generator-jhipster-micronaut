@@ -95,7 +95,7 @@
         "written": true
       }
     },
-    "jhipsterVersion": "8.0.0-beta.3",
+    "jhipsterVersion": "8.0.0",
     "js": true,
     "localBlueprint": false,
     "prettierDefaultIndent": 2,

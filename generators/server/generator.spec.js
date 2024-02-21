@@ -57,9 +57,5 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
     it('should succeed', () => {
       expect(result.getStateSnapshot()).toMatchSnapshot();
     });
-
-    it('should not write jakarta validation', () => {
-      expect(result.fs.read('src/main/java/com/mycompany/myapp/domain/Entity.java')).toMatch(/^((?!jakarta).)*$/s);
-    });
   });
 });

@@ -2,6 +2,7 @@ import { GENERATOR_BOOTSTRAP_APPLICATION } from 'generator-jhipster/generators';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
 import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
 import { javaMainPackageTemplatesBlock } from 'generator-jhipster/generators/java/support';
+import { getCacheProviderMavenDefinition } from './internal/dependencies.mjs';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
@@ -64,6 +65,13 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING_ENTITIES]() {
     return this.asPostWritingTaskGroup({
+      addDependencies({ application, source }) {
+        const definition = getCacheProviderMavenDefinition(application.cacheProvider, application.javaDependencies);
+        source.addMavenDefinition?.(definition.base);
+        if (application.enableHibernateCache && definition.hibernateCache) {
+          source.addMavenDefinition?.(definition.hibernateCache);
+        }
+      },
       customizeFiles({ source, entities, application: { cacheProvider, enableHibernateCache } }) {
         if (!enableHibernateCache || !cacheProvider) return;
         if (['ehcache', 'caffeine', 'infinispan', 'redis'].includes(cacheProvider)) {

@@ -96,6 +96,10 @@ processResources.dependsOn webapp
 
 processResources.dependsOn webappBuildDev
 copyIntoStatic.dependsOn processResources
+buildLayers.dependsOn copyIntoStatic
+jar.dependsOn copyIntoStatic
+shadowJar.dependsOn copyIntoStatic
+compileTestJava.dependsOn copyIntoStatic
 assemble.dependsOn copyIntoStatic
 
 npmInstall.onlyIf { shouldWebappRun() == true }

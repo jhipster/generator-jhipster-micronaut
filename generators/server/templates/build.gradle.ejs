@@ -30,6 +30,9 @@ plugins {
     <%_ if (!skipClient) { _%>
     id "com.github.node-gradle.node"
     <%_ } _%>
+    <%_ if (databaseTypeSql) { _%>
+    id "org.liquibase.gradle"
+    <%_ } _%>
     id "org.sonarqube"
     id "com.github.johnrengelman.shadow"
     // jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
@@ -58,7 +61,7 @@ description = ""
 
 sourceCompatibility=<%= JAVA_VERSION %>
 targetCompatibility=<%= JAVA_VERSION %>
-assert System.properties["java.specification.version"] == "1.8" || "11" || "12" || "13" || "14"
+assert System.properties["java.specification.version"] == "17" || "18" || "19" || "20" || "21"
 
 apply from: "gradle/docker.gradle"
 apply from: "gradle/sonar.gradle"
@@ -194,7 +197,7 @@ task cucumberTestReport(type: TestReport) {
 }
 
 <%_ } _%>
-<%_ if (databaseTypeSql) { 
+<%_ if (databaseTypeSql) {
         const { sqlDb } = MN_CONSTANTS;
         const devDbInfo = sqlDb[devDatabaseType];
 _%>
@@ -214,6 +217,7 @@ gitProperties {
 
 configurations {
     providedRuntime
+    liquibaseRuntime.extendsFrom sourceSets.main.compileClasspath
 }
 
 repositories {
@@ -233,10 +237,12 @@ repositories {
 dependencies {
     // import JHipster dependencies BOM
     if (!project.hasProperty("gae")) {
-        implementation platform("tech.jhipster:jhipster-dependencies:${jhipster_dependencies_version}")
+        implementation platform("tech.jhipster:jhipster-dependencies:${jhipster_dependencies_version}") {
+            exclude group: 'org.hibernate'
+        }
     }
 
-    annotationProcessor "io.micronaut:micronaut-validation"
+    annotationProcessor "io.micronaut.validation:micronaut-validation-processor"
     <%_ if (databaseTypeSql) { _%>
     annotationProcessor "io.micronaut.data:micronaut-data-processor"
     <%_ } _%>
@@ -254,22 +260,20 @@ dependencies {
         exclude group: "org.springframework.boot", module: "spring-boot-starter-web"
         exclude group: "org.springframework.boot", module: "spring-boot-starter-validation"
     }
-    implementation "org.simplejavamail:simple-java-mail:$simplejavamail_version"
-    implementation "javax.annotation:javax.annotation-api"
     implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
     implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "net.logstash.logback:logstash-logback-encoder"
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-hppc"
+
+    implementation "com.fasterxml.jackson.core:jackson-annotations"
+    implementation "com.fasterxml.jackson.core:jackson-databind"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
     <%_ if (databaseTypeSql) { _%>
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-hibernate6"
     <%_ } _%>
-    implementation "com.fasterxml.jackson.core:jackson-annotations"
-    implementation "com.fasterxml.jackson.module:jackson-module-jaxb-annotations"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml"
-    implementation "com.fasterxml.jackson.core:jackson-databind"
-    <%_ if (applicationTypeGateway && authenticationType === 'uaa') { _%>
+    implementation "io.micronaut:micronaut-jackson-databind"
+    <%_ if (applicationTypeGateway) { _%>
     implementation "org.apache.httpcomponents:httpclient"
     <%_ } _%>
     <%_ if (cacheProvider === 'hazelcast') { _%>
@@ -298,7 +302,7 @@ dependencies {
     <%_ if (cacheProvider === 'redis') { _%>
     implementation "org.redisson:redisson"
         <%_ if (enableHibernateCache) { _%>
-    implementation "org.hibernate:hibernate-jcache"
+    implementation "org.hibernate:hibernate-jcache:$hibernate_version"
         <%_ } _%>
     testImplementation "org.testcontainers:testcontainers:$testcontainers_version"
     <%_ } _%>
@@ -307,7 +311,7 @@ dependencies {
     implementation "javax.cache:cache-api"
     <%_ } _%>
     <%_ if (databaseTypeSql) { _%>
-    implementation "org.hibernate:hibernate-core"
+    implementation "org.hibernate:hibernate-core:$hibernate_version"
     implementation "com.zaxxer:HikariCP"
     <%_ } _%>
     <%_ if (databaseType === 'cassandra' || applicationTypeGateway) { _%>
@@ -317,8 +321,6 @@ dependencies {
     implementation "org.openapitools:jackson-databind-nullable:${jackson_databind_nullable_version}"
     <%_ } _%>
     implementation "org.apache.commons:commons-lang3"
-    implementation "commons-io:commons-io"
-    implementation "javax.transaction:javax.transaction-api"
     <%_ if (databaseType === 'cassandra') { _%>
     implementation "org.lz4:lz4-java"
     <%_ } _%>
@@ -326,7 +328,7 @@ dependencies {
     implementation "org.ehcache:ehcache"
     implementation "io.micronaut.cache:micronaut-cache-ehcache"
         <%_ if (enableHibernateCache) { _%>
-    implementation "org.hibernate:hibernate-jcache"
+    implementation "org.hibernate:hibernate-jcache:$hibernate_version"
         <%_ } _%>
     <%_ } _%>
     <%_ if (cacheProvider === 'caffeine') { _%>
@@ -335,22 +337,22 @@ dependencies {
     implementation "com.typesafe:config:${typesafe_config_version}"
     implementation "io.micronaut.cache:micronaut-cache-caffeine"
         <%_ if (enableHibernateCache) { _%>
-    implementation "org.hibernate:hibernate-jcache"
+    implementation "org.hibernate:hibernate-jcache:$hibernate_version"
         <%_ } _%>
     <%_ } _%>
     <%_ if (databaseTypeSql) { _%>
-    implementation "org.hibernate:hibernate-entitymanager"
-    implementation "org.hibernate.validator:hibernate-validator"
+    implementation "org.liquibase:liquibase-core"
+    liquibaseRuntime "org.liquibase:liquibase-core"
+    liquibaseRuntime "org.liquibase.ext:liquibase-hibernate6:${liquibase_hibernate6_version}"
     <%_ } _%>
 
+    runtimeOnly "org.yaml:snakeyaml"
     implementation "io.micronaut:micronaut-inject"
-    implementation "io.micronaut:micronaut-validation"
-    implementation "io.micronaut:micronaut-runtime"
     implementation "io.micronaut:micronaut-http-client"
     implementation "io.micronaut:micronaut-http-server-netty"
     implementation "io.micronaut:micronaut-management"
     implementation "io.micronaut.security:micronaut-security-jwt"
-<%_ if (authenticationType == 'oauth2') { _%>
+<%_ if (authenticationTypeOauth2) { _%>
     implementation "io.micronaut.security:micronaut-security-oauth2"
 <%_ } _%>
     implementation "io.micronaut.views:micronaut-views-thymeleaf"
@@ -361,6 +363,8 @@ dependencies {
 
     compileOnly "org.graalvm.nativeimage:svm"
 
+    implementation "io.micronaut.validation:micronaut-validation"
+    implementation "io.micronaut.liquibase:micronaut-liquibase"
     implementation "io.micronaut.sql:micronaut-jdbc-hikari"
     implementation "io.micronaut.jmx:micronaut-jmx"
     implementation "io.micronaut.micrometer:micronaut-micrometer-core"
@@ -372,16 +376,18 @@ dependencies {
     implementation("io.micronaut.data:micronaut-data-jdbc:$micronaut_data_version") {
         exclude group: 'io.micronaut', module: 'micronaut-jdbc'
     }
+    implementation "jakarta.persistence:jakarta.persistence-api:3.1.0"
 <%_ if (serviceDiscoveryType === 'eureka' || serviceDiscoveryType === 'consul') { _%>
     implementation "io.micronaut.discovery:micronaut-discovery-client:$micronaut_discovery_client_version"
 <%_ } _%>
 
-    implementation "jakarta.inject:jakarta.inject-api:${jakarta_inject_version}"
-    implementation "jakarta.mail:jakarta.mail-api:$jakarta_mail_version"
-    implementation "com.sun.mail:jakarta.mail:$jakarta_mail_version"
-    implementation "org.zalando:problem:$problem_version"
+    implementation("io.micronaut.email:micronaut-email-javamail")
+    runtimeOnly("org.eclipse.angus:angus-mail")
+    implementation("io.micronaut.email:micronaut-email-template")
+    implementation("io.micronaut.views:micronaut-views-thymeleaf")
+
     implementation "org.zalando:problem-violations:$problem_version"
-    implementation "org.zalando:jackson-datatype-problem:$problem_version"
+    implementation "org.zalando:jackson-datatype-problem:0.27.1"
     <%_ if (searchEngine === 'elasticsearch') { _%>
 
     // log4j2-mock needed to create embedded elasticsearch instance with SLF4J

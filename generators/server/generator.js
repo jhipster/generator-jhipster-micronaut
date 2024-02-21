@@ -13,6 +13,8 @@ import { writeFiles } from './files.js';
 
 import command from './command.js';
 import { entityFiles } from './entity-files.js';
+import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
+import constants from '../constants.cjs';
 
 export default class extends ServerGenerator {
   constructor(args, opts, features) {
@@ -24,7 +26,7 @@ export default class extends ServerGenerator {
     this.command = command;
     if (!this.options.help) {
       this.jhipsterTemplatesFolders.push(
-        // For _persistClass_.java.jhi.hibernate_cache file
+        // For _persistClass_.java.jhi.hibernate_cache/_persistClass_.java.jhi.jakarta_persistence file
         this.fetchFromInstalledJHipster('spring-data-relational/templates'),
         // For _global_partials_entity_/field_validators file
         this.fetchFromInstalledJHipster('java/templates'),
@@ -33,9 +35,7 @@ export default class extends ServerGenerator {
   }
 
   async beforeQueue() {
-    // TODO remove pass useJakartaValidation as options.
-    const javaGenerator = await this.dependsOnJHipster('java', { generatorOptions: { useJakartaValidation: false } });
-    javaGenerator.useJakartaValidation = false;
+    await this.dependsOnJHipster('java');
     await this.dependsOnJHipster('common');
   }
 
@@ -116,9 +116,8 @@ export default class extends ServerGenerator {
         application.MN_CONSTANTS = mnConstants;
         application.gradleVersion = mnConstants.GRADLE_VERSION;
         application.dockerContainers.redis = mnConstants.DOCKER_REDIS;
-        application.jhipsterDependenciesVersion = '7.9.3';
-        // Revert to java 11 to fix redis.
-        application.JAVA_VERSION = '11';
+        application.jhipsterDependenciesVersion = '8.0.0';
+        application.JAVA_VERSION = '17';
         // Add liquibase h2 database references.
         application.liquibaseAddH2Properties = true;
         // Micronaut is a java project.
@@ -225,6 +224,13 @@ export default class extends ServerGenerator {
   get [ServerGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
       ...super.postWriting,
+      sqlDependencies({ application, source }) {
+        if (application.databaseTypeSql) {
+          source.addMavenDefinition?.(getImperativeMavenDefinition({ javaDependencies: { hibernate: constants.versions.hibernate } }));
+          source.addMavenDefinition?.(getCommonMavenDefinition());
+          source.addMavenDependency?.(getDatabaseDriverForDatabase(application.prodDatabaseType).jdbc);
+        }
+      },
       packageJsonCustomizations({ application }) {
         this.packageJson.merge({
           scripts: {
@@ -268,7 +274,6 @@ export default class extends ServerGenerator {
                 `import io.micronaut.core.annotation.Introspected;
 import java.io.Serializable;`,
               ),
-            content => content.replaceAll('jakarta.', 'javax.'),
             content =>
               content.replace(
                 '\npublic class',

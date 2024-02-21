@@ -27,19 +27,14 @@ const TEST_DIR = 'src/test/';
 export const entityFiles = {
   domain: [
     javaMainPackageTemplatesBlock({
-      condition: generator =>
-        !generator.reactive && generator.databaseTypeSql && generator.prodDatabaseTypePostgresql && generator.fieldsContainImageBlob,
+      condition: data => !data.reactive && data.databaseTypeSql && data.prodDatabaseTypePostgresql && data.anyFieldHasTextContentType,
       relativePath: '_entityPackage_/',
       templates: ['domain/_persistClass_.java.jhi.micronaut'],
     }),
     javaMainPackageTemplatesBlock({
-      relativePath: '_entityPackage_/',
-      templates: ['domain/_persistClass_.java.jhi.javax_validation'],
-    }),
-    javaMainPackageTemplatesBlock({
       condition: generator => generator.databaseTypeSql && !generator.reactive,
       relativePath: '_entityPackage_/',
-      templates: ['domain/_persistClass_.java.jhi.javax_persistence'],
+      templates: ['domain/_persistClass_.java.jhi.jakarta_persistence'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => generator.databaseTypeSql && !generator.reactive && generator.enableHibernateCache,
