@@ -9,7 +9,7 @@ export default class extends BaseGenerator {
       async buildMatrix() {
         const samples = await readdir(this.templatePath('../../generate-sample/templates/samples'));
         const matrix = {
-          include: samples.map(sample => ({
+          include: samples.filter(sample => !sample.includes('disabled')).map(sample => ({
             'sample-name': sample,
             'node-version': '18',
             'java-version': '17',
