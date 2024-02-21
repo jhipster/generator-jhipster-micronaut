@@ -21,16 +21,17 @@
  EJS fragments will process % delimiter tags in template and & delimiter tags in the merge process.
 -%>
 <&_ if (fragment.importSection) { -&>
-<%_ if (prodDatabaseTypePostgresql && fieldsContainImageBlob) { _%>
-import org.hibernate.annotations.Type;
+<%_ if (prodDatabaseTypePostgresql && anyFieldHasTextContentType) { _%>
+import java.sql.Types;
+import org.hibernate.annotations.JdbcTypeCode;
 <%_ } _%>
 <&_ } -&>
 
 <%_ for (const field of fields) { -%>
 <&_ if (fragment.field<%- field.fieldNameCapitalized %>AnnotationSection) { -&>
   <%_ if (field.fieldTypeBytes) { _%>
-    <%_ if (prodDatabaseTypePostgresql && field.blobContentTypeImage) { _%>
-    @Type(type = "org.hibernate.type.BinaryType")
+    <%_ if (prodDatabaseTypePostgresql && field.blobContentTypeText) { _%>
+    @JdbcTypeCode(Types.LONGVARCHAR)
     <%_ } _%>
   <%_ } _%>
 <&_ } -&>

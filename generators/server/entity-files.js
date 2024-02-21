@@ -27,8 +27,7 @@ const TEST_DIR = 'src/test/';
 export const entityFiles = {
   domain: [
     javaMainPackageTemplatesBlock({
-      condition: generator =>
-        !generator.reactive && generator.databaseTypeSql && generator.prodDatabaseTypePostgresql && generator.fieldsContainImageBlob,
+      condition: data => !data.reactive && data.databaseTypeSql && data.prodDatabaseTypePostgresql && data.anyFieldHasTextContentType,
       relativePath: '_entityPackage_/',
       templates: ['domain/_persistClass_.java.jhi.micronaut'],
     }),
