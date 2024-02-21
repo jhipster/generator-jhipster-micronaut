@@ -9,12 +9,14 @@ export default class extends BaseGenerator {
       async buildMatrix() {
         const samples = await readdir(this.templatePath('../../generate-sample/templates/samples'));
         const matrix = {
-          include: samples.filter(sample => !sample.includes('disabled')).map(sample => ({
-            'sample-name': sample,
-            'node-version': '18',
-            'java-version': '17',
-            'build-tool': sample.includes('gradle') ? 'gradle' : 'maven',
-          })),
+          include: samples
+            .filter(sample => !sample.includes('disabled'))
+            .map(sample => ({
+              'sample-name': sample,
+              'node-version': '18',
+              'java-version': '17',
+              'build-tool': sample.includes('gradle') ? 'gradle' : 'maven',
+            })),
         };
         const matrixoutput = `matrix<<EOF${os.EOL}${JSON.stringify(matrix)}${os.EOL}EOF${os.EOL}`;
         const filePath = process.env['GITHUB_OUTPUT'];
