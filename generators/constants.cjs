@@ -40,7 +40,7 @@ module.exports = {
     },
     postgresql: {
       driver: 'org.postgresql.Driver',
-      dialect: 'org.hibernate.dialect.PostgreSQL10Dialect',
+      dialect: 'org.hibernate.dialect.PostgreSQLDialect',
     },
     oracle: {
       driver: 'oracle.jdbc.OracleDriver',
@@ -52,8 +52,8 @@ module.exports = {
     },
   },
   versions: {
-    micronaut: '4.2.1',
-    micronautData: '4.2.0',
+    micronaut: '4.3.3',
+    micronautData: '4.6.2',
     micronautDiscoveryClient: '4.1.0',
     micronautOpenApi: '4.2.0',
     netty: '4.1.97.Final',
