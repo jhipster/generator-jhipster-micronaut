@@ -116,7 +116,7 @@ export default class extends ServerGenerator {
         application.MN_CONSTANTS = mnConstants;
         application.gradleVersion = mnConstants.GRADLE_VERSION;
         application.dockerContainers.redis = mnConstants.DOCKER_REDIS;
-        application.jhipsterDependenciesVersion = '8.0.0';
+        application.jhipsterDependenciesVersion = '8.1.0';
         application.JAVA_VERSION = '17';
         // Add liquibase h2 database references.
         application.liquibaseAddH2Properties = true;
