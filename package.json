@@ -62,7 +62,7 @@
     "mocha-expect-snapshot": "3.1.0",
     "prettier": "3.0.3",
     "prettier-plugin-java": "2.6.0",
-    "prettier-plugin-packagejson": "2.2.17",
+    "prettier-plugin-packagejson": "2.4.12",
     "vitest": "0.34.6",
     "yeoman-test": ">=8.0.0-rc.1"
   },
