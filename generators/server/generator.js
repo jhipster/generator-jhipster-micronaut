@@ -1,3 +1,5 @@
+import os from 'os';
+import chalk from 'chalk';
 import ServerGenerator from 'generator-jhipster/generators/server';
 import {
   GENERATOR_DOCKER,
@@ -311,7 +313,19 @@ public class`,
 
   get [ServerGenerator.END]() {
     return this.asEndTaskGroup({
-      ...super.end,
+      end() {
+        this.log.ok('Micronaut application generated successfully.');
+
+        let executable = 'mvnw';
+        if (this.buildTool === 'gradle') {
+          executable = 'gradlew';
+        }
+        let logMsgComment = '';
+        if (os.platform() === 'win32') {
+          logMsgComment = ` (${chalk.yellow.bold(executable)} if using Windows Command Prompt)`;
+        }
+        this.log(chalk.green(`  Run your Micronaut application:\n  ${chalk.yellow.bold(`./${executable}`)}${logMsgComment}`));
+      },
     });
   }
 }
