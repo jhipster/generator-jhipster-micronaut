@@ -40,7 +40,7 @@ module.exports = {
     },
     postgresql: {
       driver: 'org.postgresql.Driver',
-      dialect: 'org.hibernate.dialect.PostgreSQL10Dialect',
+      dialect: 'org.hibernate.dialect.PostgreSQLDialect',
     },
     oracle: {
       driver: 'oracle.jdbc.OracleDriver',
