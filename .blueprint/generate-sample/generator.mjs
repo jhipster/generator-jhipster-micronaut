@@ -1,8 +1,8 @@
 import { readdir } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import process from 'node:process';
 import BaseGenerator from 'generator-jhipster/generators/base';
 import command from './command.mjs';
-import { readFileSync } from 'node:fs';
 
 export default class extends BaseGenerator {
   sampleName;
