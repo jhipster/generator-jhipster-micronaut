@@ -4,6 +4,10 @@ import { readdir } from 'node:fs/promises';
 import BaseGenerator from 'generator-jhipster/generators/base';
 
 export default class extends BaseGenerator {
+  constructor(args, opts, features) {
+    super(args, opts, { ...features, jhipsterBootstrap: false });
+  }
+
   get [BaseGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async buildMatrix() {

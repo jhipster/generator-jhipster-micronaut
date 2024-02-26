@@ -63,9 +63,6 @@ jobs:
         working-directory: ${{ github.workspace }}/generator-jhipster-micronaut
       - name: 'Generate Project'
         run: mhipster generate-sample ${{ matrix.sample-name }} --skip-jhipster-dependencies --force
-        env:
-          JHI_PROFILE: dev
-          JHI_PROJECT_VERSION: 3.0.0-git
       - uses: jhipster/actions/compare-sample@v0
         with:
           generator-path: generator-jhipster-micronaut
