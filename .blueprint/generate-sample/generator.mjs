@@ -1,6 +1,8 @@
 import { readdir } from 'node:fs/promises';
+import process from 'node:process';
 import BaseGenerator from 'generator-jhipster/generators/base';
 import command from './command.mjs';
+import { readFileSync } from 'node:fs';
 
 export default class extends BaseGenerator {
   sampleName;
@@ -44,6 +46,11 @@ export default class extends BaseGenerator {
   get [BaseGenerator.END]() {
     return this.asEndTaskGroup({
       async generateSample() {
+        const packageJson = JSON.parse(readFileSync(new URL('../../package.json', import.meta.url)));
+        const projectVersion = `${packageJson.version}-git`;
+
+        process.env.JHI_PROFILE = 'dev';
+
         await this.composeWithJHipster('jdl', {
           generatorArgs: [this.sampleName],
           generatorOptions: {
@@ -51,6 +58,7 @@ export default class extends BaseGenerator {
             insight: false,
             skipChecks: true,
             skipInstall: true,
+            projectVersion,
           },
         });
       },
