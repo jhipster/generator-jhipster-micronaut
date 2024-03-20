@@ -1,92 +1,57 @@
-# Greetings, Micronaut Hipster!
+# generator-jhipster-micronaut
 
-![Tests](https://github.com/jhipster/generator-jhipster-micronaut/workflows/Generator%20Lint%20/%20Tests/badge.svg)
-![Sample Projects](https://github.com/jhipster/generator-jhipster-micronaut/workflows/Verify%20Sample%20Projects/badge.svg)
+> JHipster blueprint, micronaut blueprint for JHipster
 
-<img src="https://raw.githubusercontent.com/jhipster/jhipster-artwork/master/family/jhipster_family_member_4.png" alt="JHipster Micronaut Family Member"
-width=200
-style="max-width:50%;">
+[![NPM version][npm-image]][npm-url]
+[![Generator][github-generator-image]][github-generator-url]
+[![Integration Test][github-integration-image]][github-integration-url]
 
-This project generates a Micronaut based JHipster application 😎.
-It is based on JHipster Blueprint 🔵, and intends to replace the Spring Boot portions of the server with [Micronaut](https://micronaut.io) equivalents.
+# Introduction
 
-## Installation and Usage
+This is a [JHipster](https://www.jhipster.tech/) blueprint, that is meant to be used in a JHipster application.
 
-1. Install MHipster
-   - `npm install -g generator-jhipster-micronaut`
-2. Create a new folder for your application
-3. Start MHipster
-   - `mhipster`
+# Prerequisites
 
-Alternatively, if you already have JHipster installed, you can use this blueprint with:
+As this is a [JHipster](https://www.jhipster.tech/) blueprint, we expect you have JHipster and its related tools already installed:
 
-```
-$ jhipster --blueprints micronaut
-```
+- [Installing JHipster](https://www.jhipster.tech/installation/)
 
-## Using Docker
+# Installation
 
-Download the Dockerfile:
+To install or update this blueprint:
 
 ```bash
-mkdir docker
-cd docker
-wget https://github.com/jhipster/generator-jhipster-micronaut/raw/main/docker/Dockerfile
+npm install -g generator-jhipster-micronaut
 ```
 
-Build the Docker images:
+# Usage
+
+To use this blueprint, run the below command
 
 ```bash
-docker build -t jhipster-generator-micronaut:latest .
+jhipster --blueprints micronaut
 ```
 
-Make a folder where you want to generate the Service:
+You can look for updated micronaut blueprint specific options by running
 
 ```bash
-mkdir service
-cd service
+jhipster app --blueprints micronaut --help
 ```
 
-Run the generator from image to generate service:
+And looking for `(blueprint option: micronaut)` like
+
+## Pre-release
+
+To use an unreleased version, install it using git.
 
 ```bash
-docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut
+npm install -g jhipster/generator-jhipster-micronaut#main
+jhipster --blueprints micronaut --skip-jhipster-dependencies
 ```
 
-Run and attach interactive shell to the generator docker container to work from inside the running container:
-
-```bash
-docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut /bin/bash
-```
-
-## Currently supported options
-
-- Monolith projects
-- Microservice projects
-- JWT or OAuth 2.0 Authentication
-- SQL Database Support
-  - MySQL
-  - MariaDB
-  - PostgreSQL
-  - H2
-- Ehcache
-- Caffeine Cache
-- Redis Cache
-- Maven or Gradle Build System
-- Angular or React Client
-- Cypress Tests
-- Heroku Deployment
-
-## Compatibility
-
-| Micronaut Blueprint | Micronaut | JHipster |
-| ------------------- | --------- | -------- |
-| 3.0.0               | 4.2.0     | 8.1.0    |
-| 2.0.0               | 3.10.1    | 7.9.3    |
-| 1.0.2               | 2.4.4     | 6.10.5   |
-| 0.8.0               | 2.3.0     | 6.10.5   |
-
-## ❤️ for community
-
-Interested in contributing?
-Check out our [contributing guide](https://github.com/jhipster/generator-jhipster-micronaut/blob/main/CONTRIBUTING.md) to get started.
+[npm-image]: https://img.shields.io/npm/v/generator-jhipster-micronaut.svg
+[npm-url]: https://npmjs.org/package/generator-jhipster-micronaut
+[github-generator-image]: https://github.com/jhipster/generator-jhipster-micronaut/actions/workflows/generator.yml/badge.svg
+[github-generator-url]: https://github.com/jhipster/generator-jhipster-micronaut/actions/workflows/generator.yml
+[github-integration-image]: https://github.com/jhipster/generator-jhipster-micronaut/actions/workflows/integration.yml/badge.svg
+[github-integration-url]: https://github.com/jhipster/generator-jhipster-micronaut/actions/workflows/integration.yml
