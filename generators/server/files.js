@@ -355,6 +355,8 @@ export const serverFiles = {
         { file: 'gradle/docker.gradle', useBluePrint: true },
         { file: 'gradle/profile_dev.gradle', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
         { file: 'gradle/profile_prod.gradle', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
+        { file: 'buildSrc/src/main/groovy/jhipster.code-quality-conventions.gradle', useBluePrint: true },
+        { file: 'buildSrc/src/main/groovy/jhipster.docker-conventions.gradle', useBluePrint: true },
       ],
     },
     {
