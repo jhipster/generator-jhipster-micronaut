@@ -30,9 +30,6 @@ plugins {
     <%_ if (!skipClient) { _%>
     id "com.github.node-gradle.node"
     <%_ } _%>
-    <%_ if (databaseTypeSql) { _%>
-    id "org.liquibase.gradle"
-    <%_ } _%>
     id "org.sonarqube"
     id "com.github.johnrengelman.shadow"
     // jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
@@ -64,7 +61,6 @@ targetCompatibility=<%= JAVA_VERSION %>
 assert System.properties["java.specification.version"] == "17" || "18" || "19" || "20" || "21"
 
 apply from: "gradle/docker.gradle"
-apply from: "gradle/sonar.gradle"
 
 <%_ if (enableSwaggerCodegen) { _%>
 apply from: "gradle/swagger.gradle"
