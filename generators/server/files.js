@@ -352,7 +352,6 @@ export const serverFiles = {
         { file: 'build.gradle', useBluePrint: true },
         { file: 'settings.gradle', useBluePrint: true },
         { file: 'gradle.properties', useBluePrint: true },
-        { file: 'gradle/sonar.gradle', useBluePrint: true },
         { file: 'gradle/docker.gradle', useBluePrint: true },
         { file: 'gradle/profile_dev.gradle', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
         { file: 'gradle/profile_prod.gradle', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
