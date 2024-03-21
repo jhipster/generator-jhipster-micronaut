@@ -23,7 +23,7 @@ const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packa
     blueprints: {
       [blueprint]: version,
     },
-    printBlueprintLogo: () => {
+    printLogo: () => {
       console.log(getLogo());
     },
     lookups: [{ packagePaths: [packagePath], lookups: ['generators'] }],
