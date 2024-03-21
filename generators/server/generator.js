@@ -91,7 +91,9 @@ export default class extends ServerGenerator {
           languagesGenerator.writeJavaLanguageFiles = true;
         }
         if (databaseType === 'sql') {
-          await this.composeWithJHipster(GENERATOR_LIQUIBASE);
+          const liquibaseGenerator = await this.composeWithJHipster(GENERATOR_LIQUIBASE);
+          liquibaseGenerator.injectLogs = false;
+          liquibaseGenerator.injectBuildTool = false;
         }
         if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) {
           await this.composeWithJHipster('jhipster-micronaut:micronaut-cache');
