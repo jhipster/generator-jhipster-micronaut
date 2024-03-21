@@ -4,9 +4,6 @@ import constants from '../constants.cjs';
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
     super(args, opts, { ...features, sbsBlueprint: true });
-    if (!this.options.help) {
-      this.jhipsterTemplatesFolders.push(this.fetchFromInstalledJHipster('liquibase/templates'));
-    }
   }
 
   get [BaseApplicationGenerator.POST_WRITING]() {

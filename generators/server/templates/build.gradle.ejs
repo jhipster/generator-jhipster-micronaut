@@ -30,6 +30,9 @@ plugins {
     <%_ if (!skipClient) { _%>
     id "com.github.node-gradle.node"
     <%_ } _%>
+    <%_ if (databaseType === 'sql') { _%>
+    id "org.liquibase.gradle"
+    <%_ } _%>
     id "org.sonarqube"
     id "com.github.johnrengelman.shadow"
     // jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
