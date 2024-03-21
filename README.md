@@ -14,17 +14,21 @@ It is based on JHipster Blueprint 🔵, and intends to replace the Spring Boot p
 
 1. Install MHipster
 
-- `npm install -g generator-jhipster-micronaut`
+   ```
+   npm install -g generator-jhipster-micronaut
+   ```
 
 2. Create a new folder for your application
 3. Start MHipster
 
-- `mhipster`
+   ```
+   mhipster
+   ```
 
 Alternatively, if you already have JHipster installed, you can use this blueprint with:
 
 ```
-$ jhipster --blueprints micronaut
+jhipster --blueprints micronaut
 ```
 
 ## Using Docker
