@@ -32,8 +32,6 @@ export default class extends ServerGenerator {
         this.fetchFromInstalledJHipster('spring-data-relational/templates'),
         // For _global_partials_entity_/field_validators file
         this.fetchFromInstalledJHipster('java/templates'),
-        // For User entity
-        this.fetchFromInstalledJHipster('server/templates'),
       );
     }
   }
