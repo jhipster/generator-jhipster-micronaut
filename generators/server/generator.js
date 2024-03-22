@@ -311,7 +311,6 @@ public class`,
   }
 
   get [ServerGenerator.END]() {
-    const { buildTool } = this.jhipsterConfigWithDefaults;
     return this.asEndTaskGroup({
       end() {
         this.log.ok('Micronaut application generated successfully.');
