@@ -30,6 +30,12 @@
         "sbs": true,
         "written": true
       },
+      "java": {
+        "command": false,
+        "priorities": ["end"],
+        "sbs": true,
+        "written": true
+      },
       "heroku": {
         "command": false,
         "priorities": [
