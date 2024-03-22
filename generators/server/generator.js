@@ -317,7 +317,7 @@ public class`,
         this.log.ok('Micronaut application generated successfully.');
 
         let executable = 'mvnw';
-        if (buildTool === 'gradle') {
+        if (this.jhipsterConfigWithDefaults.buildTool === 'gradle') {
           executable = 'gradlew';
         }
         let logMsgComment = '';
