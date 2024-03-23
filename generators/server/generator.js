@@ -111,8 +111,14 @@ export default class extends ServerGenerator {
   get [ServerGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
       ...super.preparing,
+      loadDependencies({ application }) {
+        application.micronautDependencies = { ...mnConstants.versions };
+        this.loadJavaDependenciesFromGradleCatalog(application.micronautDependencies);
+
+        // Workaound liquibase generator bug
+        application.springBootDependencies = { liquibase: mnConstants.versions.liquibase, h2: application.micronautDependencies.h2 };
+      },
       configure({ application }) {
-        application.springBootDependencies = { liquibase: mnConstants.versions.liquibase };
         if (application.authenticationTypeOauth2) {
           application.syncUserWithIdp = true;
           application.generateBuiltInUserEntity = true;
