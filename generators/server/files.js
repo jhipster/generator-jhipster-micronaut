@@ -46,6 +46,7 @@ export const serverFiles = {
       templates: ['entrypoint.sh'],
     },
   ],
+  conventionPlugins: [{ templates: ['buildSrc/src/main/groovy/jhipster.code-quality-conventions.gradle'] }],
   serverResources: [
     javaMainResourceTemplatesBlock({
       condition: generator => generator.devDatabaseType === 'h2Disk' || generator.devDatabaseType === 'h2Memory',

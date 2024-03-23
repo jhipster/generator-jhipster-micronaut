@@ -38,6 +38,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "README.md": {
     "stateCleared": "modified",
   },
+  "buildSrc/src/main/groovy/jhipster.code-quality-conventions.gradle": {
+    "stateCleared": "modified",
+  },
   "checkstyle.xml": {
     "stateCleared": "modified",
   },
@@ -518,6 +521,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "README.md": {
+    "stateCleared": "modified",
+  },
+  "buildSrc/src/main/groovy/jhipster.code-quality-conventions.gradle": {
     "stateCleared": "modified",
   },
   "checkstyle.xml": {
