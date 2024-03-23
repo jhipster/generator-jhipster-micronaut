@@ -87,7 +87,8 @@ docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut /bin
 ## Compatibility
 
 | Micronaut Blueprint | Micronaut | JHipster |
-| ------------------- | --------- | -------- |
+|---------------------|-----------|----------|
+| 3.1.0               | 4.3.6     | 8.2.1    |
 | 3.0.0               | 4.2.0     | 8.1.0    |
 | 2.0.0               | 3.10.1    | 7.9.3    |
 | 1.0.2               | 2.4.4     | 6.10.5   |
@@ -97,3 +98,11 @@ docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut /bin
 
 Interested in contributing?
 Check out our [contributing guide](https://github.com/jhipster/generator-jhipster-micronaut/blob/main/CONTRIBUTING.md) to get started.
+
+## Help
+
+Please post any questions in [this project's discussions](https://github.com/jhipster/generator-jhipster-micronaut/discussions), or on [Stack Overflow with a `jhipster` tag](https://stackoverflow.com/questions/tagged/jhipster).
+
+## License
+
+Apache 2.0, see [LICENSE](LICENSE).
