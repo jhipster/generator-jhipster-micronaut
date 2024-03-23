@@ -2,6 +2,7 @@ import { existsSync, appendFileSync } from 'node:fs';
 import os from 'node:os';
 import { readdir } from 'node:fs/promises';
 import BaseGenerator from 'generator-jhipster/generators/base';
+import { RECOMMENDED_NODE_VERSION, RECOMMENDED_JAVA_VERSION } from 'generator-jhipster';
 
 export default class extends BaseGenerator {
   constructor(args, opts, features) {
@@ -17,8 +18,8 @@ export default class extends BaseGenerator {
             .filter(sample => !sample.includes('disabled'))
             .map(sample => ({
               'sample-name': sample,
-              'node-version': '18',
-              'java-version': '17',
+              'node-version': RECOMMENDED_NODE_VERSION,
+              'java-version': RECOMMENDED_JAVA_VERSION,
               'build-tool': sample.includes('gradle') ? 'gradle' : 'maven',
             })),
         };
