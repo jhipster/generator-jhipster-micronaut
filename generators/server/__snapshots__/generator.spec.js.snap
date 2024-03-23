@@ -77,6 +77,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/docker/jhipster-control-center.yml": {
     "stateCleared": "modified",
   },
+  "src/main/docker/jib/entrypoint.sh": {
+    "stateCleared": "modified",
+  },
   "src/main/docker/monitoring.yml": {
     "stateCleared": "modified",
   },
@@ -554,6 +557,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/main/docker/jhipster-control-center.yml": {
+    "stateCleared": "modified",
+  },
+  "src/main/docker/jib/entrypoint.sh": {
     "stateCleared": "modified",
   },
   "src/main/docker/monitoring.yml": {
