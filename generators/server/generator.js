@@ -37,9 +37,8 @@ export default class extends ServerGenerator {
   }
 
   async beforeQueue() {
-    await this.dependsOnJHipster('java');
-    await this.dependsOnJHipster('common');
-    await this.dependsOnJHipster('server');
+    await this.dependsOnJHipster(GENERATOR_COMMON);
+    await this.dependsOnJHipster(GENERATOR_JAVA);
   }
 
   get [ServerGenerator.INITIALIZING]() {
