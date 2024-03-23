@@ -2,8 +2,10 @@ import os from 'os';
 import chalk from 'chalk';
 import ServerGenerator from 'generator-jhipster/generators/server';
 import {
+  GENERATOR_COMMON,
   GENERATOR_DOCKER,
   GENERATOR_GRADLE,
+  GENERATOR_JAVA,
   GENERATOR_LANGUAGES,
   GENERATOR_LIQUIBASE,
   GENERATOR_MAVEN,
@@ -225,6 +227,7 @@ export default class extends ServerGenerator {
   get [ServerGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
       ...super.postWriting,
+      customizeGradle: undefined,
       sqlDependencies({ application, source }) {
         if (application.databaseTypeSql) {
           source.addMavenDefinition?.(getImperativeMavenDefinition({ javaDependencies: { hibernate: constants.versions.hibernate } }));
