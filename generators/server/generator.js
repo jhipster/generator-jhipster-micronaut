@@ -93,9 +93,7 @@ export default class extends ServerGenerator {
           languagesGenerator.writeJavaLanguageFiles = true;
         }
         if (databaseType === 'sql') {
-          const liquibaseGenerator = await this.composeWithJHipster(GENERATOR_LIQUIBASE);
-          liquibaseGenerator.injectLogs = false;
-          liquibaseGenerator.injectBuildTool = false;
+          await this.composeWithJHipster(GENERATOR_LIQUIBASE);
         }
         if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) {
           await this.composeWithJHipster('jhipster-micronaut:micronaut-cache');
@@ -114,6 +112,7 @@ export default class extends ServerGenerator {
     return this.asPreparingTaskGroup({
       ...super.preparing,
       configure({ application }) {
+        application.springBootDependencies = { liquibase: mnConstants.versions.liquibase };
         if (application.authenticationTypeOauth2) {
           application.syncUserWithIdp = true;
           application.generateBuiltInUserEntity = true;
