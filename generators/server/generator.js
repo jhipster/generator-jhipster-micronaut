@@ -113,7 +113,12 @@ export default class extends ServerGenerator {
   get [ServerGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
       ...super.preparing,
-
+      configure({ application }) {
+        if (application.authenticationTypeOauth2) {
+          application.syncUserWithIdp = true;
+          application.generateBuiltInUserEntity = true;
+        }
+      },
       prepareForTemplates({ application }) {
         // Use Micronaut specific hipster
         application.hipster = 'jhipster_family_member_4';
@@ -151,6 +156,12 @@ export default class extends ServerGenerator {
             }),
           );
       },
+    });
+  }
+
+  get [ServerGenerator.POST_PREPARING]() {
+    return this.asPostPreparingTaskGroup({
+      ...super.postPreparing,
     });
   }
 
