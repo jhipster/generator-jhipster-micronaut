@@ -19,20 +19,8 @@
 
 version: 2
 updates:
-  - package-ecosystem: 'maven'
-    directory: '/generators/server/templates/'
-    schedule:
-      interval: 'daily'
-      # Maven doesn't have many PRs, but it triggers every client workflow. Let 2h of interval.
-      time: '05:00'
-    open-pull-requests-limit: 5
-    labels:
-      - 'theme: dependencies'
-      - 'theme: java'
-      - 'skip-changelog'
-
   - package-ecosystem: 'gradle'
-    directory: '/generators/server/templates'
+    directory: '/generators/server/resources'
     schedule:
       interval: 'daily'
       time: '08:00'

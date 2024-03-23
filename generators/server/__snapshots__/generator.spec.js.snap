@@ -38,6 +38,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "README.md": {
     "stateCleared": "modified",
   },
+  "buildSrc/src/main/groovy/jhipster.code-quality-conventions.gradle": {
+    "stateCleared": "modified",
+  },
   "checkstyle.xml": {
     "stateCleared": "modified",
   },
@@ -416,6 +419,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/test/java/com/mycompany/myapp/config/CorsTest.java": {
     "stateCleared": "modified",
   },
+  "src/test/java/com/mycompany/myapp/domain/AssertUtils.java": {
+    "stateCleared": "modified",
+  },
   "src/test/java/com/mycompany/myapp/security/DomainUserDetailsServiceIT.java": {
     "stateCleared": "modified",
   },
@@ -515,6 +521,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "README.md": {
+    "stateCleared": "modified",
+  },
+  "buildSrc/src/main/groovy/jhipster.code-quality-conventions.gradle": {
     "stateCleared": "modified",
   },
   "checkstyle.xml": {
@@ -917,6 +926,12 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/config/CorsTest.java": {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/domain/AssertUtils.java": {
+    "stateCleared": "modified",
+  },
+  "src/test/java/com/mycompany/myapp/domain/EntityAsserts.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/domain/EntityTest.java": {

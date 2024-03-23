@@ -2,8 +2,10 @@ import os from 'os';
 import chalk from 'chalk';
 import ServerGenerator from 'generator-jhipster/generators/server';
 import {
+  GENERATOR_COMMON,
   GENERATOR_DOCKER,
   GENERATOR_GRADLE,
+  GENERATOR_JAVA,
   GENERATOR_LANGUAGES,
   GENERATOR_LIQUIBASE,
   GENERATOR_MAVEN,
@@ -37,8 +39,8 @@ export default class extends ServerGenerator {
   }
 
   async beforeQueue() {
-    await this.dependsOnJHipster('java');
-    await this.dependsOnJHipster('common');
+    await this.dependsOnJHipster(GENERATOR_COMMON);
+    await this.dependsOnJHipster(GENERATOR_JAVA);
   }
 
   get [ServerGenerator.INITIALIZING]() {
@@ -109,7 +111,19 @@ export default class extends ServerGenerator {
   get [ServerGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
       ...super.preparing,
+      loadDependencies({ application }) {
+        application.micronautDependencies = { ...mnConstants.versions };
+        this.loadJavaDependenciesFromGradleCatalog(application.micronautDependencies);
 
+        // Workaound liquibase generator bug
+        application.springBootDependencies = { liquibase: mnConstants.versions.liquibase, h2: application.micronautDependencies.h2 };
+      },
+      configure({ application }) {
+        if (application.authenticationTypeOauth2) {
+          application.syncUserWithIdp = true;
+          application.generateBuiltInUserEntity = true;
+        }
+      },
       prepareForTemplates({ application }) {
         // Use Micronaut specific hipster
         application.hipster = 'jhipster_family_member_4';
@@ -147,6 +161,12 @@ export default class extends ServerGenerator {
             }),
           );
       },
+    });
+  }
+
+  get [ServerGenerator.POST_PREPARING]() {
+    return this.asPostPreparingTaskGroup({
+      ...super.postPreparing,
     });
   }
 
@@ -223,6 +243,60 @@ export default class extends ServerGenerator {
   get [ServerGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
       ...super.postWriting,
+      customizeGradle: undefined,
+      addCodeQualityConventionPlugin({ application, source }) {
+        if (application.buildToolGradle) {
+          source.addGradlePlugin?.({ id: 'jhipster.code-quality-conventions' });
+
+          source.addGradleDependencyCatalogVersion?.({ name: 'jacoco', version: application.javaDependencies?.['jacoco-maven-plugin'] });
+          source.addGradleDependencyCatalogVersion?.({ name: 'checkstyle', version: application.javaDependencies.checkstyle });
+
+          source.addGradleBuildSrcDependency?.({
+            groupId: 'org.sonarsource.scanner.gradle',
+            artifactId: 'sonarqube-gradle-plugin',
+            // eslint-disable-next-line no-template-curly-in-string
+            version: '${libs.versions.sonarqube.plugin.get()}',
+            scope: 'implementation',
+          });
+          source.addGradleBuildSrcDependency?.({
+            groupId: 'com.diffplug.spotless',
+            artifactId: 'spotless-plugin-gradle',
+            // eslint-disable-next-line no-template-curly-in-string
+            version: '${libs.versions.spotless.plugin.get()}',
+            scope: 'implementation',
+          });
+          source.addGradleBuildSrcDependency?.({
+            groupId: 'com.github.andygoossens',
+            artifactId: 'gradle-modernizer-plugin',
+            // eslint-disable-next-line no-template-curly-in-string
+            version: '${libs.versions.modernizer.plugin.get()}',
+            scope: 'implementation',
+          });
+          source.addGradleBuildSrcDependency?.({
+            groupId: 'io.spring.nohttp',
+            artifactId: 'nohttp-gradle',
+            // eslint-disable-next-line no-template-curly-in-string
+            version: '${libs.versions.nohttp.plugin.get()}',
+            scope: 'implementation',
+          });
+          source.addGradleBuildSrcDependencyCatalogVersion?.({
+            name: 'nohttp-plugin',
+            version: application.javaDependencies?.['nohttp-checkstyle'],
+          });
+          source.addGradleBuildSrcDependencyCatalogVersion?.({
+            name: 'modernizer-plugin',
+            version: application.javaDependencies?.['gradle-modernizer-plugin'],
+          });
+          source.addGradleBuildSrcDependencyCatalogVersion?.({
+            name: 'spotless-plugin',
+            version: application.javaDependencies?.['spotless-gradle-plugin'],
+          });
+          source.addGradleBuildSrcDependencyCatalogVersion?.({
+            name: 'sonarqube-plugin',
+            version: application.javaDependencies?.['gradle-sonarqube'],
+          });
+        }
+      },
       sqlDependencies({ application, source }) {
         if (application.databaseTypeSql) {
           source.addMavenDefinition?.(getImperativeMavenDefinition({ javaDependencies: { hibernate: constants.versions.hibernate } }));

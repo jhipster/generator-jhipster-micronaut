@@ -1,9 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`SubGenerator heroku of micronaut JHipster blueprint > run > should succeed 1`] = `
-{
-  ".yo-rc.json": {
-    "stateCleared": "modified",
-  },
-}
-`;

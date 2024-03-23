@@ -1,0 +1,2 @@
+[libraries]
+h2 = { module = 'com.h2database:h2', version = '2.2.224' }

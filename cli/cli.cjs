@@ -8,6 +8,7 @@ const { version, bin } = require('../package.json');
 const packagePath = dirname(__dirname);
 const packageFolderName = basename(packagePath);
 const devBlueprintPath = join(packagePath, '.blueprint');
+const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packageFolderName}` : packageFolderName;
 
 (async () => {
   const { runJHipster, done, logger } = await import('generator-jhipster/cli');
@@ -20,10 +21,9 @@ const devBlueprintPath = join(packagePath, '.blueprint');
     defaultCommand: 'app',
     devBlueprintPath,
     blueprints: {
-      [packageFolderName]: version,
+      [blueprint]: version,
     },
-    printLogo: () => {},
-    printBlueprintLogo: () => {
+    printLogo: () => {
       console.log(getLogo());
     },
     lookups: [{ packagePaths: [packagePath], lookups: ['generators'] }],
