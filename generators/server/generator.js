@@ -49,6 +49,9 @@ export default class extends ServerGenerator {
       async initializingTemplateTask() {
         this.parseJHipsterArguments(command.arguments);
         this.parseJHipsterOptions(command.options);
+
+        // Disables reactive prompt, it will still be shown using `--ask-answered` option.
+        this.jhipsterConfig.reactive = false;
       },
     });
   }
