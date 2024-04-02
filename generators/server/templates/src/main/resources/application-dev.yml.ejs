@@ -77,7 +77,6 @@ jpa:
   default:
     properties:
       hibernate:
-        dialect: "<%=dbInfo.dialect%>"
 <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) { _%>
         javax.cache.missing_cache_strategy: create
 <%_ } _%>
