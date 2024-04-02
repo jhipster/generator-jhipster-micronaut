@@ -50,8 +50,9 @@ export default class extends ServerGenerator {
         this.parseJHipsterArguments(command.arguments);
         this.parseJHipsterOptions(command.options);
 
-        // Disables reactive prompt, it will still be shown using `--ask-answered` option.
+        // Disables some prompts by making it configured, it will be shown using `--ask-answered` option.
         this.jhipsterConfig.reactive = false;
+        this.jhipsterConfig.databaseType = 'sql';
       },
     });
   }
