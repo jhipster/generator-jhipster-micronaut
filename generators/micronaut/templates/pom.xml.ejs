@@ -125,7 +125,6 @@ _%>
         <maven-resources-plugin.version><%- javaDependencies['maven-resources-plugin'] %></maven-resources-plugin.version>
         <maven-surefire-plugin.version><%- javaDependencies['maven-surefire-plugin'] %></maven-surefire-plugin.version>
         <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
-        <checksum-maven-plugin.version>1.11</checksum-maven-plugin.version>
         <maven-exec-plugin.version>3.1.1</maven-exec-plugin.version>
         <micronaut-plugin.version><%= versions.micronaut %></micronaut-plugin.version>
         <git-commit-id-maven-plugin.version><%- javaDependencies['git-commit-id-maven-plugin'] %></git-commit-id-maven-plugin.version>
@@ -824,66 +823,6 @@ _%>
                 </activation>
                 <build>
                     <plugins>
-                        <plugin>
-                            <groupId>net.nicoulaj.maven.plugins</groupId>
-                            <artifactId>checksum-maven-plugin</artifactId>
-                            <version>${checksum-maven-plugin.version}</version>
-                            <executions>
-                                <execution>
-                                    <id>create-pre-compiled-webapp-checksum</id>
-                                    <goals>
-                                        <goal>files</goal>
-                                    </goals>
-                                    <phase>generate-resources</phase>
-                                </execution>
-                                <execution>
-                                    <id>create-compiled-webapp-checksum</id>
-                                    <goals>
-                                        <goal>files</goal>
-                                    </goals>
-                                    <phase>compile</phase>
-                                    <configuration>
-                                        <csvSummaryFile>checksums.csv.old</csvSummaryFile>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                            <configuration>
-                                <fileSets>
-                                    <fileSet>
-                                        <directory>${project.basedir}</directory>
-                                        <includes>
-                                            <include><%= MAIN_DIR %>webapp/**/*.*</include>
-                                            <include>target/classes/static/**/*.*</include>
-                                            <include>package-lock.json</include>
-                                            <include>package.json</include>
-                                            <include>webpack/*.*</include>
-                                            <include>tsconfig.json</include>
-                                            <%_ if (clientFrameworkAngular) { _%>
-                                            <include>tsconfig.app.json</include>
-                                            <%_ } _%>
-                                            <%_ if (clientFrameworkReact) { _%>
-                                            <include>.postcss.config.js</include>
-                                            <%_ } _%>
-                                            <%_ if (clientFrameworkVue) { _%>
-                                            <include>.postcssrc.js</include>
-                                            <%_ } _%>
-                                        </includes>
-                                        <excludes>
-                                            <exclude>**/app/**/service-worker.js</exclude>
-                                            <exclude>**/app/**/vendor.css</exclude>
-                                        </excludes>
-                                    </fileSet>
-                                </fileSets>
-                                <failOnError>false</failOnError>
-                                <failIfNoFiles>false</failIfNoFiles>
-                                <individualFiles>false</individualFiles>
-                                <algorithms>
-                                    <algorithm>SHA-1</algorithm>
-                                </algorithms>
-                                <includeRelativePath>true</includeRelativePath>
-                                <quiet>true</quiet>
-                            </configuration>
-                        </plugin>
                     </plugins>
                 </build>
                 <properties>
