@@ -351,9 +351,6 @@ export const serverFiles = {
   ],
   serverBuild: [
     {
-      templates: [{ file: 'checkstyle.xml', options: { interpolate: INTERPOLATE_REGEX } }],
-    },
-    {
       condition: generator => generator.buildTool === 'gradle',
       templates: [
         { file: 'build.gradle', useBluePrint: true },

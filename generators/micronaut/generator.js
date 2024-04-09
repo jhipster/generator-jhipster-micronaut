@@ -65,15 +65,9 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.COMPOSING]() {
     return this.asComposingTaskGroup({
       async composing() {
-        const { buildTool, enableTranslation, databaseType, cacheProvider } = this.jhipsterConfigWithDefaults;
-        if (buildTool === 'gradle') {
-          await this.composeWithJHipster(GENERATOR_GRADLE);
-        } else if (buildTool === 'maven') {
-          (await this.composeWithJHipster(GENERATOR_MAVEN)).sortPomFile = false;
-        } else {
-          throw new Error(`Build tool ${buildTool} is not supported`);
-        }
+        const { enableTranslation, databaseType, cacheProvider } = this.jhipsterConfigWithDefaults;
 
+        await this.composeWithJHipster('jhipster:java:code-quality');
         await this.composeWithJHipster(GENERATOR_DOCKER);
 
         // We don't expose client/server to cli, composing with languages is used for test purposes.
@@ -189,59 +183,6 @@ export default class extends BaseApplicationGenerator {
             version: javaDependencies['logstash-logback-encoder'],
           },
         ]);
-      },
-      addCodeQualityConventionPlugin({ application, source }) {
-        if (application.buildToolGradle) {
-          source.addGradlePlugin?.({ id: 'jhipster.code-quality-conventions' });
-
-          source.addGradleDependencyCatalogVersion?.({ name: 'jacoco', version: application.javaDependencies?.['jacoco-maven-plugin'] });
-          source.addGradleDependencyCatalogVersion?.({ name: 'checkstyle', version: application.javaDependencies.checkstyle });
-
-          source.addGradleBuildSrcDependency?.({
-            groupId: 'org.sonarsource.scanner.gradle',
-            artifactId: 'sonarqube-gradle-plugin',
-            // eslint-disable-next-line no-template-curly-in-string
-            version: '${libs.versions.sonarqube.plugin.get()}',
-            scope: 'implementation',
-          });
-          source.addGradleBuildSrcDependency?.({
-            groupId: 'com.diffplug.spotless',
-            artifactId: 'spotless-plugin-gradle',
-            // eslint-disable-next-line no-template-curly-in-string
-            version: '${libs.versions.spotless.plugin.get()}',
-            scope: 'implementation',
-          });
-          source.addGradleBuildSrcDependency?.({
-            groupId: 'com.github.andygoossens',
-            artifactId: 'gradle-modernizer-plugin',
-            // eslint-disable-next-line no-template-curly-in-string
-            version: '${libs.versions.modernizer.plugin.get()}',
-            scope: 'implementation',
-          });
-          source.addGradleBuildSrcDependency?.({
-            groupId: 'io.spring.nohttp',
-            artifactId: 'nohttp-gradle',
-            // eslint-disable-next-line no-template-curly-in-string
-            version: '${libs.versions.nohttp.plugin.get()}',
-            scope: 'implementation',
-          });
-          source.addGradleBuildSrcDependencyCatalogVersion?.({
-            name: 'nohttp-plugin',
-            version: application.javaDependencies?.['nohttp-checkstyle'],
-          });
-          source.addGradleBuildSrcDependencyCatalogVersion?.({
-            name: 'modernizer-plugin',
-            version: application.javaDependencies?.['gradle-modernizer-plugin'],
-          });
-          source.addGradleBuildSrcDependencyCatalogVersion?.({
-            name: 'spotless-plugin',
-            version: application.javaDependencies?.['spotless-gradle-plugin'],
-          });
-          source.addGradleBuildSrcDependencyCatalogVersion?.({
-            name: 'sonarqube-plugin',
-            version: application.javaDependencies?.['gradle-sonarqube'],
-          });
-        }
       },
       sqlDependencies({ application, source }) {
         if (application.databaseTypeSql) {
