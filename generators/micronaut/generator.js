@@ -183,6 +183,7 @@ export default class extends BaseApplicationGenerator {
             artifactId: 'jhipster-framework',
             version: application.jhipsterDependenciesVersion,
           },
+          { groupId: 'org.apache.commons', artifactId: 'commons-lang3', version: javaDependencies['commons-lang3'] },
         ]);
         if (application.buildToolMaven) {
           source.addMavenDefinition({
