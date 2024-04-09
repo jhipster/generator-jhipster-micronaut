@@ -49,11 +49,6 @@ export const serverFiles = {
       condition: generator => !!generator.enableSwaggerCodegen,
       templates: ['swagger/api.yml'],
     }),
-    {
-      condition: generator => !generator.skipClient,
-      transform: false,
-      templates: ['npmw', 'npmw.cmd'],
-    },
     javaMainResourceTemplatesBlock({
       templates: [
         {

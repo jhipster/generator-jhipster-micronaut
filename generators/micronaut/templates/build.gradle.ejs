@@ -26,9 +26,6 @@ plugins {
     <%_ if (enableSwaggerCodegen) { _%>
     id "org.openapi.generator"
     <%_ } _%>
-    <%_ if (!skipClient) { _%>
-    id "com.github.node-gradle.node"
-    <%_ } _%>
     id "com.github.johnrengelman.shadow"
     // jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
@@ -525,14 +522,6 @@ wrapper {
 <%_ if (!skipClient) { _%>
 task webapp_test(type: NpmTask, dependsOn: "npm_install") {
     args = ["run", "webapp:test"]
-}
-
-if (project.hasProperty("nodeInstall")) {
-    node {
-        version = "${node_version}"
-        npmVersion = "${npm_version}"
-        download = true
-    }
 }
 
 test.dependsOn webapp_test

@@ -19,9 +19,7 @@ export default class extends BaseApplicationGenerator {
       // For _persistClass_.java.jhi.hibernate_cache/_persistClass_.java.jhi.jakarta_persistence file
       this.fetchFromInstalledJHipster('spring-data-relational/templates'),
       // For _global_partials_entity_/field_validators file
-      this.fetchFromInstalledJHipster('java/templates'),
       this.fetchFromInstalledJHipster('java/generators/domain/templates'),
-      this.fetchFromInstalledJHipster('java/generators/node/templates'),
     );
     await this.dependsOnJHipster(GENERATOR_SERVER);
     await this.dependsOnJHipster('jhipster:java:build-tool');
@@ -54,12 +52,16 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.COMPOSING]() {
     return this.asComposingTaskGroup({
       async composing() {
-        const { enableTranslation, databaseType, cacheProvider } = this.jhipsterConfigWithDefaults;
+        const { enableTranslation, databaseType, cacheProvider, skipClient, clientFramework = 'no' } = this.jhipsterConfigWithDefaults;
 
         await this.composeWithJHipster('jhipster:java:domain');
         await this.composeWithJHipster('jhipster:java:code-quality');
         await this.composeWithJHipster('jhipster:java:jib');
         await this.composeWithJHipster(GENERATOR_DOCKER);
+
+        if (!skipClient && clientFramework !== 'no') {
+          await this.composeWithJHipster('jhipster:java:node');
+        }
 
         // We don't expose client/server to cli, composing with languages is used for test purposes.
         if (enableTranslation) {
@@ -92,7 +94,7 @@ export default class extends BaseApplicationGenerator {
           application.generateBuiltInUserEntity = true;
         }
       },
-      prepareForTemplates({ application }) {
+      prepareForTemplates({ application, applicationDefaults }) {
         // Use Micronaut specific hipster
         application.hipster = 'jhipster_family_member_4';
         // Workaround
@@ -103,6 +105,9 @@ export default class extends BaseApplicationGenerator {
         application.liquibaseAddH2Properties = true;
         // Micronaut is a java project.
         application.backendTypeJavaAny = true;
+        applicationDefaults({
+          useNpmWrapper: () => application => application.clientFrameworkAny && !application.skipClient,
+        });
       },
 
       registerSpringFactory: undefined,

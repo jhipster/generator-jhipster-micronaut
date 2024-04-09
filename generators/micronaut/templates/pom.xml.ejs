@@ -66,12 +66,6 @@ _%>
         <java.version><%= JAVA_VERSION %></java.version>
         <jdk.version><%= JAVA_VERSION %></jdk.version>
         <release.version><%= JAVA_VERSION %></release.version>
-<%_ if (!skipClient) { _%>
-        <node.version>v<%= nodeVersion %></node.version>
-    <%_ if (clientPackageManager === 'npm') { _%>
-        <npm.version><%= nodeDependencies.npm %></npm.version>
-    <%_ } _%>
-<%_ } _%>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
@@ -134,9 +128,6 @@ _%>
         <checksum-maven-plugin.version>1.11</checksum-maven-plugin.version>
         <maven-exec-plugin.version>3.1.1</maven-exec-plugin.version>
         <micronaut-plugin.version><%= versions.micronaut %></micronaut-plugin.version>
-<%_ if (!skipClient) { _%>
-        <frontend-maven-plugin.version><%- javaDependencies['frontend-maven-plugin'] %></frontend-maven-plugin.version>
-<%_ } _%>
         <git-commit-id-maven-plugin.version><%- javaDependencies['git-commit-id-maven-plugin'] %></git-commit-id-maven-plugin.version>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version><%- javaDependencies['properties-maven-plugin'] %></properties-maven-plugin.version>
@@ -638,18 +629,6 @@ _%>
                         <%_ } _%>
                     </configuration>
                 </plugin>
-                <%_ if (!skipClient) { _%>
-                <plugin>
-                    <groupId>com.github.eirslett</groupId>
-                    <artifactId>frontend-maven-plugin</artifactId>
-                    <version>${frontend-maven-plugin.version}</version>
-                    <configuration>
-                        <installDirectory>target</installDirectory>
-                        <nodeVersion>${node.version}</nodeVersion>
-                        <npmVersion>${npm.version}</npmVersion>
-                    </configuration>
-                </plugin>
-                <%_ } _%>
                 <plugin>
                     <groupId>io.github.git-commit-id</groupId>
                     <artifactId>git-commit-id-maven-plugin</artifactId>
@@ -905,64 +884,6 @@ _%>
                                 <quiet>true</quiet>
                             </configuration>
                         </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-antrun-plugin</artifactId>
-                            <version>${maven-antrun-plugin.version}</version>
-                            <executions>
-                                <execution>
-                                    <id>eval-frontend-checksum</id>
-                                    <phase>generate-resources</phase>
-                                    <goals>
-                                        <goal>run</goal>
-                                    </goals>
-                                    <configuration>
-                                        <target>
-                                            <condition property="skip.npm" value="true" else="false" >
-                                                <and>
-                                                    <available file="checksums.csv" filepath="${project.build.directory}" />
-                                                    <available file="checksums.csv.old" filepath="${project.build.directory}" />
-                                                    <filesmatch file1="${project.build.directory}/checksums.csv" file2="${project.build.directory}/checksums.csv.old" />
-                                                </and>
-                                            </condition>
-                                        </target>
-                                        <exportAntProperties>true</exportAntProperties>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        <plugin>
-                            <groupId>com.github.eirslett</groupId>
-                            <artifactId>frontend-maven-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <id>install-node-and-npm</id>
-                                    <goals>
-                                        <goal>install-node-and-npm</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>npm install</id>
-                                    <goals>
-                                        <goal>npm</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>webapp build dev</id>
-                                    <goals>
-                                        <goal>npm</goal>
-                                    </goals>
-                                    <phase>generate-resources</phase>
-                                    <configuration>
-                                        <arguments>run webapp:build</arguments>
-                                        <environmentVariables>
-                                            <APP_VERSION>${project.version}</APP_VERSION>
-                                        </environmentVariables>
-                                        <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
                     </plugins>
                 </build>
                 <properties>
@@ -1002,51 +923,6 @@ _%>
                             </filesets>
                         </configuration>
                     </plugin>
-                    <%_ if (!skipClient) { _%>
-                    <plugin>
-                        <groupId>com.github.eirslett</groupId>
-                        <artifactId>frontend-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>install-node-and-npm</id>
-                                <goals>
-                                    <goal>install-node-and-npm</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>npm install</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>webapp build test</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                                <phase>test</phase>
-                                <configuration>
-                                    <arguments>run webapp:test</arguments>
-                                    <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>webapp build prod</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                                <phase>generate-resources</phase>
-                                <configuration>
-                                    <arguments>run webapp:prod</arguments>
-                                    <environmentVariables>
-                                        <APP_VERSION>${project.version}</APP_VERSION>
-                                    </environmentVariables>
-                                    <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <%_ } _%>
                     <plugin>
                         <groupId>io.github.git-commit-id</groupId>
                         <artifactId>git-commit-id-maven-plugin</artifactId>
