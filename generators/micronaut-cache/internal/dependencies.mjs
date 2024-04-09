@@ -62,18 +62,35 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
     },
     ehcache: {
       base: {
+        properties: [
+          { property: 'ehcache.version', value: javaDependencies.ehcache },
+          { property: 'jaxb-runtime.version', value: javaDependencies['jaxb-runtime'] },
+        ],
         dependencies: [
           javaxCacheApi,
           {
             groupId: 'org.ehcache',
             artifactId: 'ehcache',
             classifier: 'jakarta',
-            version: javaDependencies.ehcache,
           },
           {
             groupId: 'org.glassfish.jaxb',
             artifactId: 'jaxb-runtime',
-            version: javaDependencies['jaxb-runtime'],
+          },
+        ],
+        dependencyManagement: [
+          {
+            groupId: 'org.ehcache',
+            artifactId: 'ehcache',
+            classifier: 'jakarta',
+            // eslint-disable-next-line no-template-curly-in-string
+            version: '${ehcache.version}',
+          },
+          {
+            groupId: 'org.glassfish.jaxb',
+            artifactId: 'jaxb-runtime',
+            // eslint-disable-next-line no-template-curly-in-string
+            version: '${jaxb-runtime.version}',
           },
         ],
       },
