@@ -72,20 +72,6 @@ if (project.hasProperty("war")) {
     apply from: "gradle/war.gradle"
 }
 
-if (project.hasProperty("gae")) {
-    apply plugin: 'maven'
-    // TODO what are our equivalent gae deps?
-//    apply plugin: 'org.springframework.boot.experimental.thin-launcher'
-//    apply plugin: 'io.spring.dependency-management'
-
-    dependencyManagement {
-        imports {
-            mavenBom 'tech.jhipster:jhipster-dependencies:${jhipster_dependencies_version}'
-        }
-    }
-    appengineStage.dependsOn thinResolve
-}
-
 <%_ if (serviceDiscoveryType || applicationTypeGateway || applicationTypeMicroservice || applicationType === 'uaa') { _%>
 if (project.hasProperty("zipkin")) {
     apply from: "gradle/zipkin.gradle"
@@ -226,31 +212,12 @@ repositories {
 }
 
 dependencies {
-    // import JHipster dependencies BOM
-    if (!project.hasProperty("gae")) {
-        implementation platform("tech.jhipster:jhipster-dependencies:${jhipster_dependencies_version}") {
-            exclude group: 'org.hibernate'
-        }
-    }
-
     annotationProcessor "io.micronaut.validation:micronaut-validation-processor"
     <%_ if (databaseTypeSql) { _%>
     annotationProcessor "io.micronaut.data:micronaut-data-processor"
     <%_ } _%>
     annotationProcessor "io.micronaut.openapi:micronaut-openapi"
 
-    // Use ", version: jhipster_dependencies_version, changing: true" if you want
-    // to use a SNAPSHOT release instead of a stable release
-    implementation (group: "tech.jhipster", name: "jhipster-framework") {
-        exclude group: "org.springframework", module: "spring-context-support"
-        <% if (reactive) { %>
-        exclude group: "org.springframework", module: "spring-webmvc"
-        <% } %>
-        exclude group: "org.springframework.boot", module: "spring-boot-autoconfigure"
-        exclude group: "org.springframework.boot", module: "spring-boot-starter-aop"
-        exclude group: "org.springframework.boot", module: "spring-boot-starter-web"
-        exclude group: "org.springframework.boot", module: "spring-boot-starter-validation"
-    }
     implementation "ch.qos.logback:logback-classic:$logback_version"
     implementation "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
     implementation "io.micrometer:micrometer-registry-prometheus"

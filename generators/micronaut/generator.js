@@ -178,6 +178,11 @@ export default class extends BaseApplicationGenerator {
             artifactId: 'logstash-logback-encoder',
             version: javaDependencies['logstash-logback-encoder'],
           },
+          {
+            groupId: 'tech.jhipster',
+            artifactId: 'jhipster-framework',
+            version: application.jhipsterDependenciesVersion,
+          },
         ]);
         if (application.buildToolMaven) {
           source.addMavenDefinition({

@@ -83,7 +83,6 @@ _%>
         <profile.tls />
 
         <!-- Dependency versions -->
-        <jhipster-dependencies.version><%= jhipsterDependenciesVersion %></jhipster-dependencies.version>
         <micronaut.version><%= versions.micronaut %></micronaut.version>
         <micronaut-data.version><%= versions.micronautData %></micronaut-data.version>
         <micronaut-discovery-client.version><%= versions.micronautDiscoveryClient %></micronaut-discovery-client.version>
@@ -147,13 +146,6 @@ _%>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>tech.jhipster</groupId>
-                <artifactId>jhipster-dependencies</artifactId>
-                <version>${jhipster-dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <!-- jhipster-needle-maven-add-dependency-management -->
         </dependencies>
     </dependencyManagement>
@@ -163,32 +155,6 @@ _%>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
             <version><%= versions.swaggerAnnotations %></version>
-        </dependency>
-        <dependency>
-            <groupId>tech.jhipster</groupId>
-            <artifactId>jhipster-framework</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-context-support</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-autoconfigure</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-aop</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-boot-starter-validation</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
