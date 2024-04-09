@@ -1,14 +1,14 @@
 import os from 'os';
 import chalk from 'chalk';
-import ServerGenerator from 'generator-jhipster/generators/server';
+import BaseApplicationGenerator from 'generator-jhipster/generators/server';
 import {
-  GENERATOR_COMMON,
   GENERATOR_DOCKER,
   GENERATOR_GRADLE,
   GENERATOR_JAVA,
   GENERATOR_LANGUAGES,
   GENERATOR_LIQUIBASE,
   GENERATOR_MAVEN,
+  GENERATOR_SERVER,
 } from 'generator-jhipster/generators';
 import { createNeedleCallback, createBase64Secret } from 'generator-jhipster/generators/base/support';
 import { addJavaAnnotation } from 'generator-jhipster/generators/java/support';
@@ -20,36 +20,26 @@ import { entityFiles } from './entity-files.js';
 import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
 import constants from '../constants.cjs';
 
-export default class extends ServerGenerator {
-  constructor(args, opts, features) {
-    super(args, opts, {
-      ...features,
-      checkBlueprint: true,
-    });
-
-    this.command = command;
-    if (!this.options.help) {
-      this.jhipsterTemplatesFolders.push(
-        // For _persistClass_.java.jhi.hibernate_cache/_persistClass_.java.jhi.jakarta_persistence file
-        this.fetchFromInstalledJHipster('spring-data-relational/templates'),
-        // For _global_partials_entity_/field_validators file
-        this.fetchFromInstalledJHipster('java/templates'),
-        this.fetchFromInstalledJHipster('java/generators/jib/templates'),
-        this.fetchFromInstalledJHipster('java/generators/node/templates'),
-        this.fetchFromInstalledJHipster('java/generators/code-quality/templates'),
-        this.fetchFromInstalledJHipster('gradle/generators/code-quality/templates'),
-      );
-    }
-  }
+export default class extends BaseApplicationGenerator {
 
   async beforeQueue() {
-    await this.dependsOnJHipster(GENERATOR_COMMON);
+    this.jhipsterTemplatesFolders.push(
+      this.fetchFromInstalledJHipster('server/templates'),
+      // For _persistClass_.java.jhi.hibernate_cache/_persistClass_.java.jhi.jakarta_persistence file
+      this.fetchFromInstalledJHipster('spring-data-relational/templates'),
+      // For _global_partials_entity_/field_validators file
+      this.fetchFromInstalledJHipster('java/templates'),
+      this.fetchFromInstalledJHipster('java/generators/jib/templates'),
+      this.fetchFromInstalledJHipster('java/generators/node/templates'),
+      this.fetchFromInstalledJHipster('java/generators/code-quality/templates'),
+      this.fetchFromInstalledJHipster('gradle/generators/code-quality/templates'),
+    );
+    await this.dependsOnJHipster(GENERATOR_SERVER);
     await this.dependsOnJHipster(GENERATOR_JAVA);
   }
 
-  get [ServerGenerator.INITIALIZING]() {
+  get [BaseApplicationGenerator.INITIALIZING]() {
     return this.asInitializingTaskGroup({
-      ...super.initializing,
       async initializingTemplateTask() {
         this.parseJHipsterArguments(command.arguments);
         this.parseJHipsterOptions(command.options);
@@ -61,17 +51,8 @@ export default class extends ServerGenerator {
     });
   }
 
-  get [ServerGenerator.PROMPTING]() {
-    return this.asPromptingTaskGroup({
-      ...super.prompting,
-      // TODO move generator-jhipster prompts to command and customize micronaut's command based on generator-jhipster
-      async promptingTemplateTask() {},
-    });
-  }
-
-  get [ServerGenerator.CONFIGURING]() {
+  get [BaseApplicationGenerator.CONFIGURING]() {
     return this.asConfiguringTaskGroup({
-      ...super.configuring,
       async configuringTemplateTask() {
         this.jhipsterConfig.backendType = 'Micronaut';
         if (this.jhipsterConfigWithDefaults.authenticationType === 'oauth2') {
@@ -81,7 +62,7 @@ export default class extends ServerGenerator {
     });
   }
 
-  get [ServerGenerator.COMPOSING]() {
+  get [BaseApplicationGenerator.COMPOSING]() {
     return this.asComposingTaskGroup({
       async composing() {
         const { buildTool, enableTranslation, databaseType, cacheProvider } = this.jhipsterConfigWithDefaults;
@@ -110,15 +91,8 @@ export default class extends ServerGenerator {
     });
   }
 
-  get [ServerGenerator.LOADING]() {
-    return this.asLoadingTaskGroup({
-      ...super.loading,
-    });
-  }
-
-  get [ServerGenerator.PREPARING]() {
+  get [BaseApplicationGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
-      ...super.preparing,
       loadDependencies({ application }) {
         application.micronautDependencies = { ...mnConstants.versions };
         this.loadJavaDependenciesFromGradleCatalog(application.micronautDependencies);
@@ -172,51 +146,8 @@ export default class extends ServerGenerator {
     });
   }
 
-  get [ServerGenerator.POST_PREPARING]() {
-    return this.asPostPreparingTaskGroup({
-      ...super.postPreparing,
-    });
-  }
-
-  get [ServerGenerator.CONFIGURING_EACH_ENTITY]() {
-    return this.asConfiguringEachEntityTaskGroup({
-      ...super.configuringEachEntity,
-    });
-  }
-
-  get [ServerGenerator.LOADING_ENTITIES]() {
-    return this.asLoadingEntitiesTaskGroup({
-      ...super.loadingEntities,
-    });
-  }
-
-  get [ServerGenerator.PREPARING_EACH_ENTITY]() {
-    return this.asPreparingEachEntityTaskGroup({
-      ...super.preparingEachEntity,
-    });
-  }
-
-  get [ServerGenerator.PREPARING_EACH_ENTITY_FIELD]() {
-    return this.asPreparingEachEntityFieldTaskGroup({
-      ...super.preparingEachEntityField,
-    });
-  }
-
-  get [ServerGenerator.PREPARING_EACH_ENTITY_RELATIONSHIP]() {
-    return this.asPreparingEachEntityRelationshipTaskGroup({
-      ...super.preparingEachEntityRelationship,
-    });
-  }
-
-  get [ServerGenerator.POST_PREPARING_EACH_ENTITY]() {
-    return this.asPostPreparingEachEntityTaskGroup({
-      ...super.postPreparingEachEntity,
-    });
-  }
-
-  get [ServerGenerator.DEFAULT]() {
+  get [BaseApplicationGenerator.DEFAULT]() {
     return this.asDefaultTaskGroup({
-      ...super.default,
       relationships({ entities }) {
         for (const entity of entities) {
           entity.fieldsContainOwnerManyToMany = entity => entity.relationships.some(rel => rel.ownerSide && rel.relationshipManyToMany);
@@ -225,14 +156,13 @@ export default class extends ServerGenerator {
     });
   }
 
-  get [ServerGenerator.WRITING]() {
+  get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       ...writeFiles.call(this),
     });
   }
 
-  get [ServerGenerator.WRITING_ENTITIES]() {
-    const { writeEnumFiles } = super.writingEntities;
+  get [BaseApplicationGenerator.WRITING_ENTITIES]() {
     return this.asWritingTaskGroup({
       async writeMicronautServerFiles({ application, entities }) {
         const rootTemplatesPath = application.reactive ? ['reactive', ''] : undefined;
@@ -244,14 +174,11 @@ export default class extends ServerGenerator {
           });
         }
       },
-      writeEnumFiles,
     });
   }
 
-  get [ServerGenerator.POST_WRITING]() {
+  get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
-      ...super.postWriting,
-      customizeGradle: undefined,
       addCodeQualityConventionPlugin({ application, source }) {
         if (application.buildToolGradle) {
           source.addGradlePlugin?.({ id: 'jhipster.code-quality-conventions' });
@@ -343,7 +270,7 @@ export default class extends ServerGenerator {
     });
   }
 
-  get [ServerGenerator.POST_WRITING_ENTITIES]() {
+  get [BaseApplicationGenerator.POST_WRITING_ENTITIES]() {
     return this.asPostWritingEntitiesTaskGroup({
       customizeMapstruct({ entities, application }) {
         for (const entity of entities.filter(entity => !entity.skipServer && !entity.builtIn && entity.dtoMapstruct)) {
@@ -378,19 +305,7 @@ public class`,
     });
   }
 
-  get [ServerGenerator.INSTALL]() {
-    return this.asInstallTaskGroup({
-      ...super.install,
-    });
-  }
-
-  get [ServerGenerator.POST_INSTALL]() {
-    return this.asPostInstallTaskGroup({
-      ...super.postInstall,
-    });
-  }
-
-  get [ServerGenerator.END]() {
+  get [BaseApplicationGenerator.END]() {
     return this.asEndTaskGroup({
       end() {
         this.log.ok('Micronaut application generated successfully.');
