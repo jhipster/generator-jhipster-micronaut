@@ -10,3 +10,5 @@ logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-enc
 commons-lang3 = { module = 'org.apache.commons:commons-lang3', version = '3.13.0' }
 
 ehcache = { module = 'org.ehcache:ehcache', version = '3.10.8' }
+
+jaxb-runtime = { module = 'org.glassfish.jaxb:jaxb-runtime', version = '4.0.5' }

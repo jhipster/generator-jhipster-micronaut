@@ -17,8 +17,6 @@
  * limitations under the License.
  */
 
-import { version } from "os";
-
 const javaxCacheApi = {
   groupId: 'javax.cache',
   artifactId: 'cache-api',
@@ -71,6 +69,11 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
             artifactId: 'ehcache',
             classifier: 'jakarta',
             version: javaDependencies.ehcache,
+          },
+          {
+            groupId: 'org.glassfish.jaxb',
+            artifactId: 'jaxb-runtime',
+            version: javaDependencies['jaxb-runtime'],
           },
         ],
       },
