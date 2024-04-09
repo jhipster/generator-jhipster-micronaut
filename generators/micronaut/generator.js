@@ -4,7 +4,6 @@ import BaseApplicationGenerator from 'generator-jhipster/generators/server';
 import {
   GENERATOR_DOCKER,
   GENERATOR_GRADLE,
-  GENERATOR_JAVA,
   GENERATOR_LANGUAGES,
   GENERATOR_LIQUIBASE,
   GENERATOR_MAVEN,
@@ -28,13 +27,15 @@ export default class extends BaseApplicationGenerator {
       this.fetchFromInstalledJHipster('spring-data-relational/templates'),
       // For _global_partials_entity_/field_validators file
       this.fetchFromInstalledJHipster('java/templates'),
+      this.fetchFromInstalledJHipster('java/generators/domain/templates'),
       this.fetchFromInstalledJHipster('java/generators/jib/templates'),
       this.fetchFromInstalledJHipster('java/generators/node/templates'),
       this.fetchFromInstalledJHipster('java/generators/code-quality/templates'),
       this.fetchFromInstalledJHipster('gradle/generators/code-quality/templates'),
     );
     await this.dependsOnJHipster(GENERATOR_SERVER);
-    await this.dependsOnJHipster(GENERATOR_JAVA);
+    await this.dependsOnJHipster('jhipster:java:build-tool');
+    await this.dependsOnJHipster('jhipster:java:domain');
   }
 
   get [BaseApplicationGenerator.INITIALIZING]() {
@@ -95,6 +96,7 @@ export default class extends BaseApplicationGenerator {
       loadDependencies({ application }) {
         application.micronautDependencies = { ...mnConstants.versions };
         this.loadJavaDependenciesFromGradleCatalog(application.micronautDependencies);
+        Object.assign(application.javaDependencies, application.micronautDependencies);
 
         // Workaound liquibase generator bug
         application.springBootDependencies = { liquibase: mnConstants.versions.liquibase, h2: application.micronautDependencies.h2 };
@@ -178,6 +180,16 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
+      addMicronautDependencies({ application, source }) {
+        const { javaDependencies } = application;
+        source.addJavaDependencies([
+          {
+            groupId: 'net.logstash.logback',
+            artifactId: 'logstash-logback-encoder',
+            version: javaDependencies['logstash-logback-encoder'],
+          },
+        ]);
+      },
       addCodeQualityConventionPlugin({ application, source }) {
         if (application.buildToolGradle) {
           source.addGradlePlugin?.({ id: 'jhipster.code-quality-conventions' });
