@@ -59,7 +59,7 @@ testcontainers_version=<%= versions.testcontainers %>
 liquibaseTaskPrefix=liquibase
 
 <%_ if (databaseTypeSql) { _%>
-jaxb_runtime_version=2.3.2
+jaxb_runtime_version=<%= javaDependencies['jaxb-runtime'] >
 <%_ } _%>
 
 # gradle plugin version
