@@ -20,7 +20,6 @@ export default class extends BaseApplicationGenerator {
               {
                 groupId: 'org.liquibase.ext',
                 artifactId: 'liquibase-hibernate6',
-                version: '${liquibase.version}',
                 scope: 'runtime',
                 exclusions: {
                   exclusion: {
@@ -28,6 +27,13 @@ export default class extends BaseApplicationGenerator {
                     artifactId: 'slf4j-simple',
                   },
                 },
+              },
+            ],
+            dependencyManagement: [
+              {
+                groupId: 'org.liquibase.ext',
+                artifactId: 'liquibase-hibernate6',
+                version: '${liquibase.version}',
               },
             ],
             plugins: [

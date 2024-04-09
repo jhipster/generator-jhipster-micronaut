@@ -172,19 +172,18 @@ export default class extends BaseApplicationGenerator {
     return this.asPostWritingTaskGroup({
       addMicronautDependencies({ application, source }) {
         const { javaDependencies } = application;
-        source.addJavaDependencies([
-          {
-            groupId: 'net.logstash.logback',
-            artifactId: 'logstash-logback-encoder',
-            version: javaDependencies['logstash-logback-encoder'],
-          },
-          {
-            groupId: 'tech.jhipster',
-            artifactId: 'jhipster-framework',
-            version: application.jhipsterDependenciesVersion,
-          },
-          { groupId: 'org.apache.commons', artifactId: 'commons-lang3', version: javaDependencies['commons-lang3'] },
-        ]);
+        source.addJavaDefinition({
+          versions: [
+            { name: 'logstash-logback-encoder', version: javaDependencies['logstash-logback-encoder'] },
+            { name: 'jhipster-framework', version: application.jhipsterDependenciesVersion },
+            { name: 'commons-lang3', version: javaDependencies['commons-lang3'] },
+          ],
+          dependencies: [
+            { groupId: 'net.logstash.logback', artifactId: 'logstash-logback-encoder', versionRef: 'logstash-logback-encoder' },
+            { groupId: 'tech.jhipster', artifactId: 'jhipster-framework', versionRef: 'jhipster-framework' },
+            { groupId: 'org.apache.commons', artifactId: 'commons-lang3', versionRef: 'commons-lang3' },
+          ],
+        });
         if (application.buildToolMaven) {
           source.addMavenDefinition({
             properties: [{ property: 'modernizer.failOnViolations', value: 'false' }],
