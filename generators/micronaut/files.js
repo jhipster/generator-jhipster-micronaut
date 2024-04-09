@@ -55,28 +55,24 @@ export const serverFiles = {
           file: 'templates/error.html',
           renameTo: () => 'views/error.html',
         },
-        { file: 'logback.xml', useBluePrint: true },
-        { file: 'application.yml', useBluePrint: true },
-        { file: 'application-dev.yml', useBluePrint: true },
-        { file: 'application-tls.yml', useBluePrint: true },
-        { file: 'application-prod.yml', useBluePrint: true },
-        { file: 'i18n/messages.properties', useBluePrint: true, noEjs: true },
+        { file: 'logback.xml' },
+        { file: 'application.yml' },
+        { file: 'application-dev.yml' },
+        { file: 'application-tls.yml' },
+        { file: 'application-prod.yml' },
+        { file: 'i18n/messages.properties', noEjs: true },
       ],
     }),
     javaTestResourceTemplatesBlock({
-      templates: [
-        { file: 'logback.xml', useBluePrint: true },
-        { file: 'application-test.yml', useBluePrint: true },
-      ],
+      templates: [{ file: 'logback.xml' }, { file: 'application-test.yml' }],
     }),
-    // Emails should be fine to import from base generator, no need for useBluePrint
     javaMainResourceTemplatesBlock({
       condition: generator => !generator.skipUserManagement,
       templates: [
         { file: 'templates/mail/activationEmail.html', renameTo: () => 'views/mail/activationEmail.html' },
         { file: 'templates/mail/creationEmail.html', renameTo: () => 'views/mail/creationEmail.html' },
         { file: 'templates/mail/passwordResetEmail.html', renameTo: () => 'views/mail/passwordResetEmail.html' },
-        { file: 'views/mail/testEmail.html', useBluePrint: true, noEjs: true },
+        { file: 'views/mail/testEmail.html', noEjs: true },
       ],
     }),
     {
@@ -135,11 +131,11 @@ export const serverFiles = {
   serverMicroserviceAndGateway: [
     javaMainResourceTemplatesBlock({
       condition: generator => generator.serviceDiscoveryType,
-      templates: [{ file: 'bootstrap.yml', useBluePrint: true }],
+      templates: [{ file: 'bootstrap.yml' }],
     }),
     javaTestResourceTemplatesBlock({
       condition: generator => generator.serviceDiscoveryType,
-      templates: [{ file: 'bootstrap-test.yml', useBluePrint: true }],
+      templates: [{ file: 'bootstrap-test.yml' }],
     }),
   ],
   // TODO WIP Adding files in here, will need to properly conditional and remove some in the future
@@ -341,12 +337,12 @@ export const serverFiles = {
     {
       condition: generator => generator.buildTool === 'gradle',
       templates: [
-        { file: 'build.gradle', useBluePrint: true },
-        { file: 'settings.gradle', useBluePrint: true },
-        { file: 'gradle.properties', useBluePrint: true },
-        { file: 'gradle/docker.gradle', useBluePrint: true },
-        { file: 'gradle/profile_dev.gradle', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
-        { file: 'gradle/profile_prod.gradle', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
+        { file: 'build.gradle' },
+        { file: 'settings.gradle' },
+        { file: 'gradle.properties' },
+        { file: 'gradle/docker.gradle' },
+        { file: 'gradle/profile_dev.gradle', options: { interpolate: INTERPOLATE_REGEX } },
+        { file: 'gradle/profile_prod.gradle', options: { interpolate: INTERPOLATE_REGEX } },
       ],
     },
     {
@@ -355,7 +351,7 @@ export const serverFiles = {
     },
     {
       condition: generator => generator.buildTool === 'maven',
-      templates: [{ file: 'pom.xml', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true }],
+      templates: [{ file: 'pom.xml', options: { interpolate: INTERPOLATE_REGEX } }],
     },
   ],
 };
