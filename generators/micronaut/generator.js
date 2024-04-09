@@ -21,7 +21,6 @@ import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMa
 import constants from '../constants.cjs';
 
 export default class extends BaseApplicationGenerator {
-
   async beforeQueue() {
     this.jhipsterTemplatesFolders.push(
       this.fetchFromInstalledJHipster('server/templates'),
