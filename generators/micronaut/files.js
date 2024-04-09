@@ -40,13 +40,6 @@ const shouldSkipUserManagement = generator =>
  */
 export const serverFiles = {
   readme: [{ templates: ['README.md.jhi.micronaut'] }],
-  jib: [
-    {
-      path: 'src/main/docker/jib/',
-      templates: ['entrypoint.sh'],
-    },
-  ],
-  conventionPlugins: [{ templates: ['buildSrc/src/main/groovy/jhipster.code-quality-conventions.gradle'] }],
   serverResources: [
     javaMainResourceTemplatesBlock({
       condition: generator => generator.devDatabaseType === 'h2Disk' || generator.devDatabaseType === 'h2Memory',

@@ -57,4 +57,23 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
       expect(result.getStateSnapshot()).toMatchSnapshot();
     });
   });
+
+  describe('with gradle build tool', () => {
+    beforeAll(async function () {
+      await helpers
+        .run(BLUEPRINT_NAMESPACE)
+        .withJHipsterConfig()
+        .withOptions({
+          ignoreNeedlesError: true,
+          blueprint: 'micronaut',
+          builtTool: 'gradle',
+        })
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
+    });
+
+    it('should succeed', () => {
+      expect(result.getStateSnapshot()).toMatchSnapshot();
+    });
+  });
 });

@@ -21,14 +21,10 @@ export default class extends BaseApplicationGenerator {
       // For _global_partials_entity_/field_validators file
       this.fetchFromInstalledJHipster('java/templates'),
       this.fetchFromInstalledJHipster('java/generators/domain/templates'),
-      this.fetchFromInstalledJHipster('java/generators/jib/templates'),
       this.fetchFromInstalledJHipster('java/generators/node/templates'),
-      this.fetchFromInstalledJHipster('java/generators/code-quality/templates'),
-      this.fetchFromInstalledJHipster('gradle/generators/code-quality/templates'),
     );
     await this.dependsOnJHipster(GENERATOR_SERVER);
     await this.dependsOnJHipster('jhipster:java:build-tool');
-    await this.dependsOnJHipster('jhipster:java:domain');
   }
 
   get [BaseApplicationGenerator.INITIALIZING]() {
@@ -60,7 +56,9 @@ export default class extends BaseApplicationGenerator {
       async composing() {
         const { enableTranslation, databaseType, cacheProvider } = this.jhipsterConfigWithDefaults;
 
+        await this.composeWithJHipster('jhipster:java:domain');
         await this.composeWithJHipster('jhipster:java:code-quality');
+        await this.composeWithJHipster('jhipster:java:jib');
         await this.composeWithJHipster(GENERATOR_DOCKER);
 
         // We don't expose client/server to cli, composing with languages is used for test purposes.
