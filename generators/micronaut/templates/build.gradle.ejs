@@ -515,16 +515,4 @@ task cleanResources(type: Delete) {
     delete "build/layers"
 }
 
-wrapper {
-    gradleVersion = "<%= gradleVersion %>"
-}
-
-<%_ if (!skipClient) { _%>
-task webapp_test(type: NpmTask, dependsOn: "npm_install") {
-    args = ["run", "webapp:test"]
-}
-
-test.dependsOn webapp_test
-<%_ } _%>
-
 compileJava.dependsOn processResources

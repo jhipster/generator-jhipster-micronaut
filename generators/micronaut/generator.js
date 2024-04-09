@@ -94,7 +94,7 @@ export default class extends BaseApplicationGenerator {
           application.generateBuiltInUserEntity = true;
         }
       },
-      prepareForTemplates({ application, applicationDefaults }) {
+      prepareForTemplates({ application }) {
         // Use Micronaut specific hipster
         application.hipster = 'jhipster_family_member_4';
         // Workaround
@@ -105,8 +105,8 @@ export default class extends BaseApplicationGenerator {
         application.liquibaseAddH2Properties = true;
         // Micronaut is a java project.
         application.backendTypeJavaAny = true;
-        applicationDefaults({
-          useNpmWrapper: () => application => application.clientFrameworkAny && !application.skipClient,
+        Object.assign(application, {
+          useNpmWrapper: application.clientFrameworkAny && !application.skipClient,
         });
       },
 
