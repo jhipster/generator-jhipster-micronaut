@@ -2,8 +2,9 @@
  * @type {import('generator-jhipster').JHipsterCommandDefinition}
  */
 const command = {
+  options: {},
+  configs: {},
   compose: ['jhipster-micronaut:micronaut'],
-  override: true,
 };
 
 export default command;
