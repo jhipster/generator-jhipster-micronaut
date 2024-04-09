@@ -26,8 +26,6 @@ import {
 /* Constants use throughout */
 import { JAVA_SERVER_TEST_RESOURCES_DIR as SERVER_TEST_RES_DIR } from 'generator-jhipster';
 
-const INTERPOLATE_REGEX = true;
-
 /* TODO: Do a PR in the parent JHipster project to export and re-use here as well in order to have a single source of truth!!!
 const TEST_DIR = constants.TEST_DIR;
 */
@@ -46,15 +44,32 @@ export const serverFiles = {
       templates: [{ file: 'h2.server.properties', renameTo: () => '.h2.server.properties' }],
     }),
     javaMainResourceTemplatesBlock({
+      templates: [{ file: 'templates/error.html', renameTo: () => 'views/error.html' }],
+    }),
+    javaMainResourceTemplatesBlock({
+      condition: generator => !generator.skipUserManagement,
+      templates: [
+        { file: 'templates/mail/activationEmail.html', renameTo: () => 'views/mail/activationEmail.html' },
+        { file: 'templates/mail/creationEmail.html', renameTo: () => 'views/mail/creationEmail.html' },
+        { file: 'templates/mail/passwordResetEmail.html', renameTo: () => 'views/mail/passwordResetEmail.html' },
+      ],
+    }),
+    {
+      condition: generator => !generator.skipUserManagement,
+      path: SERVER_TEST_RES_DIR,
+      templates: [
+        /* User management java test files */
+        'i18n/messages_en.properties',
+      ],
+    },
+  ],
+  micronautResources: [
+    javaMainResourceTemplatesBlock({
       condition: generator => !!generator.enableSwaggerCodegen,
       templates: ['swagger/api.yml'],
     }),
     javaMainResourceTemplatesBlock({
       templates: [
-        {
-          file: 'templates/error.html',
-          renameTo: () => 'views/error.html',
-        },
         { file: 'logback.xml' },
         { file: 'application.yml' },
         { file: 'application-dev.yml' },
@@ -68,64 +83,7 @@ export const serverFiles = {
     }),
     javaMainResourceTemplatesBlock({
       condition: generator => !generator.skipUserManagement,
-      templates: [
-        { file: 'templates/mail/activationEmail.html', renameTo: () => 'views/mail/activationEmail.html' },
-        { file: 'templates/mail/creationEmail.html', renameTo: () => 'views/mail/creationEmail.html' },
-        { file: 'templates/mail/passwordResetEmail.html', renameTo: () => 'views/mail/passwordResetEmail.html' },
-        { file: 'views/mail/testEmail.html', noEjs: true },
-      ],
-    }),
-    {
-      condition: generator => !generator.skipUserManagement,
-      path: SERVER_TEST_RES_DIR,
-      templates: [
-        /* User management java test files */
-        'i18n/messages_en.properties',
-      ],
-    },
-    javaMainPackageTemplatesBlock({
-      condition: generator =>
-        generator.databaseType === 'mongodb' &&
-        (!generator.skipUserManagement || (generator.skipUserManagement && generator.authenticationTypeOauth2)),
-      templates: ['config/dbmigrations/InitialSetupMigration.kt'],
-    }),
-    javaMainResourceTemplatesBlock({
-      condition: generator => generator.databaseType === 'couchbase',
-      templates: ['config/couchmove/changelog/V0__create_indexes.n1ql'],
-    }),
-    javaMainResourceTemplatesBlock({
-      condition: generator =>
-        generator.databaseType === 'couchbase' && (!generator.skipUserManagement || generator.authenticationTypeOauth2),
-      templates: [
-        'config/couchmove/changelog/V0.1__initial_setup/ROLE_ADMIN.json',
-        'config/couchmove/changelog/V0.1__initial_setup/ROLE_USER.json',
-        'config/couchmove/changelog/V0.1__initial_setup/user__admin.json',
-        'config/couchmove/changelog/V0.1__initial_setup/user__anonymoususer.json',
-        'config/couchmove/changelog/V0.1__initial_setup/user__system.json',
-        'config/couchmove/changelog/V0.1__initial_setup/user__user.json',
-      ],
-    }),
-    javaMainResourceTemplatesBlock({
-      condition: generator => generator.databaseType === 'cassandra',
-      templates: [
-        'config/cql/create-keyspace-prod.cql',
-        'config/cql/create-keyspace.cql',
-        'config/cql/drop-keyspace.cql',
-        { file: 'config/cql/changelog/README.md', method: 'copy' },
-      ],
-    }),
-    javaMainResourceTemplatesBlock({
-      condition: generator =>
-        generator.databaseType === 'cassandra' &&
-        generator.applicationType !== 'microservice' &&
-        (!generator.skipUserManagement || generator.authenticationTypeOauth2),
-      templates: [
-        { file: 'config/cql/changelog/create-tables.cql', renameTo: () => 'config/cql/changelog/00000000000000_create-tables.cql' },
-        {
-          file: 'config/cql/changelog/insert_default_users.cql',
-          renameTo: () => 'config/cql/changelog/00000000000001_insert_default_users.cql',
-        },
-      ],
+      templates: [{ file: 'views/mail/testEmail.html', noEjs: true }],
     }),
   ],
   serverMicroserviceAndGateway: [
@@ -178,15 +136,6 @@ export const serverFiles = {
     }),
   ],
   serverJavaOpenApi: [
-    /*{
-      templates: [
-        {
-          file: 'openapi.properties',
-          useBluePrint: true,
-        },
-      ],
-    },
-    */
     javaMainPackageTemplatesBlock({
       templates: ['web/rest/SwaggerResource.java'],
     }),
@@ -341,8 +290,8 @@ export const serverFiles = {
         { file: 'settings.gradle' },
         { file: 'gradle.properties' },
         { file: 'gradle/docker.gradle' },
-        { file: 'gradle/profile_dev.gradle', options: { interpolate: INTERPOLATE_REGEX } },
-        { file: 'gradle/profile_prod.gradle', options: { interpolate: INTERPOLATE_REGEX } },
+        { file: 'gradle/profile_dev.gradle' },
+        { file: 'gradle/profile_prod.gradle' },
       ],
     },
     {
@@ -351,7 +300,7 @@ export const serverFiles = {
     },
     {
       condition: generator => generator.buildTool === 'maven',
-      templates: [{ file: 'pom.xml', options: { interpolate: INTERPOLATE_REGEX } }],
+      templates: [{ file: 'pom.xml' }],
     },
   ],
 };
