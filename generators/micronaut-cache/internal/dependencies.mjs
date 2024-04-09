@@ -17,6 +17,8 @@
  * limitations under the License.
  */
 
+import { version } from "os";
+
 const javaxCacheApi = {
   groupId: 'javax.cache',
   artifactId: 'cache-api',
@@ -68,6 +70,7 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
             groupId: 'org.ehcache',
             artifactId: 'ehcache',
             classifier: 'jakarta',
+            version: javaDependencies.ehcache,
           },
         ],
       },
