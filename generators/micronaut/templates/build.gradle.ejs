@@ -17,7 +17,6 @@
  limitations under the License.
 -%>
 plugins {
-    id "io.micronaut.application"
     id "java"
     id "maven-publish"
     id "idea"
@@ -320,16 +319,16 @@ dependencies {
     implementation "io.micronaut.jmx:micronaut-jmx"
     implementation "io.micronaut.micrometer:micronaut-micrometer-core"
     implementation "io.micronaut.micrometer:micronaut-micrometer-registry-prometheus"
-    implementation "io.micronaut.data:micronaut-data-runtime:$micronaut_data_version"
-    implementation ("io.micronaut.data:micronaut-data-hibernate-jpa:$micronaut_data_version") {
+    implementation "io.micronaut.data:micronaut-data-runtime"
+    implementation ("io.micronaut.data:micronaut-data-hibernate-jpa") {
         exclude group: 'io.micronaut', module: 'micronaut-jdbc'
     }
-    implementation("io.micronaut.data:micronaut-data-jdbc:$micronaut_data_version") {
+    implementation("io.micronaut.data:micronaut-data-jdbc") {
         exclude group: 'io.micronaut', module: 'micronaut-jdbc'
     }
     implementation "jakarta.persistence:jakarta.persistence-api:3.1.0"
 <%_ if (serviceDiscoveryType === 'eureka' || serviceDiscoveryType === 'consul') { _%>
-    implementation "io.micronaut.discovery:micronaut-discovery-client:$micronaut_discovery_client_version"
+    implementation "io.micronaut.discovery:micronaut-discovery-client"
 <%_ } _%>
 
     implementation("io.micronaut.email:micronaut-email-javamail")
