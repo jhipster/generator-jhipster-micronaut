@@ -85,7 +85,7 @@ export default class extends BaseApplicationGenerator {
         this.loadJavaDependenciesFromGradleCatalog(application.micronautDependencies);
         Object.assign(application.javaDependencies, application.micronautDependencies);
 
-        // Workaound liquibase generator bug
+        // Workaround liquibase generator bug. Drop for generator-jhipster 8.3.1.
         application.springBootDependencies = { liquibase: mnConstants.versions.liquibase, h2: application.micronautDependencies.h2 };
       },
       configure({ application }) {
