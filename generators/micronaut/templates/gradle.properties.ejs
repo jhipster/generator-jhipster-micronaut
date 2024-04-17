@@ -25,10 +25,8 @@ profile=dev
 # Build properties
 
 # Dependency versions
-micronautVersion=<%=versions.micronaut%>
-micronaut_data_version=<%=versions.micronautData%>
-micronaut_discovery_client_version=<%=versions.micronautDiscoveryClient%>
-micronaut_openapi_version=<%=versions.micronautOpenApi%>
+micronautVersion=<%= javaDependencies['micronaut-platform'] %>
+
 # The hibernate version should match the one managed by Micronaut data
 # https://mvnrepository.com/artifact/io.micronaut.data/micronaut-data-hibernate-jpa/1.0.1
 hibernate_version=<%=versions.hibernate%>
@@ -63,7 +61,6 @@ jaxb_runtime_version=<%= javaDependencies['jaxb-runtime'] %>
 <%_ } _%>
 
 # gradle plugin version
-micronaut_plugin_version=4.3.4
 git_properties_plugin_version=2.4.1
 apt_plugin_version=0.21
 <%_ if (databaseTypeSql) { _%>

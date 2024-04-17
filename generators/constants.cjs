@@ -18,8 +18,6 @@
  */
 
 module.exports = {
-  JAVA_VERSION: 17,
-  GRADLE_VERSION: '8.6',
   DOCKER_REDIS: 'redis:6.0.10',
   sqlDb: {
     h2Disk: {
@@ -52,10 +50,6 @@ module.exports = {
     },
   },
   versions: {
-    micronaut: '4.3.6',
-    micronautData: '4.6.2',
-    micronautDiscoveryClient: '4.2.0',
-    micronautOpenApi: '4.2.0',
     netty: '4.1.107.Final',
     rxJava3: '2.3.0',
     hibernate: '6.4.4.Final',

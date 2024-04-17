@@ -17,7 +17,6 @@
  limitations under the License.
 -%>
 plugins {
-    id "io.micronaut.application"
     id "java"
     id "maven-publish"
     id "idea"
@@ -320,16 +319,16 @@ dependencies {
     implementation "io.micronaut.jmx:micronaut-jmx"
     implementation "io.micronaut.micrometer:micronaut-micrometer-core"
     implementation "io.micronaut.micrometer:micronaut-micrometer-registry-prometheus"
-    implementation "io.micronaut.data:micronaut-data-runtime:$micronaut_data_version"
-    implementation ("io.micronaut.data:micronaut-data-hibernate-jpa:$micronaut_data_version") {
+    implementation "io.micronaut.data:micronaut-data-runtime"
+    implementation ("io.micronaut.data:micronaut-data-hibernate-jpa") {
         exclude group: 'io.micronaut', module: 'micronaut-jdbc'
     }
-    implementation("io.micronaut.data:micronaut-data-jdbc:$micronaut_data_version") {
+    implementation("io.micronaut.data:micronaut-data-jdbc") {
         exclude group: 'io.micronaut', module: 'micronaut-jdbc'
     }
     implementation "jakarta.persistence:jakarta.persistence-api:3.1.0"
 <%_ if (serviceDiscoveryType === 'eureka' || serviceDiscoveryType === 'consul') { _%>
-    implementation "io.micronaut.discovery:micronaut-discovery-client:$micronaut_discovery_client_version"
+    implementation "io.micronaut.discovery:micronaut-discovery-client"
 <%_ } _%>
 
     implementation("io.micronaut.email:micronaut-email-javamail")
@@ -344,9 +343,6 @@ dependencies {
     // log4j2-mock needed to create embedded elasticsearch instance with SLF4J
     runtimeOnly "de.dentrassi.elasticsearch:log4j2-mock:$log4j2_mock_version"
     <%_ } _%>
-    <%_ if (['mongodb', 'cassandra', 'couchbase'].includes(databaseType)) { _%>
-
-    <%_ } _%>
     <%_ if (messageBroker === 'kafka') { _%>
         <%_ if (!reactive) { _%>
     implementation "org.apache.kafka:kafka-clients"
@@ -354,18 +350,10 @@ dependencies {
     implementation "io.projectreactor.kafka:reactor-kafka"
         <%_ } _%>
     <%_ } _%>
-
-    <%_ if (!reactive) { _%>
-
-    <%_ } _%>
     <%_ if (reactive) { _%>
 
     implementation "io.netty:netty-tcnative-boringssl-static"
     <%_ } _%>
-    <%_ if (websocket === 'spring-websocket') { _%>
-
-    <%_ } _%>
-
 
     <%_ if (databaseType === 'cassandra') { _%>
     implementation "com.datastax.cassandra:cassandra-driver-extras"
@@ -375,30 +363,6 @@ dependencies {
 
     implementation "com.github.vladimir-bukhtoyarov:bucket4j-core"
     implementation "com.github.vladimir-bukhtoyarov:bucket4j-jcache"
-    <%_ } _%>
-    <%_ if (applicationTypeMicroservice || applicationTypeGateway || applicationType === 'uaa') { _%>
-
-    <%_ } _%>
-    <%_ if (serviceDiscoveryType === 'eureka') { _%>
-
-    <%_ } _%>
-    <%_ if (serviceDiscoveryType === 'consul') { _%>
-
-    <%_ } _%>
-    <%_ if (authenticationType === 'uaa') { _%>
-
-    <%_ } _%>
-    <%_ if (applicationTypeMicroservice || applicationTypeGateway || applicationType === 'uaa') { _%>
-
-    <%_ } _%>
-
-    <%_ if (authenticationTypeOauth2) { _%>
-
-    <%_ } _%>
-
-    <%_ if (authenticationType === 'uaa') { _%>
-
-    <% if (databaseTypeSql) { %>implementation<% } else { %>runtimeOnly<% } %> "org.glassfish.jaxb:jaxb-runtime:$jaxb_runtime_version"
     <%_ } _%>
     <%_ if (databaseType === 'mongodb') { _%>
     implementation "com.github.mongobee:mongobee"

@@ -36,7 +36,7 @@ _%>
     <parent>
         <groupId>io.micronaut.platform</groupId>
         <artifactId>micronaut-parent</artifactId>
-        <version><%= versions.micronaut %></version>
+        <version><%= javaDependencies['micronaut-platform'] %></version>
     </parent>
 
     <repositories>
@@ -83,10 +83,7 @@ _%>
         <profile.tls />
 
         <!-- Dependency versions -->
-        <micronaut.version><%= versions.micronaut %></micronaut.version>
-        <micronaut-data.version><%= versions.micronautData %></micronaut-data.version>
-        <micronaut-discovery-client.version><%= versions.micronautDiscoveryClient %></micronaut-discovery-client.version>
-        <micronaut-openapi.version><%= versions.micronautOpenApi %></micronaut-openapi.version>
+        <micronaut.version><%= javaDependencies['micronaut-platform'] %></micronaut.version>
         <prometheus-simpleclient.version><%= versions.prometheusSimpleclient %></prometheus-simpleclient.version>
         <hibernate.version><%= versions.hibernate %></hibernate.version>
         <!-- The javassist version should match the one managed by
@@ -125,7 +122,6 @@ _%>
         <maven-surefire-plugin.version><%- javaDependencies['maven-surefire-plugin'] %></maven-surefire-plugin.version>
         <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
         <maven-exec-plugin.version>3.1.1</maven-exec-plugin.version>
-        <micronaut-plugin.version><%= versions.micronaut %></micronaut-plugin.version>
         <git-commit-id-maven-plugin.version><%- javaDependencies['git-commit-id-maven-plugin'] %></git-commit-id-maven-plugin.version>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version><%- javaDependencies['properties-maven-plugin'] %></properties-maven-plugin.version>
@@ -139,14 +135,6 @@ _%>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>io.micronaut.platform</groupId>
-                <artifactId>micronaut-platform</artifactId>
-                <version>${micronaut.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!-- jhipster-needle-maven-add-dependency-management -->
         </dependencies>
     </dependencyManagement>
 
@@ -427,7 +415,6 @@ _%>
         <dependency>
             <groupId>io.micronaut.discovery</groupId>
             <artifactId>micronaut-discovery-client</artifactId>
-            <version>${micronaut-discovery-client.version}</version>
             <scope>compile</scope>
         </dependency>
         <%_ } _%>

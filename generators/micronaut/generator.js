@@ -188,6 +188,13 @@ export default class extends BaseApplicationGenerator {
           source.addMavenDefinition({
             properties: [{ property: 'modernizer.failOnViolations', value: 'false' }],
           });
+        } else if (application.buildToolGradle) {
+          source.addGradleDependencyCatalogPlugin({
+            id: 'io.micronaut.application',
+            pluginName: 'micronaut-application',
+            version: application.javaDependencies['micronaut-application'],
+            addToBuild: true,
+          });
         }
       },
       sqlDependencies({ application, source }) {
