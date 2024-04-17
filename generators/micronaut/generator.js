@@ -7,7 +7,6 @@ import { addJavaAnnotation } from 'generator-jhipster/generators/java/support';
 import mnConstants from '../constants.cjs';
 import { writeFiles } from './files.js';
 
-import command from './command.js';
 import { entityFiles } from './entity-files.js';
 import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
 import constants from '../constants.cjs';
@@ -27,13 +26,17 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.INITIALIZING]() {
     return this.asInitializingTaskGroup({
-      async initializingTemplateTask() {
-        this.parseJHipsterArguments(command.arguments);
-        this.parseJHipsterOptions(command.options);
+      async initializing() {
+        await this.parseCurrentJHipsterCommand();
+      },
+    });
+  }
 
-        // Disables some prompts by making it configured, it will be shown using `--ask-answered` option.
-        this.jhipsterConfig.reactive = false;
-        this.jhipsterConfig.databaseType = 'sql';
+  get [BaseApplicationGenerator.PROMPTING]() {
+    return this.asPromptingTaskGroup({
+      async prompting({ control }) {
+        if (control.existingProject && this.options.askAnswered !== true) return;
+        await this.promptCurrentJHipsterCommand();
       },
     });
   }
@@ -41,7 +44,6 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.CONFIGURING]() {
     return this.asConfiguringTaskGroup({
       async configuringTemplateTask() {
-        this.jhipsterConfig.backendType = 'Micronaut';
         if (this.jhipsterConfigWithDefaults.authenticationType === 'oauth2') {
           this.jhipsterConfig.jwtSecretKey = this.jhipsterConfig.jwtSecretKey ?? createBase64Secret(64, this.options.reproducibleTests);
         }
@@ -74,6 +76,14 @@ export default class extends BaseApplicationGenerator {
         if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) {
           await this.composeWithJHipster('jhipster-micronaut:micronaut-cache');
         }
+      },
+    });
+  }
+
+  get [BaseApplicationGenerator.LOADING]() {
+    return this.asLoadingTaskGroup({
+      async loading() {
+        await this.loadCurrentJHipsterCommandConfig();
       },
     });
   }
