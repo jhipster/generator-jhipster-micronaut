@@ -1,0 +1,14 @@
+[libraries]
+h2 = { module = 'com.h2database:h2', version = '2.2.224' }
+
+liquibase = { module = 'org.liquibase:liquibase-core', version = '4.27.0' }
+
+jakarta-validation = { module = 'jakarta.validation:jakarta.validation-api', version = '3.0.2' }
+
+logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-encoder', version = '7.4' }
+
+commons-lang3 = { module = 'org.apache.commons:commons-lang3', version = '3.13.0' }
+
+ehcache = { module = 'org.ehcache:ehcache', version = '3.10.8' }
+
+jaxb-runtime = { module = 'org.glassfish.jaxb:jaxb-runtime', version = '4.0.5' }

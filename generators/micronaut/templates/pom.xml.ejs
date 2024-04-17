@@ -66,12 +66,6 @@ _%>
         <java.version><%= JAVA_VERSION %></java.version>
         <jdk.version><%= JAVA_VERSION %></jdk.version>
         <release.version><%= JAVA_VERSION %></release.version>
-<%_ if (!skipClient) { _%>
-        <node.version>v<%= nodeVersion %></node.version>
-    <%_ if (clientPackageManager === 'npm') { _%>
-        <npm.version><%= nodeDependencies.npm %></npm.version>
-    <%_ } _%>
-<%_ } _%>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
@@ -89,7 +83,6 @@ _%>
         <profile.tls />
 
         <!-- Dependency versions -->
-        <jhipster-dependencies.version><%= jhipsterDependenciesVersion %></jhipster-dependencies.version>
         <micronaut.version><%= versions.micronaut %></micronaut.version>
         <micronaut-data.version><%= versions.micronautData %></micronaut-data.version>
         <micronaut-discovery-client.version><%= versions.micronautDiscoveryClient %></micronaut-discovery-client.version>
@@ -104,14 +97,12 @@ _%>
         <%_ if (!skipUserManagement) { _%>
         <jbcrypt.version><%= versions.jbcrypt %></jbcrypt.version>
         <%_ } _%>
-        <liquibase.version><%= versions.liquibase %></liquibase.version>
         <logback.version><%= versions.logback %></logback.version>
         <mapstruct.version><%- javaDependencies.mapstruct %></mapstruct.version>
         <mockito.version><%= versions.mockito %></mockito.version>
         <assertj.version><%= versions.assertj %></assertj.version>
         <problem.version><%= versions.problem %></problem.version>
         <jackson.version><%= versions.jackson %></jackson.version>
-        <checkstyle.version><%- javaDependencies.checkstyle %></checkstyle.version>
 <%_ if (cacheProvider === 'caffeine') { _%>
         <caffeine.version><%= versions.caffeine %></caffeine.version>
         <typesafe.version>1.4.0</typesafe.version>
@@ -133,31 +124,14 @@ _%>
         <maven-resources-plugin.version><%- javaDependencies['maven-resources-plugin'] %></maven-resources-plugin.version>
         <maven-surefire-plugin.version><%- javaDependencies['maven-surefire-plugin'] %></maven-surefire-plugin.version>
         <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
-        <maven-checkstyle-plugin.version><%- javaDependencies['maven-checkstyle-plugin'] %></maven-checkstyle-plugin.version>
-        <checksum-maven-plugin.version>1.11</checksum-maven-plugin.version>
         <maven-exec-plugin.version>3.1.1</maven-exec-plugin.version>
         <micronaut-plugin.version><%= versions.micronaut %></micronaut-plugin.version>
-        <spotless-maven-plugin.version><%- javaDependencies['spotless-maven-plugin'] %></spotless-maven-plugin.version>
-        <modernizer-maven-plugin.version><%- javaDependencies['modernizer-maven-plugin'] %></modernizer-maven-plugin.version>
-        <nohttp-checkstyle.version><%- javaDependencies['nohttp-checkstyle'] %></nohttp-checkstyle.version>
-<%_ if (!skipClient) { _%>
-        <frontend-maven-plugin.version><%- javaDependencies['frontend-maven-plugin'] %></frontend-maven-plugin.version>
-<%_ } _%>
         <git-commit-id-maven-plugin.version><%- javaDependencies['git-commit-id-maven-plugin'] %></git-commit-id-maven-plugin.version>
-        <jacoco-maven-plugin.version><%= javaDependencies['jacoco-maven-plugin'] %></jacoco-maven-plugin.version>
-        <jib-maven-plugin.version><%= javaDependencies['jib-maven-plugin'] %></jib-maven-plugin.version>
-        <jib-maven-plugin.image><%- dockerContainers.javaJre %></jib-maven-plugin.image>
-        <jib-maven-plugin.architecture>amd64</jib-maven-plugin.architecture>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
         <properties-maven-plugin.version><%- javaDependencies['properties-maven-plugin'] %></properties-maven-plugin.version>
-        <sonar-maven-plugin.version><%- javaDependencies['sonar-maven-plugin'] %></sonar-maven-plugin.version>
 <%_ if (enableSwaggerCodegen) { _%>
         <jackson-databind-nullable.version><%= javaDependencies['jackson-databind-nullable'] %></jackson-databind-nullable.version>
 <%_ } _%>
-
-        <jacoco.reportFolder>${project.build.directory}/jacoco</jacoco.reportFolder>
-        <jacoco.utReportFile>${jacoco.reportFolder}/test.exec</jacoco.utReportFile>
-        <jacoco.itReportFile>${jacoco.reportFolder}/integrationTest.exec</jacoco.itReportFile>
         <junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
         <junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
         <!-- jhipster-needle-maven-property -->
@@ -172,13 +146,6 @@ _%>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>tech.jhipster</groupId>
-                <artifactId>jhipster-dependencies</artifactId>
-                <version>${jhipster-dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <!-- jhipster-needle-maven-add-dependency-management -->
         </dependencies>
     </dependencyManagement>
@@ -188,32 +155,6 @@ _%>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
             <version><%= versions.swaggerAnnotations %></version>
-        </dependency>
-        <dependency>
-            <groupId>tech.jhipster</groupId>
-            <artifactId>jhipster-framework</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-context-support</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-autoconfigure</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-aop</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-boot-starter-validation</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
@@ -401,10 +342,6 @@ _%>
         </dependency>
 <%_ } _%>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
@@ -522,11 +459,6 @@ _%>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven-checkstyle-plugin.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
             </plugin>
             <plugin>
@@ -550,62 +482,12 @@ _%>
                 <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.diffplug.spotless</groupId>
-                <artifactId>spotless-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.gaul</groupId>
-                <artifactId>modernizer-maven-plugin</artifactId>
             </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${maven-checkstyle-plugin.version}</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.puppycrawl.tools</groupId>
-                            <artifactId>checkstyle</artifactId>
-                            <version>${checkstyle.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>io.spring.nohttp</groupId>
-                            <artifactId>nohttp-checkstyle</artifactId>
-                            <version>${nohttp-checkstyle.version}</version>
-                        </dependency>
-                    </dependencies>
-                    <configuration>
-                        <configLocation>checkstyle.xml</configLocation>
-                        <includes>pom.xml,README.md</includes>
-                        <excludes>.git/**/*,target/**/*,node_modules/**/*,node/**/*</excludes>
-                        <sourceDirectories>./</sourceDirectories>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -708,36 +590,6 @@ _%>
                         <%_ } _%>
                     </configuration>
                 </plugin>
-                <%_ if (!skipClient) { _%>
-                <plugin>
-                    <groupId>com.github.eirslett</groupId>
-                    <artifactId>frontend-maven-plugin</artifactId>
-                    <version>${frontend-maven-plugin.version}</version>
-                    <configuration>
-                        <installDirectory>target</installDirectory>
-                        <nodeVersion>${node.version}</nodeVersion>
-                        <npmVersion>${npm.version}</npmVersion>
-                    </configuration>
-                </plugin>
-                <%_ } _%>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>properties-maven-plugin</artifactId>
-                    <version>${properties-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <phase>initialize</phase>
-                            <goals>
-                                <goal>read-project-properties</goal>
-                            </goals>
-                            <configuration>
-                                <files>
-                                    <file>sonar-project.properties</file>
-                                </files>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
                 <plugin>
                     <groupId>io.github.git-commit-id</groupId>
                     <artifactId>git-commit-id-maven-plugin</artifactId>
@@ -758,115 +610,6 @@ _%>
                             <includeOnlyProperty>^git.commit.id.describe$</includeOnlyProperty>
                             <includeOnlyProperty>^git.branch$</includeOnlyProperty>
                         </includeOnlyProperties>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.gaul</groupId>
-                    <artifactId>modernizer-maven-plugin</artifactId>
-                    <version>${modernizer-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>modernizer</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>modernizer</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <failOnViolations>false</failOnViolations>
-                        <javaVersion>${java.version}</javaVersion>
-                        <%_ if (databaseTypeCassandra) { _%>
-                            <ignoreClassNamePatterns>
-                                <ignoreClassNamePattern><%= packageName %>.domain.PersistentTokenHelper__MapperGenerated</ignoreClassNamePattern>
-                                <ignoreClassNamePattern><%= packageName %>.domain.UserHelper__MapperGenerated</ignoreClassNamePattern>
-                            </ignoreClassNamePatterns>
-                        <%_ } _%>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${jacoco-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>pre-unit-tests</id>
-                            <goals>
-                                <goal>prepare-agent</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <!-- Ensures that the code coverage report for unit tests is created after unit tests have been run -->
-                            <id>post-unit-test</id>
-                            <phase>test</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>pre-integration-tests</id>
-                            <goals>
-                                <goal>prepare-agent-integration</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <!-- Ensures that the code coverage report for integration tests is created after integration tests have been run -->
-                            <id>post-integration-tests</id>
-                            <phase>post-integration-test</phase>
-                            <goals>
-                                <goal>report-integration</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>com.google.cloud.tools</groupId>
-                    <artifactId>jib-maven-plugin</artifactId>
-                    <version>${jib-maven-plugin.version}</version>
-                    <configuration>
-                        <from>
-                            <image>${jib-maven-plugin.image}</image>
-                            <platforms>
-                                <platform>
-                                    <architecture>${jib-maven-plugin.architecture}</architecture>
-                                    <os>linux</os>
-                                </platform>
-                            </platforms>
-                        </from>
-                        <to>
-                            <image><%= baseName.toLowerCase() %>:latest</image>
-                        </to>
-                        <container>
-                            <entrypoint>
-                                <shell>bash</shell>
-                                <option>-c</option>
-                                <arg>/entrypoint.sh</arg>
-                            </entrypoint>
-                            <ports>
-                                <port><%= serverPort %></port>
-                                <%_ if (cacheProviderHazelcast) { _%>
-                                <port>5701/udp</port>
-                                <%_ } _%>
-                            </ports>
-                            <environment>
-                                <%_ if (cacheProviderInfinispan) { _%>
-                                <JAVA_OPTS>-Djgroups.tcp.address=NON_LOOPBACK -Djava.net.preferIPv4Stack=true</JAVA_OPTS>
-                                <%_ } _%>
-                                <SPRING_OUTPUT_ANSI_ENABLED>ALWAYS</SPRING_OUTPUT_ANSI_ENABLED>
-                                <JHIPSTER_SLEEP>0</JHIPSTER_SLEEP>
-                            </environment>
-                            <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
-                            <user>1000</user>
-                        </container>
-                        <extraDirectories>
-                            <paths><%= dockerServicesDir %>jib</paths>
-                            <permissions>
-                                <permission>
-                                    <file>/entrypoint.sh</file>
-                                    <mode>755</mode>
-                                </permission>
-                            </permissions>
-                        </extraDirectories>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -985,30 +728,6 @@ _%>
                     <version>${maven-jar-plugin.version}</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.sonarsource.scanner.maven</groupId>
-                    <artifactId>sonar-maven-plugin</artifactId>
-                    <version>${sonar-maven-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>com.diffplug.spotless</groupId>
-                    <artifactId>spotless-maven-plugin</artifactId>
-                    <version>${spotless-maven-plugin.version}</version>
-                    <configuration>
-                        <java>
-                            <!-- <removeUnusedImports/> -->
-                        </java>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>spotless</id>
-                            <phase>process-sources</phase>
-                            <goals>
-                                <goal>apply</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-failsafe-plugin.version}</version>
@@ -1066,124 +785,6 @@ _%>
                 </activation>
                 <build>
                     <plugins>
-                        <plugin>
-                            <groupId>net.nicoulaj.maven.plugins</groupId>
-                            <artifactId>checksum-maven-plugin</artifactId>
-                            <version>${checksum-maven-plugin.version}</version>
-                            <executions>
-                                <execution>
-                                    <id>create-pre-compiled-webapp-checksum</id>
-                                    <goals>
-                                        <goal>files</goal>
-                                    </goals>
-                                    <phase>generate-resources</phase>
-                                </execution>
-                                <execution>
-                                    <id>create-compiled-webapp-checksum</id>
-                                    <goals>
-                                        <goal>files</goal>
-                                    </goals>
-                                    <phase>compile</phase>
-                                    <configuration>
-                                        <csvSummaryFile>checksums.csv.old</csvSummaryFile>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                            <configuration>
-                                <fileSets>
-                                    <fileSet>
-                                        <directory>${project.basedir}</directory>
-                                        <includes>
-                                            <include><%= MAIN_DIR %>webapp/**/*.*</include>
-                                            <include>target/classes/static/**/*.*</include>
-                                            <include>package-lock.json</include>
-                                            <include>package.json</include>
-                                            <include>webpack/*.*</include>
-                                            <include>tsconfig.json</include>
-                                            <%_ if (clientFrameworkAngular) { _%>
-                                            <include>tsconfig.app.json</include>
-                                            <%_ } _%>
-                                            <%_ if (clientFrameworkReact) { _%>
-                                            <include>.postcss.config.js</include>
-                                            <%_ } _%>
-                                            <%_ if (clientFrameworkVue) { _%>
-                                            <include>.postcssrc.js</include>
-                                            <%_ } _%>
-                                        </includes>
-                                        <excludes>
-                                            <exclude>**/app/**/service-worker.js</exclude>
-                                            <exclude>**/app/**/vendor.css</exclude>
-                                        </excludes>
-                                    </fileSet>
-                                </fileSets>
-                                <failOnError>false</failOnError>
-                                <failIfNoFiles>false</failIfNoFiles>
-                                <individualFiles>false</individualFiles>
-                                <algorithms>
-                                    <algorithm>SHA-1</algorithm>
-                                </algorithms>
-                                <includeRelativePath>true</includeRelativePath>
-                                <quiet>true</quiet>
-                            </configuration>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-antrun-plugin</artifactId>
-                            <version>${maven-antrun-plugin.version}</version>
-                            <executions>
-                                <execution>
-                                    <id>eval-frontend-checksum</id>
-                                    <phase>generate-resources</phase>
-                                    <goals>
-                                        <goal>run</goal>
-                                    </goals>
-                                    <configuration>
-                                        <target>
-                                            <condition property="skip.npm" value="true" else="false" >
-                                                <and>
-                                                    <available file="checksums.csv" filepath="${project.build.directory}" />
-                                                    <available file="checksums.csv.old" filepath="${project.build.directory}" />
-                                                    <filesmatch file1="${project.build.directory}/checksums.csv" file2="${project.build.directory}/checksums.csv.old" />
-                                                </and>
-                                            </condition>
-                                        </target>
-                                        <exportAntProperties>true</exportAntProperties>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        <plugin>
-                            <groupId>com.github.eirslett</groupId>
-                            <artifactId>frontend-maven-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <id>install-node-and-npm</id>
-                                    <goals>
-                                        <goal>install-node-and-npm</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>npm install</id>
-                                    <goals>
-                                        <goal>npm</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>webapp build dev</id>
-                                    <goals>
-                                        <goal>npm</goal>
-                                    </goals>
-                                    <phase>generate-resources</phase>
-                                    <configuration>
-                                        <arguments>run webapp:build</arguments>
-                                        <environmentVariables>
-                                            <APP_VERSION>${project.version}</APP_VERSION>
-                                        </environmentVariables>
-                                        <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
                     </plugins>
                 </build>
                 <properties>
@@ -1223,51 +824,6 @@ _%>
                             </filesets>
                         </configuration>
                     </plugin>
-                    <%_ if (!skipClient) { _%>
-                    <plugin>
-                        <groupId>com.github.eirslett</groupId>
-                        <artifactId>frontend-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>install-node-and-npm</id>
-                                <goals>
-                                    <goal>install-node-and-npm</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>npm install</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>webapp build test</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                                <phase>test</phase>
-                                <configuration>
-                                    <arguments>run webapp:test</arguments>
-                                    <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
-                                </configuration>
-                            </execution>
-                            <execution>
-                                <id>webapp build prod</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                                <phase>generate-resources</phase>
-                                <configuration>
-                                    <arguments>run webapp:prod</arguments>
-                                    <environmentVariables>
-                                        <APP_VERSION>${project.version}</APP_VERSION>
-                                    </environmentVariables>
-                                    <npmInheritsProxyConfigFromMaven>false</npmInheritsProxyConfigFromMaven>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <%_ } _%>
                     <plugin>
                         <groupId>io.github.git-commit-id</groupId>
                         <artifactId>git-commit-id-maven-plugin</artifactId>

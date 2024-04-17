@@ -29,10 +29,6 @@ pluginManagement {
         <%_ if (enableSwaggerCodegen) { _%>
         id "org.openapi.generator" version "${openapi_plugin_version}"
         <%_ } _%>
-        <%_ if (!skipClient) { _%>
-        id 'com.github.node-gradle.node' version "${gradle_node_plugin_version}"
-        <%_ } _%>
-        id 'org.sonarqube' version "${sonarqube_plugin_version}"
         id 'com.github.johnrengelman.shadow' version "${shadow_plugin_version}"
         // jhipster-needle-gradle-plugin-management-plugins - JHipster will add additional entries here
     }

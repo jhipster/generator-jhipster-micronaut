@@ -26,8 +26,6 @@ import {
 /* Constants use throughout */
 import { JAVA_SERVER_TEST_RESOURCES_DIR as SERVER_TEST_RES_DIR } from 'generator-jhipster';
 
-const INTERPOLATE_REGEX = true;
-
 /* TODO: Do a PR in the parent JHipster project to export and re-use here as well in order to have a single source of truth!!!
 const TEST_DIR = constants.TEST_DIR;
 */
@@ -40,55 +38,20 @@ const shouldSkipUserManagement = generator =>
  */
 export const serverFiles = {
   readme: [{ templates: ['README.md.jhi.micronaut'] }],
-  jib: [
-    {
-      path: 'src/main/docker/jib/',
-      templates: ['entrypoint.sh'],
-    },
-  ],
-  conventionPlugins: [{ templates: ['buildSrc/src/main/groovy/jhipster.code-quality-conventions.gradle'] }],
   serverResources: [
     javaMainResourceTemplatesBlock({
       condition: generator => generator.devDatabaseType === 'h2Disk' || generator.devDatabaseType === 'h2Memory',
       templates: [{ file: 'h2.server.properties', renameTo: () => '.h2.server.properties' }],
     }),
     javaMainResourceTemplatesBlock({
-      condition: generator => !!generator.enableSwaggerCodegen,
-      templates: ['swagger/api.yml'],
+      templates: [{ file: 'templates/error.html', renameTo: () => 'views/error.html' }],
     }),
-    {
-      condition: generator => !generator.skipClient,
-      transform: false,
-      templates: ['npmw', 'npmw.cmd'],
-    },
-    javaMainResourceTemplatesBlock({
-      templates: [
-        {
-          file: 'templates/error.html',
-          renameTo: () => 'views/error.html',
-        },
-        { file: 'logback.xml', useBluePrint: true },
-        { file: 'application.yml', useBluePrint: true },
-        { file: 'application-dev.yml', useBluePrint: true },
-        { file: 'application-tls.yml', useBluePrint: true },
-        { file: 'application-prod.yml', useBluePrint: true },
-        { file: 'i18n/messages.properties', useBluePrint: true, noEjs: true },
-      ],
-    }),
-    javaTestResourceTemplatesBlock({
-      templates: [
-        { file: 'logback.xml', useBluePrint: true },
-        { file: 'application-test.yml', useBluePrint: true },
-      ],
-    }),
-    // Emails should be fine to import from base generator, no need for useBluePrint
     javaMainResourceTemplatesBlock({
       condition: generator => !generator.skipUserManagement,
       templates: [
         { file: 'templates/mail/activationEmail.html', renameTo: () => 'views/mail/activationEmail.html' },
         { file: 'templates/mail/creationEmail.html', renameTo: () => 'views/mail/creationEmail.html' },
         { file: 'templates/mail/passwordResetEmail.html', renameTo: () => 'views/mail/passwordResetEmail.html' },
-        { file: 'views/mail/testEmail.html', useBluePrint: true, noEjs: true },
       ],
     }),
     {
@@ -99,59 +62,38 @@ export const serverFiles = {
         'i18n/messages_en.properties',
       ],
     },
-    javaMainPackageTemplatesBlock({
-      condition: generator =>
-        generator.databaseType === 'mongodb' &&
-        (!generator.skipUserManagement || (generator.skipUserManagement && generator.authenticationTypeOauth2)),
-      templates: ['config/dbmigrations/InitialSetupMigration.kt'],
+  ],
+  micronautResources: [
+    javaMainResourceTemplatesBlock({
+      condition: generator => !!generator.enableSwaggerCodegen,
+      templates: ['swagger/api.yml'],
     }),
     javaMainResourceTemplatesBlock({
-      condition: generator => generator.databaseType === 'couchbase',
-      templates: ['config/couchmove/changelog/V0__create_indexes.n1ql'],
-    }),
-    javaMainResourceTemplatesBlock({
-      condition: generator =>
-        generator.databaseType === 'couchbase' && (!generator.skipUserManagement || generator.authenticationTypeOauth2),
       templates: [
-        'config/couchmove/changelog/V0.1__initial_setup/ROLE_ADMIN.json',
-        'config/couchmove/changelog/V0.1__initial_setup/ROLE_USER.json',
-        'config/couchmove/changelog/V0.1__initial_setup/user__admin.json',
-        'config/couchmove/changelog/V0.1__initial_setup/user__anonymoususer.json',
-        'config/couchmove/changelog/V0.1__initial_setup/user__system.json',
-        'config/couchmove/changelog/V0.1__initial_setup/user__user.json',
+        { file: 'logback.xml' },
+        { file: 'application.yml' },
+        { file: 'application-dev.yml' },
+        { file: 'application-tls.yml' },
+        { file: 'application-prod.yml' },
+        { file: 'i18n/messages.properties', noEjs: true },
       ],
     }),
-    javaMainResourceTemplatesBlock({
-      condition: generator => generator.databaseType === 'cassandra',
-      templates: [
-        'config/cql/create-keyspace-prod.cql',
-        'config/cql/create-keyspace.cql',
-        'config/cql/drop-keyspace.cql',
-        { file: 'config/cql/changelog/README.md', method: 'copy' },
-      ],
+    javaTestResourceTemplatesBlock({
+      templates: [{ file: 'logback.xml' }, { file: 'application-test.yml' }],
     }),
     javaMainResourceTemplatesBlock({
-      condition: generator =>
-        generator.databaseType === 'cassandra' &&
-        generator.applicationType !== 'microservice' &&
-        (!generator.skipUserManagement || generator.authenticationTypeOauth2),
-      templates: [
-        { file: 'config/cql/changelog/create-tables.cql', renameTo: () => 'config/cql/changelog/00000000000000_create-tables.cql' },
-        {
-          file: 'config/cql/changelog/insert_default_users.cql',
-          renameTo: () => 'config/cql/changelog/00000000000001_insert_default_users.cql',
-        },
-      ],
+      condition: generator => !generator.skipUserManagement,
+      templates: [{ file: 'views/mail/testEmail.html', noEjs: true }],
     }),
   ],
   serverMicroserviceAndGateway: [
     javaMainResourceTemplatesBlock({
       condition: generator => generator.serviceDiscoveryType,
-      templates: [{ file: 'bootstrap.yml', useBluePrint: true }],
+      templates: [{ file: 'bootstrap.yml' }],
     }),
     javaTestResourceTemplatesBlock({
       condition: generator => generator.serviceDiscoveryType,
-      templates: [{ file: 'bootstrap-test.yml', useBluePrint: true }],
+      templates: [{ file: 'bootstrap-test.yml' }],
     }),
   ],
   // TODO WIP Adding files in here, will need to properly conditional and remove some in the future
@@ -194,15 +136,6 @@ export const serverFiles = {
     }),
   ],
   serverJavaOpenApi: [
-    /*{
-      templates: [
-        {
-          file: 'openapi.properties',
-          useBluePrint: true,
-        },
-      ],
-    },
-    */
     javaMainPackageTemplatesBlock({
       templates: ['web/rest/SwaggerResource.java'],
     }),
@@ -351,17 +284,14 @@ export const serverFiles = {
   ],
   serverBuild: [
     {
-      templates: [{ file: 'checkstyle.xml', options: { interpolate: INTERPOLATE_REGEX } }],
-    },
-    {
       condition: generator => generator.buildTool === 'gradle',
       templates: [
-        { file: 'build.gradle', useBluePrint: true },
-        { file: 'settings.gradle', useBluePrint: true },
-        { file: 'gradle.properties', useBluePrint: true },
-        { file: 'gradle/docker.gradle', useBluePrint: true },
-        { file: 'gradle/profile_dev.gradle', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
-        { file: 'gradle/profile_prod.gradle', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true },
+        { file: 'build.gradle' },
+        { file: 'settings.gradle' },
+        { file: 'gradle.properties' },
+        { file: 'gradle/docker.gradle' },
+        { file: 'gradle/profile_dev.gradle' },
+        { file: 'gradle/profile_prod.gradle' },
       ],
     },
     {
@@ -370,7 +300,7 @@ export const serverFiles = {
     },
     {
       condition: generator => generator.buildTool === 'maven',
-      templates: [{ file: 'pom.xml', options: { interpolate: INTERPOLATE_REGEX }, useBluePrint: true }],
+      templates: [{ file: 'pom.xml' }],
     },
   ],
 };

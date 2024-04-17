@@ -23,11 +23,8 @@ rootProject.name=<%= dasherizedBaseName %>
 profile=dev
 
 # Build properties
-node_version=<%= nodeVersion %>
-npm_version=<%= nodeDependencies.npm %>
 
 # Dependency versions
-jhipster_dependencies_version=<%= jhipsterDependenciesVersion %>
 micronautVersion=<%=versions.micronaut%>
 micronaut_data_version=<%=versions.micronautData%>
 micronaut_discovery_client_version=<%=versions.micronautDiscoveryClient%>
@@ -59,24 +56,19 @@ typesafe_config_version=1.4.0
 <%_ } _%>
 testcontainers_version=<%= versions.testcontainers %>
 
-liquibase_hibernate6_version=<%=versions.liquibaseHibernate6%>
 liquibaseTaskPrefix=liquibase
 
 <%_ if (databaseTypeSql) { _%>
-jaxb_runtime_version=2.3.2
+jaxb_runtime_version=<%= javaDependencies['jaxb-runtime'] %>
 <%_ } _%>
 
 # gradle plugin version
 micronaut_plugin_version=4.3.4
 git_properties_plugin_version=2.4.1
-<%_ if (!skipClient) { _%>
-gradle_node_plugin_version=7.0.2
-<%_ } _%>
 apt_plugin_version=0.21
 <%_ if (databaseTypeSql) { _%>
 liquibase_plugin_version=2.2.0
 <%_ } _%>
-sonarqube_plugin_version=4.3.0.3225
 <%_ if (enableSwaggerCodegen) { _%>
 openapi_plugin_version=4.3.1
 <%_ } _%>

@@ -20,7 +20,7 @@
 version: 2
 updates:
   - package-ecosystem: 'gradle'
-    directory: '/generators/server/resources'
+    directory: '/generators/micronaut/resources'
     schedule:
       interval: 'daily'
       time: '08:00'
