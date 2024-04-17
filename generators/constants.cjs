@@ -19,7 +19,6 @@
 
 module.exports = {
   JAVA_VERSION: 17,
-  GRADLE_VERSION: '8.7',
   DOCKER_REDIS: 'redis:6.0.10',
   sqlDb: {
     h2Disk: {
