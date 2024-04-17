@@ -16,4 +16,4 @@ logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-enc
 micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', version = '4.3.6' }
 
 [plugins]
-micronaut-application = { id = 'io.micronaut.application', version = '4.3.4' }
+micronaut-application = { id = 'io.micronaut.application', version = '4.3.6' }
