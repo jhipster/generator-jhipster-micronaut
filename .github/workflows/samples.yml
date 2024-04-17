@@ -64,19 +64,28 @@ jobs:
       - name: 'Generate Project'
         run: mhipster generate-sample ${{ matrix.sample-name }} --skip-jhipster-dependencies --force
       - uses: jhipster/actions/compare-sample@v0
+        id: compare
+        if: >-
+          github.event.pull_request &&
+          !contains(github.event.pull_request.labels.*.name, 'pr: disable-compare')
         with:
           generator-path: generator-jhipster-micronaut
           cmd: mhipster generate-sample ${{ matrix.sample-name }} --skip-jhipster-dependencies --force --skip-install
       - name: 'Start Dependency Containers'
+        if: steps.compare.outputs.equals != 'true'
         run: npm run ci:e2e:prepare
       - name: 'Run Server Tests'
+        if: steps.compare.outputs.equals != 'true'
         run: npm run ci:backend:test
         id: backend
       - name: 'Run Client Tests'
+        if: steps.compare.outputs.equals != 'true'
         run: npm run ci:frontend:test --if-present
       - name: 'Build App'
+        if: steps.compare.outputs.equals != 'true'
         run: npm run ci:e2e:package
       - name: 'E2E Tests'
+        if: steps.compare.outputs.equals != 'true'
         id: e2e
         run: npm run ci:e2e:run --if-present
       - name: 'BACKEND: Store failure logs'
