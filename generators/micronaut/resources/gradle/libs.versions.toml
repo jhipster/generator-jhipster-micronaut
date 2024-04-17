@@ -7,7 +7,7 @@ jakarta-validation = { module = 'jakarta.validation:jakarta.validation-api', ver
 
 logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-encoder', version = '7.4' }
 
-commons-lang3 = { module = 'org.apache.commons:commons-lang3', version = '3.13.0' }
+commons-lang3 = { module = 'org.apache.commons:commons-lang3', version = '3.14.0' }
 
 ehcache = { module = 'org.ehcache:ehcache', version = '3.10.8' }
 
