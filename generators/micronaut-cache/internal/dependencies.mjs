@@ -53,6 +53,7 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
           {
             groupId: 'org.redisson',
             artifactId: 'redisson',
+            version: javaDependencies.redisson,
           },
         ],
       },
