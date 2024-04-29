@@ -51,8 +51,9 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
             scope: 'test',
           },
           {
-            groupId: 'io.micronaut.redis',
-            artifactId: 'micronaut-redis-lettuce',
+            groupId: 'org.redisson',
+            artifactId: 'redisson',
+            version: javaDependencies.redisson,
           },
         ],
       },
