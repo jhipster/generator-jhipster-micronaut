@@ -1,4 +1,5 @@
 import { command as serverCommand } from 'generator-jhipster/generators/server';
+import { default as micronautCommand } from '../micronaut/command.js';
 
 const { applicationType, ...remainingConfigs } = serverCommand.configs;
 
@@ -6,7 +7,7 @@ const { applicationType, ...remainingConfigs } = serverCommand.configs;
  * @type {import('generator-jhipster').JHipsterCommandDefinition}
  */
 const command = {
-  ...serverCommand,
+  options: Object.fromEntries(Object.entries(serverCommand.options).filter(([key]) => !(key in micronautCommand.configs))),
   configs: {
     // Gateway is not supported
     applicationType: {
@@ -16,6 +17,7 @@ const command = {
     ...remainingConfigs,
   },
   override: true,
+  import: ['jhipster-micronaut:micronaut'],
   compose: ['jhipster-micronaut:micronaut'],
 };
 

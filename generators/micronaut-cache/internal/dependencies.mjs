@@ -34,7 +34,6 @@ const hibernateJCache = {
 //   hibernateCache?: MavenDefinition;
 // };
 
-// eslint-disable-next-line import/prefer-default-export
 export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies) => {
   const dependenciesForCache = {
     redis: {

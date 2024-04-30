@@ -10,6 +10,7 @@ import { writeFiles } from './files.js';
 import { entityFiles } from './entity-files.js';
 import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
 import constants from '../constants.cjs';
+import { serverTestFrameworkChoices } from './command.js';
 
 export default class extends BaseApplicationGenerator {
   async beforeQueue() {
@@ -34,9 +35,32 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.PROMPTING]() {
     return this.asPromptingTaskGroup({
+      prepareForPrompt({ control }) {
+        this.jhipsterConfig.testFrameworks = this.jhipsterConfig.testFrameworks ?? [];
+
+        const supportedServerOptions = serverTestFrameworkChoices.map(({ value }) => value);
+        const serverTestFrameworks = [
+          ...(this.jhipsterConfig.serverTestFrameworks ?? []),
+          this.jhipsterConfig.testFrameworks.filter(framework => supportedServerOptions.includes(framework)),
+        ];
+        if (serverTestFrameworks.length > 0) {
+          this.jhipsterConfig.serverTestFrameworks = serverTestFrameworks;
+          this.jhipsterConfig.testFrameworks = this.jhipsterConfig.testFrameworks.filter(
+            framework => !supportedServerOptions.includes(framework),
+          );
+        } else if (control.existingProject) {
+          this.jhipsterConfig.serverTestFrameworks = [];
+        }
+      },
       async prompting({ control }) {
         if (control.existingProject && this.options.askAnswered !== true) return;
         await this.promptCurrentJHipsterCommand();
+      },
+      loadFromPrompt() {
+        this.jhipsterConfig.testFrameworks = [
+          ...new Set([...this.jhipsterConfig.testFrameworks, ...this.jhipsterConfig.serverTestFrameworks]),
+        ];
+        this.jhipsterConfig.serverTestFrameworks = [];
       },
     });
   }
