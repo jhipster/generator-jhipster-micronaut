@@ -42,27 +42,20 @@ jobs:
       fail-fast: false
       matrix: ${{fromJson(needs.build-matrix.outputs.matrix)}}
     steps:
-      - uses: jhipster/actions/create-app-path@v0
-      - uses: jhipster/actions/setup-git@v0
-      - uses: jhipster/actions/restore-cache@v0
-        with:
-          npm: true
       - uses: actions/checkout@v4
         with:
           path: generator-jhipster-micronaut
           fetch-depth: 2
-      - uses: actions/setup-node@v4
+      - uses: jhipster/actions/setup-runner@v0
         with:
-          node-version: ${{ matrix.node-version }}
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
           java-version: ${{ matrix.java-version }}
+          node-version: ${{ matrix.node-version }}
+          binary-dir: ${{ github.workspace }}/generator-jhipster-micronaut/cli/
       - name: 'Install blueprint'
-        run: npm install && npm link
+        run: npm install
         working-directory: ${{ github.workspace }}/generator-jhipster-micronaut
       - name: 'Generate Project'
-        run: mhipster generate-sample ${{ matrix.sample-name }} --skip-jhipster-dependencies --force
+        run: cli.cjs generate-sample ${{ matrix.sample-name }} --skip-jhipster-dependencies --force
       - uses: jhipster/actions/compare-sample@v0
         id: compare
         if: >-
@@ -70,7 +63,7 @@ jobs:
           !contains(github.event.pull_request.labels.*.name, 'pr: disable-compare')
         with:
           generator-path: generator-jhipster-micronaut
-          cmd: mhipster generate-sample ${{ matrix.sample-name }} --skip-jhipster-dependencies --force --skip-install
+          cmd: cli.cjs generate-sample ${{ matrix.sample-name }} --skip-jhipster-dependencies --force --skip-install
       - name: 'Start Dependency Containers'
         if: steps.compare.outputs.equals != 'true'
         run: npm run ci:e2e:prepare
