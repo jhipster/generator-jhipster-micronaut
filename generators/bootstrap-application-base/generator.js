@@ -37,6 +37,10 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
       configure({ application }) {
+        // bootstrap-application-base generator does not respect current configured hipster value.
+        Object.assign(application, {
+          hipster: 'jhipster_family_member_4',
+        });
         if (application.authenticationType === 'oauth2') {
           application.syncUserWithIdp = true;
           application.generateBuiltInUserEntity = true;

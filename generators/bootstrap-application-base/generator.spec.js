@@ -72,7 +72,7 @@ describe('SubGenerator bootstrap-application-base of micronaut JHipster blueprin
           "generateBuiltInUserEntity": true,
           "generateInMemoryUserCredentials": false,
           "generateUserManagement": true,
-          "hipster": "jhipster_family_member_3",
+          "hipster": "jhipster_family_member_4",
           "hipsterBugTrackerLink": "https://github.com/jhipster/generator-jhipster-micronaut/issues?state=open",
           "hipsterBugTrackerProductName": "MHipster",
           "hipsterChatLink": "https://gitter.im/jhipster/generator-jhipster",
