@@ -25,10 +25,6 @@ export default class extends BaseApplicationGenerator {
           hipsterName: 'Micronaut Hipster',
           hipsterProductName: 'MHipster',
           hipsterProjectLink: 'https://github.com/jhipster/generator-jhipster-micronaut',
-          hipsterStackOverflowProductName: 'JHipster',
-          hipsterStackoverflowLink: 'https://stackoverflow.com/tags/jhipster/info',
-          hipsterTwitterLink: 'https://twitter.com/jhipster',
-          hipsterTwitterUsername: '@jhipster',
         });
       },
     });
