@@ -35,9 +35,6 @@ exports[`SubGenerator cypress of micronaut JHipster blueprint > run > should suc
   "src/test/javascript/cypress/e2e/administration/administration.cy.ts": {
     "stateCleared": "modified",
   },
-  "src/test/javascript/cypress/e2e/entity/authority.cy.ts": {
-    "stateCleared": "modified",
-  },
   "src/test/javascript/cypress/e2e/lighthouse.audits.ts": {
     "stateCleared": "modified",
   },

@@ -21,15 +21,6 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
       customizeAngularForMicronaut({ application: { authenticationTypeJwt, clientSrcDir } }) {
-        // Update home with mhipster
-        this.editFile(`${clientSrcDir}app/home/home.component.html`, content =>
-          content
-            .replaceAll('https://github.com/jhipster/generator-jhipster', 'https://github.com/jhipster/generator-jhipster-micronaut')
-            .replace('If you like JHipster', 'If you like MHipster')
-            .replace('JHipster bug tracker', 'MHipster bug tracker')
-            .replace('If you have any question on JHipster', 'If you have any question on JHipster or MHipster'),
-        );
-
         // health api
         this.editFile(`${clientSrcDir}app/admin/health/health.model.ts`, content => content.replaceAll('components', 'details'));
         this.editFile(`${clientSrcDir}app/admin/health/health.component.html`, content => content.replaceAll('components', 'details'));
