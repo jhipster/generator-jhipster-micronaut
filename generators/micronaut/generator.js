@@ -82,8 +82,8 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.LOADING]() {
     return this.asLoadingTaskGroup({
-      async loading() {
-        await this.loadCurrentJHipsterCommandConfig();
+      async loading({ application }) {
+        await this.loadCurrentJHipsterCommandConfig(application);
       },
     });
   }
