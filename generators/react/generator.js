@@ -8,15 +8,6 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
       customizeReactForMicronaut({ application: { authenticationTypeJwt, clientSrcDir } }) {
-        // Update home with mhipster
-        this.editFile(`${clientSrcDir}app/modules/home/home.tsx`, content =>
-          content
-            .replaceAll('https://github.com/jhipster/generator-jhipster', 'https://github.com/jhipster/generator-jhipster-micronaut')
-            .replace('If you like JHipster', 'If you like MHipster')
-            .replace('JHipster bug tracker', 'MHipster bug tracker')
-            .replace('If you have any question on JHipster', 'If you have any question on JHipster or MHipster'),
-        );
-
         // health api
         this.editFile(`${clientSrcDir}app/modules/administration/health/health.tsx`, content =>
           content.replaceAll('components', 'details'),

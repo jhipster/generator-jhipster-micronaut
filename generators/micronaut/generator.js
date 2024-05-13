@@ -10,6 +10,7 @@ import { writeFiles } from './files.js';
 import { entityFiles } from './entity-files.js';
 import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
 import constants from '../constants.cjs';
+import { serverTestFrameworkChoices } from './command.js';
 
 export default class extends BaseApplicationGenerator {
   async beforeQueue() {
@@ -34,9 +35,32 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.PROMPTING]() {
     return this.asPromptingTaskGroup({
+      prepareForPrompt({ control }) {
+        this.jhipsterConfig.testFrameworks = this.jhipsterConfig.testFrameworks ?? [];
+
+        const supportedServerOptions = serverTestFrameworkChoices.map(({ value }) => value);
+        const serverTestFrameworks = [
+          ...(this.jhipsterConfig.serverTestFrameworks ?? []),
+          this.jhipsterConfig.testFrameworks.filter(framework => supportedServerOptions.includes(framework)),
+        ];
+        if (serverTestFrameworks.length > 0) {
+          this.jhipsterConfig.serverTestFrameworks = serverTestFrameworks;
+          this.jhipsterConfig.testFrameworks = this.jhipsterConfig.testFrameworks.filter(
+            framework => !supportedServerOptions.includes(framework),
+          );
+        } else if (control.existingProject) {
+          this.jhipsterConfig.serverTestFrameworks = [];
+        }
+      },
       async prompting({ control }) {
         if (control.existingProject && this.options.askAnswered !== true) return;
         await this.promptCurrentJHipsterCommand();
+      },
+      loadFromPrompt() {
+        this.jhipsterConfig.testFrameworks = [
+          ...new Set([...this.jhipsterConfig.testFrameworks, ...this.jhipsterConfig.serverTestFrameworks]),
+        ];
+        this.jhipsterConfig.serverTestFrameworks = [];
       },
     });
   }
@@ -82,8 +106,8 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.LOADING]() {
     return this.asLoadingTaskGroup({
-      async loading() {
-        await this.loadCurrentJHipsterCommandConfig();
+      async loading({ application }) {
+        await this.loadCurrentJHipsterCommandConfig(application);
       },
     });
   }
@@ -94,27 +118,13 @@ export default class extends BaseApplicationGenerator {
         application.micronautDependencies = { ...mnConstants.versions };
         this.loadJavaDependenciesFromGradleCatalog(application.micronautDependencies);
         Object.assign(application.javaDependencies, application.micronautDependencies);
-
-        // Workaround liquibase generator bug. Drop for generator-jhipster 8.3.1.
-        application.springBootDependencies = { liquibase: mnConstants.versions.liquibase, h2: application.micronautDependencies.h2 };
-      },
-      configure({ application }) {
-        if (application.authenticationTypeOauth2) {
-          application.syncUserWithIdp = true;
-          application.generateBuiltInUserEntity = true;
-        }
       },
       prepareForTemplates({ application }) {
-        // Use Micronaut specific hipster
-        application.hipster = 'jhipster_family_member_4';
         // Workaround
-        application.addSpringMilestoneRepository = false;
         application.MN_CONSTANTS = mnConstants;
         application.dockerContainers.redis = mnConstants.DOCKER_REDIS;
         // Add liquibase h2 database references.
         application.liquibaseAddH2Properties = true;
-        // Micronaut is a java project.
-        application.backendTypeJavaAny = true;
         Object.assign(application, {
           useNpmWrapper: application.clientFrameworkAny && !application.skipClient,
         });

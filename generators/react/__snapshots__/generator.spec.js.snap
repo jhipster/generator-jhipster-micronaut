@@ -47,9 +47,6 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
   "sonar-project.properties": {
     "stateCleared": "modified",
   },
-  "src/main/resources/i18n/messages_en.properties": {
-    "stateCleared": "modified",
-  },
   "src/main/webapp/404.html": {
     "stateCleared": "modified",
   },
@@ -486,9 +483,6 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
     "stateCleared": "modified",
   },
   "src/main/webapp/swagger-ui/index.html": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/i18n/messages_en.properties": {
     "stateCleared": "modified",
   },
   "tsconfig.json": {

@@ -5,9 +5,6 @@ exports[`SubGenerator liquibase of micronaut JHipster blueprint > run > should s
   ".yo-rc.json": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/LiquibaseConfiguration.java": {
-    "stateCleared": "modified",
-  },
   "src/main/resources/config/liquibase/changelog/00000000000000_initial_schema.xml": {
     "stateCleared": "modified",
   },
