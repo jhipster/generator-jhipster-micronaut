@@ -7,7 +7,7 @@
 width=200
 style="max-width:50%;">
 
-This project generates a Micronaut based JHipster application 😎.
+This project generates a Micronaut-based JHipster application 😎.
 It is based on JHipster Blueprint 🔵, and intends to replace the Spring Boot portions of the server with [Micronaut](https://micronaut.io) equivalents.
 
 ## Installation and Usage
@@ -88,6 +88,7 @@ docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut /bin
 
 | Micronaut Blueprint | Micronaut | JHipster |
 | ------------------- | --------- | -------- |
+| 3.3.0               | 4.4.2     | 8.4.0    |
 | 3.2.0               | 4.3.8     | 8.3.0    |
 | 3.1.0               | 4.3.6     | 8.2.1    |
 | 3.0.0               | 4.2.0     | 8.1.0    |
