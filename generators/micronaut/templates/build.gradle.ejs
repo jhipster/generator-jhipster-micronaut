@@ -259,7 +259,7 @@ dependencies {
         <%_ if (enableHibernateCache) { _%>
     implementation "org.hibernate:hibernate-jcache:$hibernate_version"
         <%_ } _%>
-    testImplementation "org.testcontainers:testcontainers:$testcontainers_version"
+    testImplementation "org.testcontainers:testcontainers"
     <%_ } _%>
     <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'redis'].includes(cacheProvider) || applicationTypeGateway) { _%>
     implementation "io.micronaut.cache:micronaut-cache-core"
