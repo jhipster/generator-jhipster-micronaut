@@ -56,6 +56,5 @@ module.exports = {
     problem: '0.29.1',
     caffeine: '3.1.8',
     testcontainers: '1.19.6',
-    assertj: '3.25.3',
   },
 };
