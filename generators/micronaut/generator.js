@@ -203,7 +203,7 @@ export default class extends BaseApplicationGenerator {
             { groupId: 'net.logstash.logback', artifactId: 'logstash-logback-encoder', versionRef: 'logstash-logback-encoder' },
             { groupId: 'tech.jhipster', artifactId: 'jhipster-framework', versionRef: 'jhipster-framework' },
             { groupId: 'org.apache.commons', artifactId: 'commons-lang3', versionRef: 'commons-lang3' },
-            { groupId: 'io.swagger.core.v3', artifactId: 'swagger-annotations', versionRef: 'swagger-annotations'},
+            { groupId: 'io.swagger.core.v3', artifactId: 'swagger-annotations', versionRef: 'swagger-annotations' },
             { groupId: 'org.mockito', artifactId: 'mockito-core', version: javaDependencies['mockito-core'], scope: 'test' },
           ],
         });
@@ -217,6 +217,13 @@ export default class extends BaseApplicationGenerator {
             pluginName: 'micronaut-application',
             version: application.javaDependencies['micronaut-application'],
             addToBuild: true,
+          });
+        }
+
+        if (!application.skipUserManagement) {
+          source.addJavaDefinition({
+            versions: [{ name: 'jbcrypt', version: javaDependencies.jbcrypt }],
+            dependencies: [{ groupId: 'org.mindrot', artifactId: 'jbcrypt', versionRef: 'jbcrypt' }],
           });
         }
       },

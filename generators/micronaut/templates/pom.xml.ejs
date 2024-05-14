@@ -87,9 +87,6 @@ _%>
         <hibernate.version><%= versions.hibernate %></hibernate.version>
         <jakarta-inject.version><%= versions.jakartaInject %></jakarta-inject.version>
         <jakarta-mail.version><%= versions.jakartaMail %></jakarta-mail.version>
-        <%_ if (!skipUserManagement) { _%>
-        <jbcrypt.version><%= versions.jbcrypt %></jbcrypt.version>
-        <%_ } _%>
         <logback.version><%= versions.logback %></logback.version>
         <mapstruct.version><%- javaDependencies.mapstruct %></mapstruct.version>
         <problem.version><%= versions.problem %></problem.version>
@@ -380,13 +377,6 @@ _%>
             <groupId>io.micronaut.security</groupId>
             <artifactId>micronaut-security-oauth2</artifactId>
             <scope>compile</scope>
-        </dependency>
-        <%_ } _%>
-        <%_ if (!skipUserManagement) { _%>
-        <dependency>
-            <groupId>org.mindrot</groupId>
-            <artifactId>jbcrypt</artifactId>
-            <version>${jbcrypt.version}</version>
         </dependency>
         <%_ } _%>
         <%_ if (applicationTypeMicroservice) { _%>

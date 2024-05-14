@@ -21,5 +21,7 @@ redisson = { module = 'org.redisson:redisson', version = '3.30.0' }
 
 swagger-annotations = { module = 'io.swagger.core.v3:swagger-annotations', version = '2.2.19' }
 
+jbcrypt = { module = 'org.mindrot:jbcrypt', version = '0.4' }
+
 [plugins]
 micronaut-application = { id = 'io.micronaut.application', version = '4.3.8' }
