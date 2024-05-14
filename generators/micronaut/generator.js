@@ -146,8 +146,6 @@ export default class extends BaseApplicationGenerator {
         });
       },
 
-      registerSpringFactory: undefined,
-
       addLogNeedles({ source, application }) {
         source.addIntegrationTestAnnotation = ({ package: packageName, annotation }) =>
           this.editFile(this.destinationPath(`${application.javaPackageTestDir}IntegrationTest.java`), content =>
