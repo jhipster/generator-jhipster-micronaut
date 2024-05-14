@@ -52,7 +52,6 @@ module.exports = {
   versions: {
     hibernate: '6.4.4.Final',
     logback: '1.5.3',
-    caffeine: '3.1.8',
     testcontainers: '1.19.6',
   },
 };
