@@ -10,7 +10,6 @@ import { writeFiles } from './files.js';
 
 import { entityFiles } from './entity-files.js';
 import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
-import constants from '../constants.cjs';
 import { serverTestFrameworkChoices } from './command.js';
 
 export default class extends BaseApplicationGenerator {
