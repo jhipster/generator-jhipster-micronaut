@@ -116,6 +116,8 @@ export default class extends BaseApplicationGenerator {
 
         // Liquibase generator uses this property, otherwise it will be used from gradle's dependenciesManagement plugin.
         application.javaDependencies.liquibase = application.javaManagedProperties['liquibase.version'];
+        // Required by Liquibase generator due to liquibase-maven-plugin
+        application.javaDependencies.h2 = application.javaManagedProperties['h2.version'];
 
         // Used by getImperativeMavenDefinition for annotation processor.
         application.javaDependencies.hibernate = application.javaManagedProperties['hibernate.version'];
