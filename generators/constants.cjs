@@ -51,7 +51,6 @@ module.exports = {
   },
   versions: {
     hibernate: '6.4.4.Final',
-    prometheusSimpleclient: '0.16.0',
     jbcrypt: '0.4',
     logback: '1.5.3',
     mockito: '5.10.0',
