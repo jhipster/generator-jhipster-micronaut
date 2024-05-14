@@ -222,8 +222,7 @@ export default class extends BaseApplicationGenerator {
 
         if (!application.skipUserManagement) {
           source.addJavaDefinition({
-            versions: [{ name: 'jbcrypt', version: javaDependencies.jbcrypt }],
-            dependencies: [{ groupId: 'org.mindrot', artifactId: 'jbcrypt', versionRef: 'jbcrypt' }],
+            dependencies: [{ groupId: 'org.mindrot', artifactId: 'jbcrypt', version: javaDependencies.jbcrypt }],
           });
         }
       },
