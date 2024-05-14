@@ -86,9 +86,6 @@ _%>
         <micronaut.version><%= javaDependencies['micronaut-platform'] %></micronaut.version>
         <prometheus-simpleclient.version><%= versions.prometheusSimpleclient %></prometheus-simpleclient.version>
         <hibernate.version><%= versions.hibernate %></hibernate.version>
-        <!-- The javassist version should match the one managed by
-        https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
-        <javassist.version><%= versions.javassist %></javassist.version>
         <jakarta-inject.version><%= versions.jakartaInject %></jakarta-inject.version>
         <jakarta-mail.version><%= versions.jakartaMail %></jakarta-mail.version>
         <%_ if (!skipUserManagement) { _%>
