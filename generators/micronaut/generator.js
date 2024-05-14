@@ -4,6 +4,7 @@ import BaseApplicationGenerator from 'generator-jhipster/generators/server';
 import { GENERATOR_DOCKER, GENERATOR_LANGUAGES, GENERATOR_LIQUIBASE, GENERATOR_SERVER } from 'generator-jhipster/generators';
 import { createNeedleCallback, createBase64Secret } from 'generator-jhipster/generators/base/support';
 import { addJavaAnnotation } from 'generator-jhipster/generators/java/support';
+import { parseMavenPom } from 'generator-jhipster/generators/maven/support';
 import mnConstants from '../constants.cjs';
 import { writeFiles } from './files.js';
 
@@ -108,6 +109,11 @@ export default class extends BaseApplicationGenerator {
     return this.asLoadingTaskGroup({
       async loading({ application }) {
         await this.loadCurrentJHipsterCommandConfig(application);
+      },
+      loadMicronautPlatformPom({ application }) {
+        const pomFile = this.readTemplate(this.templatePath('../resources/micronaut-platform.pom')).toString();
+        const pom = parseMavenPom(pomFile);
+        Object.assign(application.javaManagedProperties, pom.project.properties);
       },
     });
   }
@@ -250,7 +256,9 @@ export default class extends BaseApplicationGenerator {
       },
       sqlDependencies({ application, source }) {
         if (application.databaseTypeSql) {
-          source.addMavenDefinition?.(getImperativeMavenDefinition({ javaDependencies: { hibernate: constants.versions.hibernate } }));
+          source.addMavenDefinition?.(
+            getImperativeMavenDefinition({ javaDependencies: { hibernate: application.javaManagedProperties['hibernate.version'] } }),
+          );
           source.addMavenDefinition?.(getCommonMavenDefinition());
           source.addMavenDependency?.(getDatabaseDriverForDatabase(application.prodDatabaseType).jdbc);
         }

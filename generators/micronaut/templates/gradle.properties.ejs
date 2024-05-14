@@ -27,9 +27,7 @@ profile=dev
 # Dependency versions
 micronautVersion=<%= javaDependencies['micronaut-platform'] %>
 
-# The hibernate version should match the one managed by Micronaut data
-# https://mvnrepository.com/artifact/io.micronaut.data/micronaut-data-hibernate-jpa/1.0.1
-hibernate_version=<%=versions.hibernate%>
+hibernate_version=<%= javaManagedProperties['hibernate.version'] %>
 mapstruct_version=<%=javaDependencies.mapstruct%>
 archunit_junit5_version=<%= javaDependencies['archunit-junit5'] %>
 logback_version=<%=versions.logback%>
