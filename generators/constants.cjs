@@ -52,7 +52,6 @@ module.exports = {
   versions: {
     hibernate: '6.4.4.Final',
     prometheusSimpleclient: '0.16.0',
-    jackson: '2.15.2',
     jbcrypt: '0.4',
     logback: '1.5.3',
     swaggerAnnotations: '2.2.19',
