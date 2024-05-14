@@ -1,10 +1,12 @@
 [libraries]
 commons-lang3 = { module = 'org.apache.commons:commons-lang3', version = '3.14.0' }
 
+# Required by Liquibase generator due to liquibase-maven-plugin
 jakarta-validation = { module = 'jakarta.validation:jakarta.validation-api', version = '3.0.2' }
 
 jaxb-runtime = { module = 'org.glassfish.jaxb:jaxb-runtime', version = '4.0.5' }
 
+# Required by Liquibase generator due to liquibase-maven-plugin
 h2 = { module = 'com.h2database:h2', version = '2.2.224' }
 
 logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-encoder', version = '7.4' }
