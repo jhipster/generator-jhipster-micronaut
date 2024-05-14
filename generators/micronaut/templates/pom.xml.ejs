@@ -93,14 +93,13 @@ _%>
         <maven-clean-plugin.version><%- javaDependencies['maven-clean-plugin'] %></maven-clean-plugin.version>
         <maven-compiler-plugin.version><%- javaDependencies['maven-compiler-plugin'] %></maven-compiler-plugin.version>
         <maven-javadoc-plugin.version><%- javaDependencies['maven-javadoc-plugin'] %></maven-javadoc-plugin.version>
-        <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
         <maven-site-plugin.version><%- javaDependencies['maven-site-plugin'] %></maven-site-plugin.version>
         <maven-enforcer-plugin.version><%- javaDependencies['maven-enforcer-plugin'] %></maven-enforcer-plugin.version>
         <maven-failsafe-plugin.version><%- javaDependencies['maven-failsafe-plugin'] %></maven-failsafe-plugin.version>
         <maven-resources-plugin.version><%- javaDependencies['maven-resources-plugin'] %></maven-resources-plugin.version>
         <maven-surefire-plugin.version><%- javaDependencies['maven-surefire-plugin'] %></maven-surefire-plugin.version>
         <git-commit-id-maven-plugin.version><%- javaDependencies['git-commit-id-maven-plugin'] %></git-commit-id-maven-plugin.version>
-        <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
+        <lifecycle-mapping.version><%- javaDependencies['lifecycle-mapping'] %></lifecycle-mapping.version>
         <properties-maven-plugin.version><%- javaDependencies['properties-maven-plugin'] %></properties-maven-plugin.version>
 <%_ if (enableSwaggerCodegen) { _%>
         <jackson-databind-nullable.version><%= javaDependencies['jackson-databind-nullable'] %></jackson-databind-nullable.version>
@@ -398,10 +397,6 @@ _%>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
             </plugin>
             <plugin>
@@ -556,15 +551,6 @@ _%>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>${maven-site-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-eclipse-plugin</artifactId>
-                    <version>${maven-eclipse-plugin.version}</version>
-                    <configuration>
-                        <downloadSources>true</downloadSources>
-                        <downloadJavadocs>true</downloadJavadocs>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
