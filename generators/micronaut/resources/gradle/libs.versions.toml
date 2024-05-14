@@ -9,8 +9,6 @@ jaxb-runtime = { module = 'org.glassfish.jaxb:jaxb-runtime', version = '4.0.5' }
 
 h2 = { module = 'com.h2database:h2', version = '2.2.224' }
 
-liquibase = { module = 'org.liquibase:liquibase-core', version = '4.27.0' }
-
 logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-encoder', version = '7.4' }
 
 micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', version = '4.4.2' }

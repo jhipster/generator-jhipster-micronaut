@@ -113,6 +113,8 @@ export default class extends BaseApplicationGenerator {
         const pomFile = this.readTemplate(this.templatePath('../resources/micronaut-platform.pom')).toString();
         const pom = parseMavenPom(pomFile);
         Object.assign(application.javaManagedProperties, pom.project.properties);
+        // Liquibase generator uses this property, otherwise it will be used from gradle's dependenciesManagement plugin.
+        application.javaDependencies.liquibase = application.javaManagedProperties['liquibase.version'];
       },
     });
   }
