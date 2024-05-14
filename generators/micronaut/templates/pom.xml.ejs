@@ -84,7 +84,6 @@ _%>
 
         <!-- Dependency versions -->
         <micronaut.version><%= javaDependencies['micronaut-platform'] %></micronaut.version>
-        <logback.version><%= versions.logback %></logback.version>
         <mapstruct.version><%- javaDependencies.mapstruct %></mapstruct.version>
         <archunit-junit5.version><%- javaDependencies['archunit-junit5'] %></archunit-junit5.version>
         <!-- Plugin versions -->
@@ -137,18 +136,6 @@ _%>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>ch.qos.logback</groupId>
-                    <artifactId>logback-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>${logback.version}</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.validation</groupId>

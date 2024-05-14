@@ -48,7 +48,4 @@ module.exports = {
       dialect: 'org.hibernate.dialect.SQLServer2012Dialect',
     },
   },
-  versions: {
-    logback: '1.5.3',
-  },
 };
