@@ -9,8 +9,6 @@ micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', vers
 
 redisson = { module = 'org.redisson:redisson', version = '3.30.0' }
 
-swagger-annotations = { module = 'io.swagger.core.v3:swagger-annotations', version = '2.2.19' }
-
 jbcrypt = { module = 'org.mindrot:jbcrypt', version = '0.4' }
 
 problem-violations = { module = 'org.zalando:problem-violations', version = '0.29.1' }

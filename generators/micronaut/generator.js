@@ -208,6 +208,7 @@ export default class extends BaseApplicationGenerator {
         const { javaDependencies } = application;
         source.addJavaDefinition({
           dependencies: [
+            { groupId: 'io.micronaut.openapi', artifactId: 'micronaut-openapi-annotations' },
             {
               groupId: 'net.logstash.logback',
               artifactId: 'logstash-logback-encoder',
@@ -215,7 +216,6 @@ export default class extends BaseApplicationGenerator {
             },
             { groupId: 'tech.jhipster', artifactId: 'jhipster-framework', version: application.jhipsterDependenciesVersion },
             { groupId: 'org.apache.commons', artifactId: 'commons-lang3', version: javaDependencies['commons-lang3'] },
-            { groupId: 'io.swagger.core.v3', artifactId: 'swagger-annotations', version: javaDependencies['swagger-annotations'] },
             { groupId: 'org.mockito', artifactId: 'mockito-core', scope: 'test' },
             { groupId: 'org.zalando', artifactId: 'jackson-datatype-problem', version: javaDependencies['jackson-datatype-problem'] },
             { groupId: 'org.zalando', artifactId: 'problem-violations', version: javaDependencies['problem-violations'] },
