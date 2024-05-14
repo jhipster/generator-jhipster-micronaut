@@ -30,8 +30,8 @@ micronautVersion=<%= javaDependencies['micronaut-platform'] %>
 # The hibernate version should match the one managed by Micronaut data
 # https://mvnrepository.com/artifact/io.micronaut.data/micronaut-data-hibernate-jpa/1.0.1
 hibernate_version=<%=versions.hibernate%>
-mapstruct_version=<%=versions.mapstruct%>
-archunit_junit5_version=<%=versions.archunit%>
+mapstruct_version=<%=javaDependencies.mapstruct%>
+archunit_junit5_version=<%= javaDependencies['archunit-junit5'] %>
 logback_version=<%=versions.logback%>
 swagger_annotations_version=<%=versions.swaggerAnnotations%>
 mockito_version=<%=versions.mockito%>
@@ -40,7 +40,6 @@ jbcrypt_version=<%=versions.jbcrypt%>
 <%_ } _%>
 jakarta_inject_version=<%= versions.jakartaInject %>
 jakarta_mail_version=<%=versions.jakartaMail%>
-simplejavamail_version=<%= versions.simplejavamail %>
 problem_version=<%=versions.problem%>
 <%_ if (searchEngine === 'elasticsearch') { _%>
 log4j2_mock_version=0.0.2
@@ -70,9 +69,6 @@ liquibase_plugin_version=2.2.0
 openapi_plugin_version=4.3.1
 <%_ } _%>
 shadow_plugin_version=7.1.2
-
-#rxjava3 dependencies
-rxJava3Version=<%=versions.rxJava3%>
 
 # jhipster-needle-gradle-property - JHipster will add additional properties here
 
