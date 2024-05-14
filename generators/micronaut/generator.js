@@ -203,6 +203,8 @@ export default class extends BaseApplicationGenerator {
             { groupId: 'org.apache.commons', artifactId: 'commons-lang3', version: javaDependencies['commons-lang3'] },
             { groupId: 'io.swagger.core.v3', artifactId: 'swagger-annotations', version: javaDependencies['swagger-annotations'] },
             { groupId: 'org.mockito', artifactId: 'mockito-core', version: javaDependencies['mockito-core'], scope: 'test' },
+            { groupId: 'org.zalando', artifactId: 'jackson-datatype-problem', version: javaDependencies['jackson-datatype-problem'] },
+            { groupId: 'org.zalando', artifactId: 'problem-violations', version: javaDependencies['problem-violations'] },
           ],
         });
         if (application.buildToolMaven) {
