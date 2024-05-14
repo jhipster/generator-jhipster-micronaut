@@ -33,9 +33,6 @@ hibernate_version=<%=versions.hibernate%>
 mapstruct_version=<%=javaDependencies.mapstruct%>
 archunit_junit5_version=<%= javaDependencies['archunit-junit5'] %>
 logback_version=<%=versions.logback%>
-<%_ if (searchEngine === 'elasticsearch') { _%>
-log4j2_mock_version=0.0.2
-<%_ } _%>
 <%_ if (enableSwaggerCodegen) { _%>
 jackson_databind_nullable_version=<%= javaDependencies['jackson-databind-nullable'] %>
 <%_ } _%>
@@ -47,10 +44,6 @@ jaxb_runtime_version=<%= javaDependencies['jaxb-runtime'] %>
 
 # gradle plugin version
 git_properties_plugin_version=2.4.1
-apt_plugin_version=0.21
-<%_ if (databaseTypeSql) { _%>
-liquibase_plugin_version=2.2.0
-<%_ } _%>
 <%_ if (enableSwaggerCodegen) { _%>
 openapi_plugin_version=4.3.1
 <%_ } _%>
