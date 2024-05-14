@@ -119,6 +119,9 @@ export default class extends BaseApplicationGenerator {
 
         // Used by getImperativeMavenDefinition for annotation processor.
         application.javaDependencies.hibernate = application.javaManagedProperties['hibernate.version'];
+
+        // Used by micronaut-cache.
+        application.javaDependencies.ehcache = application.javaManagedProperties['ehcache.version'];
       },
     });
   }
