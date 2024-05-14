@@ -50,7 +50,6 @@ module.exports = {
     },
   },
   versions: {
-    netty: '4.1.107.Final',
     rxJava3: '2.3.0',
     hibernate: '6.4.4.Final',
     prometheusSimpleclient: '0.16.0',
