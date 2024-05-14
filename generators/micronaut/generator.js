@@ -197,11 +197,13 @@ export default class extends BaseApplicationGenerator {
             { name: 'logstash-logback-encoder', version: javaDependencies['logstash-logback-encoder'] },
             { name: 'jhipster-framework', version: application.jhipsterDependenciesVersion },
             { name: 'commons-lang3', version: javaDependencies['commons-lang3'] },
+            { name: 'swagger-annotations', version: javaDependencies['swagger-annotations'] },
           ],
           dependencies: [
             { groupId: 'net.logstash.logback', artifactId: 'logstash-logback-encoder', versionRef: 'logstash-logback-encoder' },
             { groupId: 'tech.jhipster', artifactId: 'jhipster-framework', versionRef: 'jhipster-framework' },
             { groupId: 'org.apache.commons', artifactId: 'commons-lang3', versionRef: 'commons-lang3' },
+            { groupId: 'io.swagger.core.v3', artifactId: 'swagger-annotations', versionRef: 'swagger-annotations'}
           ],
         });
         if (application.buildToolMaven) {

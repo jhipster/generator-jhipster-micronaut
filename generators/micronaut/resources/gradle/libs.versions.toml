@@ -17,5 +17,7 @@ micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', vers
 
 redisson = { module = 'org.redisson:redisson', version = '3.30.0' }
 
+swagger-annotations = { module = 'io.swagger.core.v3:swagger-annotations', version = '2.2.19' }
+
 [plugins]
 micronaut-application = { id = 'io.micronaut.application', version = '4.3.8' }

@@ -54,7 +54,6 @@ module.exports = {
     prometheusSimpleclient: '0.16.0',
     jbcrypt: '0.4',
     logback: '1.5.3',
-    swaggerAnnotations: '2.2.19',
     mockito: '5.10.0',
     problem: '0.29.1',
     caffeine: '3.1.8',
