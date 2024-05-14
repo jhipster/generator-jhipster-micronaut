@@ -92,7 +92,6 @@ _%>
         <%_ } _%>
         <logback.version><%= versions.logback %></logback.version>
         <mapstruct.version><%- javaDependencies.mapstruct %></mapstruct.version>
-        <mockito.version><%= versions.mockito %></mockito.version>
         <assertj.version><%= versions.assertj %></assertj.version>
         <problem.version><%= versions.problem %></problem.version>
 <%_ if (cacheProvider === 'caffeine') { _%>
@@ -350,12 +349,6 @@ _%>
             <groupId>com.tngtech.archunit</groupId>
             <artifactId>archunit-junit5-api</artifactId>
             <version>${archunit-junit5.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

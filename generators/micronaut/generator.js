@@ -203,7 +203,8 @@ export default class extends BaseApplicationGenerator {
             { groupId: 'net.logstash.logback', artifactId: 'logstash-logback-encoder', versionRef: 'logstash-logback-encoder' },
             { groupId: 'tech.jhipster', artifactId: 'jhipster-framework', versionRef: 'jhipster-framework' },
             { groupId: 'org.apache.commons', artifactId: 'commons-lang3', versionRef: 'commons-lang3' },
-            { groupId: 'io.swagger.core.v3', artifactId: 'swagger-annotations', versionRef: 'swagger-annotations'}
+            { groupId: 'io.swagger.core.v3', artifactId: 'swagger-annotations', versionRef: 'swagger-annotations'},
+            { groupId: 'org.mockito', artifactId: 'mockito-core', version: javaDependencies['mockito-core'], scope: 'test' },
           ],
         });
         if (application.buildToolMaven) {
