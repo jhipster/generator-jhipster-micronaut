@@ -138,7 +138,6 @@ export default class extends BaseApplicationGenerator {
       prepareForTemplates({ application }) {
         // Workaround
         application.MN_CONSTANTS = mnConstants;
-        application.dockerContainers.redis = mnConstants.DOCKER_REDIS;
         // Add liquibase h2 database references.
         application.liquibaseAddH2Properties = true;
         Object.assign(application, {
