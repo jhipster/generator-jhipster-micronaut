@@ -29,3 +29,9 @@ jackson-datatype-problem = { module = 'org.zalando:jackson-datatype-problem', ve
 
 [plugins]
 micronaut-application = { id = 'io.micronaut.application', version = '4.3.8' }
+
+gradle-git-properties = { id = 'com.gorylenko.gradle-git-properties', version = '2.4.1' }
+
+openapi-generator = { id = 'org.openapi.generator', version = '4.3.1' }
+
+shadow = { id = 'com.github.johnrengelman.shadow', version = '7.1.2' }

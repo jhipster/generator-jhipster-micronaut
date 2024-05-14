@@ -212,12 +212,34 @@ export default class extends BaseApplicationGenerator {
             properties: [{ property: 'modernizer.failOnViolations', value: 'false' }],
           });
         } else if (application.buildToolGradle) {
-          source.addGradleDependencyCatalogPlugin({
-            id: 'io.micronaut.application',
-            pluginName: 'micronaut-application',
-            version: application.javaDependencies['micronaut-application'],
-            addToBuild: true,
-          });
+          source.addGradleDependencyCatalogPlugins([
+            {
+              id: 'io.micronaut.application',
+              pluginName: 'micronaut-application',
+              version: application.javaDependencies['micronaut-application'],
+              addToBuild: true,
+            },
+            {
+              id: 'com.gorylenko.gradle-git-properties',
+              pluginName: 'gradle-git-properties',
+              version: application.javaDependencies['gradle-git-properties'],
+              addToBuild: true,
+            },
+            {
+              id: 'com.github.johnrengelman.shadow',
+              pluginName: 'shadow',
+              version: application.javaDependencies['shadow'],
+              addToBuild: true,
+            },
+          ]);
+          if (application.enableSwaggerCodegen) {
+            source.addGradleDependencyCatalogPlugin({
+              id: 'org.openapi.generator',
+              pluginName: 'openapi-generator',
+              version: application.javaDependencies['openapi-generator'],
+              addToBuild: true,
+            });
+          }
         }
 
         if (!application.skipUserManagement) {
