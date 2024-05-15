@@ -18,7 +18,6 @@
  */
 
 module.exports = {
-  DOCKER_REDIS: 'redis:6.0.10',
   sqlDb: {
     h2Disk: {
       driver: 'org.h2.Driver',
@@ -48,25 +47,5 @@ module.exports = {
       driver: '',
       dialect: 'org.hibernate.dialect.SQLServer2012Dialect',
     },
-  },
-  versions: {
-    netty: '4.1.107.Final',
-    rxJava3: '2.3.0',
-    hibernate: '6.4.4.Final',
-    prometheusSimpleclient: '0.16.0',
-    jackson: '2.15.2',
-    javassist: '3.27.0-GA', // Should match Hibernate deps
-    javaxMail: '2.0.1',
-    jbcrypt: '0.4',
-    logback: '1.5.3',
-    mapstruct: '1.5.5.Final',
-    swaggerAnnotations: '2.2.19',
-    mockito: '5.10.0',
-    problem: '0.29.1',
-    caffeine: '3.1.8',
-    archunit: '1.2.1',
-    simplejavamail: '8.6.3',
-    testcontainers: '1.19.6',
-    assertj: '3.25.3',
   },
 };

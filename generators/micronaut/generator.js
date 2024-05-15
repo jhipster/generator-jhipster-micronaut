@@ -4,12 +4,12 @@ import BaseApplicationGenerator from 'generator-jhipster/generators/server';
 import { GENERATOR_DOCKER, GENERATOR_LANGUAGES, GENERATOR_LIQUIBASE, GENERATOR_SERVER } from 'generator-jhipster/generators';
 import { createNeedleCallback, createBase64Secret } from 'generator-jhipster/generators/base/support';
 import { addJavaAnnotation } from 'generator-jhipster/generators/java/support';
+import { parseMavenPom } from 'generator-jhipster/generators/maven/support';
 import mnConstants from '../constants.cjs';
 import { writeFiles } from './files.js';
 
 import { entityFiles } from './entity-files.js';
 import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
-import constants from '../constants.cjs';
 import { serverTestFrameworkChoices } from './command.js';
 
 export default class extends BaseApplicationGenerator {
@@ -109,6 +109,22 @@ export default class extends BaseApplicationGenerator {
       async loading({ application }) {
         await this.loadCurrentJHipsterCommandConfig(application);
       },
+      loadMicronautPlatformPom({ application }) {
+        const pomFile = this.readTemplate(this.templatePath('../resources/micronaut-platform.pom')).toString();
+        const pom = parseMavenPom(pomFile);
+        Object.assign(application.javaManagedProperties, pom.project.properties);
+
+        // Liquibase generator uses this property, otherwise it will be used from gradle's dependenciesManagement plugin.
+        application.javaDependencies.liquibase = application.javaManagedProperties['liquibase.version'];
+        // Required by Liquibase generator due to liquibase-maven-plugin
+        application.javaDependencies.h2 = application.javaManagedProperties['h2.version'];
+
+        // Used by getImperativeMavenDefinition for annotation processor.
+        application.javaDependencies.hibernate = application.javaManagedProperties['hibernate.version'];
+
+        // Used by micronaut-cache.
+        application.javaDependencies.ehcache = application.javaManagedProperties['ehcache.version'];
+      },
     });
   }
 
@@ -122,15 +138,12 @@ export default class extends BaseApplicationGenerator {
       prepareForTemplates({ application }) {
         // Workaround
         application.MN_CONSTANTS = mnConstants;
-        application.dockerContainers.redis = mnConstants.DOCKER_REDIS;
         // Add liquibase h2 database references.
         application.liquibaseAddH2Properties = true;
         Object.assign(application, {
           useNpmWrapper: application.clientFrameworkAny && !application.skipClient,
         });
       },
-
-      registerSpringFactory: undefined,
 
       addLogNeedles({ source, application }) {
         source.addIntegrationTestAnnotation = ({ package: packageName, annotation }) =>
@@ -193,15 +206,18 @@ export default class extends BaseApplicationGenerator {
       addMicronautDependencies({ application, source }) {
         const { javaDependencies } = application;
         source.addJavaDefinition({
-          versions: [
-            { name: 'logstash-logback-encoder', version: javaDependencies['logstash-logback-encoder'] },
-            { name: 'jhipster-framework', version: application.jhipsterDependenciesVersion },
-            { name: 'commons-lang3', version: javaDependencies['commons-lang3'] },
-          ],
           dependencies: [
-            { groupId: 'net.logstash.logback', artifactId: 'logstash-logback-encoder', versionRef: 'logstash-logback-encoder' },
-            { groupId: 'tech.jhipster', artifactId: 'jhipster-framework', versionRef: 'jhipster-framework' },
-            { groupId: 'org.apache.commons', artifactId: 'commons-lang3', versionRef: 'commons-lang3' },
+            { groupId: 'io.micronaut.openapi', artifactId: 'micronaut-openapi-annotations' },
+            {
+              groupId: 'net.logstash.logback',
+              artifactId: 'logstash-logback-encoder',
+              version: javaDependencies['logstash-logback-encoder'],
+            },
+            { groupId: 'tech.jhipster', artifactId: 'jhipster-framework', version: application.jhipsterDependenciesVersion },
+            { groupId: 'org.apache.commons', artifactId: 'commons-lang3', version: javaDependencies['commons-lang3'] },
+            { groupId: 'org.mockito', artifactId: 'mockito-core', scope: 'test' },
+            { groupId: 'org.zalando', artifactId: 'jackson-datatype-problem', version: javaDependencies['jackson-datatype-problem'] },
+            { groupId: 'org.zalando', artifactId: 'problem-violations', version: javaDependencies['problem-violations'] },
           ],
         });
         if (application.buildToolMaven) {
@@ -209,17 +225,47 @@ export default class extends BaseApplicationGenerator {
             properties: [{ property: 'modernizer.failOnViolations', value: 'false' }],
           });
         } else if (application.buildToolGradle) {
-          source.addGradleDependencyCatalogPlugin({
-            id: 'io.micronaut.application',
-            pluginName: 'micronaut-application',
-            version: application.javaDependencies['micronaut-application'],
-            addToBuild: true,
+          source.addGradleDependencyCatalogPlugins([
+            {
+              id: 'io.micronaut.application',
+              pluginName: 'micronaut-application',
+              version: application.javaDependencies['micronaut-application'],
+              addToBuild: true,
+            },
+            {
+              id: 'com.gorylenko.gradle-git-properties',
+              pluginName: 'gradle-git-properties',
+              version: application.javaDependencies['gradle-git-properties'],
+              addToBuild: true,
+            },
+            {
+              id: 'com.github.johnrengelman.shadow',
+              pluginName: 'shadow',
+              version: application.javaDependencies['shadow'],
+              addToBuild: true,
+            },
+          ]);
+          if (application.enableSwaggerCodegen) {
+            source.addGradleDependencyCatalogPlugin({
+              id: 'org.openapi.generator',
+              pluginName: 'openapi-generator',
+              version: application.javaDependencies['openapi-generator'],
+              addToBuild: true,
+            });
+          }
+        }
+
+        if (!application.skipUserManagement) {
+          source.addJavaDefinition({
+            dependencies: [{ groupId: 'org.mindrot', artifactId: 'jbcrypt', version: javaDependencies.jbcrypt }],
           });
         }
       },
       sqlDependencies({ application, source }) {
         if (application.databaseTypeSql) {
-          source.addMavenDefinition?.(getImperativeMavenDefinition({ javaDependencies: { hibernate: constants.versions.hibernate } }));
+          source.addMavenDefinition?.(
+            getImperativeMavenDefinition({ javaDependencies: { hibernate: application.javaManagedProperties['hibernate.version'] } }),
+          );
           source.addMavenDefinition?.(getCommonMavenDefinition());
           source.addMavenDependency?.(getDatabaseDriverForDatabase(application.prodDatabaseType).jdbc);
         }

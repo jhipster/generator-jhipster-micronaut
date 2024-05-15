@@ -1,10 +1,5 @@
 import chalk from 'chalk';
-import constants from '../generators/constants.cjs';
 import { readFileSync } from 'fs';
-
-const {
-  versions: { micronaut: MICRONAUT_VERSION },
-} = constants;
 
 export function getLogo() {
   const { version } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)));
@@ -19,7 +14,7 @@ ${chalk.blue(' ╚═╝     ╚═╝')}${chalk.green(' ╚═╝   ╚═╝ �
 
 ${chalk.white.bold('                            https://www.jhipster.tech')}
 ${chalk.blue.bold('                              https://micronaut.io\n')}
-${chalk.white(` Welcome to MHipster v${chalk.white.bold(version)} :: Running Micronaut v${chalk.white.bold(MICRONAUT_VERSION)}`)}
+${chalk.white(` Welcome to MHipster v${chalk.white.bold(version)}`)}
 ${chalk.white(' This blueprint generates your backend as a Micronaut Java project.')}
 ${chalk.green(' _______________________________________________________________________________________________________________\n')}
 ${chalk.white(` ${chalk.yellow('::')} This project is a ${chalk.blue.bold('Micronaut')} blueprint for ${chalk.green.bold('JHipster')}`)}

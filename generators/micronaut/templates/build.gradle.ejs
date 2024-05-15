@@ -21,11 +21,6 @@ plugins {
     id "maven-publish"
     id "idea"
     id "application"
-    id "com.gorylenko.gradle-git-properties"
-    <%_ if (enableSwaggerCodegen) { _%>
-    id "org.openapi.generator"
-    <%_ } _%>
-    id "com.github.johnrengelman.shadow"
     // jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
@@ -217,8 +212,7 @@ dependencies {
     <%_ } _%>
     annotationProcessor "io.micronaut.openapi:micronaut-openapi"
 
-    implementation "ch.qos.logback:logback-classic:$logback_version"
-    implementation "io.swagger.core.v3:swagger-annotations:$swagger_annotations_version"
+    implementation "ch.qos.logback:logback-classic"
     implementation "io.micrometer:micrometer-registry-prometheus"
 
     implementation "com.fasterxml.jackson.core:jackson-annotations"
@@ -260,7 +254,7 @@ dependencies {
         <%_ if (enableHibernateCache) { _%>
     implementation "org.hibernate:hibernate-jcache:$hibernate_version"
         <%_ } _%>
-    testImplementation "org.testcontainers:testcontainers:$testcontainers_version"
+    testImplementation "org.testcontainers:testcontainers"
     <%_ } _%>
     <%_ if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'redis'].includes(cacheProvider) || applicationTypeGateway) { _%>
     implementation "io.micronaut.cache:micronaut-cache-core"
@@ -287,12 +281,9 @@ dependencies {
         <%_ } _%>
     <%_ } _%>
     <%_ if (cacheProvider === 'caffeine') { _%>
-    implementation "com.github.ben-manes.caffeine:caffeine:${caffeine_version}"
-    implementation "com.github.ben-manes.caffeine:jcache:${caffeine_version}"
-    implementation "com.typesafe:config:${typesafe_config_version}"
     implementation "io.micronaut.cache:micronaut-cache-caffeine"
         <%_ if (enableHibernateCache) { _%>
-    implementation "org.hibernate:hibernate-jcache:$hibernate_version"
+    implementation "org.hibernate:hibernate-jcache"
         <%_ } _%>
     <%_ } _%>
 
@@ -306,10 +297,6 @@ dependencies {
     implementation "io.micronaut.security:micronaut-security-oauth2"
 <%_ } _%>
     implementation "io.micronaut.views:micronaut-views-thymeleaf"
-
-<%_ if (!skipUserManagement) { _%>
-    implementation "org.mindrot:jbcrypt:$jbcrypt_version"
-<%_ } _%>
 
     compileOnly "org.graalvm.nativeimage:svm"
 
@@ -326,7 +313,6 @@ dependencies {
     implementation("io.micronaut.data:micronaut-data-jdbc") {
         exclude group: 'io.micronaut', module: 'micronaut-jdbc'
     }
-    implementation "jakarta.persistence:jakarta.persistence-api:3.1.0"
 <%_ if (serviceDiscoveryType === 'eureka' || serviceDiscoveryType === 'consul') { _%>
     implementation "io.micronaut.discovery:micronaut-discovery-client"
 <%_ } _%>
@@ -335,14 +321,6 @@ dependencies {
     runtimeOnly("org.eclipse.angus:angus-mail")
     implementation("io.micronaut.email:micronaut-email-template")
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
-
-    implementation "org.zalando:problem-violations:$problem_version"
-    implementation "org.zalando:jackson-datatype-problem:0.27.1"
-    <%_ if (searchEngine === 'elasticsearch') { _%>
-
-    // log4j2-mock needed to create embedded elasticsearch instance with SLF4J
-    runtimeOnly "de.dentrassi.elasticsearch:log4j2-mock:$log4j2_mock_version"
-    <%_ } _%>
     <%_ if (messageBroker === 'kafka') { _%>
         <%_ if (!reactive) { _%>
     implementation "org.apache.kafka:kafka-clients"
@@ -403,7 +381,6 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-engine"
     testImplementation "org.junit.jupiter:junit-jupiter-api"
     testImplementation "org.assertj:assertj-core"
-    testImplementation "org.mockito:mockito-core:$mockito_version"
 
     testImplementation "com.tngtech.archunit:archunit-junit5-api:${archunit_junit5_version}"
     testRuntimeOnly "com.tngtech.archunit:archunit-junit5-engine:${archunit_junit5_version}"
@@ -424,7 +401,7 @@ dependencies {
     <%_ } _%>
 
     implementation("io.micronaut.rxjava3:micronaut-rxjava3")
-    implementation("io.micronaut.rxjava3:micronaut-rxjava3-http-client:$rxJava3Version")
+    implementation("io.micronaut.rxjava3:micronaut-rxjava3-http-client")
 
     // jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }

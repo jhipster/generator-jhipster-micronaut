@@ -27,52 +27,17 @@ profile=dev
 # Dependency versions
 micronautVersion=<%= javaDependencies['micronaut-platform'] %>
 
-# The hibernate version should match the one managed by Micronaut data
-# https://mvnrepository.com/artifact/io.micronaut.data/micronaut-data-hibernate-jpa/1.0.1
-hibernate_version=<%=versions.hibernate%>
-mapstruct_version=<%=versions.mapstruct%>
-archunit_junit5_version=<%=versions.archunit%>
-logback_version=<%=versions.logback%>
-swagger_annotations_version=<%=versions.swaggerAnnotations%>
-mockito_version=<%=versions.mockito%>
-<%_ if (!skipUserManagement) { _%>
-jbcrypt_version=<%=versions.jbcrypt%>
-<%_ } _%>
-jakarta_inject_version=<%= versions.jakartaInject %>
-jakarta_mail_version=<%=versions.jakartaMail%>
-simplejavamail_version=<%= versions.simplejavamail %>
-problem_version=<%=versions.problem%>
-<%_ if (searchEngine === 'elasticsearch') { _%>
-log4j2_mock_version=0.0.2
-<%_ } _%>
+hibernate_version=<%= javaManagedProperties['hibernate.version'] %>
+mapstruct_version=<%=javaDependencies.mapstruct%>
+archunit_junit5_version=<%= javaDependencies['archunit-junit5'] %>
 <%_ if (enableSwaggerCodegen) { _%>
 jackson_databind_nullable_version=<%= javaDependencies['jackson-databind-nullable'] %>
 <%_ } _%>
-<%_ if (cacheProvider === 'caffeine') { _%>
-caffeine_version=<%=versions.caffeine%>
-typesafe_config_version=1.4.0
-<%_ } _%>
-testcontainers_version=<%= versions.testcontainers %>
-
 liquibaseTaskPrefix=liquibase
 
 <%_ if (databaseTypeSql) { _%>
 jaxb_runtime_version=<%= javaDependencies['jaxb-runtime'] %>
 <%_ } _%>
-
-# gradle plugin version
-git_properties_plugin_version=2.4.1
-apt_plugin_version=0.21
-<%_ if (databaseTypeSql) { _%>
-liquibase_plugin_version=2.2.0
-<%_ } _%>
-<%_ if (enableSwaggerCodegen) { _%>
-openapi_plugin_version=4.3.1
-<%_ } _%>
-shadow_plugin_version=7.1.2
-
-#rxjava3 dependencies
-rxJava3Version=<%=versions.rxJava3%>
 
 # jhipster-needle-gradle-property - JHipster will add additional properties here
 

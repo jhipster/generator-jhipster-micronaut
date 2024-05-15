@@ -1,15 +1,10 @@
 [libraries]
 commons-lang3 = { module = 'org.apache.commons:commons-lang3', version = '3.14.0' }
 
-ehcache = { module = 'org.ehcache:ehcache', version = '3.10.8' }
-
+# Required by Liquibase generator due to liquibase-maven-plugin
 jakarta-validation = { module = 'jakarta.validation:jakarta.validation-api', version = '3.0.2' }
 
 jaxb-runtime = { module = 'org.glassfish.jaxb:jaxb-runtime', version = '4.0.5' }
-
-h2 = { module = 'com.h2database:h2', version = '2.2.224' }
-
-liquibase = { module = 'org.liquibase:liquibase-core', version = '4.27.0' }
 
 logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-encoder', version = '7.4' }
 
@@ -17,5 +12,20 @@ micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', vers
 
 redisson = { module = 'org.redisson:redisson', version = '3.30.0' }
 
+jbcrypt = { module = 'org.mindrot:jbcrypt', version = '0.4' }
+
+problem-violations = { module = 'org.zalando:problem-violations', version = '0.29.1' }
+
+jackson-datatype-problem = { module = 'org.zalando:jackson-datatype-problem', version = '0.27.1' }
+
+# caffeine
+typesafe = { module = 'com.typesafe:config', version = '1.4.3' }
+
 [plugins]
 micronaut-application = { id = 'io.micronaut.application', version = '4.3.8' }
+
+gradle-git-properties = { id = 'com.gorylenko.gradle-git-properties', version = '2.4.1' }
+
+openapi-generator = { id = 'org.openapi.generator', version = '4.3.1' }
+
+shadow = { id = 'com.github.johnrengelman.shadow', version = '7.1.2' }

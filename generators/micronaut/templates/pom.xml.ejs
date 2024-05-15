@@ -84,46 +84,20 @@ _%>
 
         <!-- Dependency versions -->
         <micronaut.version><%= javaDependencies['micronaut-platform'] %></micronaut.version>
-        <prometheus-simpleclient.version><%= versions.prometheusSimpleclient %></prometheus-simpleclient.version>
-        <hibernate.version><%= versions.hibernate %></hibernate.version>
-        <!-- The javassist version should match the one managed by
-        https://mvnrepository.com/artifact/org.hibernate/hibernate-core/${hibernate.version} -->
-        <javassist.version><%= versions.javassist %></javassist.version>
-        <jakarta-inject.version><%= versions.jakartaInject %></jakarta-inject.version>
-        <jakarta-mail.version><%= versions.jakartaMail %></jakarta-mail.version>
-        <%_ if (!skipUserManagement) { _%>
-        <jbcrypt.version><%= versions.jbcrypt %></jbcrypt.version>
-        <%_ } _%>
-        <logback.version><%= versions.logback %></logback.version>
         <mapstruct.version><%- javaDependencies.mapstruct %></mapstruct.version>
-        <mockito.version><%= versions.mockito %></mockito.version>
-        <assertj.version><%= versions.assertj %></assertj.version>
-        <problem.version><%= versions.problem %></problem.version>
-        <jackson.version><%= versions.jackson %></jackson.version>
-<%_ if (cacheProvider === 'caffeine') { _%>
-        <caffeine.version><%= versions.caffeine %></caffeine.version>
-        <typesafe.version>1.4.0</typesafe.version>
-<%_ } _%>
-<%_ if (cacheProviderEhcache) { _%>
-        <ehcache.version>3.10.8</ehcache.version>
-<%_ } _%>
         <archunit-junit5.version><%- javaDependencies['archunit-junit5'] %></archunit-junit5.version>
-        <testcontainers.version><%= versions.testcontainers %></testcontainers.version>
         <!-- Plugin versions -->
         <maven-antrun-plugin.version><%- javaDependencies['maven-antrun-plugin'] %></maven-antrun-plugin.version>
         <maven-clean-plugin.version><%- javaDependencies['maven-clean-plugin'] %></maven-clean-plugin.version>
         <maven-compiler-plugin.version><%- javaDependencies['maven-compiler-plugin'] %></maven-compiler-plugin.version>
         <maven-javadoc-plugin.version><%- javaDependencies['maven-javadoc-plugin'] %></maven-javadoc-plugin.version>
-        <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
         <maven-site-plugin.version><%- javaDependencies['maven-site-plugin'] %></maven-site-plugin.version>
         <maven-enforcer-plugin.version><%- javaDependencies['maven-enforcer-plugin'] %></maven-enforcer-plugin.version>
         <maven-failsafe-plugin.version><%- javaDependencies['maven-failsafe-plugin'] %></maven-failsafe-plugin.version>
         <maven-resources-plugin.version><%- javaDependencies['maven-resources-plugin'] %></maven-resources-plugin.version>
         <maven-surefire-plugin.version><%- javaDependencies['maven-surefire-plugin'] %></maven-surefire-plugin.version>
-        <maven-shade-plugin.version>3.5.1</maven-shade-plugin.version>
-        <maven-exec-plugin.version>3.1.1</maven-exec-plugin.version>
         <git-commit-id-maven-plugin.version><%- javaDependencies['git-commit-id-maven-plugin'] %></git-commit-id-maven-plugin.version>
-        <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
+        <lifecycle-mapping.version><%- javaDependencies['lifecycle-mapping'] %></lifecycle-mapping.version>
         <properties-maven-plugin.version><%- javaDependencies['properties-maven-plugin'] %></properties-maven-plugin.version>
 <%_ if (enableSwaggerCodegen) { _%>
         <jackson-databind-nullable.version><%= javaDependencies['jackson-databind-nullable'] %></jackson-databind-nullable.version>
@@ -139,11 +113,6 @@ _%>
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version><%= versions.swaggerAnnotations %></version>
-        </dependency>
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
@@ -167,28 +136,6 @@ _%>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>ch.qos.logback</groupId>
-                    <artifactId>logback-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.zalando</groupId>
-            <artifactId>jackson-datatype-problem</artifactId>
-            <version>0.27.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.zalando</groupId>
-            <artifactId>problem-violations</artifactId>
-            <version><%=versions.problem%></version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.validation</groupId>
@@ -363,15 +310,8 @@ _%>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>${assertj.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -399,13 +339,6 @@ _%>
             <groupId>io.micronaut.security</groupId>
             <artifactId>micronaut-security-oauth2</artifactId>
             <scope>compile</scope>
-        </dependency>
-        <%_ } _%>
-        <%_ if (!skipUserManagement) { _%>
-        <dependency>
-            <groupId>org.mindrot</groupId>
-            <artifactId>jbcrypt</artifactId>
-            <version>${jbcrypt.version}</version>
         </dependency>
         <%_ } _%>
         <%_ if (applicationTypeMicroservice) { _%>
@@ -447,10 +380,6 @@ _%>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -608,15 +537,6 @@ _%>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>${maven-site-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-eclipse-plugin</artifactId>
-                    <version>${maven-eclipse-plugin.version}</version>
-                    <configuration>
-                        <downloadSources>true</downloadSources>
-                        <downloadJavadocs>true</downloadJavadocs>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
