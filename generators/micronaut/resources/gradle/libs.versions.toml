@@ -28,4 +28,4 @@ gradle-git-properties = { id = 'com.gorylenko.gradle-git-properties', version = 
 
 openapi-generator = { id = 'org.openapi.generator', version = '4.3.1' }
 
-shadow = { id = 'com.github.johnrengelman.shadow', version = '7.1.2' }
+shadow = { id = 'com.github.johnrengelman.shadow', version = '8.1.1' }
