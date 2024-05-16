@@ -1,6 +1,6 @@
 {
   "name": "generator-jhipster-micronaut",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "A Micronaut application generator for JHipster",
   "keywords": [
     "yeoman-generator",
