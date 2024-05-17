@@ -47,7 +47,7 @@ describe('SubGenerator bootstrap-application-base of micronaut JHipster blueprin
           "backendTypeJavaAny": true,
           "backendTypeSpringBoot": false,
           "baseName": "jhipster",
-          "blueprints": Any<Array>,
+          "blueprints": Any<Object>,
           "camelizedBaseName": "jhipster",
           "capitalizedBaseName": "Jhipster",
           "clientPackageManager": "npm",
