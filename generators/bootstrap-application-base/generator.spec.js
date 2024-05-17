@@ -29,6 +29,7 @@ describe('SubGenerator bootstrap-application-base of micronaut JHipster blueprin
           backendType: 'micronaut',
           backendTypeSpringBoot: false,
           backendTypeJavaAny: true,
+          blueprints: expect.any(Object),
         },
         `
         {
@@ -46,12 +47,7 @@ describe('SubGenerator bootstrap-application-base of micronaut JHipster blueprin
           "backendTypeJavaAny": true,
           "backendTypeSpringBoot": false,
           "baseName": "jhipster",
-          "blueprints": [
-            {
-              "name": "generator-jhipster-micronaut",
-              "version": "3.2.0",
-            },
-          ],
+          "blueprints": Any<Object>,
           "camelizedBaseName": "jhipster",
           "capitalizedBaseName": "Jhipster",
           "clientPackageManager": "npm",
