@@ -30,9 +30,9 @@ describe('SubGenerator bootstrap-application-base of micronaut JHipster blueprin
           backendTypeSpringBoot: false,
           backendTypeJavaAny: true,
           blueprints: expect.any(Object),
-        },
-        `
+        }, `
         {
+          "anyEntityHasRelationshipWithUser": false,
           "applicationType": "monolith",
           "applicationTypeAny": true,
           "applicationTypeGateway": false,
@@ -135,8 +135,7 @@ describe('SubGenerator bootstrap-application-base of micronaut JHipster blueprin
           "userManagement": Any<Object>,
           "withAdminUi": true,
         }
-      `,
-      );
+      `);
     });
   });
 });
