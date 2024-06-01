@@ -15,7 +15,6 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run test
-
   check-generator:
     permissions:
       contents: none
@@ -29,4 +28,3 @@ jobs:
             exit 0
           fi
           exit 1
-
