@@ -73,6 +73,7 @@
         "written": true
       }
     },
+    "githubWorkflows": true,
     "jhipsterVersion": "8.2.1",
     "js": true,
     "localBlueprint": false,
