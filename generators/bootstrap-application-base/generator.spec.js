@@ -33,6 +33,7 @@ describe('SubGenerator bootstrap-application-base of micronaut JHipster blueprin
         },
         `
         {
+          "anyEntityHasRelationshipWithUser": false,
           "applicationType": "monolith",
           "applicationTypeAny": true,
           "applicationTypeGateway": false,
