@@ -53,6 +53,7 @@ describe('SubGenerator bootstrap-application-base of micronaut JHipster blueprin
           "capitalizedBaseName": "Jhipster",
           "clientPackageManager": "npm",
           "cucumberTests": false,
+          "customizeTemplatePaths": [],
           "cypressTests": false,
           "dasherizedBaseName": "jhipster",
           "dockerServicesDir": "src/main/docker/",

@@ -25,7 +25,7 @@ const hibernateJCache = {
   groupId: 'org.hibernate.orm',
   artifactId: 'hibernate-jcache',
   // TODO drop forced version. Refer to https://github.com/jhipster/generator-jhipster/issues/22579
-  // eslint-disable-next-line no-template-curly-in-string
+
   version: '${hibernate.version}',
 };
 
@@ -83,13 +83,13 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
             groupId: 'org.ehcache',
             artifactId: 'ehcache',
             classifier: 'jakarta',
-            // eslint-disable-next-line no-template-curly-in-string
+
             version: '${ehcache.version}',
           },
           {
             groupId: 'org.glassfish.jaxb',
             artifactId: 'jaxb-runtime',
-            // eslint-disable-next-line no-template-curly-in-string
+
             version: '${jaxb-runtime.version}',
           },
         ],
@@ -119,7 +119,7 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
           {
             groupId: 'com.typesafe',
             artifactId: 'config',
-            // eslint-disable-next-line no-template-curly-in-string
+
             version: '${typesafe.version}',
           },
         ],
@@ -141,7 +141,7 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
           {
             groupId: 'com.hazelcast',
             artifactId: 'hazelcast-spring',
-            // eslint-disable-next-line no-template-curly-in-string
+
             version: '${hazelcast-spring.version}',
           },
         ],
@@ -157,7 +157,7 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
           {
             groupId: 'com.hazelcast',
             artifactId: 'hazelcast-hibernate53',
-            // eslint-disable-next-line no-template-curly-in-string
+
             version: '${hazelcast-hibernate53.version}',
           },
         ],
