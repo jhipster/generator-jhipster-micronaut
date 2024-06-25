@@ -1,5 +1,5 @@
-import chalk from 'chalk';
 import { readFileSync } from 'fs';
+import chalk from 'chalk';
 
 export function getLogo() {
   const { version } = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)));

@@ -305,7 +305,6 @@ export const serverFiles = {
   ],
 };
 
-/* eslint-disable no-template-curly-in-string */
 export function writeFiles() {
   return this.asWritingTaskGroup({
     async writeFiles({ application }) {
