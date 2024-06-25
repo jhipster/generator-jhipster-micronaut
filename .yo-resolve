@@ -1,2 +1,3 @@
 generators/**
 README.md
+cli/cli.cjs
