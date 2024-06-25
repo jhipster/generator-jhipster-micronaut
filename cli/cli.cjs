@@ -12,6 +12,7 @@ const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packa
 
 (async () => {
   const { runJHipster, done, logger } = await import('generator-jhipster/cli');
+  const { getLogo } = await import('./logo.js');
   const executableName = Object.keys(bin)[0];
 
   runJHipster({
@@ -22,9 +23,8 @@ const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packa
     blueprints: {
       [blueprint]: version,
     },
-    printBlueprintLogo: () => {
-      console.log('===================== JHipster micronaut =====================');
-      console.log('');
+    printLogo: () => {
+      console.log(getLogo());
     },
     lookups: [{ packagePaths: [packagePath] }],
   }).catch(done);
