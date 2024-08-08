@@ -62,11 +62,12 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
     beforeAll(async function () {
       await helpers
         .run(BLUEPRINT_NAMESPACE)
-        .withJHipsterConfig()
+        .withJHipsterConfig({
+          buildTool: 'gradle',
+        })
         .withOptions({
           ignoreNeedlesError: true,
           blueprint: 'micronaut',
-          builtTool: 'gradle',
         })
         .withJHipsterLookup()
         .withParentBlueprintLookup();
