@@ -88,6 +88,12 @@ jpa:
           use_query_cache: false
 <%_ if (enableHibernateCache) { _%>
           use_second_level_cache: true
+    <%_ if (cacheProvider === 'hazelcast') { _%>
+          region.factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
+          use_minimal_puts: true
+          hazelcast.instance_name: <%= baseName %>
+          hazelcast.use_lite_member: true
+    <%_ } _%>
 <%_ } else { _%>
           use_second_level_cache: false
 <%_ } _%>

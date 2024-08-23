@@ -4,7 +4,9 @@ import java.util.Properties;
 
 import <%=packageName%>.util.JHipsterProperties;
 import io.micronaut.context.ApplicationContext;
+import io.micronaut.context.annotation.Context;
 import io.micronaut.context.annotation.Factory;
+import io.micronaut.context.annotation.Primary;
 
 <%_ if (cacheProvider === 'ehcache') { _%>
 import java.time.Duration;
@@ -26,7 +28,31 @@ import org.redisson.config.Config;
 import org.redisson.config.SingleServerConfig;
 import org.redisson.jcache.configuration.RedissonConfiguration;
 <%_ } _%>
+<%_ if (cacheProvider === 'hazelcast') { _%>
+import io.micronaut.cache.DynamicCacheManager;
+import io.micronaut.cache.hazelcast.HazelcastCacheManager;
+import io.micronaut.core.convert.ConversionService;
+import io.micronaut.scheduling.TaskExecutors;
+import io.reactivex.rxjava3.core.Flowable;
 
+import com.hazelcast.config.Config;
+import com.hazelcast.config.EvictionPolicy;
+import com.hazelcast.config.ManagementCenterConfig;
+import com.hazelcast.config.MapConfig;
+import com.hazelcast.config.MaxSizePolicy;
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import tech.jhipster.config.JHipsterConstants;
+<%_ if (serviceDiscoveryAny) { _%>
+import io.micronaut.context.env.Environment;
+import io.micronaut.discovery.DiscoveryClient;
+import io.micronaut.discovery.ServiceInstance;
+import io.micronaut.runtime.server.EmbeddedServer;
+<%_ } _%>
+<%_ } _%>
 import javax.cache.CacheManager;
 <%_ if (cacheProvider === 'redis') { _%>
 import javax.cache.Caching;
@@ -34,14 +60,46 @@ import javax.cache.configuration.MutableConfiguration;
 import javax.cache.expiry.CreatedExpiryPolicy;
 import javax.cache.expiry.Duration;
 <%_ } _%>
+<%_ if (cacheProvider === 'hazelcast') { _%>
+import jakarta.annotation.PreDestroy;
+import jakarta.inject.Named;
+<%_ } _%>
 import jakarta.inject.Singleton;
 <%_ if (cacheProvider === 'redis') { _%>
 import java.util.concurrent.TimeUnit;
 <%_ } _%>
+<%_ if (cacheProvider === 'hazelcast') { _%>
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+<%_ } _%>
 
 @Factory
 public class CacheConfiguration {
+<%_ if (cacheProvider === 'hazelcast') { _%>
 
+    private final Logger log = LoggerFactory.getLogger(CacheConfiguration.class);
+
+    private final Environment env;
+
+    private final JHipsterProperties jHipsterProperties;
+
+    <%_ if (serviceDiscoveryAny) { _%>
+    private final EmbeddedServer embeddedServer;
+
+    private final DiscoveryClient discoveryClient;
+    <%_ } _%>
+
+    public CacheConfiguration(Environment env<% if (serviceDiscoveryAny) { %>, EmbeddedServer embeddedServer, DiscoveryClient discoveryClient<%_ } _%>, JHipsterProperties jHipsterProperties) {
+        this.env = env;
+        <% if (serviceDiscoveryAny) { %>
+        this.embeddedServer = embeddedServer;
+        this.discoveryClient = discoveryClient;
+        <%_ } _%>
+        this.jHipsterProperties = jHipsterProperties;
+    }
+
+<%_ } _%>
+<%_ if (cacheProvider === 'ehcache' || cacheProvider === 'caffeine' || cacheProvider === 'redis') { _%>
     private final javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration;
 
     public CacheConfiguration(JHipsterProperties jHipsterProperties) {
@@ -145,4 +203,132 @@ public class CacheConfiguration {
         }
         cm.createCache(cacheName, jcacheConfiguration);
     }
+<%_ } _%>
+<%_ if (cacheProvider === 'hazelcast') { _%>
+    @Singleton
+    @Context
+    @Primary
+    public HazelcastInstance hazelcastInstance(Config hazelcastConfig) {
+        return Hazelcast.newHazelcastInstance(hazelcastConfig);
+    }
+
+    @Singleton
+    public DynamicCacheManager cacheManager(HazelcastInstance hazelcastInstance,
+                                            @Named(TaskExecutors.IO) ExecutorService executorService) {
+        log.debug("Starting HazelcastCacheManager");
+        return new HazelcastCacheManager(ConversionService.SHARED, hazelcastInstance, executorService);
+    }
+
+    @PreDestroy
+    public void destroy() {
+        log.info("Closing Cache Manager");
+        Hazelcast.shutdownAll();
+    }
+
+    @Singleton
+    public Config hazelcastConfig() {
+        log.debug("Configuring Hazelcast");
+        HazelcastInstance hazelCastInstance = Hazelcast.getHazelcastInstanceByName("<%= baseName %>");
+        if (hazelCastInstance != null) {
+            log.debug("Hazelcast already initialized");
+            return hazelCastInstance.getConfig();
+        }
+
+        Config config = new Config();
+        config.setInstanceName("<%= baseName %>");
+    <%_ if (serviceDiscoveryAny) { _%>
+        config.getNetworkConfig().getJoin().getMulticastConfig().setEnabled(false);
+
+        if (this.discoveryClient == null) {
+            log.warn("No discovery service is set up, Hazelcast cannot create a cluster.");
+        } else {
+
+            String serviceId = env.getProperty("micronaut.application.name", String.class).orElse("<%= baseName %>");
+            log.debug("Configuring Hazelcast clustering for instanceId: {}", serviceId);
+
+            // In development, everything goes through 127.0.0.1, with a different port
+            if (env.getActiveNames().contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
+                log.debug(
+                    "Application is running with the \"dev\" profile, Hazelcast " + "cluster will only work with localhost instances"
+                );
+
+                config.getNetworkConfig().setPort(embeddedServer.getPort() + 5701);
+                config.getNetworkConfig().getJoin().getTcpIpConfig().setEnabled(true);
+
+                List<ServiceInstance> instances = Flowable.fromPublisher(discoveryClient.getInstances(serviceId)).blockingFirst();
+                for (ServiceInstance instance : instances) {
+                    String clusterMember = "127.0.0.1:" + (instance.getPort() + 5701);
+                    log.debug("Adding Hazelcast (dev) cluster member {}", clusterMember);
+                    config.getNetworkConfig().getJoin().getTcpIpConfig().addMember(clusterMember);
+                }
+
+            } else { // Production configuration, one host per instance all using port 5701
+                config.getNetworkConfig().setPort(5701);
+                config.getNetworkConfig().getJoin().getTcpIpConfig().setEnabled(true);
+
+                List<ServiceInstance> instances = Flowable.fromPublisher(discoveryClient.getInstances(serviceId)).blockingFirst();
+                for (ServiceInstance instance : instances) {
+                    String clusterMember = instance.getHost() + ":5701";
+                    log.debug("Adding Hazelcast (prod) cluster member {}", clusterMember);
+                    config.getNetworkConfig().getJoin().getTcpIpConfig().addMember(clusterMember);
+                }
+            }
+        }
+    <%_ } else { _%>
+        config.getNetworkConfig().setPort(5701);
+        config.getNetworkConfig().setPortAutoIncrement(true);
+
+        // In development, remove multicast auto-configuration
+        if (env.acceptsProfiles(Profiles.of(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT))) {
+            System.setProperty("hazelcast.local.localAddress", "127.0.0.1");
+
+            config.getNetworkConfig().getJoin().getAwsConfig().setEnabled(false);
+            config.getNetworkConfig().getJoin().getMulticastConfig().setEnabled(false);
+            config.getNetworkConfig().getJoin().getTcpIpConfig().setEnabled(false);
+        }
+    <%_ } _%>   
+        config.setManagementCenterConfig(new ManagementCenterConfig());
+        config.addMapConfig(initializeDefaultMapConfig(jHipsterProperties));
+    <%_ if (enableHibernateCache) { _%>
+        config.addMapConfig(initializeDomainMapConfig(jHipsterProperties));
+    <%_ } _%>
+        return config;
+    }
+
+    private MapConfig initializeDefaultMapConfig(JHipsterProperties jHipsterProperties) {
+        MapConfig mapConfig = new MapConfig("default");
+
+        /*
+        Number of backups. If 1 is set as the backup-count for example,
+        then all entries of the map will be copied to another JVM for
+        fail-safety. Valid numbers are 0 (no backup), 1, 2, 3.
+        */
+        mapConfig.setBackupCount(jHipsterProperties.getCache().getHazelcast().getBackupCount());
+
+        /*
+        Valid values are:
+        NONE (no eviction),
+        LRU (Least Recently Used),
+        LFU (Least Frequently Used).
+        NONE is the default.
+        */
+        mapConfig.getEvictionConfig().setEvictionPolicy(EvictionPolicy.LRU);
+
+        /*
+        Maximum size of the map. When max size is reached,
+        map is evicted based on the policy defined.
+        Any integer between 0 and Integer.MAX_VALUE. 0 means
+        Integer.MAX_VALUE. Default is 0.
+        */
+        mapConfig.getEvictionConfig().setMaxSizePolicy(MaxSizePolicy.USED_HEAP_SIZE);
+
+        return mapConfig;
+    }
+
+    private MapConfig initializeDomainMapConfig(JHipsterProperties jHipsterProperties) {
+        MapConfig mapConfig = new MapConfig("<%= packageName %>.domain.*");
+        mapConfig.setTimeToLiveSeconds(jHipsterProperties.getCache().getHazelcast().getTimeToLiveSeconds());
+        return mapConfig;
+    }
+<%_ } _%>
 }

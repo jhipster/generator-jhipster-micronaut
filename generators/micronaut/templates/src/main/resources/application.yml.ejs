@@ -20,6 +20,11 @@ micronaut:
     instance:
       id: ${random.shortuuid}
 <%_ } _%>
+<%_ if (cacheProvider === 'hazelcast') { _%>
+  caches:
+    discovery-client:
+      enabled: false
+<%_ } _%>
   router:
     static-resources:
       client:
