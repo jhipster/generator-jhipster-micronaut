@@ -53,7 +53,7 @@ export default class extends BaseApplicationGenerator {
             files: [
               {
                 ...javaMainPackageTemplatesBlock(),
-                templates: ['config/CacheConfiguration.java'],
+                templates: [data => `config/CacheConfiguration${data.cacheProviderHazelcast ? '_hazelcast' : ''}.java`],
               },
             ],
           },
