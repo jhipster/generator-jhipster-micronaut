@@ -132,17 +132,23 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
       base: {
         properties: [
           {
-            property: 'hazelcast-spring.version',
-            value: javaDependencies['hazelcast-spring'],
+            property: 'hazelcast.version',
+            value: javaDependencies['hazelcast'],
           },
         ],
         dependencies: [
           javaxCacheApi,
           {
             groupId: 'com.hazelcast',
-            artifactId: 'hazelcast-spring',
+            artifactId: 'hazelcast',
 
-            version: '${hazelcast-spring.version}',
+            version: '${hazelcast.version}',
+          },
+          {
+            groupId: 'io.micronaut.cache',
+            artifactId: 'micronaut-cache-hazelcast',
+
+            version: '${micronaut.cache.version}',
           },
         ],
       },

@@ -228,12 +228,10 @@ dependencies {
     <%_ } _%>
     <%_ if (cacheProvider === 'hazelcast') { _%>
     implementation "com.hazelcast:hazelcast"
+    implementation "io.micronaut.cache:micronaut-cache-hazelcast"
     <%_ } _%>
     <%_ if (cacheProvider === 'hazelcast' && enableHibernateCache) { _%>
     implementation "com.hazelcast:hazelcast-hibernate53:<%- javaDependencies['hazelcast-hibernate53'] %>"
-    <%_ } _%>
-    <%_ if (cacheProvider === 'hazelcast') { _%>
-    implementation "io.micronaut.cache:micronaut-cache-hazelcast"
     <%_ } _%>
     <%_ if (cacheProvider === 'infinispan') { _%>
     implementation "org.infinispan:infinispan-hibernate-cache-v53"
