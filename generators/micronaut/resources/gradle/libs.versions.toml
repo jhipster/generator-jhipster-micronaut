@@ -33,6 +33,4 @@ shadow = { id = 'com.github.johnrengelman.shadow', version = '8.1.1' }
 # hazelcast
 hazelcast = { id = 'com.hazelcast:hazelcast', version = '5.4.0' }
 # hazelcast-hibernate
-hazelcast-hibernate53 = { id = 'com.hazelcast:hazelcast-hibernate53', version = '5.2.0' }
-# micronaut-cache-hazelcast
-micronaut-cache-hazelcast = { id = 'io.micronaut.cache:micronaut-cache-hazelcast', version = '5.0.0' }
+hazelcast-hibernate = { id = 'com.hazelcast:hazelcast-hibernate53', version = '5.2.0' }

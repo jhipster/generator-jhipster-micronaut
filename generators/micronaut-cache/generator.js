@@ -2,7 +2,7 @@ import { GENERATOR_BOOTSTRAP_APPLICATION } from 'generator-jhipster/generators';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
 import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
 import { javaMainPackageTemplatesBlock } from 'generator-jhipster/generators/java/support';
-import { getCacheProviderMavenDefinition } from './internal/dependencies.mjs';
+import { getCacheProviderMavenDefinition, getCacheProviderGradleDefinition } from './internal/dependencies.mjs';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
@@ -66,10 +66,23 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.POST_WRITING_ENTITIES]() {
     return this.asPostWritingTaskGroup({
       addDependencies({ application, source }) {
-        const definition = getCacheProviderMavenDefinition(application.cacheProvider, application.javaDependencies);
-        source.addMavenDefinition?.(definition.base);
-        if (application.enableHibernateCache && definition.hibernateCache) {
-          source.addMavenDefinition?.(definition.hibernateCache);
+        
+        if(application.buildToolMaven){
+          const definition = getCacheProviderMavenDefinition(application.cacheProvider, application.javaDependencies);
+
+          source.addMavenDefinition?.(definition.base);
+          if (application.enableHibernateCache && definition.hibernateCache) {
+            source.addMavenDefinition?.(definition.hibernateCache);
+          }
+        }else if(application.buildToolGradle){
+          const definition = getCacheProviderGradleDefinition(application.cacheProvider, application.javaDependencies);
+
+          if(definition){
+            source.addGradleDependencies?.(definition.base.dependencies);
+            if (application.enableHibernateCache && definition.hibernateCache) {
+              source.addGradleDependencies?.(definition.hibernateCache.dependencies);
+            }
+          }
         }
       },
       customizeFiles({ source, entities, application: { cacheProvider, enableHibernateCache } }) {

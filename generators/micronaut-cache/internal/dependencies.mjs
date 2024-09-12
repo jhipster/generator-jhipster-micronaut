@@ -155,8 +155,8 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
       hibernateCache: {
         properties: [
           {
-            property: 'hazelcast-hibernate53.version',
-            value: javaDependencies['hazelcast-hibernate53'],
+            property: 'hazelcast-hibernate.version',
+            value: javaDependencies['hazelcast-hibernate'],
           },
         ],
         dependencies: [
@@ -164,7 +164,7 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
             groupId: 'com.hazelcast',
             artifactId: 'hazelcast-hibernate53',
 
-            version: '${hazelcast-hibernate53.version}',
+            version: '${hazelcast-hibernate.version}',
           },
         ],
       },
@@ -217,5 +217,56 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
       },
     },
   };
+  return dependenciesForCache[cacheProvider];
+};
+
+export const getCacheProviderGradleDefinition = (cacheProvider, javaDependencies) => {
+  const dependenciesForCache = {
+    hazelcast: {
+      base: {
+        properties: [
+          {
+            property: 'hazelcast.version',
+            value: javaDependencies['hazelcast'],
+          },
+        ],
+        dependencies: [
+          javaxCacheApi,
+          {
+            groupId: 'com.hazelcast',
+            artifactId: 'hazelcast',
+            scope: 'implementation',
+
+            version: '${hazelcast_version}',
+          },
+          {
+            groupId: 'io.micronaut.cache',
+            artifactId: 'micronaut-cache-hazelcast',
+            scope: 'implementation',
+
+            version: '${micronaut_cache_version}',
+          },
+        ],
+      },
+      hibernateCache: {
+        properties: [
+          {
+            property: 'hazelcast-hibernate.version',
+            value: javaDependencies['hazelcast-hibernate'],
+          },
+        ],
+        dependencies: [
+          {
+            groupId: 'com.hazelcast',
+            artifactId: 'hazelcast-hibernate53',
+            scope: 'implementation',
+            
+            version: '${hazelcast_hibernate_version}',
+          },
+        ],
+      },
+    },
+  };
+
   return dependenciesForCache[cacheProvider];
 };
