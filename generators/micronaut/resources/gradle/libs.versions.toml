@@ -29,3 +29,6 @@ gradle-git-properties = { id = 'com.gorylenko.gradle-git-properties', version = 
 openapi-generator = { id = 'org.openapi.generator', version = '7.8.0' }
 
 shadow = { id = 'com.github.johnrengelman.shadow', version = '8.1.1' }
+
+# hazelcast-hibernate
+hazelcast-hibernate53 = { id = 'com.hazelcast:hazelcast-hibernate53', version = '5.2.0' }
