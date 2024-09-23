@@ -15,7 +15,7 @@ import { serverTestFrameworkChoices } from './command.js';
 export default class extends BaseApplicationGenerator {
   async beforeQueue() {
     this.jhipsterTemplatesFolders.push(
-      this.fetchFromInstalledJHipster('server/templates'),
+      this.fetchFromInstalledJHipster('spring-boot/templates'),
       // For _persistClass_.java.jhi.hibernate_cache/_persistClass_.java.jhi.jakarta_persistence file
       this.fetchFromInstalledJHipster('spring-data-relational/templates'),
       // For _global_partials_entity_/field_validators file
