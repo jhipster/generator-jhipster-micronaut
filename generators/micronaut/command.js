@@ -40,6 +40,7 @@ const command = {
           'As you are running in a microservice architecture, on which port would like your server to run? It should be unique to avoid port conflicts.',
         default: gen.jhipsterConfigWithDefaults.serverPort,
       }),
+      scope: 'storage',
     },
     serviceDiscoveryType: {
       description: 'Service discovery',
@@ -57,6 +58,7 @@ const command = {
         { name: 'JHipster Registry (legacy, uses Eureka, provides Spring Cloud Config support)', value: 'eureka' },
         { name: 'No service discovery', value: 'no' },
       ],
+      scope: 'storage',
     },
     authenticationType: {
       description: 'Authentication type',
@@ -72,6 +74,7 @@ const command = {
         default: 'jwt',
       }),
       choices: authenticationTypeChoices,
+      scope: 'storage',
     },
     syncUserWithIdp,
     prodDatabaseType: {
@@ -86,6 +89,7 @@ const command = {
       }),
       choices: prodDatabaseTypeChoices,
       default: 'postgresql',
+      scope: 'storage',
     },
     devDatabaseType: {
       description: 'Development database',
@@ -102,6 +106,7 @@ const command = {
         ],
         default: 'h2Disk',
       },
+      scope: 'storage',
     },
     cacheProvider: {
       description: 'Cache provider',
@@ -125,6 +130,7 @@ const command = {
         { value: 'redis', name: 'Redis (distributed cache)' },
         { value: 'no', name: 'No cache - Warning, when using an SQL database, this will disable the Hibernate 2nd level cache!' },
       ],
+      scope: 'storage',
     },
     enableHibernateCache: {
       description: 'Hibernate 2nd level cache',
@@ -138,6 +144,7 @@ const command = {
         message: 'Do you want to use Hibernate 2nd level cache?',
         default: gen.jhipsterConfigWithDefaults.enableHibernateCache,
       }),
+      scope: 'storage',
     },
     serverTestFrameworks: {
       description: 'Server test frameworks',
@@ -149,6 +156,7 @@ const command = {
         message: 'Besides Junit, which testing frameworks would you like to use?',
       },
       choices: serverTestFrameworkChoices,
+      scope: 'storage',
     },
     messageBroker: {
       description: 'Message broker',
@@ -163,6 +171,7 @@ const command = {
         { value: 'no', name: 'No message broker' },
         { value: 'kafka', name: 'Apache Kafka as asynchronous messages broker' },
       ],
+      scope: 'storage',
     },
     searchEngine: {
       description: 'Search engine',
@@ -177,6 +186,7 @@ const command = {
         { value: 'no', name: 'No search engine' },
         { value: 'elasticsearch', name: 'Elasticsearch' },
       ],
+      scope: 'storage',
     },
     enableSwaggerCodegen: {
       description: 'API first development using OpenAPI-generator',
@@ -188,6 +198,7 @@ const command = {
         message: 'API first development using OpenAPI-generator',
       },
       default: false,
+      scope: 'storage',
     },
     defaultPackaging,
   },
