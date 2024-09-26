@@ -144,7 +144,8 @@ export default class extends BaseApplicationGenerator {
           useNpmWrapper: application.clientFrameworkAny && !application.skipClient,
         });
         Object.assign(application.dockerContainers, {
-          mysqlImage: 'mysql:8.4.0',
+          mysql: 'mysql:8.4.0',
+          mysqlImage: 'mysql',
           mysqlTag: '8.4.0',
         });
       },
