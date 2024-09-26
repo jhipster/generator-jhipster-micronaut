@@ -1,9 +1,8 @@
+import { asCommand } from 'generator-jhipster';
 import { command as serverCommand } from 'generator-jhipster/generators/server';
 import { default as micronautCommand } from '../micronaut/command.js';
 
 const { applicationType, ...remainingConfigs } = serverCommand.configs;
-
-import { asCommand } from 'generator-jhipster';
 
 export default asCommand({
   options: Object.fromEntries(Object.entries(serverCommand.options).filter(([key]) => !(key in micronautCommand.configs))),
