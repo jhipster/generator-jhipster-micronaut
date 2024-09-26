@@ -26,6 +26,16 @@ pluginManagement {
     plugins {
         // jhipster-needle-gradle-plugin-management-plugins - JHipster will add additional entries here
     }
+<%_ if (databaseMigrationLiquibase) { _%>
+    buildscript {
+        repositories {
+            mavenCentral()
+        }
+        dependencies {
+            classpath group: 'org.liquibase', name: 'liquibase-core', version: "${liquibaseCoreVersion}"
+        }
+    }
+<%_ } _%>
 }
 
 rootProject.name = "<%= dasherizedBaseName %>"
