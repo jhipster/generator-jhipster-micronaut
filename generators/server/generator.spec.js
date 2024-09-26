@@ -13,7 +13,7 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
         .withJHipsterConfig()
         .withOptions({
           ignoreNeedlesError: true,
-          blueprint: 'micronaut',
+          blueprint: ['micronaut'],
         })
         .withJHipsterLookup()
         .withParentBlueprintLookup()

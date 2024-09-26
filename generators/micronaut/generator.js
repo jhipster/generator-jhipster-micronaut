@@ -2,7 +2,7 @@ import os from 'os';
 import chalk from 'chalk';
 import BaseApplicationGenerator from 'generator-jhipster/generators/server';
 import { GENERATOR_DOCKER, GENERATOR_LANGUAGES, GENERATOR_LIQUIBASE, GENERATOR_SERVER } from 'generator-jhipster/generators';
-import { createNeedleCallback, createBase64Secret } from 'generator-jhipster/generators/base/support';
+import { createBase64Secret, createNeedleCallback } from 'generator-jhipster/generators/base/support';
 import { addJavaAnnotation } from 'generator-jhipster/generators/java/support';
 import { parseMavenPom } from 'generator-jhipster/generators/maven/support';
 import mnConstants from '../constants.cjs';
@@ -241,7 +241,7 @@ export default class extends BaseApplicationGenerator {
             {
               id: 'com.github.johnrengelman.shadow',
               pluginName: 'shadow',
-              version: application.javaDependencies['shadow'],
+              version: application.javaDependencies.shadow,
               addToBuild: true,
             },
           ]);

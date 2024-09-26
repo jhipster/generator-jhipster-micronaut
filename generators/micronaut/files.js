@@ -18,8 +18,8 @@
  */
 import {
   javaMainPackageTemplatesBlock,
-  javaTestPackageTemplatesBlock,
   javaMainResourceTemplatesBlock,
+  javaTestPackageTemplatesBlock,
   javaTestResourceTemplatesBlock,
 } from 'generator-jhipster/generators/java/support';
 
