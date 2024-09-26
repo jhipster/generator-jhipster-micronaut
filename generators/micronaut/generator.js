@@ -143,6 +143,10 @@ export default class extends BaseApplicationGenerator {
         Object.assign(application, {
           useNpmWrapper: application.clientFrameworkAny && !application.skipClient,
         });
+        Object.assign(application.dockerContainers, {
+          mysqlImage: 'mysql:8.4.0',
+          mysqlTag: '8.4.0',
+        });
       },
 
       addLogNeedles({ source, application }) {
