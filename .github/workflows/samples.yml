@@ -59,14 +59,14 @@ jobs:
         with:
           generator-path: generator-jhipster-micronaut
           cmd: cli.cjs generate-sample ${{ matrix.sample-name }} --skip-jhipster-dependencies --skip-install ${{ matrix.extra-args }}
+      - run: npm run ci:e2e:package
+        if: steps.compare.outputs.equals != 'true'
+      - run: npm run ci:e2e:prepare
+        if: steps.compare.outputs.equals != 'true'
       - run: npm run ci:backend:test
         if: steps.compare.outputs.equals != 'true'
         id: backend
       - run: npm run ci:frontend:test --if-present
-        if: steps.compare.outputs.equals != 'true'
-      - run: npm run ci:e2e:package
-        if: steps.compare.outputs.equals != 'true'
-      - run: npm run ci:e2e:prepare
         if: steps.compare.outputs.equals != 'true'
       - run: npm run ci:e2e:run --if-present
         if: steps.compare.outputs.equals != 'true'
