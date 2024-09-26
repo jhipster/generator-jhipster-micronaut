@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { asCommand } from 'generator-jhipster';
 import { command as springBootCommand } from 'generator-jhipster/generators/spring-boot';
 
 const { syncUserWithIdp, defaultPackaging } = springBootCommand.configs;
@@ -22,10 +23,7 @@ export const serverTestFrameworkChoices = [
   { name: 'Cucumber', value: 'cucumber' },
 ];
 
-/**
- * @type {import('generator-jhipster').JHipsterCommandDefinition}
- */
-const command = {
+export default asCommand({
   options: {},
   configs: {
     serverPort: {
@@ -202,6 +200,4 @@ const command = {
     },
     defaultPackaging,
   },
-};
-
-export default command;
+});
