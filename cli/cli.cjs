@@ -23,10 +23,15 @@ const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packa
     blueprints: {
       [blueprint]: version,
     },
+    printBlueprintLogo: () => {
+      console.log('===================== JHipster Micronaut =====================');
+      console.log('');
+    },
     printLogo: () => {
       console.log(getLogo());
     },
     lookups: [{ packagePaths: [packagePath] }],
+    ...require('./cli-customizations.cjs'),
   }).catch(done);
 
   process.on('unhandledRejection', up => {
