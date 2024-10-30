@@ -207,7 +207,7 @@ export default class extends BaseApplicationGenerator {
         if (application.prodDatabaseTypeMysql) {
           this.editFile(`${application.dockerServicesDir}mysql.yml`, content =>
             content
-              .replaceAll("['CMD', 'mysql', '-e', 'SHOW DATABASES;']", '[\'CMD-SHELL\', \'mysql -e "SHOW DATABASES;" && sleep 5\']')
+              .replace(/test: [^\n]*/, 'test: [\'CMD-SHELL\', \'mysql -e "SHOW DATABASES;" && sleep 5\']')
               .replace('timeout: 5s', 'timeout: 10s')
           );
         }
