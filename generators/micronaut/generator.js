@@ -203,6 +203,11 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
+      addMysqlSleep({ application }) {
+        this.editFile(`${application.dockerServicesDir}mysql.yml`, content =>
+          content.replace("'SHOW DATABASES;']", "'SHOW DATABASES;', '&&', 'sleep', '5']").replace('timeout: 5s', 'timeout: 10s')
+        );
+      },
       addMicronautDependencies({ application, source }) {
         const { javaDependencies } = application;
         source.addJavaDefinition({
