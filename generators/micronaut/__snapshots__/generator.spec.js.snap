@@ -2,12 +2,6 @@
 
 exports[`SubGenerator server of micronaut JHipster blueprint > run > should succeed 1`] = `
 {
-  ".devcontainer/Dockerfile": {
-    "stateCleared": "modified",
-  },
-  ".devcontainer/devcontainer.json": {
-    "stateCleared": "modified",
-  },
   ".editorconfig": {
     "stateCleared": "modified",
   },
@@ -101,19 +95,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/docker/sonar.yml": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/ApplicationWebXml.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/GeneratedByJHipster.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/JhipsterApp.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/aop/logging/LoggingAspect.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/aop/logging/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/ActiveProfilesInfoSource.java": {
@@ -122,22 +107,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/java/com/mycompany/myapp/config/ApplicationProperties.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/AsyncConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/CRLFLogConverter.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/CacheConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/Constants.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/DatabaseConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/DateTimeFormatConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/DefaultProfileUtil.java": {
@@ -149,31 +122,13 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/java/com/mycompany/myapp/config/JacksonConfiguration.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/LiquibaseConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/LoggingAspectConfiguration.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/LoggingConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/MessagesBundleMessageSource.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/SecurityConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/SecurityJwtConfiguration.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/SnakeCasePhysicalNamingStrategy.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/StaticResourcesWebConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/WebConfigurer.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java": {
@@ -185,9 +140,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/java/com/mycompany/myapp/config/package-info.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/domain/AbstractAuditingEntity.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/domain/Authority.java": {
     "stateCleared": "modified",
   },
@@ -195,12 +147,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/domain/package-info.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/management/SecurityMetersService.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/management/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/package-info.java": {
@@ -224,9 +170,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/java/com/mycompany/myapp/security/DatabaseAuthenticationProvider.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/security/DomainUserDetailsService.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/security/Logout.java": {
     "stateCleared": "modified",
   },
@@ -242,19 +185,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/java/com/mycompany/myapp/security/SecurityUtils.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/security/SpringSecurityAuditorAware.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/security/UserNotActivatedException.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/security/package-info.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/service/EmailAlreadyUsedException.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/service/InvalidPasswordException.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/MailSenderFactory.java": {
@@ -264,9 +198,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/UserService.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/service/UsernameAlreadyUsedException.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/dto/AdminUserDTO.java": {
@@ -308,19 +239,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/java/com/mycompany/myapp/util/package-info.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/web/filter/SpaWebFilter.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/filter/package-info.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/web/rest/AccountResource.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/rest/AuthenticateController.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/rest/AuthorityResource.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/ClientForwardController.java": {
@@ -345,9 +264,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/errors/ErrorConstants.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/rest/errors/ExceptionTranslator.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/errors/FieldErrorVM.java": {
@@ -407,22 +323,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/resources/application.yml": {
     "stateCleared": "modified",
   },
-  "src/main/resources/banner.txt": {
-    "stateCleared": "modified",
-  },
   "src/main/resources/bootstrap.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application-dev.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application-prod.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application-tls.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application.yml": {
     "stateCleared": "modified",
   },
   "src/main/resources/config/liquibase/changelog/00000000000000_initial_schema.xml": {
@@ -440,31 +341,13 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/resources/config/liquibase/master.xml": {
     "stateCleared": "modified",
   },
-  "src/main/resources/config/tls/keystore.p12": {
-    "stateCleared": "modified",
-  },
   "src/main/resources/i18n/messages.properties": {
     "stateCleared": "modified",
   },
   "src/main/resources/i18n/messages_en.properties": {
     "stateCleared": "modified",
   },
-  "src/main/resources/logback-spring.xml": {
-    "stateCleared": "modified",
-  },
   "src/main/resources/logback.xml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/error.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/mail/activationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/mail/creationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/mail/passwordResetEmail.html": {
     "stateCleared": "modified",
   },
   "src/main/resources/views/error.html": {
@@ -483,9 +366,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
     "stateCleared": "modified",
   },
   "src/main/webapp/i18n/en/activate.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/adminAuthority.json": {
     "stateCleared": "modified",
   },
   "src/main/webapp/i18n/en/configuration.json": {
@@ -530,70 +410,13 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/webapp/i18n/en/user-management.json": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/IntegrationTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/TechnicalStructureTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/AsyncSyncConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/CRLFLogConverterTest.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/config/CorsController.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/config/CorsTest.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/config/EmbeddedSQL.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/PostgreSqlTestContainer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SpringBootTestClassOrderer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SqlTestContainer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SqlTestContainersSpringContextCustomizerFactory.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/StaticResourcesWebConfigurerTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/WebConfigurerTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/WebConfigurerTestController.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/timezone/HibernateTimeZoneIT.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/domain/AssertUtils.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/domain/AuthorityAsserts.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/domain/AuthorityTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/domain/AuthorityTestSamples.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/management/SecurityMetersServiceTests.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/repository/timezone/DateTimeWrapper.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/repository/timezone/DateTimeWrapperRepository.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/security/DomainUserDetailsServiceIT.java": {
@@ -605,19 +428,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/test/java/com/mycompany/myapp/security/SecurityUtilsUnitTest.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/security/jwt/AuthenticationIntegrationTest.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/security/jwt/JWTFilterTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/security/jwt/JwtAuthenticationTestUtils.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/security/jwt/TokenAuthenticationIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/security/jwt/TokenAuthenticationSecurityMetersIT.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/service/MailServiceIT.java": {
@@ -629,25 +440,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/test/java/com/mycompany/myapp/service/mapper/UserMapperIT.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/service/mapper/UserMapperTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/web/filter/SpaWebFilterIT.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/web/rest/AccountResourceIT.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/web/rest/AuthenticateControllerIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/web/rest/AuthorityResourceIT.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/web/rest/ClientForwardControllerIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/web/rest/PublicUserResourceIT.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/web/rest/TestUtil.java": {
@@ -659,9 +455,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/test/java/com/mycompany/myapp/web/rest/UserResourceIT.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/web/rest/WithUnauthenticatedMockUser.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/web/rest/errors/ExceptionTranslatorIT.java": {
     "stateCleared": "modified",
   },
@@ -671,43 +464,16 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/test/java/com/mycompany/myapp/web/rest/errors/TestDTO.java": {
     "stateCleared": "modified",
   },
-  "src/test/resources/META-INF/spring.factories": {
-    "stateCleared": "modified",
-  },
   "src/test/resources/application-test.yml": {
     "stateCleared": "modified",
   },
   "src/test/resources/bootstrap-test.yml": {
     "stateCleared": "modified",
   },
-  "src/test/resources/config/application-testdev.yml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/config/application-testprod.yml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/config/application.yml": {
-    "stateCleared": "modified",
-  },
   "src/test/resources/i18n/messages_en.properties": {
     "stateCleared": "modified",
   },
-  "src/test/resources/junit-platform.properties": {
-    "stateCleared": "modified",
-  },
   "src/test/resources/logback.xml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/activationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/creationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/passwordResetEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/testEmail.html": {
     "stateCleared": "modified",
   },
 }
@@ -715,12 +481,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
 
 exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build tool > should succeed 1`] = `
 {
-  ".devcontainer/Dockerfile": {
-    "stateCleared": "modified",
-  },
-  ".devcontainer/devcontainer.json": {
-    "stateCleared": "modified",
-  },
   ".editorconfig": {
     "stateCleared": "modified",
   },
@@ -766,9 +526,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "buildSrc/src/main/groovy/jhipster.node-gradle-conventions.gradle": {
     "stateCleared": "modified",
   },
-  "buildSrc/src/main/groovy/jhipster.spring-cache-conventions.gradle": {
-    "stateCleared": "modified",
-  },
   "checkstyle.xml": {
     "stateCleared": "modified",
   },
@@ -790,16 +547,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "gradle/profile_prod.gradle": {
     "stateCleared": "modified",
   },
-  "gradle/war.gradle": {
-    "stateCleared": "modified",
-  },
   "gradle/wrapper/gradle-wrapper.jar": {
     "stateCleared": "modified",
   },
   "gradle/wrapper/gradle-wrapper.properties": {
-    "stateCleared": "modified",
-  },
-  "gradle/zipkin.gradle": {
     "stateCleared": "modified",
   },
   "gradlew": {
@@ -856,19 +607,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/docker/sonar.yml": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/ApplicationWebXml.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/GeneratedByJHipster.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/JhipsterApp.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/aop/logging/LoggingAspect.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/aop/logging/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/ActiveProfilesInfoSource.java": {
@@ -877,22 +619,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/java/com/mycompany/myapp/config/ApplicationProperties.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/AsyncConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/CRLFLogConverter.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/CacheConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/Constants.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/DatabaseConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/DateTimeFormatConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/DefaultProfileUtil.java": {
@@ -904,31 +634,13 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/java/com/mycompany/myapp/config/JacksonConfiguration.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/LiquibaseConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/LoggingAspectConfiguration.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/LoggingConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/MessagesBundleMessageSource.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/SecurityConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/SecurityJwtConfiguration.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/SnakeCasePhysicalNamingStrategy.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/StaticResourcesWebConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/WebConfigurer.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java": {
@@ -940,9 +652,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/java/com/mycompany/myapp/config/package-info.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/domain/AbstractAuditingEntity.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/domain/Authority.java": {
     "stateCleared": "modified",
   },
@@ -950,12 +659,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/domain/package-info.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/management/SecurityMetersService.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/management/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/package-info.java": {
@@ -979,9 +682,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/java/com/mycompany/myapp/security/DatabaseAuthenticationProvider.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/security/DomainUserDetailsService.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/security/Logout.java": {
     "stateCleared": "modified",
   },
@@ -997,19 +697,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/java/com/mycompany/myapp/security/SecurityUtils.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/security/SpringSecurityAuditorAware.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/security/UserNotActivatedException.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/security/package-info.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/service/EmailAlreadyUsedException.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/service/InvalidPasswordException.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/MailSenderFactory.java": {
@@ -1019,9 +710,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/UserService.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/service/UsernameAlreadyUsedException.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/dto/AdminUserDTO.java": {
@@ -1063,19 +751,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/java/com/mycompany/myapp/util/package-info.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/web/filter/SpaWebFilter.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/filter/package-info.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/web/rest/AccountResource.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/rest/AuthenticateController.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/rest/AuthorityResource.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/ClientForwardController.java": {
@@ -1100,9 +776,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/errors/ErrorConstants.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/rest/errors/ExceptionTranslator.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/errors/FieldErrorVM.java": {
@@ -1162,22 +835,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/resources/application.yml": {
     "stateCleared": "modified",
   },
-  "src/main/resources/banner.txt": {
-    "stateCleared": "modified",
-  },
   "src/main/resources/bootstrap.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application-dev.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application-prod.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application-tls.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application.yml": {
     "stateCleared": "modified",
   },
   "src/main/resources/config/liquibase/changelog/00000000000000_initial_schema.xml": {
@@ -1195,31 +853,13 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/resources/config/liquibase/master.xml": {
     "stateCleared": "modified",
   },
-  "src/main/resources/config/tls/keystore.p12": {
-    "stateCleared": "modified",
-  },
   "src/main/resources/i18n/messages.properties": {
     "stateCleared": "modified",
   },
   "src/main/resources/i18n/messages_en.properties": {
     "stateCleared": "modified",
   },
-  "src/main/resources/logback-spring.xml": {
-    "stateCleared": "modified",
-  },
   "src/main/resources/logback.xml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/error.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/mail/activationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/mail/creationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/mail/passwordResetEmail.html": {
     "stateCleared": "modified",
   },
   "src/main/resources/views/error.html": {
@@ -1238,9 +878,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
     "stateCleared": "modified",
   },
   "src/main/webapp/i18n/en/activate.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/adminAuthority.json": {
     "stateCleared": "modified",
   },
   "src/main/webapp/i18n/en/configuration.json": {
@@ -1285,70 +922,13 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/webapp/i18n/en/user-management.json": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/IntegrationTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/TechnicalStructureTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/AsyncSyncConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/CRLFLogConverterTest.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/config/CorsController.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/config/CorsTest.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/config/EmbeddedSQL.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/PostgreSqlTestContainer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SpringBootTestClassOrderer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SqlTestContainer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SqlTestContainersSpringContextCustomizerFactory.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/StaticResourcesWebConfigurerTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/WebConfigurerTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/WebConfigurerTestController.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/timezone/HibernateTimeZoneIT.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/domain/AssertUtils.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/domain/AuthorityAsserts.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/domain/AuthorityTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/domain/AuthorityTestSamples.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/management/SecurityMetersServiceTests.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/repository/timezone/DateTimeWrapper.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/repository/timezone/DateTimeWrapperRepository.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/security/DomainUserDetailsServiceIT.java": {
@@ -1360,19 +940,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/test/java/com/mycompany/myapp/security/SecurityUtilsUnitTest.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/security/jwt/AuthenticationIntegrationTest.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/security/jwt/JWTFilterTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/security/jwt/JwtAuthenticationTestUtils.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/security/jwt/TokenAuthenticationIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/security/jwt/TokenAuthenticationSecurityMetersIT.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/service/MailServiceIT.java": {
@@ -1384,25 +952,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/test/java/com/mycompany/myapp/service/mapper/UserMapperIT.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/service/mapper/UserMapperTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/web/filter/SpaWebFilterIT.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/web/rest/AccountResourceIT.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/web/rest/AuthenticateControllerIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/web/rest/AuthorityResourceIT.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/web/rest/ClientForwardControllerIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/web/rest/PublicUserResourceIT.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/web/rest/TestUtil.java": {
@@ -1414,9 +967,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/test/java/com/mycompany/myapp/web/rest/UserResourceIT.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/web/rest/WithUnauthenticatedMockUser.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/web/rest/errors/ExceptionTranslatorIT.java": {
     "stateCleared": "modified",
   },
@@ -1426,43 +976,16 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/test/java/com/mycompany/myapp/web/rest/errors/TestDTO.java": {
     "stateCleared": "modified",
   },
-  "src/test/resources/META-INF/spring.factories": {
-    "stateCleared": "modified",
-  },
   "src/test/resources/application-test.yml": {
     "stateCleared": "modified",
   },
   "src/test/resources/bootstrap-test.yml": {
     "stateCleared": "modified",
   },
-  "src/test/resources/config/application-testdev.yml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/config/application-testprod.yml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/config/application.yml": {
-    "stateCleared": "modified",
-  },
   "src/test/resources/i18n/messages_en.properties": {
     "stateCleared": "modified",
   },
-  "src/test/resources/junit-platform.properties": {
-    "stateCleared": "modified",
-  },
   "src/test/resources/logback.xml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/activationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/creationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/passwordResetEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/testEmail.html": {
     "stateCleared": "modified",
   },
 }
@@ -1470,12 +993,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
 
 exports[`SubGenerator server of micronaut JHipster blueprint > with maven build tool > should succeed 1`] = `
 {
-  ".devcontainer/Dockerfile": {
-    "stateCleared": "modified",
-  },
-  ".devcontainer/devcontainer.json": {
-    "stateCleared": "modified",
-  },
   ".editorconfig": {
     "stateCleared": "modified",
   },
@@ -1569,19 +1086,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/docker/sonar.yml": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/ApplicationWebXml.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/GeneratedByJHipster.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/JhipsterApp.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/aop/logging/LoggingAspect.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/aop/logging/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/ActiveProfilesInfoSource.java": {
@@ -1590,22 +1098,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/java/com/mycompany/myapp/config/ApplicationProperties.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/AsyncConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/CRLFLogConverter.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/CacheConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/Constants.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/DatabaseConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/DateTimeFormatConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/DefaultProfileUtil.java": {
@@ -1617,31 +1113,13 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/java/com/mycompany/myapp/config/JacksonConfiguration.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/LiquibaseConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/LoggingAspectConfiguration.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/LoggingConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/MessagesBundleMessageSource.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/SecurityConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/SecurityJwtConfiguration.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/SnakeCasePhysicalNamingStrategy.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/StaticResourcesWebConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/WebConfigurer.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java": {
@@ -1653,9 +1131,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/java/com/mycompany/myapp/config/package-info.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/domain/AbstractAuditingEntity.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/domain/Authority.java": {
     "stateCleared": "modified",
   },
@@ -1663,12 +1138,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/domain/package-info.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/management/SecurityMetersService.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/management/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/package-info.java": {
@@ -1692,9 +1161,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/java/com/mycompany/myapp/security/DatabaseAuthenticationProvider.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/security/DomainUserDetailsService.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/security/Logout.java": {
     "stateCleared": "modified",
   },
@@ -1710,19 +1176,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/java/com/mycompany/myapp/security/SecurityUtils.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/security/SpringSecurityAuditorAware.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/security/UserNotActivatedException.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/security/package-info.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/service/EmailAlreadyUsedException.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/service/InvalidPasswordException.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/MailSenderFactory.java": {
@@ -1732,9 +1189,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/UserService.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/service/UsernameAlreadyUsedException.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/dto/AdminUserDTO.java": {
@@ -1776,19 +1230,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/java/com/mycompany/myapp/util/package-info.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/web/filter/SpaWebFilter.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/filter/package-info.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/web/rest/AccountResource.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/rest/AuthenticateController.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/rest/AuthorityResource.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/ClientForwardController.java": {
@@ -1813,9 +1255,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/errors/ErrorConstants.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/rest/errors/ExceptionTranslator.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/errors/FieldErrorVM.java": {
@@ -1875,22 +1314,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/resources/application.yml": {
     "stateCleared": "modified",
   },
-  "src/main/resources/banner.txt": {
-    "stateCleared": "modified",
-  },
   "src/main/resources/bootstrap.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application-dev.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application-prod.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application-tls.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application.yml": {
     "stateCleared": "modified",
   },
   "src/main/resources/config/liquibase/changelog/00000000000000_initial_schema.xml": {
@@ -1908,31 +1332,13 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/resources/config/liquibase/master.xml": {
     "stateCleared": "modified",
   },
-  "src/main/resources/config/tls/keystore.p12": {
-    "stateCleared": "modified",
-  },
   "src/main/resources/i18n/messages.properties": {
     "stateCleared": "modified",
   },
   "src/main/resources/i18n/messages_en.properties": {
     "stateCleared": "modified",
   },
-  "src/main/resources/logback-spring.xml": {
-    "stateCleared": "modified",
-  },
   "src/main/resources/logback.xml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/error.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/mail/activationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/mail/creationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/mail/passwordResetEmail.html": {
     "stateCleared": "modified",
   },
   "src/main/resources/views/error.html": {
@@ -1951,9 +1357,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
     "stateCleared": "modified",
   },
   "src/main/webapp/i18n/en/activate.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/adminAuthority.json": {
     "stateCleared": "modified",
   },
   "src/main/webapp/i18n/en/configuration.json": {
@@ -1998,70 +1401,13 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/webapp/i18n/en/user-management.json": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/IntegrationTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/TechnicalStructureTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/AsyncSyncConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/CRLFLogConverterTest.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/config/CorsController.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/config/CorsTest.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/config/EmbeddedSQL.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/PostgreSqlTestContainer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SpringBootTestClassOrderer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SqlTestContainer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SqlTestContainersSpringContextCustomizerFactory.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/StaticResourcesWebConfigurerTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/WebConfigurerTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/WebConfigurerTestController.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/timezone/HibernateTimeZoneIT.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/domain/AssertUtils.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/domain/AuthorityAsserts.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/domain/AuthorityTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/domain/AuthorityTestSamples.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/management/SecurityMetersServiceTests.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/repository/timezone/DateTimeWrapper.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/repository/timezone/DateTimeWrapperRepository.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/security/DomainUserDetailsServiceIT.java": {
@@ -2073,19 +1419,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/test/java/com/mycompany/myapp/security/SecurityUtilsUnitTest.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/security/jwt/AuthenticationIntegrationTest.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/security/jwt/JWTFilterTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/security/jwt/JwtAuthenticationTestUtils.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/security/jwt/TokenAuthenticationIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/security/jwt/TokenAuthenticationSecurityMetersIT.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/service/MailServiceIT.java": {
@@ -2097,25 +1431,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/test/java/com/mycompany/myapp/service/mapper/UserMapperIT.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/service/mapper/UserMapperTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/web/filter/SpaWebFilterIT.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/web/rest/AccountResourceIT.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/web/rest/AuthenticateControllerIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/web/rest/AuthorityResourceIT.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/web/rest/ClientForwardControllerIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/web/rest/PublicUserResourceIT.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/web/rest/TestUtil.java": {
@@ -2127,9 +1446,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/test/java/com/mycompany/myapp/web/rest/UserResourceIT.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/web/rest/WithUnauthenticatedMockUser.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/web/rest/errors/ExceptionTranslatorIT.java": {
     "stateCleared": "modified",
   },
@@ -2139,43 +1455,16 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/test/java/com/mycompany/myapp/web/rest/errors/TestDTO.java": {
     "stateCleared": "modified",
   },
-  "src/test/resources/META-INF/spring.factories": {
-    "stateCleared": "modified",
-  },
   "src/test/resources/application-test.yml": {
     "stateCleared": "modified",
   },
   "src/test/resources/bootstrap-test.yml": {
     "stateCleared": "modified",
   },
-  "src/test/resources/config/application-testdev.yml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/config/application-testprod.yml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/config/application.yml": {
-    "stateCleared": "modified",
-  },
   "src/test/resources/i18n/messages_en.properties": {
     "stateCleared": "modified",
   },
-  "src/test/resources/junit-platform.properties": {
-    "stateCleared": "modified",
-  },
   "src/test/resources/logback.xml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/activationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/creationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/passwordResetEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/testEmail.html": {
     "stateCleared": "modified",
   },
 }
@@ -2183,12 +1472,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
 
 exports[`SubGenerator server of micronaut JHipster blueprint > with some entities > should succeed 1`] = `
 {
-  ".devcontainer/Dockerfile": {
-    "stateCleared": "modified",
-  },
-  ".devcontainer/devcontainer.json": {
-    "stateCleared": "modified",
-  },
   ".editorconfig": {
     "stateCleared": "modified",
   },
@@ -2285,19 +1568,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/docker/sonar.yml": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/ApplicationWebXml.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/GeneratedByJHipster.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/JhipsterApp.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/aop/logging/LoggingAspect.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/aop/logging/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/ActiveProfilesInfoSource.java": {
@@ -2306,22 +1580,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/java/com/mycompany/myapp/config/ApplicationProperties.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/AsyncConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/CRLFLogConverter.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/CacheConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/Constants.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/DatabaseConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/DateTimeFormatConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/DefaultProfileUtil.java": {
@@ -2333,31 +1595,13 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/java/com/mycompany/myapp/config/JacksonConfiguration.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/LiquibaseConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/LoggingAspectConfiguration.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/LoggingConfiguration.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/MessagesBundleMessageSource.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/config/SecurityConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/SecurityJwtConfiguration.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/config/SnakeCasePhysicalNamingStrategy.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/StaticResourcesWebConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/config/WebConfigurer.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java": {
@@ -2367,9 +1611,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/package-info.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/domain/AbstractAuditingEntity.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/domain/Authority.java": {
@@ -2382,12 +1623,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/domain/package-info.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/management/SecurityMetersService.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/management/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/package-info.java": {
@@ -2414,9 +1649,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/java/com/mycompany/myapp/security/DatabaseAuthenticationProvider.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/security/DomainUserDetailsService.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/security/Logout.java": {
     "stateCleared": "modified",
   },
@@ -2432,19 +1664,10 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/java/com/mycompany/myapp/security/SecurityUtils.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/security/SpringSecurityAuditorAware.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/security/UserNotActivatedException.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/security/package-info.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/service/EmailAlreadyUsedException.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/service/InvalidPasswordException.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/MailSenderFactory.java": {
@@ -2454,9 +1677,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/UserService.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/service/UsernameAlreadyUsedException.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/dto/AdminUserDTO.java": {
@@ -2504,19 +1724,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/java/com/mycompany/myapp/util/package-info.java": {
     "stateCleared": "modified",
   },
-  "src/main/java/com/mycompany/myapp/web/filter/SpaWebFilter.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/filter/package-info.java": {
-    "stateCleared": "modified",
-  },
   "src/main/java/com/mycompany/myapp/web/rest/AccountResource.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/rest/AuthenticateController.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/rest/AuthorityResource.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/ClientForwardController.java": {
@@ -2544,9 +1752,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/errors/ErrorConstants.java": {
-    "stateCleared": "modified",
-  },
-  "src/main/java/com/mycompany/myapp/web/rest/errors/ExceptionTranslator.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/errors/FieldErrorVM.java": {
@@ -2606,22 +1811,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/resources/application.yml": {
     "stateCleared": "modified",
   },
-  "src/main/resources/banner.txt": {
-    "stateCleared": "modified",
-  },
   "src/main/resources/bootstrap.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application-dev.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application-prod.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application-tls.yml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/config/application.yml": {
     "stateCleared": "modified",
   },
   "src/main/resources/config/liquibase/changelog/00000000000000_initial_schema.xml": {
@@ -2645,31 +1835,13 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/resources/config/liquibase/master.xml": {
     "stateCleared": "modified",
   },
-  "src/main/resources/config/tls/keystore.p12": {
-    "stateCleared": "modified",
-  },
   "src/main/resources/i18n/messages.properties": {
     "stateCleared": "modified",
   },
   "src/main/resources/i18n/messages_en.properties": {
     "stateCleared": "modified",
   },
-  "src/main/resources/logback-spring.xml": {
-    "stateCleared": "modified",
-  },
   "src/main/resources/logback.xml": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/error.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/mail/activationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/mail/creationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/main/resources/templates/mail/passwordResetEmail.html": {
     "stateCleared": "modified",
   },
   "src/main/resources/views/error.html": {
@@ -2688,9 +1860,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/main/webapp/i18n/en/activate.json": {
-    "stateCleared": "modified",
-  },
-  "src/main/webapp/i18n/en/adminAuthority.json": {
     "stateCleared": "modified",
   },
   "src/main/webapp/i18n/en/configuration.json": {
@@ -2738,61 +1907,13 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/webapp/i18n/en/user-management.json": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/IntegrationTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/TechnicalStructureTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/AsyncSyncConfiguration.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/CRLFLogConverterTest.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/config/CorsController.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/config/CorsTest.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/config/EmbeddedSQL.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/PostgreSqlTestContainer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SpringBootTestClassOrderer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SqlTestContainer.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/SqlTestContainersSpringContextCustomizerFactory.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/StaticResourcesWebConfigurerTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/WebConfigurerTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/WebConfigurerTestController.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/config/timezone/HibernateTimeZoneIT.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/domain/AssertUtils.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/domain/AuthorityAsserts.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/domain/AuthorityTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/domain/AuthorityTestSamples.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/domain/EntityAsserts.java": {
@@ -2804,15 +1925,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/test/java/com/mycompany/myapp/domain/EntityTestSamples.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/management/SecurityMetersServiceTests.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/repository/timezone/DateTimeWrapper.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/repository/timezone/DateTimeWrapperRepository.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/security/DomainUserDetailsServiceIT.java": {
     "stateCleared": "modified",
   },
@@ -2822,19 +1934,7 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/test/java/com/mycompany/myapp/security/SecurityUtilsUnitTest.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/security/jwt/AuthenticationIntegrationTest.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/security/jwt/JWTFilterTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/security/jwt/JwtAuthenticationTestUtils.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/security/jwt/TokenAuthenticationIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/security/jwt/TokenAuthenticationSecurityMetersIT.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/service/MailServiceIT.java": {
@@ -2852,28 +1952,13 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/test/java/com/mycompany/myapp/service/mapper/UserMapperIT.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/service/mapper/UserMapperTest.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/web/filter/SpaWebFilterIT.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/web/rest/AccountResourceIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/web/rest/AuthenticateControllerIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/web/rest/AuthorityResourceIT.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/web/rest/ClientForwardControllerIT.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/web/rest/EntityResourceIT.java": {
-    "stateCleared": "modified",
-  },
-  "src/test/java/com/mycompany/myapp/web/rest/PublicUserResourceIT.java": {
     "stateCleared": "modified",
   },
   "src/test/java/com/mycompany/myapp/web/rest/TestUtil.java": {
@@ -2885,9 +1970,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/test/java/com/mycompany/myapp/web/rest/UserResourceIT.java": {
     "stateCleared": "modified",
   },
-  "src/test/java/com/mycompany/myapp/web/rest/WithUnauthenticatedMockUser.java": {
-    "stateCleared": "modified",
-  },
   "src/test/java/com/mycompany/myapp/web/rest/errors/ExceptionTranslatorIT.java": {
     "stateCleared": "modified",
   },
@@ -2897,43 +1979,16 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/test/java/com/mycompany/myapp/web/rest/errors/TestDTO.java": {
     "stateCleared": "modified",
   },
-  "src/test/resources/META-INF/spring.factories": {
-    "stateCleared": "modified",
-  },
   "src/test/resources/application-test.yml": {
     "stateCleared": "modified",
   },
   "src/test/resources/bootstrap-test.yml": {
     "stateCleared": "modified",
   },
-  "src/test/resources/config/application-testdev.yml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/config/application-testprod.yml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/config/application.yml": {
-    "stateCleared": "modified",
-  },
   "src/test/resources/i18n/messages_en.properties": {
     "stateCleared": "modified",
   },
-  "src/test/resources/junit-platform.properties": {
-    "stateCleared": "modified",
-  },
   "src/test/resources/logback.xml": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/activationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/creationEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/passwordResetEmail.html": {
-    "stateCleared": "modified",
-  },
-  "src/test/resources/templates/mail/testEmail.html": {
     "stateCleared": "modified",
   },
 }
