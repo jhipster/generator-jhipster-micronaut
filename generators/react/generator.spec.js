@@ -15,7 +15,7 @@ describe('SubGenerator react of micronaut JHipster blueprint', () => {
         })
         .withOptions({
           ignoreNeedlesError: true,
-          blueprint: 'micronaut',
+          blueprint: ['micronaut'],
         })
         .withJHipsterLookup()
         .withParentBlueprintLookup();

@@ -9,8 +9,6 @@ on:
   pull_request:
     branches:
       - '*'
-env:
-  JHI_E2E_HEADLESS: true
 permissions:
   contents: read
 jobs:
@@ -20,18 +18,15 @@ jobs:
       matrix: ${{ steps.build.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 22
       - id: build
         run: |
           npm install
-          npm link
-          mhipster github-build-matrix
+          ./cli/cli.cjs github-build-matrix
   samples:
-    name: ${{ matrix.sample-name }}
+    name: ${{ matrix.job-name || matrix.sample-name }}
     runs-on: ubuntu-latest
     needs: build-matrix
     defaults:
@@ -50,12 +45,12 @@ jobs:
         with:
           java-version: ${{ matrix.java-version }}
           node-version: ${{ matrix.node-version }}
+          maven-cache: true
+          gradle-cache: true
           binary-dir: ${{ github.workspace }}/generator-jhipster-micronaut/cli/
-      - name: 'Install blueprint'
-        run: npm install
+      - run: npm install
         working-directory: ${{ github.workspace }}/generator-jhipster-micronaut
-      - name: 'Generate Project'
-        run: cli.cjs generate-sample ${{ matrix.sample-name }} --skip-jhipster-dependencies --force
+      - run: cli.cjs generate-sample ${{ matrix.sample }}.jdl --skip-jhipster-dependencies --skip-install ${{ matrix.extra-args }}
       - uses: jhipster/actions/compare-sample@v0
         id: compare
         if: >-
@@ -63,25 +58,20 @@ jobs:
           !contains(github.event.pull_request.labels.*.name, 'pr: disable-compare')
         with:
           generator-path: generator-jhipster-micronaut
-          cmd: cli.cjs generate-sample ${{ matrix.sample-name }} --skip-jhipster-dependencies --force --skip-install
-      - name: 'Start Dependency Containers'
+          cmd: cli.cjs generate-sample ${{ matrix.sample }}.jdl --skip-jhipster-dependencies --skip-install ${{ matrix.extra-args }}
+      - run: npm run ci:backend:test
         if: steps.compare.outputs.equals != 'true'
-        run: npm run ci:e2e:prepare
-      - name: 'Run Server Tests'
-        if: steps.compare.outputs.equals != 'true'
-        run: npm run ci:backend:test
         id: backend
-      - name: 'Run Client Tests'
+      - run: npm run ci:e2e:package
         if: steps.compare.outputs.equals != 'true'
-        run: npm run ci:frontend:test --if-present
-      - name: 'Build App'
+      - run: npm run ci:frontend:test --if-present
         if: steps.compare.outputs.equals != 'true'
-        run: npm run ci:e2e:package
-      - name: 'E2E Tests'
+      - run: npm run ci:e2e:prepare
+        if: steps.compare.outputs.equals != 'true'
+      - run: npm run ci:e2e:run --if-present
         if: steps.compare.outputs.equals != 'true'
         id: e2e
-        run: npm run ci:e2e:run --if-present
-      - name: 'BACKEND: Store failure logs'
+      - name: Store backend test failure logs
         uses: actions/upload-artifact@v4
         if: always() && steps.backend.outcome == 'failure'
         with:
@@ -89,7 +79,7 @@ jobs:
           path: |
             ${{ github.workspace }}/app/build/test-results/**/*.xml
             ${{ github.workspace }}/app/target/surefire-reports
-      - name: 'E2E: Store failure screenshots'
+      - name: Store cypress screenshots
         uses: actions/upload-artifact@v4
         if: always() && steps.e2e.outcome == 'failure'
         with:

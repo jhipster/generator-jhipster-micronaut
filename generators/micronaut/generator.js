@@ -2,7 +2,7 @@ import os from 'os';
 import chalk from 'chalk';
 import BaseApplicationGenerator from 'generator-jhipster/generators/server';
 import { GENERATOR_DOCKER, GENERATOR_LANGUAGES, GENERATOR_LIQUIBASE, GENERATOR_SERVER } from 'generator-jhipster/generators';
-import { createNeedleCallback, createBase64Secret } from 'generator-jhipster/generators/base/support';
+import { createBase64Secret, createNeedleCallback } from 'generator-jhipster/generators/base/support';
 import { addJavaAnnotation } from 'generator-jhipster/generators/java/support';
 import { parseMavenPom } from 'generator-jhipster/generators/maven/support';
 import mnConstants from '../constants.cjs';
@@ -15,7 +15,7 @@ import { serverTestFrameworkChoices } from './command.js';
 export default class extends BaseApplicationGenerator {
   async beforeQueue() {
     this.jhipsterTemplatesFolders.push(
-      this.fetchFromInstalledJHipster('server/templates'),
+      this.fetchFromInstalledJHipster('spring-boot/templates'),
       // For _persistClass_.java.jhi.hibernate_cache/_persistClass_.java.jhi.jakarta_persistence file
       this.fetchFromInstalledJHipster('spring-data-relational/templates'),
       // For _global_partials_entity_/field_validators file
@@ -203,6 +203,15 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
+      addMysqlSleep({ application }) {
+        if (application.prodDatabaseTypeMysql) {
+          this.editFile(`${application.dockerServicesDir}mysql.yml`, content =>
+            content
+              .replace(/test: [^\n]*/, "test: ['CMD-SHELL', 'mysql -e \"SHOW DATABASES;\" && sleep 5']")
+              .replace('timeout: 5s', 'timeout: 10s'),
+          );
+        }
+      },
       addMicronautDependencies({ application, source }) {
         const { javaDependencies } = application;
         source.addJavaDefinition({
@@ -241,7 +250,7 @@ export default class extends BaseApplicationGenerator {
             {
               id: 'com.github.johnrengelman.shadow',
               pluginName: 'shadow',
-              version: application.javaDependencies['shadow'],
+              version: application.javaDependencies.shadow,
               addToBuild: true,
             },
           ]);

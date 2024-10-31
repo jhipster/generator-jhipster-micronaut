@@ -6,11 +6,11 @@ jakarta-validation = { module = 'jakarta.validation:jakarta.validation-api', ver
 
 jaxb-runtime = { module = 'org.glassfish.jaxb:jaxb-runtime', version = '4.0.5' }
 
-logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-encoder', version = '7.4' }
+logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-encoder', version = '8.0' }
 
-micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', version = '4.6.1' }
+micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', version = '4.6.3' }
 
-redisson = { module = 'org.redisson:redisson', version = '3.36.0' }
+redisson = { module = 'org.redisson:redisson', version = '3.38.1' }
 
 jbcrypt = { module = 'org.mindrot:jbcrypt', version = '0.4' }
 
@@ -22,11 +22,11 @@ jackson-datatype-problem = { module = 'org.zalando:jackson-datatype-problem', ve
 typesafe = { module = 'com.typesafe:config', version = '1.4.3' }
 
 [plugins]
-micronaut-application = { id = 'io.micronaut.application', version = '4.4.2' }
+micronaut-application = { id = 'io.micronaut.application', version = '4.4.3' }
 
 gradle-git-properties = { id = 'com.gorylenko.gradle-git-properties', version = '2.4.2' }
 
-openapi-generator = { id = 'org.openapi.generator', version = '7.8.0' }
+openapi-generator = { id = 'org.openapi.generator', version = '7.9.0' }
 
 shadow = { id = 'com.github.johnrengelman.shadow', version = '8.1.1' }
 
