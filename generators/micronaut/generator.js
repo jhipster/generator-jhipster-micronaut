@@ -68,7 +68,13 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.CONFIGURING]() {
     return this.asConfiguringTaskGroup({
       async configuringTemplateTask() {
-        if (this.jhipsterConfigWithDefaults.authenticationType === 'oauth2') {
+        const { authenticationType, rememberMeKey, jwtSecretKey } = this.jhipsterConfigWithDefaults;
+        if (authenticationType === 'session' && !rememberMeKey) {
+          this.jhipsterConfig.rememberMeKey = createSecret();
+        } else if (
+          jwtSecretKey === undefined &&
+          (authenticationType === 'jwt' || authenticationType === 'oauth2')
+        ) {
           this.jhipsterConfig.jwtSecretKey = this.jhipsterConfig.jwtSecretKey ?? createBase64Secret(64, this.options.reproducibleTests);
         }
       },
