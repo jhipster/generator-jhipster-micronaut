@@ -1,6 +1,6 @@
 # Greetings, Micronaut Hipster!
 
-![Tests](https://github.com/jhipster/generator-jhipster-micronaut/workflows/Generator%20Lint%20/%20Tests/badge.svg)
+![Tests](https://github.com/jhipster/generator-jhipster-micronaut/workflows/Generator/badge.svg)
 ![Sample Projects](https://github.com/jhipster/generator-jhipster-micronaut/workflows/Verify%20Sample%20Projects/badge.svg)
 
 <img src="https://raw.githubusercontent.com/jhipster/jhipster-artwork/master/family/jhipster_family_member_4.png" alt="JHipster Micronaut Family Member"
