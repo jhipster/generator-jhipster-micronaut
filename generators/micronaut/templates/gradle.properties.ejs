@@ -39,6 +39,13 @@ liquibaseTaskPrefix=liquibase
 jaxb_runtime_version=<%= javaDependencies['jaxb-runtime'] %>
 <%_ } _%>
 
+<%_ if (cacheProvider === 'hazelcast') { _%>
+hazelcast_version=<%= javaManagedProperties['hazelcast.version'] %>
+micronaut_cache_version=<%= javaManagedProperties['micronaut.cache.version'] %>
+     <%_ if (enableHibernateCache) { _%>
+hazelcast_hibernate_version=<%= javaManagedProperties['hazelcast-hibernate.version'] %>
+     <%_ } _%>
+<%_ } _%>
 # jhipster-needle-gradle-property - JHipster will add additional properties here
 
 ## below are some of the gradle performance improvement settings that can be used as required, these are not enabled by default
