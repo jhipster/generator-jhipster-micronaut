@@ -87,7 +87,8 @@ docker run -it --rm -v $PWD:/home/jhipster/app jhipster-generator-micronaut /bin
 ## Compatibility
 
 | Micronaut Blueprint | Micronaut | JHipster |
-| ------------------- | --------- | -------- |
+|---------------------|-----------|----------|
+| 3.5.0               | 4.6.3     | 8.7.3    |
 | 3.4.1               | 4.5.0     | 8.6.0    |
 | 3.3.0               | 4.4.2     | 8.4.0    |
 | 3.2.0               | 4.3.8     | 8.3.0    |
