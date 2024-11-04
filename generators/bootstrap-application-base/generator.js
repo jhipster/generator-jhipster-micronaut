@@ -15,7 +15,7 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.LOADING]() {
     return this.asPreparingTaskGroup({
-      async preparingMicronaut({ application, applicationDefaults }) {
+      async preparingMicronaut({ application }) {
         Object.assign(application, {
           backendTypeJavaAny: true,
           hipster: 'jhipster_family_member_4',
@@ -25,9 +25,6 @@ export default class extends BaseApplicationGenerator {
           hipsterName: 'Micronaut Hipster',
           hipsterProductName: 'MHipster',
           hipsterProjectLink: 'https://github.com/jhipster/generator-jhipster-micronaut',
-        });
-        applicationDefaults({
-          messageBrokerPulsar: undefined,
         });
       },
     });
