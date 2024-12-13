@@ -10,7 +10,7 @@ logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-enc
 
 micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', version = '4.7.0' }
 
-redisson = { module = 'org.redisson:redisson', version = '3.39.0' }
+redisson = { module = 'org.redisson:redisson', version = '3.40.2' }
 
 jbcrypt = { module = 'org.mindrot:jbcrypt', version = '0.4' }
 
