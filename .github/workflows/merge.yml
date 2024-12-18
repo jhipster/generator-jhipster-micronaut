@@ -20,3 +20,17 @@ jobs:
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+        if: steps.dependabot-metadata.outputs.dependency-names == 'io.micronaut.platform:micronaut-platform'
+      - uses: jhipster/actions/setup-git@v0
+        if: steps.dependabot-metadata.outputs.dependency-names == 'io.micronaut.platform:micronaut-platform'
+      - name: download bom
+        run: |
+          wget -O micronaut-platform.pom https://repo1.maven.org/maven2/io/micronaut/platform/micronaut-platform/${{ steps.dependabot-metadata.outputs.new-version }}/micronaut-platform-${{ steps.dependabot-metadata.outputs.new-version }}.pom
+          git add .
+          git commit -a -m "update micronaut-platform bom to v${{ steps.dependabot-metadata.outputs.new-version }}"
+          git push -u origin
+        working-directory: generators/micronaut/resources
+        if: steps.dependabot-metadata.outputs.dependency-names == 'io.micronaut.platform:micronaut-platform'
