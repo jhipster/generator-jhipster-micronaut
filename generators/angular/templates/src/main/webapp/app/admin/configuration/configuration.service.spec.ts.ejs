@@ -47,7 +47,7 @@ describe('Service Tests', () => {
               service.get().subscribe();
 
               const req = httpMock.expectOne({ method: 'GET' });
-              const resourceUrl = SERVER_API_URL + 'management/configprops';
+              const resourceUrl = serverApiUrl + 'management/configprops';
               expect(req.request.url).toEqual(resourceUrl);
             });
 
