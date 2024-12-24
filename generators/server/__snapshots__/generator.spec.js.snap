@@ -5,8 +5,5 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   ".yo-rc.json": {
     "stateCleared": "modified",
   },
-  "package.json": {
-    "stateCleared": "modified",
-  },
 }
 `;
