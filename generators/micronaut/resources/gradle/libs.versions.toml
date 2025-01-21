@@ -26,6 +26,6 @@ micronaut-application = { id = 'io.micronaut.application', version = '4.4.5' }
 
 gradle-git-properties = { id = 'com.gorylenko.gradle-git-properties', version = '2.4.2' }
 
-openapi-generator = { id = 'org.openapi.generator', version = '7.10.0' }
+openapi-generator = { id = 'org.openapi.generator', version = '7.11.0' }
 
 shadow = { id = 'com.github.johnrengelman.shadow', version = '8.1.1' }
