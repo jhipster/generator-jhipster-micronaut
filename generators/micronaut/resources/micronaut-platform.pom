@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.micronaut.platform</groupId>
   <artifactId>micronaut-platform</artifactId>
-  <version>4.8.0</version>
+  <version>4.8.1</version>
   <packaging>pom</packaging>
   <name>Micronaut Platform</name>
   <description>Bill-Of-Materials (BOM) and Gradle version catalogs for Micronaut</description>
@@ -112,7 +112,7 @@
     <jaxrs.api.version>3.1.0</jaxrs.api.version>
     <jcache.version>1.1.1</jcache.version>
     <jdbi.version>3.47.0</jdbi.version>
-    <jetty.version>12.0.18</jetty.version>
+    <jetty.version>12.0.19</jetty.version>
     <jjwt.version>0.12.6</jjwt.version>
     <jna.version>5.17.0</jna.version>
     <jooq.version>3.19.18</jooq.version>
@@ -137,7 +137,7 @@
     <log4j.version>2.24.2</log4j.version>
     <logback.access.version>1.5.16</logback.access.version>
     <logback.version>1.5.16</logback.version>
-    <lombok.version>1.18.36</lombok.version>
+    <lombok.version>1.18.38</lombok.version>
     <mailjet.version>5.2.5</mailjet.version>
     <mariadb.driver.version>3.5.1</mariadb.driver.version>
     <maven.native.plugin.version>0.10.6</maven.native.plugin.version>
@@ -155,7 +155,7 @@
     <micronaut.chatbots.version>1.4.0</micronaut.chatbots.version>
     <micronaut.coherence.version>5.0.5</micronaut.coherence.version>
     <micronaut.control.panel.version>1.7.0</micronaut.control.panel.version>
-    <micronaut.core.version>4.8.9</micronaut.core.version>
+    <micronaut.core.version>4.8.10</micronaut.core.version>
     <micronaut.crac.version>2.6.0</micronaut.crac.version>
     <micronaut.data.version>4.12.0</micronaut.data.version>
     <micronaut.discovery.client.version>4.6.0</micronaut.discovery.client.version>
@@ -175,14 +175,14 @@
     <micronaut.jaxrs.version>4.8.0</micronaut.jaxrs.version>
     <micronaut.jms.version>4.2.0</micronaut.jms.version>
     <micronaut.jmx.version>4.6.0</micronaut.jmx.version>
-    <micronaut.json.schema.version>1.5.0</micronaut.json.schema.version>
+    <micronaut.json.schema.version>1.5.2</micronaut.json.schema.version>
     <micronaut.kafka.version>5.8.0</micronaut.kafka.version>
     <micronaut.kotlin.version>4.6.0</micronaut.kotlin.version>
     <micronaut.kubernetes.version>7.0.0</micronaut.kubernetes.version>
     <micronaut.langchain4j.version>0.3.0</micronaut.langchain4j.version>
     <micronaut.liquibase.version>6.7.0</micronaut.liquibase.version>
     <micronaut.logging.version>1.6.1</micronaut.logging.version>
-    <micronaut.micrometer.version>5.10.0</micronaut.micrometer.version>
+    <micronaut.micrometer.version>5.10.1</micronaut.micrometer.version>
     <micronaut.micronaut.graal.languages.version>1.1.0</micronaut.micronaut.graal.languages.version>
     <micronaut.micronaut.langchain4j.version>0.3.0</micronaut.micronaut.langchain4j.version>
     <micronaut.microstream.version>2.8.0</micronaut.microstream.version>
@@ -198,7 +198,7 @@
     <micronaut.oracle.cloud.version>5.0.1</micronaut.oracle.cloud.version>
     <micronaut.oraclecloud.version>5.0.1</micronaut.oraclecloud.version>
     <micronaut.picocli.version>5.7.0</micronaut.picocli.version>
-    <micronaut.platform.version>4.8.0</micronaut.platform.version>
+    <micronaut.platform.version>4.8.1</micronaut.platform.version>
     <micronaut.problem.json.version>3.7.0</micronaut.problem.json.version>
     <micronaut.problem.version>3.7.0</micronaut.problem.version>
     <micronaut.pulsar.version>2.6.0</micronaut.pulsar.version>
@@ -212,9 +212,9 @@
     <micronaut.security.version>4.12.1</micronaut.security.version>
     <micronaut.serde.version>2.14.0</micronaut.serde.version>
     <micronaut.serialization.version>2.14.0</micronaut.serialization.version>
-    <micronaut.servlet.version>5.2.1</micronaut.servlet.version>
+    <micronaut.servlet.version>5.2.2</micronaut.servlet.version>
     <micronaut.session.version>4.6.0</micronaut.session.version>
-    <micronaut.sourcegen.version>1.7.2</micronaut.sourcegen.version>
+    <micronaut.sourcegen.version>1.7.3</micronaut.sourcegen.version>
     <micronaut.spring.version>5.10.0</micronaut.spring.version>
     <micronaut.sql.version>6.1.1</micronaut.sql.version>
     <micronaut.test.resources.version>2.8.0</micronaut.test.resources.version>
