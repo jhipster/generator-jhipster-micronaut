@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.micronaut.platform</groupId>
   <artifactId>micronaut-platform</artifactId>
-  <version>4.8.2</version>
+  <version>4.8.3</version>
   <packaging>pom</packaging>
   <name>Micronaut Platform</name>
   <description>Bill-Of-Materials (BOM) and Gradle version catalogs for Micronaut</description>
@@ -52,7 +52,7 @@
     <bson.version>4.11.5</bson.version>
     <bytebuddy.version>1.17.0</bytebuddy.version>
     <caffeine.version>3.1.8</caffeine.version>
-    <coherence.version>25.03</coherence.version>
+    <coherence.version>25.03.1</coherence.version>
     <commons.dbcp.version>2.13.0</commons.dbcp.version>
     <crac.version>1.5.0</crac.version>
     <datasource.micrometer.version>1.0.6</datasource.micrometer.version>
@@ -153,11 +153,11 @@
     <micronaut.cache.version>5.2.0</micronaut.cache.version>
     <micronaut.cassandra.version>6.7.0</micronaut.cassandra.version>
     <micronaut.chatbots.version>1.4.0</micronaut.chatbots.version>
-    <micronaut.coherence.version>5.0.5</micronaut.coherence.version>
+    <micronaut.coherence.version>5.0.6</micronaut.coherence.version>
     <micronaut.control.panel.version>1.7.0</micronaut.control.panel.version>
-    <micronaut.core.version>4.8.11</micronaut.core.version>
+    <micronaut.core.version>4.8.18</micronaut.core.version>
     <micronaut.crac.version>2.6.0</micronaut.crac.version>
-    <micronaut.data.version>4.12.0</micronaut.data.version>
+    <micronaut.data.version>4.12.2</micronaut.data.version>
     <micronaut.discovery.client.version>4.6.0</micronaut.discovery.client.version>
     <micronaut.discovery.version>4.6.0</micronaut.discovery.version>
     <micronaut.eclipsestore.version>1.9.0</micronaut.eclipsestore.version>
@@ -182,7 +182,7 @@
     <micronaut.langchain4j.version>0.3.0</micronaut.langchain4j.version>
     <micronaut.liquibase.version>6.7.0</micronaut.liquibase.version>
     <micronaut.logging.version>1.6.1</micronaut.logging.version>
-    <micronaut.micrometer.version>5.10.1</micronaut.micrometer.version>
+    <micronaut.micrometer.version>5.10.2</micronaut.micrometer.version>
     <micronaut.micronaut.graal.languages.version>1.1.0</micronaut.micronaut.graal.languages.version>
     <micronaut.micronaut.langchain4j.version>0.3.0</micronaut.micronaut.langchain4j.version>
     <micronaut.microstream.version>2.8.0</micronaut.microstream.version>
@@ -195,10 +195,10 @@
     <micronaut.object.storage.version>2.8.0</micronaut.object.storage.version>
     <micronaut.openapi.version>6.15.0</micronaut.openapi.version>
     <micronaut.opensearch.version>1.4.0</micronaut.opensearch.version>
-    <micronaut.oracle.cloud.version>5.0.1</micronaut.oracle.cloud.version>
-    <micronaut.oraclecloud.version>5.0.1</micronaut.oraclecloud.version>
+    <micronaut.oracle.cloud.version>5.0.2</micronaut.oracle.cloud.version>
+    <micronaut.oraclecloud.version>5.0.2</micronaut.oraclecloud.version>
     <micronaut.picocli.version>5.7.0</micronaut.picocli.version>
-    <micronaut.platform.version>4.8.2</micronaut.platform.version>
+    <micronaut.platform.version>4.8.3</micronaut.platform.version>
     <micronaut.problem.json.version>3.7.0</micronaut.problem.json.version>
     <micronaut.problem.version>3.7.0</micronaut.problem.version>
     <micronaut.pulsar.version>2.6.0</micronaut.pulsar.version>
@@ -209,13 +209,13 @@
     <micronaut.rss.version>4.6.0</micronaut.rss.version>
     <micronaut.rxjava2.version>2.7.0</micronaut.rxjava2.version>
     <micronaut.rxjava3.version>3.7.0</micronaut.rxjava3.version>
-    <micronaut.security.version>4.12.1</micronaut.security.version>
-    <micronaut.serde.version>2.14.0</micronaut.serde.version>
-    <micronaut.serialization.version>2.14.0</micronaut.serialization.version>
+    <micronaut.security.version>4.12.2</micronaut.security.version>
+    <micronaut.serde.version>2.14.1</micronaut.serde.version>
+    <micronaut.serialization.version>2.14.1</micronaut.serialization.version>
     <micronaut.servlet.version>5.2.2</micronaut.servlet.version>
     <micronaut.session.version>4.6.0</micronaut.session.version>
-    <micronaut.sourcegen.version>1.7.2</micronaut.sourcegen.version>
-    <micronaut.spring.version>5.10.0</micronaut.spring.version>
+    <micronaut.sourcegen.version>1.7.10</micronaut.sourcegen.version>
+    <micronaut.spring.version>5.10.1</micronaut.spring.version>
     <micronaut.sql.version>6.1.1</micronaut.sql.version>
     <micronaut.test.resources.version>2.8.0</micronaut.test.resources.version>
     <micronaut.test.version>4.7.0</micronaut.test.version>
@@ -236,10 +236,10 @@
     <mysql.driver.version>8.0.33</mysql.driver.version>
     <neo4j.driver.version>5.28.2</neo4j.driver.version>
     <neo4j.version>5.26.3</neo4j.version>
-    <netty.http3.version>0.0.28.Final</netty.http3.version>
+    <netty.http3.version>0.0.29.Final</netty.http3.version>
     <netty.iouring.version>0.0.26.Final</netty.iouring.version>
     <netty.tcnative.version>2.0.70.Final</netty.tcnative.version>
-    <netty.version>4.1.118.Final</netty.version>
+    <netty.version>4.1.119.Final</netty.version>
     <new.relic.registry.version>0.10.0</new.relic.registry.version>
     <nimbus.jose.jwt.version>9.48</nimbus.jose.jwt.version>
     <ojdbc.version>23.7.0.25.01</ojdbc.version>
@@ -286,8 +286,8 @@
     <soy.version>2023-09-13</soy.version>
     <spock.version>2.3-groovy-4.0</spock.version>
     <spotbugs.version>4.9.3</spotbugs.version>
-    <spring.boot.version>3.4.2</spring.boot.version>
-    <spring.version>6.2.2</spring.version>
+    <spring.boot.version>3.4.5</spring.boot.version>
+    <spring.version>6.2.7</spring.version>
     <swagger.version>2.2.29</swagger.version>
     <testcontainers.redis.version>1.6.4</testcontainers.redis.version>
     <testcontainers.version>1.20.6</testcontainers.version>
