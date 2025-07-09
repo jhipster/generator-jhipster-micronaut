@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.micronaut.platform</groupId>
   <artifactId>micronaut-platform</artifactId>
-  <version>4.9.0</version>
+  <version>4.9.1</version>
   <packaging>pom</packaging>
   <name>Micronaut Platform</name>
   <description>Bill-Of-Materials (BOM) and Gradle version catalogs for Micronaut</description>
@@ -141,7 +141,7 @@
     <logback.version>1.5.18</logback.version>
     <lombok.version>1.18.38</lombok.version>
     <mailjet.version>5.2.6</mailjet.version>
-    <mariadb.driver.version>3.5.3</mariadb.driver.version>
+    <mariadb.driver.version>3.5.4</mariadb.driver.version>
     <maven.native.plugin.version>0.10.6</maven.native.plugin.version>
     <methvin.directory.watcher.version>0.19.0</methvin.directory.watcher.version>
     <metrics.core.version>4.2.32</metrics.core.version>
@@ -149,7 +149,7 @@
     <micrometer.tracing.version>1.5.0</micrometer.tracing.version>
     <micrometer.version>1.15.0</micrometer.version>
     <micronaut.acme.version>5.5.0</micronaut.acme.version>
-    <micronaut.aot.version>2.8.0</micronaut.aot.version>
+    <micronaut.aot.version>2.8.1</micronaut.aot.version>
     <micronaut.aws.version>4.11.0</micronaut.aws.version>
     <micronaut.azure.version>5.11.0</micronaut.azure.version>
     <micronaut.cache.version>5.3.0</micronaut.cache.version>
@@ -157,9 +157,9 @@
     <micronaut.chatbots.version>1.5.0</micronaut.chatbots.version>
     <micronaut.coherence.version>5.0.6</micronaut.coherence.version>
     <micronaut.control.panel.version>1.8.0</micronaut.control.panel.version>
-    <micronaut.core.version>4.9.5</micronaut.core.version>
+    <micronaut.core.version>4.9.7</micronaut.core.version>
     <micronaut.crac.version>2.7.0</micronaut.crac.version>
-    <micronaut.data.version>4.13.1</micronaut.data.version>
+    <micronaut.data.version>4.13.2</micronaut.data.version>
     <micronaut.discovery.client.version>4.7.1</micronaut.discovery.client.version>
     <micronaut.discovery.version>4.7.1</micronaut.discovery.version>
     <micronaut.eclipsestore.version>1.10.0</micronaut.eclipsestore.version>
@@ -176,7 +176,7 @@
     <micronaut.guides.version>0.1.0</micronaut.guides.version>
     <micronaut.hibernate.validator.version>4.8.0</micronaut.hibernate.validator.version>
     <micronaut.jackson.xml.version>4.7.0</micronaut.jackson.xml.version>
-    <micronaut.jaxrs.version>4.9.0</micronaut.jaxrs.version>
+    <micronaut.jaxrs.version>4.9.1</micronaut.jaxrs.version>
     <micronaut.jms.version>4.3.0</micronaut.jms.version>
     <micronaut.jmx.version>4.7.0</micronaut.jmx.version>
     <micronaut.json.schema.version>1.6.0</micronaut.json.schema.version>
@@ -198,12 +198,12 @@
     <micronaut.nats.version>4.8.0</micronaut.nats.version>
     <micronaut.neo4j.version>6.10.0</micronaut.neo4j.version>
     <micronaut.object.storage.version>2.9.0</micronaut.object.storage.version>
-    <micronaut.openapi.version>6.17.1</micronaut.openapi.version>
+    <micronaut.openapi.version>6.17.3</micronaut.openapi.version>
     <micronaut.opensearch.version>1.6.0</micronaut.opensearch.version>
     <micronaut.oracle.cloud.version>5.2.0</micronaut.oracle.cloud.version>
     <micronaut.oraclecloud.version>5.2.0</micronaut.oraclecloud.version>
     <micronaut.picocli.version>5.8.0</micronaut.picocli.version>
-    <micronaut.platform.version>4.9.0</micronaut.platform.version>
+    <micronaut.platform.version>4.9.1</micronaut.platform.version>
     <micronaut.problem.json.version>3.8.0</micronaut.problem.json.version>
     <micronaut.problem.version>3.8.0</micronaut.problem.version>
     <micronaut.pulsar.version>2.6.0</micronaut.pulsar.version>
@@ -221,7 +221,7 @@
     <micronaut.session.version>4.7.0</micronaut.session.version>
     <micronaut.sourcegen.version>1.8.2</micronaut.sourcegen.version>
     <micronaut.spring.version>5.11.0</micronaut.spring.version>
-    <micronaut.sql.version>6.2.0</micronaut.sql.version>
+    <micronaut.sql.version>6.2.1</micronaut.sql.version>
     <micronaut.test.resources.version>2.9.0</micronaut.test.resources.version>
     <micronaut.test.version>4.8.1</micronaut.test.version>
     <micronaut.testresources.version>2.9.0</micronaut.testresources.version>
@@ -236,7 +236,7 @@
     <mongo.version>4.11.5</mongo.version>
     <mqttv3.version>1.2.5</mqttv3.version>
     <mqttv5.version>1.2.5</mqttv5.version>
-    <mssql.driver.version>12.10.0.jre11</mssql.driver.version>
+    <mssql.driver.version>12.10.1.jre11</mssql.driver.version>
     <mysql.connector.j.version>9.2.0</mysql.connector.j.version>
     <mysql.driver.version>8.0.33</mysql.driver.version>
     <neo4j.driver.version>5.28.5</neo4j.driver.version>
@@ -262,7 +262,7 @@
     <parboiled.version>1.4.1</parboiled.version>
     <pegdown.version>1.6.0</pegdown.version>
     <picocli.version>4.7.7</picocli.version>
-    <postgres.driver.version>42.7.5</postgres.driver.version>
+    <postgres.driver.version>42.7.7</postgres.driver.version>
     <postmark.version>1.11.1</postmark.version>
     <prometheus.metrics.exporter.pushgateway.version>1.3.8</prometheus.metrics.exporter.pushgateway.version>
     <protobuf.version>3.25.8</protobuf.version>
@@ -296,7 +296,7 @@
     <testcontainers.redis.version>1.6.4</testcontainers.redis.version>
     <testcontainers.version>1.20.6</testcontainers.version>
     <thymeleaf.version>3.1.3.RELEASE</thymeleaf.version>
-    <tomcat.jdbc.version>11.0.7</tomcat.jdbc.version>
+    <tomcat.jdbc.version>11.0.8</tomcat.jdbc.version>
     <validation.version>3.1.1</validation.version>
     <velocity.version>2.4.1</velocity.version>
     <vertx.version>4.5.15</vertx.version>
