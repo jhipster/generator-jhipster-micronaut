@@ -4,7 +4,7 @@ commons-lang3 = { module = 'org.apache.commons:commons-lang3', version = '3.18.0
 # Required by Liquibase generator due to liquibase-maven-plugin
 jakarta-validation = { module = 'jakarta.validation:jakarta.validation-api', version = '3.1.1' }
 
-jaxb-runtime = { module = 'org.glassfish.jaxb:jaxb-runtime', version = '4.0.5' }
+jaxb-runtime = { module = 'org.glassfish.jaxb:jaxb-runtime', version = '4.0.6' }
 
 logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-encoder', version = '8.1' }
 
