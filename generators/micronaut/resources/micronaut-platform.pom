@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.micronaut.platform</groupId>
   <artifactId>micronaut-platform</artifactId>
-  <version>4.9.4</version>
+  <version>4.10.0</version>
   <packaging>pom</packaging>
   <name>Micronaut Platform</name>
   <description>Bill-Of-Materials (BOM) and Gradle version catalogs for Micronaut</description>
@@ -41,51 +41,52 @@
     <artemis.jakarta.client.version>2.41.0</artemis.jakarta.client.version>
     <asciidoctorj.version>3.0.0</asciidoctorj.version>
     <asm.version>9.8</asm.version>
-    <assertj.version>3.27.3</assertj.version>
+    <assertj.version>3.27.4</assertj.version>
     <aws.java.sdk.v1.version>1.12.787</aws.java.sdk.v1.version>
     <aws.java.sdk.v2.version>2.31.66</aws.java.sdk.v2.version>
     <aws.lambda.events.version>3.15.0</aws.lambda.events.version>
     <aws.lambda.java.serialization.version>1.1.5</aws.lambda.java.serialization.version>
     <aws.lambda.version>1.3.0</aws.lambda.version>
-    <azure.cosmos.version>4.71.0</azure.cosmos.version>
-    <azure.functions.java.library.version>3.1.0</azure.functions.java.library.version>
-    <azure.sdk.version>1.2.35</azure.sdk.version>
+    <azure.cosmos.version>4.74.0</azure.cosmos.version>
+    <azure.functions.java.library.version>3.2.0</azure.functions.java.library.version>
+    <azure.sdk.version>1.3.0</azure.sdk.version>
     <brave.instrumentation.version>6.3.0</brave.instrumentation.version>
     <bson.version>4.11.5</bson.version>
-    <bytebuddy.version>1.17.5</bytebuddy.version>
+    <bytebuddy.version>1.17.7</bytebuddy.version>
     <caffeine.version>3.2.1</caffeine.version>
     <coherence.version>25.03.1</coherence.version>
     <commons.dbcp.version>2.13.0</commons.dbcp.version>
     <crac.version>1.5.0</crac.version>
-    <datasource.micrometer.version>1.1.1</datasource.micrometer.version>
+    <datasource.micrometer.version>1.2.0</datasource.micrometer.version>
     <datastax.cassandra.driver.version>4.17.0</datastax.cassandra.driver.version>
-    <eclipse.angus.version>2.0.3</eclipse.angus.version>
+    <eclipse.angus.version>2.0.5</eclipse.angus.version>
     <eclipse.parsson.version>1.1.7</eclipse.parsson.version>
     <eclipsestore.version>1.4.0</eclipsestore.version>
     <ehcache.version>3.10.8</ehcache.version>
-    <elasticsearch.version>8.18.2</elasticsearch.version>
+    <elasticsearch.version>8.19.5</elasticsearch.version>
     <evo.inflector.version>1.3</evo.inflector.version>
+    <flexmark.version>0.64.8</flexmark.version>
     <flyway.version>10.22.0</flyway.version>
     <freemarker.version>2.3.34</freemarker.version>
-    <gax.version>2.67.2</gax.version>
-    <google.auth.library.oauth2http.version>1.37.0</google.auth.library.oauth2http.version>
-    <google.cloud.core.version>2.57.1</google.cloud.core.version>
-    <google.cloud.pubsub.version>1.140.1</google.cloud.pubsub.version>
-    <google.cloud.secretmanager.version>2.64.0</google.cloud.secretmanager.version>
+    <gax.version>2.70.3</gax.version>
+    <google.auth.library.oauth2http.version>1.39.1</google.auth.library.oauth2http.version>
+    <google.cloud.core.version>2.60.3</google.cloud.core.version>
+    <google.cloud.pubsub.version>1.142.0</google.cloud.pubsub.version>
+    <google.cloud.secretmanager.version>2.76.0</google.cloud.secretmanager.version>
     <google.cloudevent.types.version>0.3.0</google.cloudevent.types.version>
     <google.function.invoker.version>1.4.1</google.function.invoker.version>
     <google.functions.framework.api.version>1.1.4</google.functions.framework.api.version>
-    <graal.sdk.version>24.2.1</graal.sdk.version>
-    <graal.svm.version>23.1.7</graal.svm.version>
+    <graal.sdk.version>24.2.2</graal.sdk.version>
+    <graal.svm.version>23.1.8</graal.svm.version>
     <graal.version>23.1.3</graal.version>
     <graalpy.version>24.2.1</graalpy.version>
     <graphql.java.extended.scalars.version>22.0</graphql.java.extended.scalars.version>
     <graphql.java.tools.version>14.0.1</graphql.java.tools.version>
     <graphql.java.version>22.4</graphql.java.version>
     <graphql.spqr.version>0.12.4</graphql.spqr.version>
-    <groovy.version>4.0.27</groovy.version>
+    <groovy.version>4.0.28</groovy.version>
     <grpc.kotlin.version>1.4.3</grpc.kotlin.version>
-    <grpc.version>1.73.0</grpc.version>
+    <grpc.version>1.75.0</grpc.version>
     <guava.version>33.4.8-jre</guava.version>
     <guice.version>7.0.0</guice.version>
     <h2.version>2.3.232</h2.version>
@@ -93,40 +94,41 @@
     <handlebars.version>4.3.1</handlebars.version>
     <hazelcast.version>5.3.7</hazelcast.version>
     <hibernate.reactive.version>2.4.8.Final</hibernate.reactive.version>
-    <hibernate.version>6.6.29.Final</hibernate.version>
+    <hibernate.version>6.6.32.Final</hibernate.version>
     <hikari.version>6.3.3</hikari.version>
     <hivemq.client.version>1.3.7</hivemq.client.version>
     <html2md.converter.version>0.64.8</html2md.converter.version>
     <infinispan.version>15.2.4.Final</infinispan.version>
-    <jackson.version>2.19.1</jackson.version>
+    <jackson.version>2.19.2</jackson.version>
     <jakarta.annotation.api.version>2.1.1</jakarta.annotation.api.version>
     <jakarta.data.version>1.0.1</jakarta.data.version>
     <jakarta.jms.api.version>3.1.0</jakarta.jms.api.version>
     <jakarta.json.api.version>2.1.3</jakarta.json.api.version>
     <jakarta.json.bind.api.version>3.0.1</jakarta.json.bind.api.version>
-    <jakarta.mail.version>2.1.3</jakarta.mail.version>
+    <jakarta.mail.version>2.1.5</jakarta.mail.version>
     <jakarta.persistence.api.version>3.1.0</jakarta.persistence.api.version>
     <jakarta.transaction.api.version>2.0.1</jakarta.transaction.api.version>
     <jasync.version>2.2.4</jasync.version>
-    <java.parser.core.version>3.26.4</java.parser.core.version>
+    <java.parser.core.version>3.27.0</java.parser.core.version>
     <javadoc.parser.version>0.3.1</javadoc.parser.version>
     <javax.annotation.api.version>1.3.2</javax.annotation.api.version>
     <javax.persistence.version>2.2</javax.persistence.version>
     <jaxrs.api.version>3.1.0</jaxrs.api.version>
     <jcache.version>1.1.1</jcache.version>
-    <jdbi.version>3.49.5</jdbi.version>
-    <jetty.version>12.0.21</jetty.version>
-    <jjwt.version>0.12.6</jjwt.version>
-    <jna.version>5.17.0</jna.version>
+    <jdbi.version>3.49.6</jdbi.version>
+    <jetty.version>12.1.2</jetty.version>
+    <jjwt.version>0.13.0</jjwt.version>
+    <jna.version>5.18.1</jna.version>
     <jooq.version>3.19.18</jooq.version>
-    <json.schema.validator.version>1.5.7</json.schema.validator.version>
-    <jsoup.version>1.21.1</jsoup.version>
+    <json.schema.validator.version>1.5.8</json.schema.validator.version>
+    <jsoup.version>1.21.2</jsoup.version>
+    <jspecify.version>1.0.0</jspecify.version>
     <jsr305.version>3.0.2</jsr305.version>
     <jstachio.version>1.3.7</jstachio.version>
     <jte.version>3.2.1</jte.version>
-    <junit.platform.version>1.12.2</junit.platform.version>
-    <junit.version>5.12.2</junit.version>
-    <junit5.version>5.12.2</junit5.version>
+    <junit.platform.version>1.14.0</junit.platform.version>
+    <junit.version>5.14.0</junit.version>
+    <junit5.version>5.14.0</junit5.version>
     <kafka.version>3.9.1</kafka.version>
     <kotest.version>5.9.1</kotest.version>
     <kotlin.coroutines.version>1.8.1</kotlin.coroutines.version>
@@ -134,169 +136,174 @@
     <kotlinpoet.version>2.0.0</kotlinpoet.version>
     <ksp.version>1.9.25-1.0.20</ksp.version>
     <ktor.version>2.3.13</ktor.version>
-    <lettuce.version>6.7.1.RELEASE</lettuce.version>
-    <liquibase.version>4.32.0</liquibase.version>
-    <log4j.version>2.24.3</log4j.version>
-    <logback.access.version>1.5.18</logback.access.version>
-    <logback.version>1.5.18</logback.version>
-    <lombok.version>1.18.38</lombok.version>
+    <lettuce.version>6.8.1.RELEASE</lettuce.version>
+    <liquibase.version>4.33.0</liquibase.version>
+    <log4j.version>2.25.2</log4j.version>
+    <logback.access.version>1.5.19</logback.access.version>
+    <logback.version>1.5.19</logback.version>
+    <lombok.version>1.18.42</lombok.version>
     <mailjet.version>5.2.6</mailjet.version>
-    <mariadb.driver.version>3.5.5</mariadb.driver.version>
-    <maven.native.plugin.version>0.10.6</maven.native.plugin.version>
+    <mariadb.driver.version>3.5.6</mariadb.driver.version>
+    <maven.native.plugin.version>0.11.2</maven.native.plugin.version>
+    <mcp.java.sdk.version>0.14.1</mcp.java.sdk.version>
     <methvin.directory.watcher.version>0.19.1</methvin.directory.watcher.version>
-    <metrics.core.version>4.2.32</metrics.core.version>
+    <metrics.core.version>4.2.37</metrics.core.version>
     <micrometer.context.propagation.version>1.1.3</micrometer.context.propagation.version>
-    <micrometer.tracing.version>1.5.0</micrometer.tracing.version>
-    <micrometer.version>1.15.0</micrometer.version>
+    <micrometer.tracing.version>1.5.4</micrometer.tracing.version>
+    <micrometer.version>1.15.4</micrometer.version>
     <micronaut.acme.version>5.5.0</micronaut.acme.version>
-    <micronaut.aot.version>2.8.1</micronaut.aot.version>
+    <micronaut.aot.version>2.9.0</micronaut.aot.version>
     <micronaut.aws.version>4.11.0</micronaut.aws.version>
-    <micronaut.azure.version>5.11.0</micronaut.azure.version>
+    <micronaut.azure.version>5.12.0</micronaut.azure.version>
     <micronaut.cache.version>5.3.0</micronaut.cache.version>
     <micronaut.cassandra.version>6.7.0</micronaut.cassandra.version>
     <micronaut.chatbots.version>1.5.0</micronaut.chatbots.version>
     <micronaut.coherence.version>5.0.6</micronaut.coherence.version>
-    <micronaut.control.panel.version>1.8.1</micronaut.control.panel.version>
-    <micronaut.core.version>4.9.12</micronaut.core.version>
+    <micronaut.control.panel.version>1.10.0</micronaut.control.panel.version>
+    <micronaut.core.version>4.10.7</micronaut.core.version>
     <micronaut.crac.version>2.7.0</micronaut.crac.version>
-    <micronaut.data.version>4.13.5</micronaut.data.version>
+    <micronaut.data.version>4.14.0</micronaut.data.version>
     <micronaut.discovery.client.version>4.7.1</micronaut.discovery.client.version>
     <micronaut.discovery.version>4.7.1</micronaut.discovery.version>
     <micronaut.eclipsestore.version>1.10.0</micronaut.eclipsestore.version>
-    <micronaut.elasticsearch.version>5.9.0</micronaut.elasticsearch.version>
-    <micronaut.email.version>2.9.0</micronaut.email.version>
-    <micronaut.flyway.version>7.8.0</micronaut.flyway.version>
-    <micronaut.gcp.version>5.12.0</micronaut.gcp.version>
+    <micronaut.elasticsearch.version>5.10.0</micronaut.elasticsearch.version>
+    <micronaut.email.version>2.10.0</micronaut.email.version>
+    <micronaut.flyway.version>7.9.0</micronaut.flyway.version>
+    <micronaut.gcp.version>5.13.0</micronaut.gcp.version>
     <micronaut.graal.languages.version>1.2.0</micronaut.graal.languages.version>
     <micronaut.graphql.version>4.8.0</micronaut.graphql.version>
     <micronaut.groovy.version>4.7.0</micronaut.groovy.version>
-    <micronaut.grpc.version>4.11.0</micronaut.grpc.version>
-    <micronaut.guice.version>1.2.0</micronaut.guice.version>
+    <micronaut.grpc.version>4.12.0</micronaut.grpc.version>
+    <micronaut.guice.version>1.3.0</micronaut.guice.version>
     <micronaut.guides.sdk.version>0.1.0</micronaut.guides.sdk.version>
     <micronaut.guides.version>0.1.0</micronaut.guides.version>
     <micronaut.hibernate.validator.version>4.8.0</micronaut.hibernate.validator.version>
-    <micronaut.jackson.xml.version>4.7.0</micronaut.jackson.xml.version>
-    <micronaut.jaxrs.version>4.9.2</micronaut.jaxrs.version>
+    <micronaut.jackson.xml.version>4.8.0</micronaut.jackson.xml.version>
+    <micronaut.jaxrs.version>4.10.0</micronaut.jaxrs.version>
     <micronaut.jms.version>4.3.0</micronaut.jms.version>
     <micronaut.jmx.version>4.7.0</micronaut.jmx.version>
-    <micronaut.json.schema.version>1.6.0</micronaut.json.schema.version>
+    <micronaut.json.schema.version>1.7.3</micronaut.json.schema.version>
     <micronaut.kafka.version>5.9.0</micronaut.kafka.version>
     <micronaut.kotlin.version>4.7.0</micronaut.kotlin.version>
     <micronaut.kubernetes.version>7.1.1</micronaut.kubernetes.version>
-    <micronaut.langchain4j.version>1.0.0</micronaut.langchain4j.version>
-    <micronaut.liquibase.version>6.8.0</micronaut.liquibase.version>
-    <micronaut.logging.version>1.7.0</micronaut.logging.version>
-    <micronaut.micrometer.version>5.12.0</micronaut.micrometer.version>
+    <micronaut.langchain4j.version>1.3.0</micronaut.langchain4j.version>
+    <micronaut.liquibase.version>6.9.0</micronaut.liquibase.version>
+    <micronaut.logging.version>1.7.1</micronaut.logging.version>
+    <micronaut.mcp.version>0.0.13</micronaut.mcp.version>
+    <micronaut.micrometer.version>5.13.1</micronaut.micrometer.version>
     <micronaut.micronaut.graal.languages.version>1.2.0</micronaut.micronaut.graal.languages.version>
     <micronaut.micronaut.guides.sdk.version>0.1.0</micronaut.micronaut.guides.sdk.version>
-    <micronaut.micronaut.langchain4j.version>1.0.0</micronaut.micronaut.langchain4j.version>
+    <micronaut.micronaut.langchain4j.version>1.3.0</micronaut.micronaut.langchain4j.version>
+    <micronaut.micronaut.mcp.version>0.0.13</micronaut.micronaut.mcp.version>
+    <micronaut.micronaut.openrewrite.version>0.0.3</micronaut.micronaut.openrewrite.version>
     <micronaut.microstream.version>2.9.0</micronaut.microstream.version>
     <micronaut.mongo.version>5.7.0</micronaut.mongo.version>
     <micronaut.mongodb.version>5.7.0</micronaut.mongodb.version>
     <micronaut.mqtt.version>3.7.0</micronaut.mqtt.version>
-    <micronaut.multitenancy.version>5.7.0</micronaut.multitenancy.version>
-    <micronaut.nats.version>4.8.0</micronaut.nats.version>
-    <micronaut.neo4j.version>6.10.0</micronaut.neo4j.version>
-    <micronaut.object.storage.version>2.9.0</micronaut.object.storage.version>
-    <micronaut.openapi.version>6.17.3</micronaut.openapi.version>
+    <micronaut.multitenancy.version>5.8.0</micronaut.multitenancy.version>
+    <micronaut.nats.version>4.9.0</micronaut.nats.version>
+    <micronaut.neo4j.version>6.11.0</micronaut.neo4j.version>
+    <micronaut.object.storage.version>2.10.0</micronaut.object.storage.version>
+    <micronaut.openapi.version>6.19.1</micronaut.openapi.version>
+    <micronaut.openrewrite.version>0.0.3</micronaut.openrewrite.version>
     <micronaut.opensearch.version>1.6.0</micronaut.opensearch.version>
-    <micronaut.oracle.cloud.version>5.2.4</micronaut.oracle.cloud.version>
-    <micronaut.oraclecloud.version>5.2.4</micronaut.oraclecloud.version>
-    <micronaut.picocli.version>5.8.0</micronaut.picocli.version>
-    <micronaut.platform.version>4.9.4</micronaut.platform.version>
-    <micronaut.problem.json.version>3.8.0</micronaut.problem.json.version>
-    <micronaut.problem.version>3.8.0</micronaut.problem.version>
+    <micronaut.oracle.cloud.version>5.5.2</micronaut.oracle.cloud.version>
+    <micronaut.oraclecloud.version>5.5.2</micronaut.oraclecloud.version>
+    <micronaut.picocli.version>5.9.0</micronaut.picocli.version>
+    <micronaut.platform.version>4.10.0</micronaut.platform.version>
+    <micronaut.problem.json.version>3.9.0</micronaut.problem.json.version>
+    <micronaut.problem.version>3.9.0</micronaut.problem.version>
     <micronaut.pulsar.version>2.6.0</micronaut.pulsar.version>
-    <micronaut.r2dbc.version>6.1.0</micronaut.r2dbc.version>
+    <micronaut.r2dbc.version>6.2.0</micronaut.r2dbc.version>
     <micronaut.rabbitmq.version>4.8.0</micronaut.rabbitmq.version>
-    <micronaut.reactor.version>3.8.0</micronaut.reactor.version>
-    <micronaut.redis.version>6.8.0</micronaut.redis.version>
-    <micronaut.rss.version>4.7.0</micronaut.rss.version>
-    <micronaut.rxjava2.version>2.8.0</micronaut.rxjava2.version>
-    <micronaut.rxjava3.version>3.8.0</micronaut.rxjava3.version>
-    <micronaut.security.version>4.13.1</micronaut.security.version>
-    <micronaut.serde.version>2.15.1</micronaut.serde.version>
-    <micronaut.serialization.version>2.15.1</micronaut.serialization.version>
-    <micronaut.servlet.version>5.4.0</micronaut.servlet.version>
-    <micronaut.session.version>4.7.0</micronaut.session.version>
+    <micronaut.reactor.version>3.9.1</micronaut.reactor.version>
+    <micronaut.redis.version>6.9.0</micronaut.redis.version>
+    <micronaut.rss.version>4.8.0</micronaut.rss.version>
+    <micronaut.rxjava2.version>2.9.0</micronaut.rxjava2.version>
+    <micronaut.rxjava3.version>3.9.0</micronaut.rxjava3.version>
+    <micronaut.security.version>4.15.0</micronaut.security.version>
+    <micronaut.serde.version>2.16.1</micronaut.serde.version>
+    <micronaut.serialization.version>2.16.1</micronaut.serialization.version>
+    <micronaut.servlet.version>5.6.0</micronaut.servlet.version>
+    <micronaut.session.version>4.8.0</micronaut.session.version>
     <micronaut.sourcegen.version>1.8.2</micronaut.sourcegen.version>
-    <micronaut.spring.version>5.11.2</micronaut.spring.version>
-    <micronaut.sql.version>6.2.2</micronaut.sql.version>
-    <micronaut.test.resources.version>2.9.0</micronaut.test.resources.version>
-    <micronaut.test.version>4.8.1</micronaut.test.version>
-    <micronaut.testresources.version>2.9.0</micronaut.testresources.version>
-    <micronaut.toml.version>2.7.0</micronaut.toml.version>
-    <micronaut.tracing.version>7.1.4</micronaut.tracing.version>
-    <micronaut.validation.version>4.10.0</micronaut.validation.version>
-    <micronaut.views.version>5.8.0</micronaut.views.version>
+    <micronaut.spring.version>5.12.0</micronaut.spring.version>
+    <micronaut.sql.version>6.3.1</micronaut.sql.version>
+    <micronaut.test.resources.version>2.10.1</micronaut.test.resources.version>
+    <micronaut.test.version>4.10.1</micronaut.test.version>
+    <micronaut.testresources.version>2.10.1</micronaut.testresources.version>
+    <micronaut.toml.version>2.8.0</micronaut.toml.version>
+    <micronaut.tracing.version>7.2.0</micronaut.tracing.version>
+    <micronaut.validation.version>4.12.0</micronaut.validation.version>
+    <micronaut.views.version>5.9.0</micronaut.views.version>
     <microstream.version>08.01.02-MS-GA</microstream.version>
-    <mockito.version>5.18.0</mockito.version>
+    <mockito.version>5.20.0</mockito.version>
     <mockk.version>1.13.17</mockk.version>
     <mongo.reactive.version>4.11.5</mongo.reactive.version>
     <mongo.version>4.11.5</mongo.version>
     <mqttv3.version>1.2.5</mqttv3.version>
     <mqttv5.version>1.2.5</mqttv5.version>
     <mssql.driver.version>12.10.1.jre11</mssql.driver.version>
-    <mysql.connector.j.version>9.2.0</mysql.connector.j.version>
+    <mysql.connector.j.version>9.4.0</mysql.connector.j.version>
     <mysql.driver.version>8.0.33</mysql.driver.version>
-    <neo4j.driver.version>5.28.5</neo4j.driver.version>
-    <neo4j.version>5.26.8</neo4j.version>
-    <netty.tcnative.version>2.0.72.Final</netty.tcnative.version>
-    <netty.version>4.2.5.Final</netty.version>
+    <neo4j.driver.version>5.28.10</neo4j.driver.version>
+    <neo4j.version>5.26.12</neo4j.version>
+    <netty.tcnative.version>2.0.74.Final</netty.tcnative.version>
+    <netty.version>4.2.7.Final</netty.version>
     <new.relic.registry.version>0.10.0</new.relic.registry.version>
-    <nimbus.jose.jwt.version>10.3.1</nimbus.jose.jwt.version>
-    <ojdbc.version>23.8.0.25.04</ojdbc.version>
+    <nimbus.jose.jwt.version>10.5</nimbus.jose.jwt.version>
+    <ojdbc.version>23.9.0.25.07</ojdbc.version>
     <ongres.scram.version>2.1</ongres.scram.version>
     <opensearch.java.version>2.24.0</opensearch.java.version>
     <opensearch.rest.client.version>2.19.2</opensearch.rest.client.version>
     <opensearch.testcontainers.version>2.1.3</opensearch.testcontainers.version>
-    <opentelemetry.alpha.version>1.51.0-alpha</opentelemetry.alpha.version>
-    <opentelemetry.autoconfigure.version>1.2.0</opentelemetry.autoconfigure.version>
-    <opentelemetry.contrib.aws.resources.version>1.46.0-alpha</opentelemetry.contrib.aws.resources.version>
-    <opentelemetry.contrib.aws.xray.propagation.version>1.46.0-alpha</opentelemetry.contrib.aws.xray.propagation.version>
-    <opentelemetry.contrib.aws.xray.version>1.46.0</opentelemetry.contrib.aws.xray.version>
+    <opentelemetry.alpha.version>1.54.1-alpha</opentelemetry.alpha.version>
+    <opentelemetry.autoconfigure.version>1.4.0</opentelemetry.autoconfigure.version>
+    <opentelemetry.contrib.aws.resources.version>1.50.0-alpha</opentelemetry.contrib.aws.resources.version>
+    <opentelemetry.contrib.aws.xray.propagation.version>1.50.0-alpha</opentelemetry.contrib.aws.xray.propagation.version>
+    <opentelemetry.contrib.aws.xray.version>1.50.0</opentelemetry.contrib.aws.xray.version>
     <opentelemetry.gcp.trace.version>0.36.0-alpha</opentelemetry.gcp.trace.version>
-    <opentelemetry.instrumentation.alpha.version>2.16.0-alpha</opentelemetry.instrumentation.alpha.version>
-    <opentelemetry.instrumentation.version>2.16.0</opentelemetry.instrumentation.version>
-    <opentelemetry.version>1.51.0</opentelemetry.version>
+    <opentelemetry.instrumentation.alpha.version>2.20.1-alpha</opentelemetry.instrumentation.alpha.version>
+    <opentelemetry.instrumentation.version>2.20.1</opentelemetry.instrumentation.version>
+    <opentelemetry.version>1.54.1</opentelemetry.version>
     <parboiled.version>1.4.1</parboiled.version>
     <pegdown.version>1.6.0</pegdown.version>
     <picocli.version>4.7.7</picocli.version>
-    <postgres.driver.version>42.7.7</postgres.driver.version>
+    <postgres.driver.version>42.7.8</postgres.driver.version>
     <postmark.version>1.11.1</postmark.version>
-    <prometheus.metrics.exporter.pushgateway.version>1.3.8</prometheus.metrics.exporter.pushgateway.version>
+    <prometheus.metrics.exporter.pushgateway.version>1.4.1</prometheus.metrics.exporter.pushgateway.version>
     <protobuf.version>3.25.8</protobuf.version>
     <publicsuffixlist.version>2.2.0</publicsuffixlist.version>
     <pulsar.client.version>3.3.5</pulsar.client.version>
     <r2dbc.h2.version>1.0.0.RELEASE</r2dbc.h2.version>
     <r2dbc.mariadb.version>1.3.0</r2dbc.mariadb.version>
-    <r2dbc.mssql.version>1.0.2.RELEASE</r2dbc.mssql.version>
+    <r2dbc.mssql.version>1.0.3.RELEASE</r2dbc.mssql.version>
     <r2dbc.mysql.version>1.4.1</r2dbc.mysql.version>
     <r2dbc.oracle.version>1.3.0</r2dbc.oracle.version>
     <r2dbc.pool.version>1.0.2.RELEASE</r2dbc.pool.version>
-    <r2dbc.postgresql.version>1.0.7.RELEASE</r2dbc.postgresql.version>
+    <r2dbc.postgresql.version>1.1.0.RELEASE</r2dbc.postgresql.version>
     <r2dbc.version>1.0.0.RELEASE</r2dbc.version>
     <reactive.streams.version>1.0.4</reactive.streams.version>
-    <reactor.bom.version>2024.0.7</reactor.bom.version>
-    <reactor.version>3.7.7</reactor.version>
-    <rest.assured.version>5.5.5</rest.assured.version>
+    <reactor.bom.version>2024.0.11</reactor.bom.version>
+    <reactor.version>3.7.12</reactor.version>
+    <rest.assured.version>5.5.6</rest.assured.version>
     <rocker.version>1.4.0</rocker.version>
     <rxjava2.version>2.2.21</rxjava2.version>
-    <rxjava3.version>3.1.10</rxjava3.version>
+    <rxjava3.version>3.1.12</rxjava3.version>
     <sendgrid.version>4.10.3</sendgrid.version>
     <servlet.api.version>6.1.0</servlet.api.version>
     <slf4j.version>2.0.17</slf4j.version>
     <snakeyaml.version>2.4</snakeyaml.version>
     <soy.version>2023-09-13</soy.version>
     <spock.version>2.3-groovy-4.0</spock.version>
-    <spotbugs.version>4.9.3</spotbugs.version>
+    <spotbugs.version>4.9.7</spotbugs.version>
     <spring.boot.version>3.5.6</spring.boot.version>
     <spring.version>6.2.11</spring.version>
-    <swagger.version>2.2.34</swagger.version>
+    <swagger.version>2.2.39</swagger.version>
     <testcontainers.redis.version>1.6.4</testcontainers.redis.version>
     <testcontainers.version>1.20.6</testcontainers.version>
     <thymeleaf.version>3.1.3.RELEASE</thymeleaf.version>
-    <tomcat.jdbc.version>11.0.10</tomcat.jdbc.version>
+    <tomcat.jdbc.version>11.0.12</tomcat.jdbc.version>
     <validation.version>3.1.1</validation.version>
     <velocity.version>2.4.1</velocity.version>
     <vertx.version>4.5.21</vertx.version>
@@ -867,6 +874,11 @@
       </dependency>
       <dependency>
         <groupId>io.micronaut.controlpanel</groupId>
+        <artifactId>micronaut-control-panel-object-storage</artifactId>
+        <version>${micronaut.control.panel.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.controlpanel</groupId>
         <artifactId>micronaut-control-panel-core</artifactId>
         <version>${micronaut.control.panel.version}</version>
       </dependency>
@@ -1059,6 +1071,11 @@
         <groupId>io.micronaut</groupId>
         <artifactId>micronaut-inject-java-test</artifactId>
         <version>${micronaut.core.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jspecify</groupId>
+        <artifactId>jspecify</artifactId>
+        <version>${jspecify.version}</version>
       </dependency>
       <dependency>
         <groupId>io.micronaut</groupId>
@@ -1374,6 +1391,11 @@
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-stdlib</artifactId>
         <version>${kotlin.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-pkitesting</artifactId>
+        <version>${netty.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jetbrains.kotlinx</groupId>
@@ -2197,6 +2219,11 @@
       </dependency>
       <dependency>
         <groupId>io.micronaut.jsonschema</groupId>
+        <artifactId>micronaut-json-schema-utils</artifactId>
+        <version>${micronaut.json.schema.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.jsonschema</groupId>
         <artifactId>micronaut-json-schema-common</artifactId>
         <version>${micronaut.json.schema.version}</version>
       </dependency>
@@ -2362,6 +2389,41 @@
       </dependency>
       <dependency>
         <groupId>io.micronaut.langchain4j</groupId>
+        <artifactId>micronaut-langchain4j-ollama-testresource</artifactId>
+        <version>${micronaut.langchain4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.langchain4j</groupId>
+        <artifactId>micronaut-langchain4j-core</artifactId>
+        <version>${micronaut.langchain4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.langchain4j</groupId>
+        <artifactId>micronaut-langchain4j-store-opensearch</artifactId>
+        <version>${micronaut.langchain4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.langchain4j</groupId>
+        <artifactId>micronaut-langchain4j-ollama</artifactId>
+        <version>${micronaut.langchain4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.langchain4j</groupId>
+        <artifactId>micronaut-langchain4j-azure</artifactId>
+        <version>${micronaut.langchain4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.langchain4j</groupId>
+        <artifactId>micronaut-langchain4j-bedrock</artifactId>
+        <version>${micronaut.langchain4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.langchain4j</groupId>
+        <artifactId>micronaut-langchain4j-store-pgvector</artifactId>
+        <version>${micronaut.langchain4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.langchain4j</groupId>
         <artifactId>micronaut-langchain4j-googleai-gemini</artifactId>
         <version>${micronaut.langchain4j.version}</version>
       </dependency>
@@ -2387,22 +2449,12 @@
       </dependency>
       <dependency>
         <groupId>io.micronaut.langchain4j</groupId>
-        <artifactId>micronaut-langchain4j-ollama-testresource</artifactId>
-        <version>${micronaut.langchain4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.micronaut.langchain4j</groupId>
         <artifactId>micronaut-langchain4j-qdrant-testresource</artifactId>
         <version>${micronaut.langchain4j.version}</version>
       </dependency>
       <dependency>
         <groupId>io.micronaut.langchain4j</groupId>
-        <artifactId>micronaut-langchain4j-core</artifactId>
-        <version>${micronaut.langchain4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.micronaut.langchain4j</groupId>
-        <artifactId>micronaut-langchain4j-store-opensearch</artifactId>
+        <artifactId>micronaut-langchain4j-cassandra</artifactId>
         <version>${micronaut.langchain4j.version}</version>
       </dependency>
       <dependency>
@@ -2422,22 +2474,12 @@
       </dependency>
       <dependency>
         <groupId>io.micronaut.langchain4j</groupId>
-        <artifactId>micronaut-langchain4j-ollama</artifactId>
+        <artifactId>micronaut-langchain4j-oci-genai</artifactId>
         <version>${micronaut.langchain4j.version}</version>
       </dependency>
       <dependency>
         <groupId>io.micronaut.langchain4j</groupId>
         <artifactId>micronaut-langchain4j-vertexai-gemini</artifactId>
-        <version>${micronaut.langchain4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.micronaut.langchain4j</groupId>
-        <artifactId>micronaut-langchain4j-azure</artifactId>
-        <version>${micronaut.langchain4j.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.micronaut.langchain4j</groupId>
-        <artifactId>micronaut-langchain4j-bedrock</artifactId>
         <version>${micronaut.langchain4j.version}</version>
       </dependency>
       <dependency>
@@ -2467,7 +2509,7 @@
       </dependency>
       <dependency>
         <groupId>io.micronaut.langchain4j</groupId>
-        <artifactId>micronaut-langchain4j-store-pgvector</artifactId>
+        <artifactId>micronaut-langchain4j-jlama</artifactId>
         <version>${micronaut.langchain4j.version}</version>
       </dependency>
       <dependency>
@@ -2564,6 +2606,41 @@
         <groupId>org.slf4j</groupId>
         <artifactId>log4j-over-slf4j</artifactId>
         <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.modelcontextprotocol.sdk</groupId>
+        <artifactId>mcp-core</artifactId>
+        <version>${mcp.java.sdk.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.mcp</groupId>
+        <artifactId>micronaut-mcp-annotations</artifactId>
+        <version>${micronaut.mcp.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.mcp</groupId>
+        <artifactId>micronaut-mcp</artifactId>
+        <version>${micronaut.mcp.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.mcp</groupId>
+        <artifactId>micronaut-mcp-bom</artifactId>
+        <version>${micronaut.micronaut.mcp.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.mcp</groupId>
+        <artifactId>micronaut-mcp-server-java-sdk</artifactId>
+        <version>${micronaut.mcp.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.mcp</groupId>
+        <artifactId>micronaut-mcp-client-langchain4j</artifactId>
+        <version>${micronaut.mcp.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.mcp</groupId>
+        <artifactId>micronaut-mcp-client-java-sdk</artifactId>
+        <version>${micronaut.mcp.version}</version>
       </dependency>
       <dependency>
         <groupId>io.micronaut.micrometer</groupId>
@@ -3006,14 +3083,14 @@
         <version>${micronaut.openapi.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.freemarker</groupId>
-        <artifactId>freemarker</artifactId>
-        <version>${freemarker.version}</version>
-      </dependency>
-      <dependency>
         <groupId>io.micronaut.openapi</groupId>
         <artifactId>micronaut-openapi-bom</artifactId>
         <version>${micronaut.openapi.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.vladsch.flexmark</groupId>
+        <artifactId>flexmark-profile-pegdown</artifactId>
+        <version>${flexmark.version}</version>
       </dependency>
       <dependency>
         <groupId>com.github.chhorz</groupId>
@@ -3046,9 +3123,24 @@
         <version>${swagger.version}</version>
       </dependency>
       <dependency>
+        <groupId>com.vladsch.flexmark</groupId>
+        <artifactId>flexmark-html2md-converter</artifactId>
+        <version>${flexmark.version}</version>
+      </dependency>
+      <dependency>
         <groupId>io.micronaut.openapi</groupId>
         <artifactId>micronaut-openapi-common</artifactId>
         <version>${micronaut.openapi.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.openrewrite</groupId>
+        <artifactId>micronaut-openrewrite</artifactId>
+        <version>${micronaut.openrewrite.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.openrewrite</groupId>
+        <artifactId>micronaut-openrewrite-bom</artifactId>
+        <version>${micronaut.micronaut.openrewrite.version}</version>
       </dependency>
       <dependency>
         <groupId>io.micronaut.opensearch</groupId>
@@ -3222,6 +3314,11 @@
       </dependency>
       <dependency>
         <groupId>io.micronaut.oraclecloud</groupId>
+        <artifactId>micronaut-oraclecloud-bmc-iot</artifactId>
+        <version>${micronaut.oracle.cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.oraclecloud</groupId>
         <artifactId>micronaut-oraclecloud-bmc-waf</artifactId>
         <version>${micronaut.oracle.cloud.version}</version>
       </dependency>
@@ -3322,11 +3419,6 @@
       </dependency>
       <dependency>
         <groupId>io.micronaut.oraclecloud</groupId>
-        <artifactId>micronaut-oraclecloud-bmc-servicemesh</artifactId>
-        <version>${micronaut.oracle.cloud.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.micronaut.oraclecloud</groupId>
         <artifactId>micronaut-oraclecloud-bmc-ocvp</artifactId>
         <version>${micronaut.oracle.cloud.version}</version>
       </dependency>
@@ -3377,6 +3469,11 @@
       </dependency>
       <dependency>
         <groupId>io.micronaut.oraclecloud</groupId>
+        <artifactId>micronaut-oraclecloud-bmc-jmsutils</artifactId>
+        <version>${micronaut.oracle.cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.oraclecloud</groupId>
         <artifactId>micronaut-oraclecloud-sdk-rxjava2</artifactId>
         <version>${micronaut.oracle.cloud.version}</version>
       </dependency>
@@ -3423,6 +3520,11 @@
       <dependency>
         <groupId>io.micronaut.oraclecloud</groupId>
         <artifactId>micronaut-oraclecloud-bmc-waas</artifactId>
+        <version>${micronaut.oracle.cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.oraclecloud</groupId>
+        <artifactId>micronaut-oraclecloud-bmc-dbmulticloud</artifactId>
         <version>${micronaut.oracle.cloud.version}</version>
       </dependency>
       <dependency>
@@ -3512,17 +3614,17 @@
       </dependency>
       <dependency>
         <groupId>io.micronaut.oraclecloud</groupId>
+        <artifactId>micronaut-oraclecloud-bmc-multicloud</artifactId>
+        <version>${micronaut.oracle.cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.oraclecloud</groupId>
         <artifactId>micronaut-oraclecloud-httpclient-apache-http-core</artifactId>
         <version>${micronaut.oracle.cloud.version}</version>
       </dependency>
       <dependency>
         <groupId>io.micronaut.oraclecloud</groupId>
         <artifactId>micronaut-oraclecloud-function-http-test</artifactId>
-        <version>${micronaut.oracle.cloud.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.micronaut.oraclecloud</groupId>
-        <artifactId>micronaut-oraclecloud-bmc-dts</artifactId>
         <version>${micronaut.oracle.cloud.version}</version>
       </dependency>
       <dependency>
@@ -3622,12 +3724,22 @@
       </dependency>
       <dependency>
         <groupId>io.micronaut.oraclecloud</groupId>
+        <artifactId>micronaut-oraclecloud-bmc-apiplatform</artifactId>
+        <version>${micronaut.oracle.cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.oraclecloud</groupId>
         <artifactId>micronaut-oraclecloud-bmc-datacatalog</artifactId>
         <version>${micronaut.oracle.cloud.version}</version>
       </dependency>
       <dependency>
         <groupId>io.micronaut.oraclecloud</groupId>
         <artifactId>micronaut-oraclecloud-bmc-keymanagement</artifactId>
+        <version>${micronaut.oracle.cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.oraclecloud</groupId>
+        <artifactId>micronaut-oraclecloud-bmc-aidataplatform</artifactId>
         <version>${micronaut.oracle.cloud.version}</version>
       </dependency>
       <dependency>
@@ -3643,11 +3755,6 @@
       <dependency>
         <groupId>io.micronaut.oraclecloud</groupId>
         <artifactId>micronaut-oraclecloud-bmc-datalabelingservicedataplane</artifactId>
-        <version>${micronaut.oracle.cloud.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.micronaut.oraclecloud</groupId>
-        <artifactId>micronaut-oraclecloud-bmc-aianomalydetection</artifactId>
         <version>${micronaut.oracle.cloud.version}</version>
       </dependency>
       <dependency>
@@ -3673,6 +3780,11 @@
       <dependency>
         <groupId>io.micronaut.oraclecloud</groupId>
         <artifactId>micronaut-oraclecloud-bmc-queue</artifactId>
+        <version>${micronaut.oracle.cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.oraclecloud</groupId>
+        <artifactId>micronaut-oraclecloud-serde-processor</artifactId>
         <version>${micronaut.oracle.cloud.version}</version>
       </dependency>
       <dependency>
@@ -3708,6 +3820,11 @@
       <dependency>
         <groupId>io.micronaut.oraclecloud</groupId>
         <artifactId>micronaut-oraclecloud-atp</artifactId>
+        <version>${micronaut.oracle.cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.oraclecloud</groupId>
+        <artifactId>micronaut-oraclecloud-bmc-resourceanalytics</artifactId>
         <version>${micronaut.oracle.cloud.version}</version>
       </dependency>
       <dependency>
@@ -3818,11 +3935,6 @@
       <dependency>
         <groupId>io.micronaut.oraclecloud</groupId>
         <artifactId>micronaut-oraclecloud-sdk-reactor</artifactId>
-        <version>${micronaut.oracle.cloud.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.micronaut.oraclecloud</groupId>
-        <artifactId>micronaut-oraclecloud-bmc-osmanagement</artifactId>
         <version>${micronaut.oracle.cloud.version}</version>
       </dependency>
       <dependency>
@@ -3973,6 +4085,11 @@
       <dependency>
         <groupId>io.micronaut.oraclecloud</groupId>
         <artifactId>micronaut-oraclecloud-bmc-events</artifactId>
+        <version>${micronaut.oracle.cloud.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.oraclecloud</groupId>
+        <artifactId>micronaut-oraclecloud-bmc-managedkafka</artifactId>
         <version>${micronaut.oracle.cloud.version}</version>
       </dependency>
       <dependency>
@@ -4766,6 +4883,11 @@
         <version>${micronaut.test.version}</version>
       </dependency>
       <dependency>
+        <groupId>io.micronaut.test</groupId>
+        <artifactId>micronaut-test-netty-leak</artifactId>
+        <version>${micronaut.test.version}</version>
+      </dependency>
+      <dependency>
         <groupId>net.bytebuddy</groupId>
         <artifactId>byte-buddy</artifactId>
         <version>${bytebuddy.version}</version>
@@ -5097,6 +5219,11 @@
       </dependency>
       <dependency>
         <groupId>io.micronaut.testresources</groupId>
+        <artifactId>micronaut-test-resources-jdbc-oracle-test-pilot</artifactId>
+        <version>${micronaut.testresources.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.testresources</groupId>
         <artifactId>micronaut-test-resources-bom</artifactId>
         <version>${micronaut.testresources.version}</version>
       </dependency>
@@ -5419,6 +5546,11 @@
         <groupId>io.micronaut.views</groupId>
         <artifactId>micronaut-views-react</artifactId>
         <version>${micronaut.views.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.freemarker</groupId>
+        <artifactId>freemarker</artifactId>
+        <version>${freemarker.version}</version>
       </dependency>
       <dependency>
         <groupId>io.jstach</groupId>
@@ -5785,6 +5917,13 @@
         <scope>import</scope>
       </dependency>
       <dependency>
+        <groupId>io.micronaut.mcp</groupId>
+        <artifactId>micronaut-mcp-bom</artifactId>
+        <version>${micronaut.mcp.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
         <groupId>io.micronaut.micrometer</groupId>
         <artifactId>micronaut-micrometer-bom</artifactId>
         <version>${micronaut.micrometer.version}</version>
@@ -5844,6 +5983,13 @@
         <groupId>io.micronaut.openapi</groupId>
         <artifactId>micronaut-openapi-bom</artifactId>
         <version>${micronaut.openapi.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.micronaut.openrewrite</groupId>
+        <artifactId>micronaut-openrewrite-bom</artifactId>
+        <version>${micronaut.openrewrite.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
