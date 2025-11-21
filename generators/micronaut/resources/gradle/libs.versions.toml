@@ -24,7 +24,7 @@ typesafe = { module = 'com.typesafe:config', version = '1.4.5' }
 [plugins]
 micronaut-application = { id = 'io.micronaut.application', version = '4.6.1' }
 
-gradle-git-properties = { id = 'com.gorylenko.gradle-git-properties', version = '2.5.3' }
+gradle-git-properties = { id = 'com.gorylenko.gradle-git-properties', version = '2.5.4' }
 
 openapi-generator = { id = 'org.openapi.generator', version = '7.17.0' }
 
