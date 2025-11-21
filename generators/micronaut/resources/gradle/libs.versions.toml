@@ -1,5 +1,5 @@
 [libraries]
-commons-lang3 = { module = 'org.apache.commons:commons-lang3', version = '3.19.0' }
+commons-lang3 = { module = 'org.apache.commons:commons-lang3', version = '3.20.0' }
 
 # Required by Liquibase generator due to liquibase-maven-plugin
 jakarta-validation = { module = 'jakarta.validation:jakarta.validation-api', version = '3.1.1' }
