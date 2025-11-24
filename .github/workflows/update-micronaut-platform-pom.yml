@@ -41,7 +41,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 20
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: jhipster/actions/setup-git@v1
       - uses: jhipster/actions/restore-cache@v1
         with:
