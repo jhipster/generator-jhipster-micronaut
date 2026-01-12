@@ -23,7 +23,7 @@ jobs:
     outputs:
       matrix: ${{ steps.build.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: 22
@@ -43,7 +43,7 @@ jobs:
       fail-fast: false
       matrix: ${{fromJson(needs.build-matrix.outputs.matrix)}}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           path: generator-jhipster-micronaut
           fetch-depth: 2
@@ -78,7 +78,7 @@ jobs:
         if: steps.compare.outputs.equals != 'true'
         id: e2e
       - name: Store backend test failure logs
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: always() && steps.backend.outcome == 'failure'
         with:
           name: log-${{ matrix.job-name || matrix.sample }}
@@ -86,7 +86,7 @@ jobs:
             ${{ github.workspace }}/app/build/test-results/**/*.xml
             ${{ github.workspace }}/app/target/surefire-reports
       - name: Store cypress screenshots
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: always() && steps.e2e.outcome == 'failure'
         with:
           name: screenshots-${{ matrix.job-name || matrix.sample }}
