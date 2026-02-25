@@ -8,7 +8,7 @@ jaxb-runtime = { module = 'org.glassfish.jaxb:jaxb-runtime', version = '4.0.6' }
 
 logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-encoder', version = '8.1' }
 
-micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', version = '4.9.4' }
+micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', version = '4.10.1' }
 
 redisson = { module = 'org.redisson:redisson', version = '4.2.0' }
 
