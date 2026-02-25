@@ -19,7 +19,7 @@ problem-violations = { module = 'org.zalando:problem-violations', version = '0.2
 jackson-datatype-problem = { module = 'org.zalando:jackson-datatype-problem', version = '0.27.1' }
 
 # caffeine
-typesafe = { module = 'com.typesafe:config', version = '1.4.5' }
+typesafe = { module = 'com.typesafe:config', version = '1.4.6' }
 
 [plugins]
 micronaut-application = { id = 'io.micronaut.application', version = '4.6.2' }
