@@ -24,7 +24,7 @@
     const entityToDtoReference = mapper + '::'+ 'toDto';
 _%>
 <%_ if (jpaMetamodelFiltering) { _%>
-    public HttpResponse<List<<%= instanceType %>>> getAll<%= entityClassPlural %>(<%= entityClass %>Criteria criteria<% if (pagination != 'no') { %>, Pageable pageable<% if (reactive) { %>, HttpRequest request<% } %><% } %>) {
+    public HttpResponse<List<<%= instanceType %>>> getAll<%= entityClassPlural %>(<%= entityClass %>Criteria criteria<% if (pagination != 'no') { %>, Pageable pageable, HttpRequest request<% } %>) {
         log.debug("REST request to get <%= entityClassPlural %> by criteria: {}", criteria);
     <%_ if (pagination === 'no') { _%>
         List<<%= instanceType %>> entityList = <%= entityInstance %>QueryService.findByCriteria(criteria);
@@ -32,7 +32,7 @@ _%>
     <%_ } else { _%>
         Page<<%= instanceType %>> page = <%= entityInstance %>QueryService.findByCriteria(criteria, pageable);
         return HttpResponse.ok(page.getContent()).headers(headers ->
-            PaginationUtil.generatePaginationHttpHeaders(<% if (!reactive) { %>headers, UriBuilder.of(request.getPath())<% } else { %>UriComponentsBuilder.fromHttpRequest(request)<% } %>, page));
+            PaginationUtil.generatePaginationHttpHeaders(headers, UriBuilder.of(request.getPath()), page));
     <%_ } _%>
     }
 
@@ -80,9 +80,9 @@ _%>
         <%_ } else { _%>
         Page<<%= instanceType %>> page = <%= entityInstance %>Repository.findAll(pageable)<% if (dto !== 'mapstruct') { %>;<% } else { %>.map(<%= entityToDtoReference %>);<% } %>
         <%_ } _%>
-    <%_ } _%>
+        <%_ } _%>
         return HttpResponse.ok(page.getContent()).headers(headers ->
-            PaginationUtil.generatePaginationHttpHeaders(<% if (!reactive) { %>headers, UriBuilder.of(request.getPath())<% } else { %>UriComponentsBuilder.fromHttpRequest(request)<% } %>, page));
+            PaginationUtil.generatePaginationHttpHeaders(headers, UriBuilder.of(request.getPath()), page));
     <%_ } _%>
     }
 <%_ } _%>

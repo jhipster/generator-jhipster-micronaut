@@ -26,11 +26,11 @@
     public List<<%= instanceType %>> search<%= entityClassPlural %>(@RequestParam String query) {
         log.debug("REST request to search <%= entityClassPlural %> for query {}", query);<%- include('search_stream_template', {viaService: viaService}); -%>
     <% } if (pagination !== 'no') { %>
-    public HttpResponse<List<<%= instanceType %>>> search<%= entityClassPlural %>(@RequestParam String query, Pageable pageable<% if (reactive) { %>, ServerHttpRequest request<% } %>) {
+    public HttpResponse<List<<%= instanceType %>>> search<%= entityClassPlural %>(@RequestParam String query, Pageable pageable, HttpRequest request) {
         log.debug("REST request to search for a page of <%= entityClassPlural %> for query {}", query);<% if (viaService) { %>
         Page<<%= instanceType %>> page = <%= entityInstance %>Service.search(query, pageable);<% } else { %>
         Page<<%= persistClass %>> page = <%= entityInstance %>SearchRepository.search(queryStringQuery(query), pageable);<% } %>
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(<% if (!reactive) { %>headers, UriBuilder.of(request.getPath())<% } else { %>UriComponentsBuilder.fromHttpRequest(request)<% } %>, page);
-        return HttpResponse.ok().headers(headers).body(<% if (!viaService && dto === 'mapstruct') { %><%= entityListToDtoListReference %>(<% } %>page.getContent()<% if (!viaService && dto === 'mapstruct') { %>)<% } %>);
+        return HttpResponse.ok(<% if (!viaService && dto === 'mapstruct') { %><%= entityListToDtoListReference %>(<% } %>page.getContent()<% if (!viaService && dto === 'mapstruct') { %>)<% } %>).headers(headers ->
+            PaginationUtil.generatePaginationHttpHeaders(headers, UriBuilder.of(request.getPath()), page));
     <% } -%>
 }
