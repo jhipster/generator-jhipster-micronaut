@@ -1,0 +1,46 @@
+package <%= packageFolder %>.domain;
+
+<%_ if (databaseType === 'mongodb') { _%>
+import io.micronaut.data.annotation.MappedEntity;
+import io.micronaut.data.mongodb.annotation.MongoRepository;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.types.ObjectId;
+<%_ } else { _%>
+import io.micronaut.data.annotation.MappedEntity;
+import io.micronaut.data.annotation.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+<%_ } _%>
+
+@MappedEntity
+public class <%= entityClass %> {
+<%_ if (databaseType === 'mongodb') { _%>
+    @BsonId
+    private ObjectId id;
+<%_ } else { _%>
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+<%_ } _%>
+
+    public <%= entityClass %>() {
+    }
+
+<%_ if (databaseType === 'mongodb') { _%>
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+<%_ } else { _%>
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+<%_ } _%>
+}

@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'io.micronaut.application' version '<%= micronautVersion %>'
+    id 'io.micronaut.library' version '<%= micronautVersion %>'
+}
+
+version = '0.0.1'
+
+group = '<%= packageFolder %>'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor 'io.micronaut:micronaut-http-validation'
+    annotationProcessor 'io.micronaut.serde:micronaut-serde-processor'
+    
+    <%_ if (databaseType === 'mongodb') { _%>
+    annotationProcessor 'io.micronaut.data:micronaut-data-processor'
+    annotationProcessor 'io.micronaut.mongodb:micronaut-mongo-annotation-processor'
+    implementation 'io.micronaut.data:micronaut-data-mongodb'
+    implementation 'io.micronaut.mongodb:micronaut-mongo-sync'
+    <%_ } else { _%>
+    annotationProcessor 'io.micronaut.data:micronaut-data-processor'
+    implementation 'io.micronaut.data:micronaut-data-jdbc'
+    implementation 'io.micronaut.sql:micronaut-jdbc-hikari'
+    <%_ if (databaseType === 'mysql') { _%>
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    <%_ } else if (databaseType === 'postgresql') { _%>
+    runtimeOnly 'org.postgresql:postgresql'
+    <%_ } _%>
+    <%_ } _%>
+    
+    implementation 'io.micronaut:micronaut-http-client'
+    implementation 'io.micronaut.serde:micronaut-serde-jackson'
+    implementation 'io.micronaut.validation:micronaut-validation'
+    
+    runtimeOnly 'ch.qos.logback:logback-classic'
+    
+    testAnnotationProcessor 'io.micronaut:micronaut-inject-java'
+    testImplementation 'io.micronaut.test:micronaut-test-junit5'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+application {
+    mainClass = '<%= packageFolder %>.Application'
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion('<%= javaVersion %>')
+    targetCompatibility = JavaVersion.toVersion('<%= javaVersion %>')
+}
+
+tasks.withType(JavaCompile) {
+    options.fork = true
+    options.compilerArgs += '-parameters'
+}
