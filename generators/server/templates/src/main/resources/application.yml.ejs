@@ -1,0 +1,32 @@
+micronaut:
+  application:
+    name: <%= baseName %>
+  server:
+    port: 8080
+
+<%_ if (databaseType === 'mongodb') { _%>
+mongouri: mongodb://localhost:27017/<%= baseName %>
+
+data:
+  mongodb:
+    uri: ${mongouri}
+<%_ } else { _%>
+datasources:
+  default:
+    url: jdbc:<%= databaseType %>://localhost:3306/<%= baseName %>
+    driverClassName: <%_ if (databaseType === 'mysql') { _%>com.mysql.cj.jdbc.Driver<%_ } else if (databaseType === 'postgresql') { _%>org.postgresql.Driver<%_ } _%>
+    username: root
+    password: password
+<%_ } _%>
+
+jpa:
+  default:
+    entity-scan:
+      packages: '<%= packageFolder %>.domain'
+    repositories:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    <%= packageFolder %>: DEBUG

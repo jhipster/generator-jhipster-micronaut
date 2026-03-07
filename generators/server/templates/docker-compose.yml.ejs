@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - MICRONAUT_ENVIRONMENTS=docker
+<%_ if (databaseType === 'mongodb') { _%>
+      - MONGOURI=mongodb://mongodb:27017/<%= baseName %>
+    depends_on:
+      - mongodb
+<%_ } else { _%>
+      - DATASOURCES_DEFAULT_URL=jdbc:<%= databaseType %>://<%= databaseType %>:3306/<%= baseName %>
+    depends_on:
+      - <%= databaseType %>
+<%_ } _%>
+    networks:
+      - app-network
+
+<%_ if (databaseType === 'mongodb') { _%>
+  mongodb:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+<%_ } else if (databaseType === 'mysql') { _%>
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=<%= baseName %>
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+<%_ } else if (databaseType === 'postgresql') { _%>
+  postgresql:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=<%= baseName %>
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+<%_ } _%>
+
+volumes:
+<%_ if (databaseType === 'mongodb') { _%>
+  mongodb_data:
+<%_ } else if (databaseType === 'mysql') { _%>
+  mysql_data:
+<%_ } else if (databaseType === 'postgresql') { _%>
+  postgresql_data:
+<%_ } _%>
+
+networks:
+  app-network:
+    driver: bridge
