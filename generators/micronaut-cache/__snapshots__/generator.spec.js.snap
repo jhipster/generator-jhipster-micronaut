@@ -10,3 +10,14 @@ exports[`SubGenerator micronaut-cache of micronaut JHipster blueprint > run > sh
   },
 }
 `;
+
+exports[`SubGenerator micronaut-cache of micronaut JHipster blueprint > run with hazelcast cache provider > should succeed 1`] = `
+{
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/config/CacheConfiguration.java": {
+    "stateCleared": "modified",
+  },
+}
+`;
