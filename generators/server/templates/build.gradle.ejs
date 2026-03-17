@@ -1,0 +1,68 @@
+plugins {
+    id("io.micronaut.application") version "4.2.1"
+    <% if (language === 'kotlin') { %>
+    id("org.jetbrains.kotlin.jvm") version "1.9.20"
+    id("org.jetbrains.kotlin.kapt") version "1.9.20"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.9.20"
+    <% } %>
+}
+
+version = "0.1"
+group = "<%= packageName %>"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    <% if (language === 'kotlin') { %>
+    implementation("io.micronaut:micronaut-runtime-kotlin")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    <% } else { %>
+    implementation("io.micronaut:micronaut-runtime")
+    <% } %>
+    implementation("io.micronaut:micronaut-http-server-netty")
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    runtimeOnly("com.h2database:h2")
+    runtimeOnly("org.postgresql:postgresql")
+    <% if (language === 'kotlin') { %>
+    kapt("io.micronaut:micronaut-http-validation")
+    kapt("io.micronaut.data:micronaut-data-processor")
+    kapt("io.micronaut.serde:micronaut-serde-processor")
+    <% } else { %>
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("io.micronaut.data:micronaut-data-processor")
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    <% } %>
+}
+
+application {
+    mainClass.set("<%= packageName %>.Application")
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
+}
+
+<% if (language === 'kotlin') { %>
+kotlin {
+    jvmToolchain(17)
+}
+
+allOpen {
+    annotation("io.micronaut.aop.Around")
+}
+<% } %> = JavaVersion.toVersion("17")
+}
+
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("<%= packageName %>.*")
+    }
+}
