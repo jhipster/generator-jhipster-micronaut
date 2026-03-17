@@ -18,6 +18,15 @@ import com.github.benmanes.caffeine.jcache.configuration.CaffeineConfiguration;
 import java.util.OptionalLong;
 import java.util.concurrent.TimeUnit;
 <%_ } _%>
+<%_ if (cacheProvider === 'hazelcast') { _%>
+import com.hazelcast.config.Config;
+import com.hazelcast.config.EvictionConfig;
+import com.hazelcast.config.EvictionPolicy;
+import com.hazelcast.config.MapConfig;
+import com.hazelcast.config.MaxSizePolicy;
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
+<%_ } _%>
 <%_ if (cacheProvider === 'redis') { _%>
 import java.net.URI;
 import org.redisson.Redisson;
@@ -62,6 +71,19 @@ public class CacheConfiguration {
         caffeineConfiguration.setExpireAfterWrite(OptionalLong.of(TimeUnit.SECONDS.toNanos(caffeine.getTimeToLiveSeconds())));
         caffeineConfiguration.setStatisticsEnabled(true);
         jcacheConfiguration = caffeineConfiguration;
+        <%_ } else if (cacheProvider === 'hazelcast') { _%>
+        JHipsterProperties.Cache.Hazelcast hazelcast =
+            jHipsterProperties.getCache().getHazelcast();
+
+        Config config = new Config();
+        config.getMapConfig("default")
+            .setBackupCount(hazelcast.getBackupCount())
+            .setEvictionConfig(new EvictionConfig()
+                .setMaxSizePolicy(MaxSizePolicy.PER_NODE)
+                .setSize(hazelcast.getManagementCenter().isEnabled() ? 200 : 100)
+                .setEvictionPolicy(EvictionPolicy.LRU))
+            .setTimeToLiveSeconds(hazelcast.getTimeToLiveSeconds());
+        jcacheConfiguration = null;
         <%_ } else if (cacheProvider === 'redis') { _%>
         MutableConfiguration<Object, Object> jcacheConfig = new MutableConfiguration<>();
 
@@ -109,6 +131,9 @@ public class CacheConfiguration {
         <%_ } else if (cacheProvider === 'caffeine') { _%>
         CacheManager cacheManager = new CaffeineCachingProvider().getCacheManager(
                 null, applicationContext.getClassLoader(), new Properties());
+        <%_ } else if (cacheProvider === 'hazelcast') { _%>
+        CacheManager cacheManager = new com.hazelcast.cache.impl.HazelcastServerCachingProvider()
+            .getCacheManager(null, applicationContext.getClassLoader(), new Properties());
         <%_ } else if (cacheProvider === 'redis') { _%>
         CacheManager cacheManager = Caching.getCachingProvider(applicationContext.getClassLoader()).getCacheManager();
         <%_ } _%>
@@ -132,6 +157,9 @@ public class CacheConfiguration {
         <%_ } _%>
         <%_ if (cacheProvider === 'caffeine') { _%>
         // jhipster-needle-caffeine-add-entry
+        <%_ } _%>
+        <%_ if (cacheProvider === 'hazelcast') { _%>
+        // jhipster-needle-hazelcast-add-entry
         <%_ } _%>
         <%_ if (cacheProvider === 'redis') { _%>
         // jhipster-needle-redis-add-entry
