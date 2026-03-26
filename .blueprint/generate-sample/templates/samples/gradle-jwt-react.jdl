@@ -7,8 +7,6 @@ application {
     buildTool gradle
     cacheProvider ehcache
     clientFramework react
-    clientTheme cyborg
-    clientThemeVariant dark
     creationTimestamp 1590870527345
     databaseType sql
     devDatabaseType mysql

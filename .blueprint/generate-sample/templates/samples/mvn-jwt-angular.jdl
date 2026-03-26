@@ -7,8 +7,6 @@ application {
     buildTool maven
     cacheProvider ehcache
     clientFramework angular
-    clientTheme cyborg
-    clientThemeVariant dark
     creationTimestamp 1590870527345
     databaseType sql
     devDatabaseType mysql

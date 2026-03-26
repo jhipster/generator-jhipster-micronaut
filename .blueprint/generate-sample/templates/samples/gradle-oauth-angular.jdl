@@ -7,8 +7,6 @@ application {
     buildTool gradle
     cacheProvider ehcache
     clientFramework angular
-    clientTheme litera
-    clientThemeVariant primary
     creationTimestamp 1591144151372
     databaseType sql
     devDatabaseType postgresql

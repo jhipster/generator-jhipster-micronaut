@@ -7,8 +7,6 @@ application {
     buildTool maven
     cacheProvider ehcache
     clientFramework angular
-    clientTheme litera
-    clientThemeVariant primary
     creationTimestamp 1596598800266
     databaseType sql
     devDatabaseType postgresql
