@@ -113,9 +113,6 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.LOADING]() {
     return this.asLoadingTaskGroup({
-      async loading({ application }) {
-        await this.loadCurrentJHipsterCommandConfig(application);
-      },
       loadMicronautPlatformPom({ application }) {
         const pomFile = this.readTemplate(this.templatePath('../resources/micronaut-platform.pom')).toString();
         const pom = parseMavenPom(pomFile);
