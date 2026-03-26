@@ -13,6 +13,12 @@
         "sbs": true,
         "written": true
       },
+      "base-application:bootstrap": {
+        "command": false,
+        "priorities": [],
+        "sbs": true,
+        "written": true
+      },
       "client": {
         "command": false,
         "priorities": ["writing"],
