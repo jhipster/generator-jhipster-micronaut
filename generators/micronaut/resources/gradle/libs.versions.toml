@@ -6,6 +6,8 @@ jakarta-validation = { module = 'jakarta.validation:jakarta.validation-api', ver
 
 jaxb-runtime = { module = 'org.glassfish.jaxb:jaxb-runtime', version = '4.0.6' }
 
+jakarta.persistence = { module = 'jakarta.persistence:jakarta.persistence-api', version = '3.2.0' }
+
 logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-encoder', version = '8.1' }
 
 micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', version = '4.9.4' }
