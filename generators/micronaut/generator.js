@@ -254,7 +254,7 @@ export default class extends BaseApplicationGenerator {
               addToBuild: true,
             },
             {
-              id: 'com.github.johnrengelman.shadow',
+              id: 'com.gradleup.shadow',
               pluginName: 'shadow',
               version: application.javaDependencies.shadow,
               addToBuild: true,
