@@ -7,7 +7,6 @@ application {
     buildTool maven
     cacheProvider no
     clientFramework angular
-    clientPackageManager npm
     clientTheme none
     creationTimestamp 1591136652677
     databaseType sql

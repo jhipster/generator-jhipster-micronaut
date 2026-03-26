@@ -7,7 +7,6 @@ application {
     buildTool maven
     cacheProvider ehcache
     clientFramework angular
-    clientPackageManager npm
     clientTheme cyborg
     clientThemeVariant dark
     creationTimestamp 1590870527345

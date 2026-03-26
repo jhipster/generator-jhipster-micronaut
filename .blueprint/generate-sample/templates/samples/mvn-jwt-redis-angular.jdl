@@ -7,7 +7,6 @@ application {
     buildTool maven
     cacheProvider redis
     clientFramework angular
-    clientPackageManager npm
     clientTheme cyborg
     clientThemeVariant dark
     creationTimestamp 1590870527345

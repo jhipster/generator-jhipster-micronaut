@@ -7,7 +7,6 @@ application {
     buildTool gradle
     cacheProvider ehcache
     clientFramework angular
-    clientPackageManager npm
     clientTheme litera
     clientThemeVariant primary
     creationTimestamp 1591144151372
