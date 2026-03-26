@@ -446,6 +446,69 @@ exports[`SubGenerator client of micronaut JHipster blueprint > run > should succ
   "src/main/webapp/app/core/util/parse-links.service.ts": {
     "stateCleared": "modified",
   },
+  "src/main/webapp/app/entities/admin/authority/authority.model.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/authority.routes.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/authority.test-samples.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/delete/authority-delete-dialog.html": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/delete/authority-delete-dialog.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/delete/authority-delete-dialog.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/detail/authority-detail.html": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/detail/authority-detail.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/detail/authority-detail.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/list/authority.html": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/list/authority.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/list/authority.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/route/authority-routing-resolve.service.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/route/authority-routing-resolve.service.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/service/authority.service.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/service/authority.service.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/update/authority-form.service.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/update/authority-form.service.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/update/authority-update.html": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/update/authority-update.spec.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/entities/admin/authority/update/authority-update.ts": {
+    "stateCleared": "modified",
+  },
   "src/main/webapp/app/entities/admin/user-management/delete/user-management-delete-dialog.html": {
     "stateCleared": "modified",
   },
@@ -831,6 +894,9 @@ exports[`SubGenerator client of micronaut JHipster blueprint > run > should succ
     "stateCleared": "modified",
   },
   "src/main/webapp/i18n/en/activate.json": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/i18n/en/adminAuthority.json": {
     "stateCleared": "modified",
   },
   "src/main/webapp/i18n/en/configuration.json": {
