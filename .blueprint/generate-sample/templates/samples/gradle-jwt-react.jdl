@@ -13,7 +13,6 @@ application {
     databaseType sql
     devDatabaseType mysql
     dtoSuffix DTO
-    embeddableLaunchScript false
     enableHibernateCache true
     enableSwaggerCodegen false
     enableTranslation true

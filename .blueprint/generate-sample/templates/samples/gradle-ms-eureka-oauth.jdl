@@ -10,7 +10,6 @@ application {
     databaseType sql
     devDatabaseType h2Memory
     dtoSuffix DTO
-    embeddableLaunchScript false
     enableHibernateCache false
     enableSwaggerCodegen false
     enableTranslation true

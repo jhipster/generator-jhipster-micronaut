@@ -13,7 +13,6 @@ application {
     databaseType sql
     devDatabaseType postgresql
     dtoSuffix DTO
-    embeddableLaunchScript false
     enableHibernateCache false
     enableSwaggerCodegen false
     enableTranslation true
