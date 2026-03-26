@@ -24,8 +24,8 @@ export default class extends BaseApplicationGenerator {
       customizeAngularForMicronaut({ application: { authenticationTypeJwt, clientSrcDir } }) {
         // health api
         this.editFile(`${clientSrcDir}app/admin/health/health.model.ts`, content => content.replaceAll('components', 'details'));
-        this.editFile(`${clientSrcDir}app/admin/health/health.component.html`, content => content.replaceAll('components', 'details'));
-        this.editFile(`${clientSrcDir}app/admin/health/health.component.spec.ts`, content => content.replaceAll('components', 'details'));
+        this.editFile(`${clientSrcDir}app/admin/health/health.html`, content => content.replaceAll('components', 'details'));
+        this.editFile(`${clientSrcDir}app/admin/health/health.spec.ts`, content => content.replaceAll('components', 'details'));
 
         if (authenticationTypeJwt) {
           // authentication api
