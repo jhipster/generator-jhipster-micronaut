@@ -277,7 +277,6 @@ export const serverFiles = {
     {
       condition: generator => generator.buildTool === 'gradle',
       templates: [
-        { file: 'build.gradle' },
         { file: 'settings.gradle' },
         { file: 'gradle.properties' },
         { file: 'gradle/docker.gradle' },

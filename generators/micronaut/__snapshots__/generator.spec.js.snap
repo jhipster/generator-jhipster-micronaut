@@ -523,9 +523,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "package.json": {
     "stateCleared": "modified",
   },
-  "settings.gradle": {
-    "stateCleared": "modified",
-  },
   "sonar-project.properties": {
     "stateCleared": "modified",
   },
