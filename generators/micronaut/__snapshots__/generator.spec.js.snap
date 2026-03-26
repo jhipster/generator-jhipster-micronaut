@@ -95,6 +95,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/docker/sonar.yml": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/GeneratedByJHipster.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/JhipsterApp.java": {
     "stateCleared": "modified",
   },
@@ -131,16 +134,31 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/config/metric/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/config/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/domain/Authority.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/domain/User.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/domain/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/repository/AuthorityRepository.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/repository/UserRepository.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/repository/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/security/AuthoritiesConstants.java": {
@@ -170,6 +188,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/java/com/mycompany/myapp/security/UserNotActivatedException.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/security/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/MailSenderFactory.java": {
     "stateCleared": "modified",
   },
@@ -188,10 +209,22 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/java/com/mycompany/myapp/service/dto/UserDTO.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/service/dto/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/mapper/UserMapper.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/service/mapper/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/service/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/util/RandomUtil.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/service/util/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/util/HeaderUtil.java": {
@@ -201,6 +234,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/util/PaginationUtil.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/util/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/AccountResource.java": {
@@ -254,6 +290,15 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/java/com/mycompany/myapp/web/rest/errors/handlers/UnsatisfiedRouteExceptionHandler.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/web/rest/errors/handlers/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/errors/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/web/rest/vm/KeyAndPasswordVM.java": {
     "stateCleared": "modified",
   },
@@ -261,6 +306,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/vm/ManagedUserVM.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/vm/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/resources/application-dev.yml": {
@@ -511,6 +559,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/docker/sonar.yml": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/GeneratedByJHipster.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/JhipsterApp.java": {
     "stateCleared": "modified",
   },
@@ -547,16 +598,31 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/config/metric/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/config/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/domain/Authority.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/domain/User.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/domain/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/repository/AuthorityRepository.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/repository/UserRepository.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/repository/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/security/AuthoritiesConstants.java": {
@@ -586,6 +652,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/java/com/mycompany/myapp/security/UserNotActivatedException.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/security/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/MailSenderFactory.java": {
     "stateCleared": "modified",
   },
@@ -604,10 +673,22 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/java/com/mycompany/myapp/service/dto/UserDTO.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/service/dto/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/mapper/UserMapper.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/service/mapper/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/service/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/util/RandomUtil.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/service/util/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/util/HeaderUtil.java": {
@@ -617,6 +698,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/util/PaginationUtil.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/util/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/AccountResource.java": {
@@ -670,6 +754,15 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/java/com/mycompany/myapp/web/rest/errors/handlers/UnsatisfiedRouteExceptionHandler.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/web/rest/errors/handlers/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/errors/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/web/rest/vm/KeyAndPasswordVM.java": {
     "stateCleared": "modified",
   },
@@ -677,6 +770,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/vm/ManagedUserVM.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/vm/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/resources/application-dev.yml": {
@@ -894,6 +990,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/docker/sonar.yml": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/GeneratedByJHipster.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/JhipsterApp.java": {
     "stateCleared": "modified",
   },
@@ -930,16 +1029,31 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/config/metric/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/config/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/domain/Authority.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/domain/User.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/domain/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/repository/AuthorityRepository.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/repository/UserRepository.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/repository/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/security/AuthoritiesConstants.java": {
@@ -969,6 +1083,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/java/com/mycompany/myapp/security/UserNotActivatedException.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/security/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/MailSenderFactory.java": {
     "stateCleared": "modified",
   },
@@ -987,10 +1104,22 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/java/com/mycompany/myapp/service/dto/UserDTO.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/service/dto/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/mapper/UserMapper.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/service/mapper/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/service/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/util/RandomUtil.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/service/util/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/util/HeaderUtil.java": {
@@ -1000,6 +1129,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/util/PaginationUtil.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/util/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/AccountResource.java": {
@@ -1053,6 +1185,15 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
   "src/main/java/com/mycompany/myapp/web/rest/errors/handlers/UnsatisfiedRouteExceptionHandler.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/web/rest/errors/handlers/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/errors/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/web/rest/vm/KeyAndPasswordVM.java": {
     "stateCleared": "modified",
   },
@@ -1060,6 +1201,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/vm/ManagedUserVM.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/vm/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/resources/application-dev.yml": {
@@ -1280,6 +1424,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/docker/sonar.yml": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/GeneratedByJHipster.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/JhipsterApp.java": {
     "stateCleared": "modified",
   },
@@ -1316,6 +1463,12 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/config/metric/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/config/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/domain/Authority.java": {
     "stateCleared": "modified",
   },
@@ -1325,6 +1478,12 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/java/com/mycompany/myapp/domain/User.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/domain/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/repository/AuthorityRepository.java": {
     "stateCleared": "modified",
   },
@@ -1332,6 +1491,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/repository/UserRepository.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/repository/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/security/AuthoritiesConstants.java": {
@@ -1361,6 +1523,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/java/com/mycompany/myapp/security/UserNotActivatedException.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/security/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/MailSenderFactory.java": {
     "stateCleared": "modified",
   },
@@ -1382,13 +1547,25 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/java/com/mycompany/myapp/service/dto/UserDTO.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/service/dto/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/mapper/EntityMapper.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/service/mapper/UserMapper.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/service/mapper/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/service/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/service/util/RandomUtil.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/service/util/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/util/HeaderUtil.java": {
@@ -1398,6 +1575,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/util/PaginationUtil.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/util/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/AccountResource.java": {
@@ -1454,6 +1634,15 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
   "src/main/java/com/mycompany/myapp/web/rest/errors/handlers/UnsatisfiedRouteExceptionHandler.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/web/rest/errors/handlers/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/errors/package-info.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/package-info.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/web/rest/vm/KeyAndPasswordVM.java": {
     "stateCleared": "modified",
   },
@@ -1461,6 +1650,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/web/rest/vm/ManagedUserVM.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/web/rest/vm/package-info.java": {
     "stateCleared": "modified",
   },
   "src/main/resources/application-dev.yml": {
