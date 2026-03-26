@@ -1,37 +1,42 @@
 import os from 'os';
-import chalk from 'chalk';
-import BaseApplicationGenerator from 'generator-jhipster/generators/server';
-import { GENERATOR_DOCKER, GENERATOR_LANGUAGES, GENERATOR_LIQUIBASE, GENERATOR_SERVER } from 'generator-jhipster/generators';
-import { createBase64Secret, createNeedleCallback } from 'generator-jhipster/generators/base/support';
-import { addJavaAnnotation } from 'generator-jhipster/generators/java/support';
-import { parseMavenPom } from 'generator-jhipster/generators/maven/support';
-import mnConstants from '../constants.cjs';
-import { writeFiles } from './files.js';
 
-import { entityFiles } from './entity-files.js';
-import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
+import chalk from 'chalk';
+import { createNeedleCallback } from 'generator-jhipster/generators/base-core/support';
+import { addJavaAnnotation } from 'generator-jhipster/generators/java/support';
+import { parseMavenPom } from 'generator-jhipster/generators/java-simple-application/generators/maven/support';
+import BaseApplicationGenerator from 'generator-jhipster/generators/server';
+import { createBase64Secret } from 'generator-jhipster/utils';
+
+import mnConstants from '../constants.cjs';
+
 import { serverTestFrameworkChoices } from './command.js';
+import { entityFiles } from './entity-files.js';
+import { writeFiles } from './files.js';
+import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
 
 export default class extends BaseApplicationGenerator {
+  constructor(args, opts, features) {
+    super(args, opts, {
+      ...features,
+      // Dropped it once migration is done.
+      jhipster7Migration: true,
+    });
+  }
+
   async beforeQueue() {
     this.jhipsterTemplatesFolders.push(
+      // For error.html file
       this.fetchFromInstalledJHipster('spring-boot/templates'),
+      // For messages.properties files
+      this.fetchFromInstalledJHipster('java/generators/i18n/templates'),
       // For _persistClass_.java.jhi.hibernate_cache/_persistClass_.java.jhi.jakarta_persistence file
-      this.fetchFromInstalledJHipster('spring-data-relational/templates'),
+      this.fetchFromInstalledJHipster('spring-boot/generators/data-relational/templates'),
       // For _global_partials_entity_/field_validators file
       this.fetchFromInstalledJHipster('java/generators/domain/templates'),
     );
-    await this.dependsOnJHipster(GENERATOR_SERVER);
-    await this.dependsOnJHipster('jhipster:java:build-tool');
+    await this.dependsOnJHipster('server');
+    await this.dependsOnJHipster('jhipster:java-simple-application:build-tool');
     await this.dependsOnJHipster('jhipster:java:server');
-  }
-
-  get [BaseApplicationGenerator.INITIALIZING]() {
-    return this.asInitializingTaskGroup({
-      async initializing() {
-        await this.parseCurrentJHipsterCommand();
-      },
-    });
   }
 
   get [BaseApplicationGenerator.PROMPTING]() {
@@ -82,9 +87,9 @@ export default class extends BaseApplicationGenerator {
         const { enableTranslation, databaseType, cacheProvider, skipClient, clientFramework = 'no' } = this.jhipsterConfigWithDefaults;
 
         await this.composeWithJHipster('jhipster:java:domain');
-        await this.composeWithJHipster('jhipster:java:code-quality');
-        await this.composeWithJHipster('jhipster:java:jib');
-        await this.composeWithJHipster(GENERATOR_DOCKER);
+        await this.composeWithJHipster('jhipster:java-simple-application:code-quality');
+        await this.composeWithJHipster('jhipster:java-simple-application:jib');
+        await this.composeWithJHipster('docker');
 
         if (!skipClient && clientFramework !== 'no') {
           await this.composeWithJHipster('jhipster:java:node');
@@ -92,11 +97,11 @@ export default class extends BaseApplicationGenerator {
 
         // We don't expose client/server to cli, composing with languages is used for test purposes.
         if (enableTranslation) {
-          const languagesGenerator = await this.composeWithJHipster(GENERATOR_LANGUAGES);
+          const languagesGenerator = await this.composeWithJHipster('languages');
           languagesGenerator.writeJavaLanguageFiles = true;
         }
         if (databaseType === 'sql') {
-          await this.composeWithJHipster(GENERATOR_LIQUIBASE);
+          await this.composeWithJHipster('liquibase');
         }
         if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) {
           await this.composeWithJHipster('jhipster-micronaut:micronaut-cache');

@@ -497,7 +497,7 @@ _%>
                             <warSourceDirectory><%= clientDistDir %></warSourceDirectory>
                             <webResources>
                                 <resource>
-                                    <directory><%= MAIN_DIR %>webapp</directory>
+                                    <directory><%= srcMainWebapp %></directory>
                                     <includes>
                                         <include>WEB-INF/**</include>
                                     </includes>
@@ -594,14 +594,14 @@ _%>
                                 </delimiters>
                                 <resources>
                                     <resource>
-                                        <directory><%= SERVER_MAIN_RES_DIR %></directory>
+                                        <directory><%= srcMainResources %></directory>
                                         <filtering>true</filtering>
                                         <includes>
                                             <include>config/*.yml</include>
                                         </includes>
                                     </resource>
                                     <resource>
-                                        <directory><%= SERVER_MAIN_RES_DIR %></directory>
+                                        <directory><%= srcMainResources %></directory>
                                         <filtering>false</filtering>
                                         <excludes>
                                             <exclude>config/*.yml</exclude>

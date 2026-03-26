@@ -18,10 +18,7 @@ const authenticationTypeChoices = [
   { value: 'session', name: 'HTTP Session Authentication (stateful)' },
 ];
 
-export const serverTestFrameworkChoices = [
-  { name: 'Gatling', value: 'gatling' },
-  { name: 'Cucumber', value: 'cucumber' },
-];
+export const serverTestFrameworkChoices = [{ name: 'Gatling', value: 'gatling' }];
 
 export default asCommand({
   options: {},

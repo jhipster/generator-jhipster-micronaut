@@ -4,6 +4,7 @@
     "baseName": "micronaut",
     "cli": true,
     "cliName": "mhipster",
+    "defaultCommand": "generate-blueprint",
     "entities": [],
     "generators": {
       "angular": {
@@ -74,7 +75,7 @@
       }
     },
     "githubWorkflows": true,
-    "jhipsterVersion": "8.11.0",
+    "jhipsterVersion": "9.0.0",
     "js": true,
     "localBlueprint": false,
     "packageJsonType": "module",

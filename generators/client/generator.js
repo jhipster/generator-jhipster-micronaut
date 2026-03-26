@@ -1,4 +1,5 @@
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
+
 import { commonFiles } from './files.js';
 
 export default class extends BaseApplicationGenerator {

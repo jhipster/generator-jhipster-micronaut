@@ -16,6 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { JAVA_SERVER_TEST_RESOURCES_DIR as SERVER_TEST_RES_DIR } from 'generator-jhipster';
 import {
   javaMainPackageTemplatesBlock,
   javaMainResourceTemplatesBlock,
@@ -24,7 +25,6 @@ import {
 } from 'generator-jhipster/generators/java/support';
 
 /* Constants use throughout */
-import { JAVA_SERVER_TEST_RESOURCES_DIR as SERVER_TEST_RES_DIR } from 'generator-jhipster';
 
 /* TODO: Do a PR in the parent JHipster project to export and re-use here as well in order to have a single source of truth!!!
 const TEST_DIR = constants.TEST_DIR;
@@ -75,7 +75,7 @@ export const serverFiles = {
         { file: 'application-dev.yml' },
         { file: 'application-tls.yml' },
         { file: 'application-prod.yml' },
-        { file: 'i18n/messages.properties', noEjs: true },
+        { file: 'i18n/messages.properties', transform: false },
       ],
     }),
     javaTestResourceTemplatesBlock({
@@ -83,7 +83,7 @@ export const serverFiles = {
     }),
     javaMainResourceTemplatesBlock({
       condition: generator => !generator.skipUserManagement,
-      templates: [{ file: 'views/mail/testEmail.html', noEjs: true }],
+      templates: [{ file: 'views/mail/testEmail.html', transform: false }],
     }),
   ],
   serverMicroserviceAndGateway: [

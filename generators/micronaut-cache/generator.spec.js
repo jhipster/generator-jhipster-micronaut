@@ -14,8 +14,9 @@ describe('SubGenerator micronaut-cache of micronaut JHipster blueprint', () => {
         .withOptions({
           ignoreNeedlesError: true,
         })
-        .withJHipsterLookup()
-        .withParentBlueprintLookup();
+        .withJHipsterGenerators()
+        .withConfiguredBlueprint()
+        .withBlueprintConfig();
     });
 
     it('should succeed', () => {
