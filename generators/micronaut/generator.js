@@ -5,6 +5,7 @@ import { createNeedleCallback } from 'generator-jhipster/generators/base-core/su
 import { addJavaAnnotation } from 'generator-jhipster/generators/java/support';
 import { parseMavenPom } from 'generator-jhipster/generators/java-simple-application/generators/maven/support';
 import BaseApplicationGenerator from 'generator-jhipster/generators/server';
+import { prepareSqlApplicationProperties } from 'generator-jhipster/generators/spring-boot/generators/data-relational/support';
 import { createBase64Secret } from 'generator-jhipster/utils';
 
 import mnConstants from '../constants.cjs';
@@ -136,6 +137,16 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
+      defaults({ application, applicationDefaults }) {
+        applicationDefaults({
+          saveUserSnapshot: ({ applicationTypeMicroservice, authenticationTypeOauth2, hasRelationshipWithBuiltInUser, dto }) =>
+            applicationTypeMicroservice && authenticationTypeOauth2 && hasRelationshipWithBuiltInUser && dto === 'no',
+        });
+
+        if (application.databaseTypeSql) {
+          prepareSqlApplicationProperties({ application });
+        }
+      },
       loadDependencies({ application }) {
         application.micronautDependencies = { ...mnConstants.versions };
         this.loadJavaDependenciesFromGradleCatalog(application.micronautDependencies);
