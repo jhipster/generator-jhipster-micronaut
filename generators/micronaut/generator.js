@@ -88,6 +88,7 @@ export default class extends BaseApplicationGenerator {
       async composing() {
         const { enableTranslation, databaseType, cacheProvider, skipClient, clientFramework = 'no' } = this.jhipsterConfigWithDefaults;
 
+        await this.composeWithJHipster('jhipster:java:i18n');
         await this.composeWithJHipster('jhipster:java:domain');
         await this.composeWithJHipster('jhipster:java-simple-application:code-quality');
         await this.composeWithJHipster('jhipster:java-simple-application:jib');

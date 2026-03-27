@@ -54,14 +54,6 @@ export const serverFiles = {
         { file: 'templates/mail/passwordResetEmail.html', renameTo: () => 'views/mail/passwordResetEmail.html' },
       ],
     }),
-    {
-      condition: generator => !generator.skipUserManagement,
-      path: SERVER_TEST_RES_DIR,
-      templates: [
-        /* User management java test files */
-        'i18n/messages_en.properties',
-      ],
-    },
   ],
   micronautResources: [
     javaMainResourceTemplatesBlock({
@@ -75,7 +67,6 @@ export const serverFiles = {
         { file: 'application-dev.yml' },
         { file: 'application-tls.yml' },
         { file: 'application-prod.yml' },
-        { file: 'i18n/messages.properties', transform: false },
       ],
     }),
     javaTestResourceTemplatesBlock({

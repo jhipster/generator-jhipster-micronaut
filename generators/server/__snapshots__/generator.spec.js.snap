@@ -344,6 +344,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/resources/i18n/messages.properties": {
     "stateCleared": "modified",
   },
+  "src/main/resources/i18n/messages_en.properties": {
+    "stateCleared": "modified",
+  },
   "src/main/resources/logback.xml": {
     "stateCleared": "modified",
   },

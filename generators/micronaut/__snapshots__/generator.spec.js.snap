@@ -344,6 +344,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/resources/i18n/messages.properties": {
     "stateCleared": "modified",
   },
+  "src/main/resources/i18n/messages_en.properties": {
+    "stateCleared": "modified",
+  },
   "src/main/resources/logback.xml": {
     "stateCleared": "modified",
   },
@@ -808,6 +811,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/resources/i18n/messages.properties": {
     "stateCleared": "modified",
   },
+  "src/main/resources/i18n/messages_en.properties": {
+    "stateCleared": "modified",
+  },
   "src/main/resources/logback.xml": {
     "stateCleared": "modified",
   },
@@ -1237,6 +1243,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
     "stateCleared": "modified",
   },
   "src/main/resources/i18n/messages.properties": {
+    "stateCleared": "modified",
+  },
+  "src/main/resources/i18n/messages_en.properties": {
     "stateCleared": "modified",
   },
   "src/main/resources/logback.xml": {
@@ -1692,6 +1701,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/main/resources/i18n/messages.properties": {
+    "stateCleared": "modified",
+  },
+  "src/main/resources/i18n/messages_en.properties": {
     "stateCleared": "modified",
   },
   "src/main/resources/logback.xml": {
