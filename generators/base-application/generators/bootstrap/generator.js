@@ -15,8 +15,8 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.LOADING]() {
     return this.asPreparingTaskGroup({
-      async preparingMicronaut({ application }) {
-        Object.assign(application, {
+      async preparingMicronaut({ applicationDefaults }) {
+        applicationDefaults({
           backendTypeJavaAny: true,
           hipster: 'jhipster_family_member_4',
           hipsterBugTrackerLink: 'https://github.com/jhipster/generator-jhipster-micronaut/issues?state=open',
@@ -25,6 +25,28 @@ export default class extends BaseApplicationGenerator {
           hipsterName: 'Micronaut Hipster',
           hipsterProductName: 'MHipster',
           hipsterProjectLink: 'https://github.com/jhipster/generator-jhipster-micronaut',
+          // TODO Remove for v9.0.1
+          temporaryDir: ({ buildTool }) => {
+            switch (buildTool) {
+              case 'maven':
+                return 'target/';
+              case 'gradle':
+                return 'build/';
+              default:
+                return 'temp/';
+            }
+          },
+          // TODO Remove for v9.0.1
+          clientDistDir: ({ temporaryDir, buildTool }) => {
+            switch (buildTool) {
+              case 'maven':
+                return `${temporaryDir}classes/static/`;
+              case 'gradle':
+                return `${temporaryDir}resources/main/static/`;
+              default:
+                return 'dist/';
+            }
+          },
         });
       },
     });
