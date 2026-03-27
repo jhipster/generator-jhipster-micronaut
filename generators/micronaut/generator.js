@@ -302,15 +302,7 @@ export default class extends BaseApplicationGenerator {
             'backend:doc:test': '',
           },
         });
-        if (application.buildToolMaven) {
-          this.packageJson.merge({
-            scripts: {
-              // jhipster generates e2e.jar
-              'postci:e2e:package':
-                'mv target/original*.jar target/original.jar.back && cp target/*.$npm_package_config_packaging target/e2e.$npm_package_config_packaging',
-            },
-          });
-        } else if (application.buildToolGradle) {
+        if (application.buildToolGradle) {
           this.editFile('package.json', contents => contents.replaceAll(' bootJar ', ' shadowJar '));
         }
         if (application.cacheProviderRedis) {
