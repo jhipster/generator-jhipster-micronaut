@@ -45,9 +45,8 @@ export class ProfileService {
           inProduction: activeProfiles?.includes('prod'),
           openAPIEnabled: activeProfiles?.includes('api-docs'),
         };
-        const rinbonOnProfiles = response['display-ribbon-on-profiles'];
-        if (activeProfiles && typeof rinbonOnProfiles === 'string') {
-          const displayRibbonOnProfiles = rinbonOnProfiles.split(',');
+        if (activeProfiles && response['display-ribbon-on-profiles']) {
+          const displayRibbonOnProfiles = response['display-ribbon-on-profiles'].split(',');
           const ribbonProfiles = displayRibbonOnProfiles.filter(profile => activeProfiles.includes(profile));
           if (ribbonProfiles.length > 0) {
             profileInfo.ribbonEnv = ribbonProfiles[0];
