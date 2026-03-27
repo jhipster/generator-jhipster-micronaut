@@ -262,7 +262,7 @@ dependencies {
 graalvmNative.toolchainDetection = false
 
 application {
-    mainClassName = "<%= packageName %>.<%= mainClass %>"
+    mainClass = "<%= packageName %>.<%= mainClass %>"
 }
 
 micronaut {
@@ -334,13 +334,13 @@ task integrationTest(type: Test) {
 
 check.dependsOn integrationTest
 task testReport(type: TestReport) {
-    destinationDir = file("$buildDir/reports/tests")
-    reportOn test
+    destinationDirectory = file("$buildDir/reports/tests")
+    testResults.from(test)
 }
 
 task integrationTestReport(type: TestReport) {
-    destinationDir = file("$buildDir/reports/tests")
-    reportOn integrationTest
+    destinationDirectory = file("$buildDir/reports/tests")
+    testResults.from(integrationTest)
 }
 
 if (!project.hasProperty("runList")) {
