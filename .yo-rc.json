@@ -31,7 +31,7 @@
         "sbs": true,
         "written": true
       },
-      "docker": {
+      "docker:bootstrap": {
         "command": false,
         "priorities": [],
         "sbs": true,
