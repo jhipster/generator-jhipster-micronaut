@@ -1,5 +1,5 @@
 <%#
- Copyright 2019-2026 the original author or authors from the JHipster project.
+ Copyright 2013-2026 the original author or authors from the JHipster project.
 
  This file is part of the JHipster project, see https://www.jhipster.tech/
  for more information.
@@ -8,7 +8,7 @@
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
 
-      http://www.apache.org/licenses/LICENSE-2.0
+      https://www.apache.org/licenses/LICENSE-2.0
 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,53 +24,23 @@ plugins {
     // jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
-repositories {
-    mavenCentral()
-    gradlePluginPortal()
-}
-
-graalvmNative.toolchainDetection = false
-
-micronaut {
-    runtime "netty"
-    testRuntime "junit5"
-    processing {
-        incremental true
-        annotations "<%= packageName %>.*"
-    }
-}
-
-group = "<%= packageName %>"
+group = "<%- packageName %>"
 version = "0.0.1-SNAPSHOT"
 
 description = ""
 
-sourceCompatibility=<%= JAVA_VERSION %>
-targetCompatibility=<%= JAVA_VERSION %>
-assert System.properties["java.specification.version"] == "17" || "18" || "19" || "20" || "21"
+java {
+    sourceCompatibility=<%- javaVersion %>
+    targetCompatibility=<%- javaVersion %>
+}
+assert System.properties["java.specification.version"] == <%- javaCompatibleVersions.map(ver => `"${ver}"`).join(' || '); %>
 
-apply from: "gradle/docker.gradle"
+repositories {
+    mavenCentral()
+    // jhipster-needle-gradle-repositories - JHipster will add additional repositories
+}
 
-<%_ if (enableSwaggerCodegen) { _%>
-apply from: "gradle/swagger.gradle"
-<%_ } _%>
 // jhipster-needle-gradle-apply-from - JHipster will add additional gradle scripts to be applied here
-
-if (project.hasProperty("prod") || project.hasProperty("gae")) {
-    apply from: "gradle/profile_prod.gradle"
-} else {
-    apply from: "gradle/profile_dev.gradle"
-}
-
-if (project.hasProperty("war")) {
-    apply from: "gradle/war.gradle"
-}
-
-<%_ if (serviceDiscoveryType || applicationTypeGateway || applicationTypeMicroservice || applicationType === 'uaa') { _%>
-if (project.hasProperty("zipkin")) {
-    apply from: "gradle/zipkin.gradle"
-}
-<%_ } _%>
 
 idea {
     module {
@@ -86,123 +56,6 @@ eclipse {
             }
         }
     }
-}
-
-defaultTasks "run"
-
-mainClassName = "<%= packageName %>.<%= mainClass %>"
-
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
-    options.compilerArgs.addAll([
-        '-parameters',
-        // enables incremental compilation
-        '-Amicronaut.processing.incremental=true',
-        '-Amicronaut.processing.annotations=<%= packageName %>.*',
-        "-Amicronaut.processing.group=$project.group",
-        "-Amicronaut.processing.module=$project.name",
-    ])
-}
-
-test {
-    useJUnitPlatform()
-    exclude "**/*IT*", "**/*IntTest*"
-
-    testLogging {
-        events 'FAILED', 'SKIPPED'
-    }
-    // uncomment if the tests reports are not generated
-    // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484
-    // ignoreFailures true
-    reports.html.required = false
-}
-
-task integrationTest(type: Test) {
-    useJUnitPlatform()
-    description = "Execute integration tests."
-    group = "verification"
-    include "**/*IT*", "**/*IntTest*"
-<%_ if (cucumberTests) { _%>
-    exclude "**/*CucumberIT*"
-<%_ } _%>
-
-    testLogging {
-        events 'FAILED', 'SKIPPED'
-    }
-    // uncomment if the tests reports are not generated
-    // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484
-    // ignoreFailures true
-    reports.html.required = false
-}
-<%_ if (cucumberTests) { _%>
-
-task cucumberTest(type: Test) {
-    description = "Execute cucumber BDD tests."
-    group = "verification"
-    include "**/*CucumberIT*"
-
-    // uncomment if the tests reports are not generated
-    // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484
-    // ignoreFailures true
-    reports.html.required = false
-}
-
-check.dependsOn cucumberTest
-<%_ } _%>
-
-check.dependsOn integrationTest
-task testReport(type: TestReport) {
-    destinationDir = file("$buildDir/reports/tests")
-    reportOn test
-}
-
-task integrationTestReport(type: TestReport) {
-    destinationDir = file("$buildDir/reports/tests")
-    reportOn integrationTest
-}
-
-<%_ if (cucumberTests) { _%>
-task cucumberTestReport(type: TestReport) {
-    destinationDir = file("$buildDir/reports/tests")
-    reportOn cucumberTest
-}
-
-<%_ } _%>
-<%_ if (databaseTypeSql) {
-        const { sqlDb } = MN_CONSTANTS;
-        const devDbInfo = sqlDb[devDatabaseType];
-_%>
-if (!project.hasProperty("runList")) {
-    project.ext.runList = "main"
-}
-
-<%_ } _%>
-shadowJar {
-    mergeServiceFiles()
-}
-
-gitProperties {
-    failOnNoGitDirectory = false
-    keys = ["git.branch", "git.commit.id.abbrev", "git.commit.id.describe"]
-}
-
-configurations {
-    providedRuntime
-    liquibaseRuntime.extendsFrom sourceSets.main.compileClasspath
-}
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    <%_ if (jhipsterDependenciesVersion.endsWith('-SNAPSHOT')) { _%>
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots/"
-        mavenContent {
-            snapshotsOnly()
-        }
-    }
-    <%_ } _%>
-    // jhipster-needle-gradle-repositories - JHipster will add additional repositories
 }
 
 dependencies {
@@ -406,15 +259,106 @@ dependencies {
     // jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
 
-if (project.hasProperty("gae")) {
-    task createPom {
-        def basePath = 'build/resources/main/META-INF/maven'
-        doLast {
-            pom {
-                withXml(dependencyManagement.pomConfigurer)
-            }.writeTo("${basePath}/${project.group}/${project.name}/pom.xml")
-        }
+graalvmNative.toolchainDetection = false
+
+application {
+    mainClass = "<%= packageName %>.<%= mainClass %>"
+}
+
+micronaut {
+    runtime "netty"
+    testRuntime "junit5"
+    processing {
+        incremental true
+        annotations "<%= packageName %>.*"
     }
+}
+
+if (project.hasProperty("prod") || project.hasProperty("gae")) {
+    apply from: "gradle/profile_prod.gradle"
+} else {
+    apply from: "gradle/profile_dev.gradle"
+}
+
+if (project.hasProperty("war")) {
+    apply from: "gradle/war.gradle"
+}
+<%_ if (serviceDiscoveryType || applicationTypeGateway || applicationTypeMicroservice || applicationType === 'uaa') { _%>
+
+if (project.hasProperty("zipkin")) {
+    apply from: "gradle/zipkin.gradle"
+}
+<%_ } _%>
+
+defaultTasks "run"
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+    options.compilerArgs.addAll([
+        '-parameters',
+        // enables incremental compilation
+        '-Amicronaut.processing.incremental=true',
+        '-Amicronaut.processing.annotations=<%= packageName %>.*',
+        "-Amicronaut.processing.group=$project.group",
+        "-Amicronaut.processing.module=$project.name",
+    ])
+}
+
+test {
+    useJUnitPlatform()
+    exclude "**/*IT*", "**/*IntTest*"
+
+    testLogging {
+        events 'FAILED', 'SKIPPED'
+    }
+    // uncomment if the tests reports are not generated
+    // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484
+    // ignoreFailures true
+    reports.html.required = false
+}
+
+task integrationTest(type: Test) {
+    useJUnitPlatform()
+    description = "Execute integration tests."
+    group = "verification"
+    include "**/*IT*", "**/*IntTest*"
+
+    testLogging {
+        events 'FAILED', 'SKIPPED'
+    }
+    // uncomment if the tests reports are not generated
+    // see https://github.com/jhipster/generator-jhipster/pull/2771 and https://github.com/jhipster/generator-jhipster/pull/4484
+    // ignoreFailures true
+    reports.html.required = false
+}
+
+check.dependsOn integrationTest
+task testReport(type: TestReport) {
+    destinationDirectory = file("$buildDir/reports/tests")
+    testResults.from(test)
+}
+
+task integrationTestReport(type: TestReport) {
+    destinationDirectory = file("$buildDir/reports/tests")
+    testResults.from(integrationTest)
+}
+
+if (!project.hasProperty("runList")) {
+    project.ext.runList = "main"
+}
+
+shadowJar {
+    mergeServiceFiles()
+}
+
+gitProperties {
+    failOnNoGitDirectory = false
+    keys = ["git.branch", "git.commit.id.abbrev", "git.commit.id.describe"]
+}
+
+configurations {
+    providedRuntime
+    liquibaseRuntime.extendsFrom sourceSets.main.compileClasspath
 }
 
 task cleanResources(type: Delete) {
@@ -422,4 +366,4 @@ task cleanResources(type: Delete) {
     delete "build/layers"
 }
 
-compileJava.dependsOn processResources
+compileJava.dependsOn(processResources)

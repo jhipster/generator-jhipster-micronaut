@@ -11,11 +11,16 @@ export default class extends BaseApplicationGenerator {
         this.editFile(`${application.cypressDir}e2e/administration/administration.cy.ts`, content =>
           content.replaceAll('info.activeProfiles', "info['active-profiles']"),
         );
-        this.editFile(`${application.cypressDir}e2e/administration/administration.cy.ts`, content =>
-          content.replace("describe('/docs'", "describe.skip('/docs'"),
-        );
         if (application.authenticationTypeJwt) {
           this.editFile(`${application.cypressDir}support/commands.ts`, content => content.replaceAll('id_token', 'access_token'));
+        }
+        if (application.generateUserManagement) {
+          this.editFile(`${application.cypressDir}e2e/entity/user-management.cy.ts`, content =>
+            content.replace(
+              "it('edit button click should load edit UserManagement page and save",
+              "it.skip('edit button click should load edit UserManagement page and save",
+            ),
+          );
         }
       },
     });

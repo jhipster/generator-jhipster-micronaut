@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs';
+
 import chalk from 'chalk';
 
 export function getLogo() {

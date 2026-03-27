@@ -29,7 +29,7 @@ for (idx in relationships) {
     isUsingMapsId = relationships[idx].useJPADerivedIdentifier;
     if ( isUsingMapsId === true) {
         mapsIdAssoc = relationships[idx];
-        mapsIdEntity = mapsIdAssoc.otherEntityNameCapitalized;
+        mapsIdEntity = mapsIdAssoc.otherEntity.entityNameCapitalized;
         mapsIdEntityInstance =  mapsIdEntity.charAt(0).toLowerCase() + mapsIdEntity.slice(1);
         mapsIdRepoInstance = `${mapsIdEntityInstance}Repository`;
         hasOauthUser = relationships[idx].otherEntityName === 'user' && authenticationTypeOauth2;
@@ -58,7 +58,7 @@ import <%= packageName %>.domain.<%= persistClass %>;
     for (idx in relationships) { // import entities in required relationships
         const relationship = relationships[idx];
         const relationshipValidate = relationships[idx].relationshipValidate;
-        const otherEntityNameCapitalized = relationships[idx].otherEntityNameCapitalized;
+        const otherEntityNameCapitalized = relationships[idx].otherEntity.entityNameCapitalized;
         const isUsingMapsIdL1 = relationships[idx].useJPADerivedIdentifier;
         if (imported.indexOf(otherEntityNameCapitalized) === -1) {
             if ((relationshipValidate !== null && relationshipValidate === true) || jpaMetamodelFiltering || (isUsingMapsIdL1 === true)) { _%>
@@ -389,7 +389,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
             const relationship = relationships[idx];
             const relationshipValidate = relationships[idx].relationshipValidate;
             const otherEntityName = relationships[idx].otherEntityName;
-            const otherEntityNameCapitalized = relationships[idx].otherEntityNameCapitalized;
+            const otherEntityNameCapitalized = relationships[idx].otherEntity.entityNameCapitalized;
             const relationshipType = relationships[idx].relationshipType;
             const relationshipNameCapitalizedPlural = relationships[idx].relationshipNameCapitalizedPlural;
             const relationshipNameCapitalized = relationships[idx].relationshipNameCapitalized;
@@ -454,7 +454,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
             for (idx in relationships) {
                 const relationshipValidate = relationships[idx].relationshipValidate;
                 const otherEntityName = relationships[idx].otherEntityName;
-                const otherEntityNameCapitalized = relationships[idx].otherEntityNameCapitalized;
+                const otherEntityNameCapitalized = relationships[idx].otherEntity.entityNameCapitalized;
                 const mapsIdUse = relationships[idx].useJPADerivedIdentifier;
                 if ((relationshipValidate !== null && relationshipValidate === true) || mapsIdUse === true) { _%>
         // Delete required entities

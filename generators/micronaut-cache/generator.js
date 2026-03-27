@@ -1,7 +1,9 @@
-import { GENERATOR_BOOTSTRAP_APPLICATION } from 'generator-jhipster/generators';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
-import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
+import { createNeedleCallback } from 'generator-jhipster/generators/base-core/support';
 import { javaMainPackageTemplatesBlock } from 'generator-jhipster/generators/java/support';
+import { getGradleLibsVersionsProperties } from 'generator-jhipster/generators/java-simple-application/generators/gradle/support';
+import { mutateData } from 'generator-jhipster/utils';
+
 import { getCacheProviderMavenDefinition } from './internal/dependencies.mjs';
 
 export default class extends BaseApplicationGenerator {
@@ -14,11 +16,25 @@ export default class extends BaseApplicationGenerator {
   }
 
   async beforeQueue() {
-    await this.dependsOnJHipster(GENERATOR_BOOTSTRAP_APPLICATION);
+    await this.dependsOnBootstrap('base-application');
+    await this.dependsOnBootstrap('java-simple-application');
   }
 
   get [BaseApplicationGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
+      async loadJavaDependencies({ application }) {
+        const gradleLibsVersions = this.readTemplate(
+          this.fetchFromInstalledJHipster('spring-boot/generators/cache/resources/gradle/libs.versions.toml'),
+        );
+        const applicationJavaDependencies = this.prepareDependencies(
+          {
+            ...getGradleLibsVersionsProperties(gradleLibsVersions),
+          },
+          'java',
+        );
+
+        mutateData(application.javaDependencies, applicationJavaDependencies);
+      },
       addNeedles({ source, application }) {
         if (application.cacheProviderEhcache || application.cacheProviderCaffeine || application.cacheProviderRedis) {
           const cacheConfigurationFile = `${application.javaPackageSrcDir}config/CacheConfiguration.java`;

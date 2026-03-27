@@ -13,12 +13,10 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
         .withJHipsterConfig()
         .withOptions({
           ignoreNeedlesError: true,
-          blueprint: ['micronaut'],
         })
-        .withJHipsterLookup()
-        .withParentBlueprintLookup()
-        .withMockedJHipsterGenerators()
-        .withMockedGenerators(['jhipster-micronaut:micronaut']);
+        .withJHipsterGenerators()
+        .withConfiguredBlueprint()
+        .withBlueprintConfig();
     });
 
     it('should succeed', () => {

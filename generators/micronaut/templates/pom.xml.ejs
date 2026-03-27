@@ -91,7 +91,6 @@ _%>
         <maven-clean-plugin.version><%- javaDependencies['maven-clean-plugin'] %></maven-clean-plugin.version>
         <maven-compiler-plugin.version><%- javaDependencies['maven-compiler-plugin'] %></maven-compiler-plugin.version>
         <maven-javadoc-plugin.version><%- javaDependencies['maven-javadoc-plugin'] %></maven-javadoc-plugin.version>
-        <maven-site-plugin.version><%- javaDependencies['maven-site-plugin'] %></maven-site-plugin.version>
         <maven-enforcer-plugin.version><%- javaDependencies['maven-enforcer-plugin'] %></maven-enforcer-plugin.version>
         <maven-failsafe-plugin.version><%- javaDependencies['maven-failsafe-plugin'] %></maven-failsafe-plugin.version>
         <maven-resources-plugin.version><%- javaDependencies['maven-resources-plugin'] %></maven-resources-plugin.version>
@@ -497,7 +496,7 @@ _%>
                             <warSourceDirectory><%= clientDistDir %></warSourceDirectory>
                             <webResources>
                                 <resource>
-                                    <directory><%= MAIN_DIR %>webapp</directory>
+                                    <directory><%= srcMainWebapp %></directory>
                                     <includes>
                                         <include>WEB-INF/**</include>
                                     </includes>
@@ -535,11 +534,6 @@ _%>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>${maven-site-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>${maven-enforcer-plugin.version}</version>
                     <executions>
@@ -570,7 +564,7 @@ _%>
                             </requireMavenVersion>
                             <requireJavaVersion>
                                 <message>You are running an incompatible version of Java. JHipster supports JDK <%= JAVA_COMPATIBLE_VERSIONS[0] %> to <%= JAVA_COMPATIBLE_VERSIONS[JAVA_COMPATIBLE_VERSIONS.length -1] %>.</message>
-                                <version><%= JAVA_COMPATIBLE_VERSIONS.map(version => parseInt(version)).map(version => `[${version},${version +1})`).join(',') %></version>
+                                <version><%= javaCompatibleVersions.map(version => parseInt(version)).map(version => `[${version},${version +1})`).join(',') %></version>
                             </requireJavaVersion>
                         </rules>
                     </configuration>
@@ -594,14 +588,14 @@ _%>
                                 </delimiters>
                                 <resources>
                                     <resource>
-                                        <directory><%= SERVER_MAIN_RES_DIR %></directory>
+                                        <directory><%= srcMainResources %></directory>
                                         <filtering>true</filtering>
                                         <includes>
                                             <include>config/*.yml</include>
                                         </includes>
                                     </resource>
                                     <resource>
-                                        <directory><%= SERVER_MAIN_RES_DIR %></directory>
+                                        <directory><%= srcMainResources %></directory>
                                         <filtering>false</filtering>
                                         <excludes>
                                             <exclude>config/*.yml</exclude>
