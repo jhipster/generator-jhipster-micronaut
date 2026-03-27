@@ -20,7 +20,7 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
       addNeedles({ source, application }) {
-        if (application.cacheProviderEhcache || application.cacheProviderCaffeine || application.cacheProviderRedis) {
+        if (application.cacheProviderEhcache || application.cacheProviderCaffeine || application.cacheProviderHazelcast || application.cacheProviderRedis) {
           const cacheConfigurationFile = `${application.javaPackageSrcDir}config/CacheConfiguration.java`;
           const needle = `${application.cacheProvider}-add-entry`;
           const addEntryToCacheCallback = entry =>
@@ -74,7 +74,7 @@ export default class extends BaseApplicationGenerator {
       },
       customizeFiles({ source, entities, application: { cacheProvider, enableHibernateCache } }) {
         if (!enableHibernateCache || !cacheProvider) return;
-        if (['ehcache', 'caffeine', 'infinispan', 'redis'].includes(cacheProvider)) {
+        if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'redis'].includes(cacheProvider)) {
           for (const entity of entities.filter(entity => !entity.skipServer && !entity.builtIn)) {
             const { entityAbsoluteClass } = entity;
             source.addEntityToCache?.({

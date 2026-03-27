@@ -22,4 +22,37 @@ describe('SubGenerator micronaut-cache of micronaut JHipster blueprint', () => {
       expect(result.getStateSnapshot()).toMatchSnapshot();
     });
   });
+
+  describe('run with hazelcast cache provider', () => {
+    beforeAll(async function () {
+      await helpers
+        .run(SUB_GENERATOR_NAMESPACE)
+        .withJHipsterConfig({
+          cacheProvider: 'hazelcast',
+        })
+        .withOptions({
+          ignoreNeedlesError: true,
+        })
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
+    });
+
+    it('should succeed', () => {
+      expect(result.getStateSnapshot()).toMatchSnapshot();
+    });
+
+    it('should generate CacheConfiguration with hazelcast imports', () => {
+      result.assertFileContent(
+        'src/main/java/com/mycompany/myapp/config/CacheConfiguration.java',
+        'com.hazelcast.config.Config',
+      );
+    });
+
+    it('should generate hazelcast needle comment', () => {
+      result.assertFileContent(
+        'src/main/java/com/mycompany/myapp/config/CacheConfiguration.java',
+        'jhipster-needle-hazelcast-add-entry',
+      );
+    });
+  });
 });
