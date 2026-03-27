@@ -15,3 +15,4 @@ generators/server/generator.js skip
 generators/react/generator.js skip
 generators/micronaut-cache/command.js skip
 generators/java-simple-application/generators/gradle/generator.js skip
+generators/docker/generators/bootstrap/generator.js skip
