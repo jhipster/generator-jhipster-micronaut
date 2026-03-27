@@ -207,11 +207,14 @@ export const serverFiles = {
         'web/rest/vm/KeyAndPasswordVM.java',
         'web/rest/vm/LoginVM.java',
         'web/rest/vm/ManagedUserVM.java',
-        'web/rest/PublicUserResource.java',
         // Base rest pkg
         'web/rest/ClientForwardController.java',
         'web/rest/UserResource.java',
       ],
+    }),
+    javaMainPackageTemplatesBlock({
+      condition: generator => generator.generateBuiltInUserEntity,
+      templates: ['web/rest/PublicUserResource.java'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement || generator.authenticationTypeOauth2,
