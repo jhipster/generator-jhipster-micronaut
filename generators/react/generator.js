@@ -32,7 +32,7 @@ export default class extends BaseApplicationGenerator {
           this.editFile(`${clientSrcDir}app/shared/reducers/authentication.ts`, content =>
             content
               .replace('const bearerToken = response?.headers?.authorization;', 'const jwt = response?.data?.access_token;')
-              .replace("bearerToken && bearerToken.slice(0, 7) === 'Bearer '", 'jwt')
+              .replace("bearerToken?.startsWith('Bearer ')", 'jwt')
               .replace('const jwt = bearerToken.slice(7, bearerToken.length);', ''),
           );
         }

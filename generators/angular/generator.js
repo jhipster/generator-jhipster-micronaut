@@ -1,4 +1,5 @@
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
+
 import { angularFiles } from './files.js';
 
 export default class extends BaseApplicationGenerator {
@@ -6,10 +7,19 @@ export default class extends BaseApplicationGenerator {
     super(args, opts, { ...features, sbsBlueprint: true });
   }
 
+  get [BaseApplicationGenerator.DEFAULT]() {
+    return this.asDefaultTaskGroup({
+      async default({ application }) {
+        if (application.generateBuiltInAuthorityEntity) {
+          application.authority.skipClient = false;
+        }
+      },
+    });
+  }
+
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async writingTemplateTask({ application }) {
-        this.deleteDestination(`src/main/webapp/app/admin/configuration/configuration.model.ts`);
         await this.writeFiles({
           sections: angularFiles,
           context: application,
@@ -23,8 +33,11 @@ export default class extends BaseApplicationGenerator {
       customizeAngularForMicronaut({ application: { authenticationTypeJwt, clientSrcDir } }) {
         // health api
         this.editFile(`${clientSrcDir}app/admin/health/health.model.ts`, content => content.replaceAll('components', 'details'));
-        this.editFile(`${clientSrcDir}app/admin/health/health.component.html`, content => content.replaceAll('components', 'details'));
-        this.editFile(`${clientSrcDir}app/admin/health/health.component.spec.ts`, content => content.replaceAll('components', 'details'));
+        this.editFile(`${clientSrcDir}app/admin/health/health.html`, content => content.replaceAll('components', 'details'));
+        this.editFile(`${clientSrcDir}app/admin/health/health.spec.ts`, content => content.replaceAll('components', 'details'));
+        this.editFile(`${clientSrcDir}app/layouts/profiles/profile-info.model.ts`, content =>
+          content.replaceAll('  activeProfiles', "  ['active-profiles']"),
+        );
 
         if (authenticationTypeJwt) {
           // authentication api

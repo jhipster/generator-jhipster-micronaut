@@ -4,11 +4,18 @@
     "baseName": "micronaut",
     "cli": true,
     "cliName": "mhipster",
+    "defaultCommand": "generate-blueprint",
     "entities": [],
     "generators": {
       "angular": {
         "command": false,
         "priorities": ["writing", "postWriting"],
+        "sbs": true,
+        "written": true
+      },
+      "base-application:bootstrap": {
+        "command": false,
+        "priorities": [],
         "sbs": true,
         "written": true
       },
@@ -24,7 +31,7 @@
         "sbs": true,
         "written": true
       },
-      "docker": {
+      "docker:bootstrap": {
         "command": false,
         "priorities": [],
         "sbs": true,
@@ -46,6 +53,12 @@
           "end"
         ],
         "sbs": false,
+        "written": true
+      },
+      "java-simple-application:gradle": {
+        "command": false,
+        "priorities": ["writing"],
+        "sbs": true,
         "written": true
       },
       "liquibase": {
@@ -74,7 +87,7 @@
       }
     },
     "githubWorkflows": true,
-    "jhipsterVersion": "8.11.0",
+    "jhipsterVersion": "9.0.0",
     "js": true,
     "localBlueprint": false,
     "packageJsonType": "module",

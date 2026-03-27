@@ -24,7 +24,6 @@ import {
 } from 'generator-jhipster/generators/java/support';
 
 /* Constants use throughout */
-import { JAVA_SERVER_TEST_RESOURCES_DIR as SERVER_TEST_RES_DIR } from 'generator-jhipster';
 
 /* TODO: Do a PR in the parent JHipster project to export and re-use here as well in order to have a single source of truth!!!
 const TEST_DIR = constants.TEST_DIR;
@@ -54,14 +53,6 @@ export const serverFiles = {
         { file: 'templates/mail/passwordResetEmail.html', renameTo: () => 'views/mail/passwordResetEmail.html' },
       ],
     }),
-    {
-      condition: generator => !generator.skipUserManagement,
-      path: SERVER_TEST_RES_DIR,
-      templates: [
-        /* User management java test files */
-        'i18n/messages_en.properties',
-      ],
-    },
   ],
   micronautResources: [
     javaMainResourceTemplatesBlock({
@@ -75,7 +66,6 @@ export const serverFiles = {
         { file: 'application-dev.yml' },
         { file: 'application-tls.yml' },
         { file: 'application-prod.yml' },
-        { file: 'i18n/messages.properties', noEjs: true },
       ],
     }),
     javaTestResourceTemplatesBlock({
@@ -83,7 +73,7 @@ export const serverFiles = {
     }),
     javaMainResourceTemplatesBlock({
       condition: generator => !generator.skipUserManagement,
-      templates: [{ file: 'views/mail/testEmail.html', noEjs: true }],
+      templates: [{ file: 'views/mail/testEmail.html', transform: false }],
     }),
   ],
   serverMicroserviceAndGateway: [
@@ -217,11 +207,14 @@ export const serverFiles = {
         'web/rest/vm/KeyAndPasswordVM.java',
         'web/rest/vm/LoginVM.java',
         'web/rest/vm/ManagedUserVM.java',
-        'web/rest/PublicUserResource.java',
         // Base rest pkg
         'web/rest/ClientForwardController.java',
         'web/rest/UserResource.java',
       ],
+    }),
+    javaMainPackageTemplatesBlock({
+      condition: generator => generator.generateBuiltInUserEntity,
+      templates: ['web/rest/PublicUserResource.java'],
     }),
     javaMainPackageTemplatesBlock({
       condition: generator => !generator.skipUserManagement || generator.authenticationTypeOauth2,
@@ -286,7 +279,6 @@ export const serverFiles = {
     {
       condition: generator => generator.buildTool === 'gradle',
       templates: [
-        { file: 'build.gradle' },
         { file: 'settings.gradle' },
         { file: 'gradle.properties' },
         { file: 'gradle/docker.gradle' },

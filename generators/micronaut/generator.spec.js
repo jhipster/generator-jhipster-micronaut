@@ -12,10 +12,10 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
         .withJHipsterConfig()
         .withOptions({
           ignoreNeedlesError: true,
-          blueprint: 'micronaut',
         })
-        .withJHipsterLookup()
-        .withParentBlueprintLookup();
+        .withJHipsterGenerators()
+        .withConfiguredBlueprint()
+        .withBlueprintConfig();
     });
 
     it('should succeed', () => {
@@ -47,10 +47,10 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
         .withOptions({
           reproducible: true,
           ignoreNeedlesError: true,
-          blueprint: 'micronaut',
         })
-        .withJHipsterLookup()
-        .withParentBlueprintLookup();
+        .withJHipsterGenerators()
+        .withConfiguredBlueprint()
+        .withBlueprintConfig();
     });
 
     it('should succeed', () => {
@@ -67,10 +67,10 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
         })
         .withOptions({
           ignoreNeedlesError: true,
-          blueprint: 'micronaut',
         })
-        .withJHipsterLookup()
-        .withParentBlueprintLookup();
+        .withJHipsterGenerators()
+        .withConfiguredBlueprint()
+        .withBlueprintConfig();
     });
 
     it('should succeed', () => {
@@ -87,10 +87,10 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
         })
         .withOptions({
           ignoreNeedlesError: true,
-          blueprint: 'micronaut',
         })
-        .withJHipsterLookup()
-        .withParentBlueprintLookup();
+        .withJHipsterGenerators()
+        .withConfiguredBlueprint()
+        .withBlueprintConfig();
     });
 
     it('should succeed', () => {

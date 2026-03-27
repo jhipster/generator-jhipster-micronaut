@@ -1,37 +1,44 @@
 import os from 'os';
-import chalk from 'chalk';
-import BaseApplicationGenerator from 'generator-jhipster/generators/server';
-import { GENERATOR_DOCKER, GENERATOR_LANGUAGES, GENERATOR_LIQUIBASE, GENERATOR_SERVER } from 'generator-jhipster/generators';
-import { createBase64Secret, createNeedleCallback } from 'generator-jhipster/generators/base/support';
-import { addJavaAnnotation } from 'generator-jhipster/generators/java/support';
-import { parseMavenPom } from 'generator-jhipster/generators/maven/support';
-import mnConstants from '../constants.cjs';
-import { writeFiles } from './files.js';
 
-import { entityFiles } from './entity-files.js';
-import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
+import chalk from 'chalk';
+import { createNeedleCallback } from 'generator-jhipster/generators/base-core/support';
+import { addJavaAnnotation } from 'generator-jhipster/generators/java/support';
+import { parseMavenPom } from 'generator-jhipster/generators/java-simple-application/generators/maven/support';
+import BaseApplicationGenerator from 'generator-jhipster/generators/server';
+import { prepareSqlApplicationProperties } from 'generator-jhipster/generators/spring-boot/generators/data-relational/support';
+import { createBase64Secret } from 'generator-jhipster/utils';
+
+import mnConstants from '../constants.cjs';
+
 import { serverTestFrameworkChoices } from './command.js';
+import { entityFiles } from './entity-files.js';
+import { writeFiles } from './files.js';
+import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
 
 export default class extends BaseApplicationGenerator {
+  constructor(args, opts, features) {
+    super(args, opts, {
+      ...features,
+      // Dropped it once migration is done.
+      jhipster7Migration: true,
+    });
+  }
+
   async beforeQueue() {
     this.jhipsterTemplatesFolders.push(
+      // For error.html file
       this.fetchFromInstalledJHipster('spring-boot/templates'),
+      // For messages.properties files
+      this.fetchFromInstalledJHipster('java/generators/i18n/templates'),
       // For _persistClass_.java.jhi.hibernate_cache/_persistClass_.java.jhi.jakarta_persistence file
-      this.fetchFromInstalledJHipster('spring-data-relational/templates'),
+      this.fetchFromInstalledJHipster('spring-boot/generators/data-relational/templates'),
       // For _global_partials_entity_/field_validators file
       this.fetchFromInstalledJHipster('java/generators/domain/templates'),
     );
-    await this.dependsOnJHipster(GENERATOR_SERVER);
-    await this.dependsOnJHipster('jhipster:java:build-tool');
+    await this.dependsOnJHipster('server');
+    await this.dependsOnJHipster('java');
+    await this.dependsOnJHipster('jhipster:java-simple-application:build-tool');
     await this.dependsOnJHipster('jhipster:java:server');
-  }
-
-  get [BaseApplicationGenerator.INITIALIZING]() {
-    return this.asInitializingTaskGroup({
-      async initializing() {
-        await this.parseCurrentJHipsterCommand();
-      },
-    });
   }
 
   get [BaseApplicationGenerator.PROMPTING]() {
@@ -81,10 +88,11 @@ export default class extends BaseApplicationGenerator {
       async composing() {
         const { enableTranslation, databaseType, cacheProvider, skipClient, clientFramework = 'no' } = this.jhipsterConfigWithDefaults;
 
+        await this.composeWithJHipster('jhipster:java:i18n');
         await this.composeWithJHipster('jhipster:java:domain');
-        await this.composeWithJHipster('jhipster:java:code-quality');
-        await this.composeWithJHipster('jhipster:java:jib');
-        await this.composeWithJHipster(GENERATOR_DOCKER);
+        await this.composeWithJHipster('jhipster:java-simple-application:code-quality');
+        await this.composeWithJHipster('jhipster:java-simple-application:jib');
+        await this.composeWithJHipster('docker');
 
         if (!skipClient && clientFramework !== 'no') {
           await this.composeWithJHipster('jhipster:java:node');
@@ -92,11 +100,11 @@ export default class extends BaseApplicationGenerator {
 
         // We don't expose client/server to cli, composing with languages is used for test purposes.
         if (enableTranslation) {
-          const languagesGenerator = await this.composeWithJHipster(GENERATOR_LANGUAGES);
+          const languagesGenerator = await this.composeWithJHipster('languages');
           languagesGenerator.writeJavaLanguageFiles = true;
         }
         if (databaseType === 'sql') {
-          await this.composeWithJHipster(GENERATOR_LIQUIBASE);
+          await this.composeWithJHipster('liquibase');
         }
         if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) {
           await this.composeWithJHipster('jhipster-micronaut:micronaut-cache');
@@ -107,9 +115,6 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.LOADING]() {
     return this.asLoadingTaskGroup({
-      async loading({ application }) {
-        await this.loadCurrentJHipsterCommandConfig(application);
-      },
       loadMicronautPlatformPom({ application }) {
         const pomFile = this.readTemplate(this.templatePath('../resources/micronaut-platform.pom')).toString();
         const pom = parseMavenPom(pomFile);
@@ -131,6 +136,16 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
+      defaults({ application, applicationDefaults }) {
+        applicationDefaults({
+          saveUserSnapshot: ({ applicationTypeMicroservice, authenticationTypeOauth2, hasRelationshipWithBuiltInUser, dto }) =>
+            applicationTypeMicroservice && authenticationTypeOauth2 && hasRelationshipWithBuiltInUser && dto === 'no',
+        });
+
+        if (application.databaseTypeSql) {
+          prepareSqlApplicationProperties({ application });
+        }
+      },
       loadDependencies({ application }) {
         application.micronautDependencies = { ...mnConstants.versions };
         this.loadJavaDependenciesFromGradleCatalog(application.micronautDependencies);
@@ -249,7 +264,7 @@ export default class extends BaseApplicationGenerator {
               addToBuild: true,
             },
             {
-              id: 'com.github.johnrengelman.shadow',
+              id: 'com.gradleup.shadow',
               pluginName: 'shadow',
               version: application.javaDependencies.shadow,
               addToBuild: true,
@@ -287,15 +302,7 @@ export default class extends BaseApplicationGenerator {
             'backend:doc:test': '',
           },
         });
-        if (application.buildToolMaven) {
-          this.packageJson.merge({
-            scripts: {
-              // jhipster generates e2e.jar
-              'postci:e2e:package':
-                'mv target/original*.jar target/original.jar.back && cp target/*.$npm_package_config_packaging target/e2e.$npm_package_config_packaging',
-            },
-          });
-        } else if (application.buildToolGradle) {
+        if (application.buildToolGradle) {
           this.editFile('package.json', contents => contents.replaceAll(' bootJar ', ' shadowJar '));
         }
         if (application.cacheProviderRedis) {

@@ -2,10 +2,10 @@ import { beforeAll, describe, expect, it } from 'vitest';
 
 import { defaultHelpers as helpers, result } from 'generator-jhipster/testing';
 
-const SUB_GENERATOR = 'docker';
+const SUB_GENERATOR = 'base-application:bootstrap';
 const BLUEPRINT_NAMESPACE = `jhipster:${SUB_GENERATOR}`;
 
-describe('SubGenerator docker of micronaut JHipster blueprint', () => {
+describe('SubGenerator base-application:bootstrap of micronaut JHipster blueprint', () => {
   describe('run', () => {
     beforeAll(async function () {
       await helpers
@@ -13,10 +13,10 @@ describe('SubGenerator docker of micronaut JHipster blueprint', () => {
         .withJHipsterConfig()
         .withOptions({
           ignoreNeedlesError: true,
-          blueprint: ['micronaut'],
         })
-        .withJHipsterLookup()
-        .withParentBlueprintLookup();
+        .withJHipsterGenerators()
+        .withConfiguredBlueprint()
+        .withBlueprintConfig();
     });
 
     it('should succeed', () => {

@@ -10,7 +10,10 @@ export default class extends BaseApplicationGenerator {
       micronautLiquibase({ application, source }) {
         if (application.buildToolMaven) {
           source.addMavenDefinition?.({
-            properties: [{ property: 'liquibase.version', value: application.javaDependencies.liquibase }],
+            properties: [
+              { property: 'liquibase.version', value: application.javaDependencies.liquibase },
+              { property: 'jboss-logging.version', value: application.javaDependencies['jboss-logging'] },
+            ],
             dependencies: [
               {
                 groupId: 'io.micronaut.liquibase',
