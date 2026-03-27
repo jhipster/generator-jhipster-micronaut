@@ -243,9 +243,6 @@ dependencies {
     <%_ if (databaseType === 'couchbase') { _%>
     testImplementation "org.testcontainers:couchbase"
     <%_ } _%>
-    <%_ if (databaseTypeSql) { _%>
-    testImplementation "com.h2database:h2"
-    <%_ } _%>
     <%_ if (devDatabaseType === 'oracle' || prodDatabaseType === 'oracle') { _%>
     implementation "com.oracle.ojdbc:ojdbc8"
     <%_ } _%>

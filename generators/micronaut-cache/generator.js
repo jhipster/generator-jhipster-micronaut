@@ -8,11 +8,7 @@ import { getCacheProviderMavenDefinition } from './internal/dependencies.mjs';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
-    super(args, opts, {
-      ...features,
-      // Dropped it once migration is done.
-      jhipster7Migration: true,
-    });
+    super(args, opts, features);
   }
 
   async beforeQueue() {

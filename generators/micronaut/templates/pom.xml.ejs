@@ -63,9 +63,9 @@ _%>
         <maven.version>3.2.5</maven.version>
         <exec.mainClass><%=packageName%>.<%=mainClass%></exec.mainClass>
         <micronaut.runtime>netty</micronaut.runtime>
-        <java.version><%= JAVA_VERSION %></java.version>
-        <jdk.version><%= JAVA_VERSION %></jdk.version>
-        <release.version><%= JAVA_VERSION %></release.version>
+        <java.version><%= javaVersion %></java.version>
+        <jdk.version><%= javaVersion %></jdk.version>
+        <release.version><%= javaVersion %></release.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
@@ -232,12 +232,6 @@ _%>
             <artifactId>hibernate-jcache</artifactId>
         </dependency>
         <%_ } _%>
-    <%_ } _%>
-    <%_ if (databaseTypeSql) { _%>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
     <%_ } _%>
 
         <dependency>
@@ -563,7 +557,7 @@ _%>
                                 <version>[${maven.version},)</version>
                             </requireMavenVersion>
                             <requireJavaVersion>
-                                <message>You are running an incompatible version of Java. JHipster supports JDK <%= JAVA_COMPATIBLE_VERSIONS[0] %> to <%= JAVA_COMPATIBLE_VERSIONS[JAVA_COMPATIBLE_VERSIONS.length -1] %>.</message>
+                                <message>You are running an incompatible version of Java. JHipster supports JDK <%= javaCompatibleVersions[0] %> to <%= javaCompatibleVersions[javaCompatibleVersions.length -1] %>.</message>
                                 <version><%= javaCompatibleVersions.map(version => parseInt(version)).map(version => `[${version},${version +1})`).join(',') %></version>
                             </requireJavaVersion>
                         </rules>

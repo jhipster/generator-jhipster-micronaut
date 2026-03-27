@@ -17,11 +17,7 @@ import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMa
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
-    super(args, opts, {
-      ...features,
-      // Dropped it once migration is done.
-      jhipster7Migration: true,
-    });
+    super(args, opts, features);
   }
 
   async beforeQueue() {
@@ -230,21 +226,27 @@ export default class extends BaseApplicationGenerator {
       },
       addMicronautDependencies({ application, source }) {
         const { javaDependencies } = application;
-        source.addJavaDefinition({
-          dependencies: [
-            { groupId: 'io.micronaut.openapi', artifactId: 'micronaut-openapi-annotations' },
-            {
-              groupId: 'net.logstash.logback',
-              artifactId: 'logstash-logback-encoder',
-              version: javaDependencies['logstash-logback-encoder'],
-            },
-            { groupId: 'tech.jhipster', artifactId: 'jhipster-framework', version: application.jhipsterDependenciesVersion },
-            { groupId: 'org.apache.commons', artifactId: 'commons-lang3', version: javaDependencies['commons-lang3'] },
-            { groupId: 'org.mockito', artifactId: 'mockito-core', scope: 'test' },
-            { groupId: 'org.zalando', artifactId: 'jackson-datatype-problem', version: javaDependencies['jackson-datatype-problem'] },
-            { groupId: 'org.zalando', artifactId: 'problem-violations', version: javaDependencies['problem-violations'] },
-          ],
-        });
+        source.addJavaDefinitions(
+          {
+            dependencies: [
+              { groupId: 'io.micronaut.openapi', artifactId: 'micronaut-openapi-annotations' },
+              {
+                groupId: 'net.logstash.logback',
+                artifactId: 'logstash-logback-encoder',
+                version: javaDependencies['logstash-logback-encoder'],
+              },
+              { groupId: 'tech.jhipster', artifactId: 'jhipster-framework', version: application.jhipsterDependenciesVersion },
+              { groupId: 'org.apache.commons', artifactId: 'commons-lang3', version: javaDependencies['commons-lang3'] },
+              { groupId: 'org.mockito', artifactId: 'mockito-core', scope: 'test' },
+              { groupId: 'org.zalando', artifactId: 'jackson-datatype-problem', version: javaDependencies['jackson-datatype-problem'] },
+              { groupId: 'org.zalando', artifactId: 'problem-violations', version: javaDependencies['problem-violations'] },
+            ],
+          },
+          {
+            condition: application.databaseTypeSql,
+            dependencies: [{ groupId: 'com.h2database', artifactId: 'h2', scope: 'test' }],
+          },
+        );
         if (application.buildToolMaven) {
           source.addMavenDefinition({
             properties: [{ property: 'modernizer.failOnViolations', value: 'false' }],
