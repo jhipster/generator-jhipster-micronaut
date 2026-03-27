@@ -1,15 +1,18 @@
-import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+
 import { Observable } from 'rxjs';
 
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
+
+import { Bean } from './configuration.model';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigurationService {
   private readonly http = inject(HttpClient);
   private readonly applicationConfigService = inject(ApplicationConfigService);
 
-  get(): Observable<any> {
-    return this.http.get(this.applicationConfigService.getEndpointFor('management/configprops'), { observe: 'body' });
+  get(): Observable<Bean> {
+    return this.http.get<Bean>(this.applicationConfigService.getEndpointFor('management/configprops'));
   }
 }

@@ -1,28 +1,46 @@
-import { Component, OnInit } from '@angular/core';
-
-import SharedModule from 'app/shared/shared.module';
+import { JsonPipe, KeyValuePipe } from '@angular/common';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+<%_ if (enableTranslation) { _%>
+import { TranslateDirective } from 'app/shared/language';
+import { TranslateModule } from '@ngx-translate/core';
+<%_ } _%>
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SortByDirective, SortDirective, SortService, sortStateSignal } from 'app/shared/sort';
+
+import { Bean } from './configuration.model';
 import { ConfigurationService } from './configuration.service';
 
-import { KeyStartsWith } from './configuration.filter';
-
 @Component({
-  standalone: true,
-  selector: '<%= jhiPrefixDashed %>-configuration',
-  templateUrl: './configuration.component.html',
-  imports: [SharedModule, FormsModule, KeyStartsWith],
+  selector: '<%- jhiPrefixDashed %>-configuration',
+  templateUrl: './configuration.html',
+  imports: [FontAwesomeModule, FormsModule, SortDirective, SortByDirective, KeyValuePipe, JsonPipe<% if (enableTranslation) { %>, TranslateDirective, TranslateModule<% } %>],
 })
-export default class ConfigurationComponent implements OnInit {
-  allConfiguration: any = null;
-  filter: string;
+export default class Configuration implements OnInit {
+  readonly allBeans = signal<Bean | undefined>(undefined);
+  readonly beansFilter = signal<string>('');
+  sortState = sortStateSignal({ predicate: 'prefix', order: 'asc' });
+  readonly beans = computed(() => {
+    let data = Object.entries(this.allBeans() ?? {}).map(([key, value]) => ({ key, value }));
+    const beansFilter = this.beansFilter();
+    if (beansFilter) {
+      data = data.filter(bean => bean.key.toLowerCase().includes(beansFilter.toLowerCase()));
+    }
 
-  constructor(private configurationService: ConfigurationService) {
-    this.filter = '';
-  }
+    const { order, predicate } = this.sortState();
+    if (predicate && order) {
+      data = data.sort(this.sortService.startSort({ predicate, order }));
+    }
+    return data;
+  });
+
+  private readonly sortService = inject(SortService);
+  private readonly configurationService = inject(ConfigurationService);
 
   ngOnInit(): void {
-    this.configurationService.get().subscribe((configuration: any) => {
-      this.allConfiguration = configuration;
+    this.configurationService.get().subscribe(beans => {
+      this.allBeans.set(beans);
     });
   }
 }

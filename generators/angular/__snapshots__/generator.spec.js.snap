@@ -192,7 +192,7 @@ exports[`SubGenerator angular of micronaut JHipster blueprint > run > should suc
     "stateCleared": "modified",
   },
   "src/main/webapp/app/admin/configuration/configuration.model.ts": {
-    "state": "deleted",
+    "stateCleared": "modified",
   },
   "src/main/webapp/app/admin/configuration/configuration.service.spec.ts": {
     "stateCleared": "modified",

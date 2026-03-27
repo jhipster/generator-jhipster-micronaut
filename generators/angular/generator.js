@@ -20,7 +20,6 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async writingTemplateTask({ application }) {
-        this.deleteDestination(`src/main/webapp/app/admin/configuration/configuration.model.ts`);
         await this.writeFiles({
           sections: angularFiles,
           context: application,
@@ -36,6 +35,9 @@ export default class extends BaseApplicationGenerator {
         this.editFile(`${clientSrcDir}app/admin/health/health.model.ts`, content => content.replaceAll('components', 'details'));
         this.editFile(`${clientSrcDir}app/admin/health/health.html`, content => content.replaceAll('components', 'details'));
         this.editFile(`${clientSrcDir}app/admin/health/health.spec.ts`, content => content.replaceAll('components', 'details'));
+        this.editFile(`${clientSrcDir}app/layouts/profiles/profile-info.model.ts`, content =>
+          content.replaceAll('  activeProfiles', "  ['active-profiles']"),
+        );
 
         if (authenticationTypeJwt) {
           // authentication api
