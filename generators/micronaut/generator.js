@@ -13,7 +13,6 @@ import mnConstants from '../constants.cjs';
 import { serverTestFrameworkChoices } from './command.js';
 import { entityFiles } from './entity-files.js';
 import { writeFiles } from './files.js';
-import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
@@ -228,99 +227,6 @@ export default class extends BaseApplicationGenerator {
               .replace(/test: [^\n]*/, "test: ['CMD-SHELL', 'mysql -e \"SHOW DATABASES;\" && sleep 5']")
               .replace('timeout: 5s', 'timeout: 10s'),
           );
-        }
-      },
-      addMicronautDependencies({ application, source }) {
-        const { javaDependencies } = application;
-        source.addJavaDefinitions(
-          {
-            dependencies: [
-              { groupId: 'io.micronaut.openapi', artifactId: 'micronaut-openapi-annotations' },
-              {
-                groupId: 'net.logstash.logback',
-                artifactId: 'logstash-logback-encoder',
-                version: javaDependencies['logstash-logback-encoder'],
-              },
-              { groupId: 'tech.jhipster', artifactId: 'jhipster-framework', version: application.jhipsterDependenciesVersion },
-              { groupId: 'org.apache.commons', artifactId: 'commons-lang3', version: javaDependencies['commons-lang3'] },
-              { groupId: 'org.mockito', artifactId: 'mockito-core', scope: 'test' },
-              { groupId: 'org.zalando', artifactId: 'jackson-datatype-problem', version: javaDependencies['jackson-datatype-problem'] },
-              { groupId: 'org.zalando', artifactId: 'problem-violations', version: javaDependencies['problem-violations'] },
-            ],
-          },
-          {
-            condition: application.databaseTypeSql,
-            dependencies: [{ groupId: 'com.h2database', artifactId: 'h2' }],
-          },
-        );
-        if (application.buildToolMaven) {
-          source.addMavenDefinition({
-            properties: [{ property: 'modernizer.failOnViolations', value: 'false' }],
-          });
-        } else if (application.buildToolGradle) {
-          source.addGradleDependencyCatalogPlugins([
-            {
-              id: 'io.micronaut.application',
-              pluginName: 'micronaut-application',
-              version: application.javaDependencies['micronaut-application'],
-              addToBuild: true,
-            },
-            {
-              id: 'com.gorylenko.gradle-git-properties',
-              pluginName: 'gradle-git-properties',
-              version: application.javaDependencies['gradle-git-properties'],
-              addToBuild: true,
-            },
-            {
-              id: 'com.gradleup.shadow',
-              pluginName: 'shadow',
-              version: application.javaDependencies.shadow,
-              addToBuild: true,
-            },
-          ]);
-          if (application.enableSwaggerCodegen) {
-            source.addGradleDependencyCatalogPlugin({
-              id: 'org.openapi.generator',
-              pluginName: 'openapi-generator',
-              version: application.javaDependencies['openapi-generator'],
-              addToBuild: true,
-            });
-          }
-        }
-
-        if (!application.skipUserManagement) {
-          source.addJavaDefinition({
-            dependencies: [{ groupId: 'org.mindrot', artifactId: 'jbcrypt', version: javaDependencies.jbcrypt }],
-          });
-        }
-      },
-      sqlDependencies({ application, source }) {
-        if (application.databaseTypeSql) {
-          source.addMavenDefinition?.(
-            getImperativeMavenDefinition({ javaDependencies: { hibernate: application.javaManagedProperties['hibernate.version'] } }),
-          );
-          source.addMavenDefinition?.(getCommonMavenDefinition());
-          source.addMavenDependency?.(getDatabaseDriverForDatabase(application.prodDatabaseType).jdbc);
-        }
-      },
-      packageJsonCustomizations({ application }) {
-        this.packageJson.merge({
-          scripts: {
-            'backend:nohttp:test': '',
-            'backend:doc:test': '',
-          },
-        });
-        if (application.buildToolGradle) {
-          this.editFile('package.json', contents => contents.replaceAll(' bootJar ', ' shadowJar '));
-        }
-        if (application.cacheProviderRedis) {
-          this.packageJson.merge({
-            scripts: {
-              'ci:e2e:server:start': `${this.packageJson.getPath(
-                'scripts.ci:e2e:server:start',
-              )} --add-opens java.base/java.util=ALL-UNNAMED`,
-            },
-          });
         }
       },
     });
