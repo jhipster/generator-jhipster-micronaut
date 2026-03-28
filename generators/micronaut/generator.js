@@ -142,11 +142,6 @@ export default class extends BaseApplicationGenerator {
           prepareSqlApplicationProperties({ application });
         }
       },
-      loadDependencies({ application }) {
-        application.micronautDependencies = { ...mnConstants.versions };
-        this.loadJavaDependenciesFromGradleCatalog(application.micronautDependencies);
-        Object.assign(application.javaDependencies, application.micronautDependencies);
-      },
       prepareForTemplates({ application }) {
         // Workaround
         application.MN_CONSTANTS = mnConstants;

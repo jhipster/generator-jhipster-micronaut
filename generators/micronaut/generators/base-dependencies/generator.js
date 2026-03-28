@@ -9,6 +9,21 @@ export default class extends BaseApplicationGenerator {
     });
   }
 
+  async beforeQueue() {
+    await this.dependsOnBootstrap('java-simple-application');
+  }
+
+  get [BaseApplicationGenerator.PREPARING]() {
+    return this.asPreparingTaskGroup({
+      loadDependencies({ application }) {
+        this.loadJavaDependenciesFromGradleCatalog(
+          application.javaDependencies,
+          this.templatePath('../../../resources/gradle/libs.versions.toml'),
+        );
+      },
+    });
+  }
+
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
       addMicronautDependencies({ application, source }) {

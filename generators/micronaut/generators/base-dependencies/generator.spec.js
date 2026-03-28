@@ -14,6 +14,7 @@ describe('SubGenerator micronaut:base-dependencies of micronaut JHipster bluepri
         .withOptions({
           ignoreNeedlesError: true,
         })
+        .withMockedSource()
         .withJHipsterGenerators()
         .withConfiguredBlueprint()
         .withBlueprintConfig();

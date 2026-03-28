@@ -5,5 +5,8 @@ exports[`SubGenerator micronaut:base-dependencies of micronaut JHipster blueprin
   ".yo-rc.json": {
     "stateCleared": "modified",
   },
+  "package.json": {
+    "stateCleared": "modified",
+  },
 }
 `;
