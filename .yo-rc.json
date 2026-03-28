@@ -73,6 +73,12 @@
         "sbs": false,
         "written": true
       },
+      "micronaut:base-dependencies": {
+        "command": false,
+        "priorities": ["postWriting"],
+        "sbs": false,
+        "written": true
+      },
       "react": {
         "command": false,
         "priorities": ["writing", "postWriting"],

@@ -4,27 +4,13 @@ export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
     super(args, opts, {
       ...features,
-
-      sbsBlueprint: true,
-    });
-  }
-
-  get [BaseApplicationGenerator.WRITING]() {
-    return this.asWritingTaskGroup({
-      async writingTemplateTask({ application }) {
-        await this.writeFiles({
-          sections: {
-            files: [{ templates: ['build.gradle'] }],
-          },
-          context: application,
-        });
-      },
     });
   }
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
       addGradleDependencies({ application, source }) {
+        if (!application.buildToolGradle) return;
         const { javaDependencies, javaManagedProperties } = application;
         const hibernateVersion = javaManagedProperties?.['hibernate.version'];
 

@@ -282,6 +282,7 @@ export const serverFiles = {
         { file: 'settings.gradle' },
         { file: 'gradle.properties' },
         { file: 'gradle/docker.gradle' },
+        { file: 'gradle/micronaut.gradle' },
         { file: 'gradle/profile_dev.gradle' },
         { file: 'gradle/profile_prod.gradle' },
       ],

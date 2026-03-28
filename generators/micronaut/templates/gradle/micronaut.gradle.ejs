@@ -16,51 +16,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-plugins {
-    id "java"
-    id "maven-publish"
-    id "idea"
-    id "application"
-    // jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
-}
-
-group = "<%- packageName %>"
-version = "0.0.1-SNAPSHOT"
-
-description = ""
-
-java {
-    sourceCompatibility=<%- javaVersion %>
-    targetCompatibility=<%- javaVersion %>
-}
-assert System.properties["java.specification.version"] == <%- javaCompatibleVersions.map(ver => `"${ver}"`).join(' || '); %>
-
-repositories {
-    mavenCentral()
-    // jhipster-needle-gradle-repositories - JHipster will add additional repositories
-}
-
-// jhipster-needle-gradle-apply-from - JHipster will add additional gradle scripts to be applied here
-
-idea {
-    module {
-        excludeDirs += files("node_modules")
-    }
-}
-
-eclipse {
-    sourceSets {
-        main {
-            java {
-                srcDirs += ["build/generated/sources/annotationProcessor/java/main"]
-            }
-        }
-    }
-}
-
-dependencies {
-    // jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
-}
+apply plugin: 'application'
 
 graalvmNative.toolchainDetection = false
 
@@ -77,7 +33,9 @@ micronaut {
     }
 }
 
-if (project.hasProperty("prod") || project.hasProperty("gae")) {
+// jhipster-needle-gradle-apply-from - JHipster will add additional gradle scripts to be applied here
+
+if (project.hasProperty("prod")) {
     apply from: "gradle/profile_prod.gradle"
 } else {
     apply from: "gradle/profile_dev.gradle"

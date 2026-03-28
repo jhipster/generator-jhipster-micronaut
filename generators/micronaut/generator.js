@@ -84,6 +84,7 @@ export default class extends BaseApplicationGenerator {
       async composing() {
         const { enableTranslation, databaseType, cacheProvider, skipClient, clientFramework = 'no' } = this.jhipsterConfigWithDefaults;
 
+        await this.composeWithJHipster('jhipster-micronaut:micronaut:base-dependencies');
         await this.composeWithJHipster('jhipster:java:i18n');
         await this.composeWithJHipster('jhipster:java:domain');
         await this.composeWithJHipster('jhipster:java-simple-application:code-quality');
@@ -215,6 +216,11 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
+      addMicronautGradleScript({ application, source }) {
+        if (application.buildToolGradle) {
+          source.applyFromGradle({ script: 'gradle/micronaut.gradle' });
+        }
+      },
       addMysqlSleep({ application }) {
         if (application.prodDatabaseTypeMysql) {
           this.editFile(`${application.dockerServicesDir}mysql.yml`, content =>
