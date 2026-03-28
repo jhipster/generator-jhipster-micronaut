@@ -244,7 +244,7 @@ export default class extends BaseApplicationGenerator {
           },
           {
             condition: application.databaseTypeSql,
-            dependencies: [{ groupId: 'com.h2database', artifactId: 'h2', scope: 'test' }],
+            dependencies: [{ groupId: 'com.h2database', artifactId: 'h2' }],
           },
         );
         if (application.buildToolMaven) {
