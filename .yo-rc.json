@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "additionalSubGenerators": "micronaut-cache",
+    "additionalSubGenerators": "",
     "baseName": "micronaut",
     "cli": true,
     "cliName": "mhipster",
@@ -67,7 +67,7 @@
         "sbs": true,
         "written": true
       },
-      "micronaut-cache": {
+      "micronaut:cache": {
         "command": false,
         "priorities": ["preparing", "writing", "postWriting"],
         "sbs": false,

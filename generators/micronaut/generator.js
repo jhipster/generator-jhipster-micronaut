@@ -103,7 +103,7 @@ export default class extends BaseApplicationGenerator {
           await this.composeWithJHipster('liquibase');
         }
         if (['ehcache', 'caffeine', 'hazelcast', 'infinispan', 'memcached', 'redis'].includes(cacheProvider)) {
-          await this.composeWithJHipster('jhipster-micronaut:micronaut-cache');
+          await this.composeWithJHipster('jhipster-micronaut:micronaut:cache');
         }
       },
     });

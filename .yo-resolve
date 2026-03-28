@@ -6,13 +6,13 @@ generators/docker/generator.js skip
 generators/liquibase/generator.js skip
 generators/heroku/generator.spec.js skip
 generators/cypress/generator.js skip
-generators/micronaut-cache/generator.js skip
+generators/micronaut/generators/cache/generator.js skip
 generators/heroku/command.js skip
 generators/heroku/generator.js skip
 generators/base-application/generators/bootstrap/generator.js skip
 generators/client/generator.js skip
 generators/server/generator.js skip
 generators/react/generator.js skip
-generators/micronaut-cache/command.js skip
+generators/micronaut/generators/cache/command.js skip
 generators/java-simple-application/generators/gradle/generator.js skip
 generators/docker/generators/bootstrap/generator.js skip
