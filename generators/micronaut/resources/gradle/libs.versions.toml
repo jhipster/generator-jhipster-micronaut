@@ -4,7 +4,7 @@ commons-lang3 = { module = 'org.apache.commons:commons-lang3', version = '3.20.0
 # Required by Liquibase generator due to liquibase-maven-plugin
 jakarta-validation = { module = 'jakarta.validation:jakarta.validation-api', version = '3.1.1' }
 
-jaxb-runtime = { module = 'org.glassfish.jaxb:jaxb-runtime', version = '4.0.6' }
+jaxb-runtime = { module = 'org.glassfish.jaxb:jaxb-runtime', version = '4.0.7' }
 
 jakarta-persistence = { module = 'jakarta.persistence:jakarta.persistence-api', version = '3.2.0' }
 
