@@ -6,8 +6,6 @@ export default class extends HerokuGenerator {
       ...features,
       sbsBlueprint: true,
       checkBlueprint: true,
-      // Dropped it once migration is done.
-      jhipster7Migration: true,
     });
   }
 

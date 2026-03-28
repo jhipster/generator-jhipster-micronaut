@@ -27,17 +27,7 @@ profile=dev
 # Dependency versions
 micronautVersion=<%= javaDependencies['micronaut-platform'] %>
 
-hibernate_version=<%= javaManagedProperties['hibernate.version'] %>
-mapstruct_version=<%=javaDependencies.mapstruct%>
-archunit_junit5_version=<%= javaDependencies['archunit-junit5'] %>
-<%_ if (enableSwaggerCodegen) { _%>
-jackson_databind_nullable_version=<%= javaDependencies['jackson-databind-nullable'] %>
-<%_ } _%>
 liquibaseTaskPrefix=liquibase
-
-<%_ if (databaseTypeSql) { _%>
-jaxb_runtime_version=<%= javaDependencies['jaxb-runtime'] %>
-<%_ } _%>
 
 # jhipster-needle-gradle-property - JHipster will add additional properties here
 
