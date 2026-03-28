@@ -224,6 +224,26 @@ export default class extends BaseApplicationGenerator {
           );
         }
       },
+      packageJsonCustomizations({ application }) {
+        this.packageJson.merge({
+          scripts: {
+            'backend:nohttp:test': '',
+            'backend:doc:test': '',
+          },
+        });
+        if (application.buildToolGradle) {
+          this.editFile('package.json', contents => contents.replaceAll(' bootJar ', ' shadowJar '));
+        }
+        if (application.cacheProviderRedis) {
+          this.packageJson.merge({
+            scripts: {
+              'ci:e2e:server:start': `${this.packageJson.getPath(
+                'scripts.ci:e2e:server:start',
+              )} --add-opens java.base/java.util=ALL-UNNAMED`,
+            },
+          });
+        }
+      },
     });
   }
 
