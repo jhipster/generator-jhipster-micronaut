@@ -162,7 +162,11 @@ export default class extends BaseApplicationGenerator {
           },
           {
             condition: application.authenticationTypeOauth2,
-            dependencies: [{ groupId: 'io.micronaut.security', artifactId: 'micronaut-security-oauth2' }],
+            dependencies: [
+              { groupId: 'io.micronaut.security', artifactId: 'micronaut-security' },
+              { groupId: 'io.micronaut.security', artifactId: 'micronaut-security-oauth2' },
+              { groupId: 'com.nimbusds', artifactId: 'nimbus-jose-jwt' },
+            ],
           },
           {
             condition: application.serviceDiscoveryType === 'eureka' || application.serviceDiscoveryType === 'consul',
