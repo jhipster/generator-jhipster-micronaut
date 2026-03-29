@@ -104,10 +104,7 @@ export default class extends BaseApplicationGenerator {
 
         source.addJavaDefinitions(
           {
-            versions: [
-              { name: 'mapstruct', version: javaDependencies?.mapstruct },
-              { name: 'archunit-junit5', version: javaDependencies?.['archunit-junit5'] },
-            ],
+            versions: [{ name: 'mapstruct', version: javaDependencies?.mapstruct }],
             dependencies: [
               // Implementation
               { groupId: 'ch.qos.logback', artifactId: 'logback-classic' },
@@ -153,14 +150,6 @@ export default class extends BaseApplicationGenerator {
               { groupId: 'org.junit.jupiter', artifactId: 'junit-jupiter-engine', scope: 'test' },
               { groupId: 'org.junit.jupiter', artifactId: 'junit-jupiter-api', scope: 'test' },
               { groupId: 'org.assertj', artifactId: 'assertj-core', scope: 'test' },
-              { groupId: 'com.tngtech.archunit', artifactId: 'archunit-junit5-api', versionRef: 'archunit-junit5', scope: 'test' },
-              // Test runtime
-              {
-                groupId: 'com.tngtech.archunit',
-                artifactId: 'archunit-junit5-engine',
-                versionRef: 'archunit-junit5',
-                scope: 'testRuntimeOnly',
-              },
             ],
           },
           {
