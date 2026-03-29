@@ -55,12 +55,6 @@
         "sbs": false,
         "written": true
       },
-      "java-simple-application:gradle": {
-        "command": false,
-        "priorities": ["writing"],
-        "sbs": true,
-        "written": true
-      },
       "liquibase": {
         "command": false,
         "priorities": [],
@@ -70,6 +64,12 @@
       "micronaut:cache": {
         "command": false,
         "priorities": ["preparing", "writing", "postWriting"],
+        "sbs": false,
+        "written": true
+      },
+      "micronaut:base-dependencies": {
+        "command": false,
+        "priorities": ["postWriting"],
         "sbs": false,
         "written": true
       },

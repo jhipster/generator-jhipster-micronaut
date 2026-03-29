@@ -13,7 +13,6 @@ import mnConstants from '../constants.cjs';
 import { serverTestFrameworkChoices } from './command.js';
 import { entityFiles } from './entity-files.js';
 import { writeFiles } from './files.js';
-import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from './internal/dependencies.js';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
@@ -84,6 +83,7 @@ export default class extends BaseApplicationGenerator {
       async composing() {
         const { enableTranslation, databaseType, cacheProvider, skipClient, clientFramework = 'no' } = this.jhipsterConfigWithDefaults;
 
+        await this.composeWithJHipster('jhipster-micronaut:micronaut:base-dependencies');
         await this.composeWithJHipster('jhipster:java:i18n');
         await this.composeWithJHipster('jhipster:java:domain');
         await this.composeWithJHipster('jhipster:java-simple-application:code-quality');
@@ -141,11 +141,6 @@ export default class extends BaseApplicationGenerator {
         if (application.databaseTypeSql) {
           prepareSqlApplicationProperties({ application });
         }
-      },
-      loadDependencies({ application }) {
-        application.micronautDependencies = { ...mnConstants.versions };
-        this.loadJavaDependenciesFromGradleCatalog(application.micronautDependencies);
-        Object.assign(application.javaDependencies, application.micronautDependencies);
       },
       prepareForTemplates({ application }) {
         // Workaround
@@ -215,6 +210,11 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
+      addMicronautGradleScript({ application, source }) {
+        if (application.buildToolGradle) {
+          source.applyFromGradle({ script: 'gradle/micronaut.gradle' });
+        }
+      },
       addMysqlSleep({ application }) {
         if (application.prodDatabaseTypeMysql) {
           this.editFile(`${application.dockerServicesDir}mysql.yml`, content =>
@@ -222,79 +222,6 @@ export default class extends BaseApplicationGenerator {
               .replace(/test: [^\n]*/, "test: ['CMD-SHELL', 'mysql -e \"SHOW DATABASES;\" && sleep 5']")
               .replace('timeout: 5s', 'timeout: 10s'),
           );
-        }
-      },
-      addMicronautDependencies({ application, source }) {
-        const { javaDependencies } = application;
-        source.addJavaDefinitions(
-          {
-            dependencies: [
-              { groupId: 'io.micronaut.openapi', artifactId: 'micronaut-openapi-annotations' },
-              {
-                groupId: 'net.logstash.logback',
-                artifactId: 'logstash-logback-encoder',
-                version: javaDependencies['logstash-logback-encoder'],
-              },
-              { groupId: 'tech.jhipster', artifactId: 'jhipster-framework', version: application.jhipsterDependenciesVersion },
-              { groupId: 'org.apache.commons', artifactId: 'commons-lang3', version: javaDependencies['commons-lang3'] },
-              { groupId: 'org.mockito', artifactId: 'mockito-core', scope: 'test' },
-              { groupId: 'org.zalando', artifactId: 'jackson-datatype-problem', version: javaDependencies['jackson-datatype-problem'] },
-              { groupId: 'org.zalando', artifactId: 'problem-violations', version: javaDependencies['problem-violations'] },
-            ],
-          },
-          {
-            condition: application.databaseTypeSql,
-            dependencies: [{ groupId: 'com.h2database', artifactId: 'h2' }],
-          },
-        );
-        if (application.buildToolMaven) {
-          source.addMavenDefinition({
-            properties: [{ property: 'modernizer.failOnViolations', value: 'false' }],
-          });
-        } else if (application.buildToolGradle) {
-          source.addGradleDependencyCatalogPlugins([
-            {
-              id: 'io.micronaut.application',
-              pluginName: 'micronaut-application',
-              version: application.javaDependencies['micronaut-application'],
-              addToBuild: true,
-            },
-            {
-              id: 'com.gorylenko.gradle-git-properties',
-              pluginName: 'gradle-git-properties',
-              version: application.javaDependencies['gradle-git-properties'],
-              addToBuild: true,
-            },
-            {
-              id: 'com.gradleup.shadow',
-              pluginName: 'shadow',
-              version: application.javaDependencies.shadow,
-              addToBuild: true,
-            },
-          ]);
-          if (application.enableSwaggerCodegen) {
-            source.addGradleDependencyCatalogPlugin({
-              id: 'org.openapi.generator',
-              pluginName: 'openapi-generator',
-              version: application.javaDependencies['openapi-generator'],
-              addToBuild: true,
-            });
-          }
-        }
-
-        if (!application.skipUserManagement) {
-          source.addJavaDefinition({
-            dependencies: [{ groupId: 'org.mindrot', artifactId: 'jbcrypt', version: javaDependencies.jbcrypt }],
-          });
-        }
-      },
-      sqlDependencies({ application, source }) {
-        if (application.databaseTypeSql) {
-          source.addMavenDefinition?.(
-            getImperativeMavenDefinition({ javaDependencies: { hibernate: application.javaManagedProperties['hibernate.version'] } }),
-          );
-          source.addMavenDefinition?.(getCommonMavenDefinition());
-          source.addMavenDependency?.(getDatabaseDriverForDatabase(application.prodDatabaseType).jdbc);
         }
       },
       packageJsonCustomizations({ application }) {

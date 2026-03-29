@@ -1,30 +1,106 @@
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
 
+import { getCommonMavenDefinition, getDatabaseDriverForDatabase, getImperativeMavenDefinition } from '../../internal/dependencies.js';
+
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
     super(args, opts, {
       ...features,
-
-      sbsBlueprint: true,
     });
   }
 
-  get [BaseApplicationGenerator.WRITING]() {
-    return this.asWritingTaskGroup({
-      async writingTemplateTask({ application }) {
-        await this.writeFiles({
-          sections: {
-            files: [{ templates: ['build.gradle'] }],
-          },
-          context: application,
-        });
+  async beforeQueue() {
+    await this.dependsOnBootstrap('java-simple-application');
+  }
+
+  get [BaseApplicationGenerator.PREPARING]() {
+    return this.asPreparingTaskGroup({
+      loadDependencies({ application }) {
+        this.loadJavaDependenciesFromGradleCatalog(
+          application.javaDependencies,
+          this.templatePath('../../../resources/gradle/libs.versions.toml'),
+        );
       },
     });
   }
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
+      addMicronautDependencies({ application, source }) {
+        const { javaDependencies } = application;
+        source.addJavaDefinitions(
+          {
+            dependencies: [
+              { groupId: 'io.micronaut.openapi', artifactId: 'micronaut-openapi-annotations' },
+              {
+                groupId: 'net.logstash.logback',
+                artifactId: 'logstash-logback-encoder',
+                version: javaDependencies['logstash-logback-encoder'],
+              },
+              { groupId: 'tech.jhipster', artifactId: 'jhipster-framework', version: application.jhipsterDependenciesVersion },
+              { groupId: 'org.apache.commons', artifactId: 'commons-lang3', version: javaDependencies['commons-lang3'] },
+              { groupId: 'org.mockito', artifactId: 'mockito-core', scope: 'test' },
+              { groupId: 'org.zalando', artifactId: 'jackson-datatype-problem', version: javaDependencies['jackson-datatype-problem'] },
+              { groupId: 'org.zalando', artifactId: 'problem-violations', version: javaDependencies['problem-violations'] },
+            ],
+          },
+          {
+            condition: application.databaseTypeSql,
+            dependencies: [{ groupId: 'com.h2database', artifactId: 'h2' }],
+          },
+        );
+        if (application.buildToolMaven) {
+          source.addMavenDefinition({
+            properties: [{ property: 'modernizer.failOnViolations', value: 'false' }],
+          });
+        } else if (application.buildToolGradle) {
+          source.addGradleDependencyCatalogPlugins([
+            {
+              id: 'io.micronaut.application',
+              pluginName: 'micronaut-application',
+              version: application.javaDependencies['micronaut-application'],
+              addToBuild: true,
+            },
+            {
+              id: 'com.gorylenko.gradle-git-properties',
+              pluginName: 'gradle-git-properties',
+              version: application.javaDependencies['gradle-git-properties'],
+              addToBuild: true,
+            },
+            {
+              id: 'com.gradleup.shadow',
+              pluginName: 'shadow',
+              version: application.javaDependencies.shadow,
+              addToBuild: true,
+            },
+          ]);
+          if (application.enableSwaggerCodegen) {
+            source.addGradleDependencyCatalogPlugin({
+              id: 'org.openapi.generator',
+              pluginName: 'openapi-generator',
+              version: application.javaDependencies['openapi-generator'],
+              addToBuild: true,
+            });
+          }
+        }
+
+        if (!application.skipUserManagement) {
+          source.addJavaDefinition({
+            dependencies: [{ groupId: 'org.mindrot', artifactId: 'jbcrypt', version: javaDependencies.jbcrypt }],
+          });
+        }
+      },
+      sqlDependencies({ application, source }) {
+        if (application.databaseTypeSql) {
+          source.addMavenDefinition?.(
+            getImperativeMavenDefinition({ javaDependencies: { hibernate: application.javaManagedProperties['hibernate.version'] } }),
+          );
+          source.addMavenDefinition?.(getCommonMavenDefinition());
+          source.addMavenDependency?.(getDatabaseDriverForDatabase(application.prodDatabaseType).jdbc);
+        }
+      },
       addGradleDependencies({ application, source }) {
+        if (!application.buildToolGradle) return;
         const { javaDependencies, javaManagedProperties } = application;
         const hibernateVersion = javaManagedProperties?.['hibernate.version'];
 
