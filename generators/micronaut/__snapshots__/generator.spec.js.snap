@@ -496,6 +496,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "gradle/liquibase.gradle": {
     "stateCleared": "modified",
   },
+  "gradle/micronaut.gradle": {
+    "stateCleared": "modified",
+  },
   "gradle/profile_dev.gradle": {
     "stateCleared": "modified",
   },
