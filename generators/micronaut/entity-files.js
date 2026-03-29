@@ -83,11 +83,6 @@ export const entityFiles = {
       relativePath: '_entityPackage_/',
       templates: ['repository/search/_entityClass_SearchRepositoryMockConfiguration.java'],
     }),
-    javaMainPackageTemplatesBlock({
-      condition: generator => generator.reactive && ['mongodb', 'cassandra', 'couchbase'].includes(generator.databaseType),
-      relativePath: '_entityPackage_/',
-      templates: ['repository/reactive/_entityClass_ReactiveRepository.java'],
-    }),
   ],
   mapstruct: [
     javaMainPackageTemplatesBlock({

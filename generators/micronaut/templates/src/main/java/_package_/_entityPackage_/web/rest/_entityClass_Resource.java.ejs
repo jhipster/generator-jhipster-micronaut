@@ -48,9 +48,6 @@ import <%= packageName %>.repository.<%= entityClass %>Repository;
     <%_ if (isUsingMapsId === true) { _%>
 import <%= packageName %>.repository.<%= mapsIdAssoc.otherEntity.entityNameCapitalized %>Repository;
     <%_ } _%>
-    <%_ if (reactive) { _%>
-import <%= packageName %>.repository.reactive.<%= entityClass %>ReactiveRepository;
-    <%_ } _%>
     <%_ if (searchEngine === 'elasticsearch') { _%>
 import <%= packageName %>.repository.search.<%= entityClass %>SearchRepository;
     <%_ } _%>
@@ -89,19 +86,6 @@ import org.slf4j.LoggerFactory;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.transaction.annotation.ReadOnly;
-<%# import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus; %>
-    <%_ if (reactive) { _%>
-<%# import org.springframework.http.server.reactive.ServerHttpRequest; %>
-    <%_ } _%>
-    <%_ if (!reactive) { _%>
-<%# import org.springframework.web.servlet.support.ServletUriComponentsBuilder; %>
-    <%_ } else { _%>
-<%# import org.springframework.web.util.UriComponentsBuilder; %>
-    <%_ } _%>
-<%_ } _%>
-<%_ if (reactive) { _%>
-<%# import org.springframework.http.MediaType; %>
 <%_ } _%>
 <%# import org.springframework.http.HttpResponse; %>
 <%_ if (!viaService && !saveUserSnapshot) { _%>
@@ -241,9 +225,7 @@ public class <%= entityClass %>Resource {
      *
     <%_ if (pagination !== 'no') { _%>
      * @param pageable the pagination information.
-        <%_ if (reactive) { _%>
-     * @param request a {@link ServerHttpRequest} request.
-        <%_ } _%>
+     * @param request the current request.
     <%_ } _%>
     <%_ if (!jpaMetamodelFiltering && fieldsContainOwnerManyToMany) { _%>
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
@@ -268,7 +250,7 @@ public class <%= entityClass %>Resource {
      * {@code GET  /<%= entityApiUrl %>} : get all the <%= entityInstancePlural %> as a stream.
      * @return the {@link Flux} of <%= entityInstancePlural %>.
      */
-    @Get(value = "/<%= entityApiUrl %>", produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+    @Get(value = "/<%= entityApiUrl %>", produces = "application/x-ndjson")
     @ExecuteOn(TaskExecutors.IO)
     <%_ if (databaseTypeSql && isUsingMapsId === true && !viaService) { _%>
     @ReadOnly
@@ -279,7 +261,8 @@ public class <%= entityClass %>Resource {
         <%_ if (viaService) { _%>
         return <%= entityInstance %>Service.findAllAsFlux();
         <%_ } else { _%>
-        return <%= entityInstance %>ReactiveRepository.findAll();
+        return Flux.fromIterable(<%= entityInstance %>Repository.findAll())<% if (dto === 'mapstruct') { %>
+            .map(<%= entityInstance %>Mapper::toDto)<% } %>;
         <%_ } _%>
     }
 
@@ -325,9 +308,7 @@ public class <%= entityClass %>Resource {
      * @param query the query of the <%= entityInstance %> search.
     <%_ if (pagination !== 'no') { _%>
      * @param pageable the pagination information.
-       <%_ if (reactive) { _%>
-     * @param request a {@link ServerHttpRequest} request.
-        <%_ } _%>
+     * @param request the current request.
     <%_ } _%>
      * @return the result of the search.
      */
