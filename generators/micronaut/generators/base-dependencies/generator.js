@@ -96,177 +96,257 @@ export default class extends BaseApplicationGenerator {
             getImperativeMavenDefinition({ javaDependencies: { hibernate: application.javaManagedProperties['hibernate.version'] } }),
           );
           source.addMavenDefinition?.(getCommonMavenDefinition());
-          source.addMavenDependency?.(getDatabaseDriverForDatabase(application.prodDatabaseType).jdbc);
         }
       },
-      addGradleDependencies({ application, source }) {
-        if (!application.buildToolGradle) return;
+      addDependencies({ application, source }) {
         const { javaDependencies, javaManagedProperties } = application;
         const hibernateVersion = javaManagedProperties?.['hibernate.version'];
 
-        source.addGradleDependencies([
-          // Annotation processors
-          { groupId: 'io.micronaut.validation', artifactId: 'micronaut-validation-processor', scope: 'annotationProcessor' },
-          { groupId: 'io.micronaut.openapi', artifactId: 'micronaut-openapi', scope: 'annotationProcessor' },
-          { groupId: 'io.micronaut', artifactId: 'micronaut-inject-java', scope: 'annotationProcessor' },
-          { groupId: 'io.micronaut.data', artifactId: 'micronaut-data-processor', scope: 'annotationProcessor' },
-          { groupId: 'io.micronaut', artifactId: 'micronaut-http-validation', scope: 'annotationProcessor' },
+        source.addJavaDefinitions(
           {
-            groupId: 'org.mapstruct',
-            artifactId: 'mapstruct-processor',
-            version: javaDependencies?.mapstruct,
-            scope: 'annotationProcessor',
+            versions: [
+              { name: 'mapstruct', version: javaDependencies?.mapstruct },
+              { name: 'archunit-junit5', version: javaDependencies?.['archunit-junit5'] },
+            ],
+            dependencies: [
+              // Implementation
+              { groupId: 'ch.qos.logback', artifactId: 'logback-classic' },
+              { groupId: 'io.micrometer', artifactId: 'micrometer-registry-prometheus' },
+              { groupId: 'com.fasterxml.jackson.core', artifactId: 'jackson-annotations' },
+              { groupId: 'com.fasterxml.jackson.core', artifactId: 'jackson-databind' },
+              { groupId: 'com.fasterxml.jackson.datatype', artifactId: 'jackson-datatype-jsr310' },
+              { groupId: 'com.fasterxml.jackson.dataformat', artifactId: 'jackson-dataformat-yaml' },
+              { groupId: 'io.micronaut', artifactId: 'micronaut-jackson-databind' },
+              { groupId: 'io.micronaut', artifactId: 'micronaut-inject' },
+              { groupId: 'io.micronaut', artifactId: 'micronaut-http-client' },
+              { groupId: 'io.micronaut', artifactId: 'micronaut-http-server-netty' },
+              { groupId: 'io.micronaut', artifactId: 'micronaut-management' },
+              { groupId: 'io.micronaut.views', artifactId: 'micronaut-views-thymeleaf' },
+              { groupId: 'io.micronaut.validation', artifactId: 'micronaut-validation' },
+              { groupId: 'io.micronaut.sql', artifactId: 'micronaut-jdbc-hikari', scope: 'runtime' },
+              { groupId: 'io.micronaut.jmx', artifactId: 'micronaut-jmx' },
+              { groupId: 'io.micronaut.micrometer', artifactId: 'micronaut-micrometer-core' },
+              { groupId: 'io.micronaut.micrometer', artifactId: 'micronaut-micrometer-registry-prometheus' },
+              { groupId: 'io.micronaut.data', artifactId: 'micronaut-data-runtime' },
+              {
+                groupId: 'io.micronaut.data',
+                artifactId: 'micronaut-data-hibernate-jpa',
+                exclusions: [{ groupId: 'io.micronaut', artifactId: 'micronaut-jdbc' }],
+              },
+              {
+                groupId: 'io.micronaut.data',
+                artifactId: 'micronaut-data-jdbc',
+                exclusions: [{ groupId: 'io.micronaut', artifactId: 'micronaut-jdbc' }],
+              },
+              { groupId: 'io.micronaut.email', artifactId: 'micronaut-email-javamail' },
+              { groupId: 'io.micronaut.email', artifactId: 'micronaut-email-template' },
+              { groupId: 'io.micronaut.rxjava3', artifactId: 'micronaut-rxjava3' },
+              { groupId: 'io.micronaut.rxjava3', artifactId: 'micronaut-rxjava3-http-client' },
+              { groupId: 'org.mapstruct', artifactId: 'mapstruct', versionRef: 'mapstruct' },
+              // Runtime
+              { groupId: 'org.yaml', artifactId: 'snakeyaml', scope: 'runtime' },
+              { groupId: 'org.eclipse.angus', artifactId: 'angus-mail', scope: 'runtime' },
+              // Provided / compileOnly
+              { groupId: 'org.graalvm.nativeimage', artifactId: 'svm', scope: 'provided' },
+              // Test
+              { groupId: 'io.micronaut.test', artifactId: 'micronaut-test-junit5', scope: 'test' },
+              { groupId: 'org.junit.jupiter', artifactId: 'junit-jupiter-engine', scope: 'test' },
+              { groupId: 'org.junit.jupiter', artifactId: 'junit-jupiter-api', scope: 'test' },
+              { groupId: 'org.assertj', artifactId: 'assertj-core', scope: 'test' },
+              { groupId: 'com.tngtech.archunit', artifactId: 'archunit-junit5-api', versionRef: 'archunit-junit5', scope: 'test' },
+              // Test runtime
+              {
+                groupId: 'com.tngtech.archunit',
+                artifactId: 'archunit-junit5-engine',
+                versionRef: 'archunit-junit5',
+                scope: 'testRuntimeOnly',
+              },
+            ],
           },
-          // Implementation
-          { groupId: 'ch.qos.logback', artifactId: 'logback-classic', scope: 'implementation' },
-          { groupId: 'io.micrometer', artifactId: 'micrometer-registry-prometheus', scope: 'implementation' },
-          { groupId: 'com.fasterxml.jackson.core', artifactId: 'jackson-annotations', scope: 'implementation' },
-          { groupId: 'com.fasterxml.jackson.core', artifactId: 'jackson-databind', scope: 'implementation' },
-          { groupId: 'com.fasterxml.jackson.datatype', artifactId: 'jackson-datatype-jsr310', scope: 'implementation' },
-          { groupId: 'com.fasterxml.jackson.dataformat', artifactId: 'jackson-dataformat-yaml', scope: 'implementation' },
-          { groupId: 'io.micronaut', artifactId: 'micronaut-jackson-databind', scope: 'implementation' },
-          { groupId: 'io.micronaut', artifactId: 'micronaut-inject', scope: 'implementation' },
-          { groupId: 'io.micronaut', artifactId: 'micronaut-http-client', scope: 'implementation' },
-          { groupId: 'io.micronaut', artifactId: 'micronaut-http-server-netty', scope: 'implementation' },
-          { groupId: 'io.micronaut', artifactId: 'micronaut-management', scope: 'implementation' },
-          { groupId: 'io.micronaut.security', artifactId: 'micronaut-security-jwt', scope: 'implementation' },
-          { groupId: 'io.micronaut.views', artifactId: 'micronaut-views-thymeleaf', scope: 'implementation' },
-          { groupId: 'io.micronaut.validation', artifactId: 'micronaut-validation', scope: 'implementation' },
-          { groupId: 'io.micronaut.sql', artifactId: 'micronaut-jdbc-hikari', scope: 'implementation' },
-          { groupId: 'io.micronaut.jmx', artifactId: 'micronaut-jmx', scope: 'implementation' },
-          { groupId: 'io.micronaut.micrometer', artifactId: 'micronaut-micrometer-core', scope: 'implementation' },
-          { groupId: 'io.micronaut.micrometer', artifactId: 'micronaut-micrometer-registry-prometheus', scope: 'implementation' },
-          { groupId: 'io.micronaut.data', artifactId: 'micronaut-data-runtime', scope: 'implementation' },
           {
-            groupId: 'io.micronaut.data',
-            artifactId: 'micronaut-data-hibernate-jpa',
-            scope: 'implementation',
-            closure: ["    exclude group: 'io.micronaut', module: 'micronaut-jdbc'"],
+            condition: application.databaseTypeSql,
+            dependencies: [{ groupId: 'com.fasterxml.jackson.datatype', artifactId: 'jackson-datatype-hibernate6' }],
           },
           {
-            groupId: 'io.micronaut.data',
-            artifactId: 'micronaut-data-jdbc',
-            scope: 'implementation',
-            closure: ["    exclude group: 'io.micronaut', module: 'micronaut-jdbc'"],
+            condition: application.authenticationTypeJwt || application.authenticationTypeOauth2,
+            dependencies: [{ groupId: 'io.micronaut.security', artifactId: 'micronaut-security-jwt' }],
           },
-          { groupId: 'io.micronaut.email', artifactId: 'micronaut-email-javamail', scope: 'implementation' },
-          { groupId: 'io.micronaut.email', artifactId: 'micronaut-email-template', scope: 'implementation' },
-          { groupId: 'io.micronaut.rxjava3', artifactId: 'micronaut-rxjava3', scope: 'implementation' },
-          { groupId: 'io.micronaut.rxjava3', artifactId: 'micronaut-rxjava3-http-client', scope: 'implementation' },
-          { groupId: 'org.mapstruct', artifactId: 'mapstruct', version: javaDependencies?.mapstruct, scope: 'implementation' },
-          // Runtime
-          { groupId: 'org.yaml', artifactId: 'snakeyaml', scope: 'runtimeOnly' },
-          { groupId: 'org.eclipse.angus', artifactId: 'angus-mail', scope: 'runtimeOnly' },
-          // CompileOnly
-          { groupId: 'org.graalvm.nativeimage', artifactId: 'svm', scope: 'compileOnly' },
-          // Test annotation processors
-          { groupId: 'io.micronaut.data', artifactId: 'micronaut-data-processor', scope: 'testAnnotationProcessor' },
           {
-            groupId: 'org.glassfish.jaxb',
-            artifactId: 'jaxb-runtime',
-            version: javaDependencies?.['jaxb-runtime'],
-            scope: 'testAnnotationProcessor',
+            condition: application.authenticationTypeOauth2,
+            dependencies: [{ groupId: 'io.micronaut.security', artifactId: 'micronaut-security-oauth2' }],
           },
-          // Test implementation
-          { groupId: 'io.micronaut.test', artifactId: 'micronaut-test-junit5', scope: 'testImplementation' },
-          { groupId: 'org.junit.jupiter', artifactId: 'junit-jupiter-engine', scope: 'testImplementation' },
-          { groupId: 'org.junit.jupiter', artifactId: 'junit-jupiter-api', scope: 'testImplementation' },
-          { groupId: 'org.assertj', artifactId: 'assertj-core', scope: 'testImplementation' },
           {
-            groupId: 'com.tngtech.archunit',
-            artifactId: 'archunit-junit5-api',
-            version: javaDependencies?.['archunit-junit5'],
-            scope: 'testImplementation',
+            condition: application.serviceDiscoveryType === 'eureka' || application.serviceDiscoveryType === 'consul',
+            dependencies: [{ groupId: 'io.micronaut.discovery', artifactId: 'micronaut-discovery-client' }],
           },
-          // Test runtime
           {
-            groupId: 'com.tngtech.archunit',
-            artifactId: 'archunit-junit5-engine',
-            version: javaDependencies?.['archunit-junit5'],
-            scope: 'testRuntimeOnly',
+            condition: application.messageBroker === 'kafka' && !application.reactive,
+            dependencies: [{ groupId: 'org.apache.kafka', artifactId: 'kafka-clients' }],
           },
-        ]);
+          {
+            condition: application.messageBroker === 'kafka' && application.reactive,
+            dependencies: [{ groupId: 'io.projectreactor.kafka', artifactId: 'reactor-kafka' }],
+          },
+          {
+            condition: application.messageBroker === 'kafka',
+            dependencies: [{ groupId: 'org.testcontainers', artifactId: 'kafka', scope: 'test' }],
+          },
+          {
+            condition: application.reactive,
+            dependencies: [{ groupId: 'io.netty', artifactId: 'netty-tcnative-boringssl-static' }],
+          },
+          {
+            condition: application.enableSwaggerCodegen,
+            dependencies: [
+              {
+                groupId: 'org.openapitools',
+                artifactId: 'jackson-databind-nullable',
+                version: javaDependencies?.['jackson-databind-nullable'],
+              },
+            ],
+          },
+          {
+            condition: application.databaseType === 'cassandra',
+            dependencies: [
+              { groupId: 'commons-codec', artifactId: 'commons-codec' },
+              { groupId: 'org.lz4', artifactId: 'lz4-java' },
+              { groupId: 'com.datastax.cassandra', artifactId: 'cassandra-driver-extras' },
+              { groupId: 'com.datastax.cassandra', artifactId: 'cassandra-driver-mapping' },
+            ],
+          },
+          {
+            condition: application.databaseType === 'mongodb',
+            dependencies: [
+              { groupId: 'com.github.mongobee', artifactId: 'mongobee' },
+              { groupId: 'de.flapdoodle.embed', artifactId: 'de.flapdoodle.embed.mongo', scope: 'test' },
+            ],
+          },
+          {
+            condition: application.databaseType === 'couchbase',
+            dependencies: [
+              { groupId: 'com.github.differentway', artifactId: 'couchmove' },
+              { groupId: 'com.couchbase.client', artifactId: 'java-client' },
+              { groupId: 'com.couchbase.client', artifactId: 'encryption' },
+              { groupId: 'org.testcontainers', artifactId: 'couchbase', scope: 'test' },
+            ],
+          },
+          {
+            condition: application.cacheProvider !== 'no',
+            dependencies: [
+              { groupId: 'io.micronaut.cache', artifactId: 'micronaut-cache-core' },
+              { groupId: 'javax.cache', artifactId: 'cache-api' },
+            ],
+          },
+          {
+            condition: application.applicationTypeGateway,
+            dependencies: [
+              { groupId: 'org.apache.httpcomponents', artifactId: 'httpclient' },
+              { groupId: 'commons-codec', artifactId: 'commons-codec' },
+              { groupId: 'com.github.vladimir-bukhtoyarov', artifactId: 'bucket4j-core' },
+              { groupId: 'com.github.vladimir-bukhtoyarov', artifactId: 'bucket4j-jcache' },
+            ],
+          },
+          {
+            condition: application.cacheProvider === 'hazelcast',
+            dependencies: [
+              { groupId: 'com.hazelcast', artifactId: 'hazelcast' },
+              { groupId: 'com.hazelcast', artifactId: 'hazelcast-spring' },
+            ],
+          },
+          {
+            condition: application.cacheProvider === 'hazelcast' && application.enableHibernateCache,
+            dependencies: [{ groupId: 'com.hazelcast', artifactId: 'hazelcast-hibernate53' }],
+          },
+          {
+            condition: application.cacheProvider === 'infinispan',
+            dependencies: [
+              { groupId: 'org.infinispan', artifactId: 'infinispan-hibernate-cache-v53' },
+              { groupId: 'org.infinispan', artifactId: 'infinispan-spring-boot-starter-embedded' },
+              { groupId: 'org.infinispan', artifactId: 'infinispan-core' },
+              { groupId: 'org.infinispan', artifactId: 'infinispan-jcache' },
+              {
+                groupId: 'org.infinispan',
+                artifactId: 'infinispan-cloud',
+                exclusions: [{ groupId: 'io.undertow', artifactId: 'undertow-core' }],
+              },
+            ],
+          },
+          {
+            condition: application.cacheProvider === 'memcached',
+            dependencies: [
+              { groupId: 'com.google.code.simple-spring-memcached', artifactId: 'spring-cache' },
+              { groupId: 'com.google.code.simple-spring-memcached', artifactId: 'xmemcached-provider' },
+              { groupId: 'com.googlecode.xmemcached', artifactId: 'xmemcached' },
+            ],
+          },
+          {
+            condition: application.cacheProvider === 'redis',
+            dependencies: [
+              { groupId: 'org.redisson', artifactId: 'redisson', version: javaDependencies?.redisson },
+              { groupId: 'org.testcontainers', artifactId: 'testcontainers', scope: 'test' },
+            ],
+          },
+          {
+            condition: application.cacheProvider === 'ehcache',
+            dependencies: [
+              { groupId: 'org.ehcache', artifactId: 'ehcache' },
+              { groupId: 'io.micronaut.cache', artifactId: 'micronaut-cache-ehcache' },
+            ],
+          },
+          {
+            condition: application.cacheProvider === 'caffeine',
+            dependencies: [{ groupId: 'io.micronaut.cache', artifactId: 'micronaut-cache-caffeine' }],
+          },
+        );
 
-        if (application.databaseTypeSql) {
+        // Gradle-specific annotation processors (handled via annotationProcessorPaths in Maven pom.xml template)
+        if (application.buildToolGradle) {
           source.addGradleDependencies([
+            { groupId: 'io.micronaut.validation', artifactId: 'micronaut-validation-processor', scope: 'annotationProcessor' },
+            { groupId: 'io.micronaut.openapi', artifactId: 'micronaut-openapi', scope: 'annotationProcessor' },
+            { groupId: 'io.micronaut', artifactId: 'micronaut-inject-java', scope: 'annotationProcessor' },
+            // micronaut-data-processor is needed for both main and test annotation processing in Gradle
+            { groupId: 'io.micronaut.data', artifactId: 'micronaut-data-processor', scope: 'annotationProcessor' },
+            { groupId: 'io.micronaut', artifactId: 'micronaut-http-validation', scope: 'annotationProcessor' },
             {
-              groupId: 'com.fasterxml.jackson.datatype',
-              artifactId: 'jackson-datatype-hibernate6',
-              scope: 'implementation',
-            },
-            { groupId: 'org.hibernate', artifactId: 'hibernate-core', version: hibernateVersion, scope: 'implementation' },
-            { groupId: 'com.zaxxer', artifactId: 'HikariCP', scope: 'implementation' },
-            {
-              groupId: 'org.hibernate',
-              artifactId: 'hibernate-jpamodelgen',
-              version: hibernateVersion,
+              groupId: 'org.mapstruct',
+              artifactId: 'mapstruct-processor',
+              version: javaDependencies?.mapstruct,
               scope: 'annotationProcessor',
             },
+            { groupId: 'io.micronaut.data', artifactId: 'micronaut-data-processor', scope: 'testAnnotationProcessor' },
+            // jaxb-runtime is needed for test annotation processing always
             {
               groupId: 'org.glassfish.jaxb',
               artifactId: 'jaxb-runtime',
               version: javaDependencies?.['jaxb-runtime'],
-              scope: 'annotationProcessor',
+              scope: 'testAnnotationProcessor',
             },
           ]);
-        }
 
-        if (application.applicationTypeGateway) {
-          source.addGradleDependencies([
-            { groupId: 'org.apache.httpcomponents', artifactId: 'httpclient', scope: 'implementation' },
-            { groupId: 'commons-codec', artifactId: 'commons-codec', scope: 'implementation' },
-            { groupId: 'io.micronaut.cache', artifactId: 'micronaut-cache-core', scope: 'implementation' },
-            { groupId: 'javax.cache', artifactId: 'cache-api', scope: 'implementation' },
-            { groupId: 'com.github.vladimir-bukhtoyarov', artifactId: 'bucket4j-core', scope: 'implementation' },
-            { groupId: 'com.github.vladimir-bukhtoyarov', artifactId: 'bucket4j-jcache', scope: 'implementation' },
-          ]);
-        }
-
-        if (application.cacheProvider === 'hazelcast') {
-          source.addGradleDependencies([
-            { groupId: 'com.hazelcast', artifactId: 'hazelcast', scope: 'implementation' },
-            { groupId: 'com.hazelcast', artifactId: 'hazelcast-spring', scope: 'implementation' },
-            { groupId: 'io.micronaut.cache', artifactId: 'micronaut-cache-core', scope: 'implementation' },
-            { groupId: 'javax.cache', artifactId: 'cache-api', scope: 'implementation' },
-          ]);
-          if (application.enableHibernateCache) {
-            source.addGradleDependency({ groupId: 'com.hazelcast', artifactId: 'hazelcast-hibernate53', scope: 'implementation' });
+          // SQL Gradle-specific dependencies (different group IDs from Maven equivalents)
+          if (application.databaseTypeSql) {
+            source.addGradleDependencies([
+              { groupId: 'org.hibernate', artifactId: 'hibernate-core', version: hibernateVersion, scope: 'implementation' },
+              { groupId: 'com.zaxxer', artifactId: 'HikariCP', scope: 'implementation' },
+              {
+                groupId: 'org.hibernate',
+                artifactId: 'hibernate-jpamodelgen',
+                version: hibernateVersion,
+                scope: 'annotationProcessor',
+              },
+              // jaxb-runtime is also needed as annotationProcessor for SQL main sources
+              {
+                groupId: 'org.glassfish.jaxb',
+                artifactId: 'jaxb-runtime',
+                version: javaDependencies?.['jaxb-runtime'],
+                scope: 'annotationProcessor',
+              },
+            ]);
           }
-        }
 
-        if (application.cacheProvider === 'infinispan') {
-          source.addGradleDependencies([
-            { groupId: 'org.infinispan', artifactId: 'infinispan-hibernate-cache-v53', scope: 'implementation' },
-            { groupId: 'org.infinispan', artifactId: 'infinispan-spring-boot-starter-embedded', scope: 'implementation' },
-            { groupId: 'org.infinispan', artifactId: 'infinispan-core', scope: 'implementation' },
-            { groupId: 'org.infinispan', artifactId: 'infinispan-jcache', scope: 'implementation' },
-            {
-              groupId: 'org.infinispan',
-              artifactId: 'infinispan-cloud',
-              scope: 'implementation',
-              closure: ["    exclude module: 'undertow-core'"],
-            },
-            { groupId: 'io.micronaut.cache', artifactId: 'micronaut-cache-core', scope: 'implementation' },
-            { groupId: 'javax.cache', artifactId: 'cache-api', scope: 'implementation' },
-          ]);
-        }
-
-        if (application.cacheProvider === 'memcached') {
-          source.addGradleDependencies([
-            { groupId: 'com.google.code.simple-spring-memcached', artifactId: 'spring-cache', scope: 'implementation' },
-            { groupId: 'com.google.code.simple-spring-memcached', artifactId: 'xmemcached-provider', scope: 'implementation' },
-            { groupId: 'com.googlecode.xmemcached', artifactId: 'xmemcached', scope: 'implementation' },
-          ]);
-        }
-
-        if (application.cacheProvider === 'redis') {
-          source.addGradleDependencies([
-            { groupId: 'org.redisson', artifactId: 'redisson', scope: 'implementation' },
-            { groupId: 'io.micronaut.cache', artifactId: 'micronaut-cache-core', scope: 'implementation' },
-            { groupId: 'javax.cache', artifactId: 'cache-api', scope: 'implementation' },
-            { groupId: 'org.testcontainers', artifactId: 'testcontainers', scope: 'testImplementation' },
-          ]);
-          if (application.enableHibernateCache) {
+          // Gradle-specific hibernate-jcache (different group ID from Maven org.hibernate.orm)
+          if (application.enableHibernateCache && ['redis', 'ehcache', 'caffeine'].includes(application.cacheProvider)) {
             source.addGradleDependency({
               groupId: 'org.hibernate',
               artifactId: 'hibernate-jcache',
@@ -274,113 +354,22 @@ export default class extends BaseApplicationGenerator {
               scope: 'implementation',
             });
           }
-        }
 
-        if (application.cacheProvider === 'ehcache') {
-          source.addGradleDependencies([
-            { groupId: 'org.ehcache', artifactId: 'ehcache', scope: 'implementation' },
-            { groupId: 'io.micronaut.cache', artifactId: 'micronaut-cache-ehcache', scope: 'implementation' },
-            { groupId: 'io.micronaut.cache', artifactId: 'micronaut-cache-core', scope: 'implementation' },
-            { groupId: 'javax.cache', artifactId: 'cache-api', scope: 'implementation' },
-          ]);
-          if (application.enableHibernateCache) {
-            source.addGradleDependency({
-              groupId: 'org.hibernate',
-              artifactId: 'hibernate-jcache',
-              version: hibernateVersion,
-              scope: 'implementation',
-            });
+          // Gradle database drivers (handled separately for Maven in sqlDependencies via getDatabaseDriverForDatabase)
+          if (application.databaseTypeSql) {
+            const dbDriver = getDatabaseDriverForDatabase(application.prodDatabaseType);
+            if (dbDriver?.jdbc) {
+              source.addGradleDependency({ ...dbDriver.jdbc, scope: 'implementation' });
+            }
+          }
+          if (application.devDatabaseType === 'oracle' || application.prodDatabaseType === 'oracle') {
+            source.addGradleDependency({ groupId: 'com.oracle.ojdbc', artifactId: 'ojdbc8', scope: 'implementation' });
           }
         }
 
-        if (application.cacheProvider === 'caffeine') {
-          source.addGradleDependencies([
-            { groupId: 'io.micronaut.cache', artifactId: 'micronaut-cache-caffeine', scope: 'implementation' },
-            { groupId: 'io.micronaut.cache', artifactId: 'micronaut-cache-core', scope: 'implementation' },
-            { groupId: 'javax.cache', artifactId: 'cache-api', scope: 'implementation' },
-          ]);
-          if (application.enableHibernateCache) {
-            source.addGradleDependency({ groupId: 'org.hibernate', artifactId: 'hibernate-jcache', scope: 'implementation' });
-          }
-        }
-
-        if (application.authenticationTypeOauth2) {
-          source.addGradleDependency({
-            groupId: 'io.micronaut.security',
-            artifactId: 'micronaut-security-oauth2',
-            scope: 'implementation',
-          });
-        }
-
-        if (application.serviceDiscoveryType === 'eureka' || application.serviceDiscoveryType === 'consul') {
-          source.addGradleDependency({
-            groupId: 'io.micronaut.discovery',
-            artifactId: 'micronaut-discovery-client',
-            scope: 'implementation',
-          });
-        }
-
-        if (application.messageBroker === 'kafka') {
-          if (!application.reactive) {
-            source.addGradleDependency({ groupId: 'org.apache.kafka', artifactId: 'kafka-clients', scope: 'implementation' });
-          } else {
-            source.addGradleDependency({ groupId: 'io.projectreactor.kafka', artifactId: 'reactor-kafka', scope: 'implementation' });
-          }
-          source.addGradleDependency({ groupId: 'org.testcontainers', artifactId: 'kafka', scope: 'testImplementation' });
-        }
-
-        if (application.reactive) {
-          source.addGradleDependency({ groupId: 'io.netty', artifactId: 'netty-tcnative-boringssl-static', scope: 'implementation' });
-        }
-
-        if (application.databaseType === 'cassandra') {
-          source.addGradleDependencies([
-            { groupId: 'commons-codec', artifactId: 'commons-codec', scope: 'implementation' },
-            { groupId: 'org.lz4', artifactId: 'lz4-java', scope: 'implementation' },
-            { groupId: 'com.datastax.cassandra', artifactId: 'cassandra-driver-extras', scope: 'implementation' },
-            { groupId: 'com.datastax.cassandra', artifactId: 'cassandra-driver-mapping', scope: 'implementation' },
-          ]);
-        }
-
-        if (application.enableSwaggerCodegen) {
-          source.addGradleDependency({
-            groupId: 'org.openapitools',
-            artifactId: 'jackson-databind-nullable',
-            version: javaDependencies?.['jackson-databind-nullable'],
-            scope: 'implementation',
-          });
-        }
-
-        if (application.databaseType === 'mongodb') {
-          source.addGradleDependencies([
-            { groupId: 'com.github.mongobee', artifactId: 'mongobee', scope: 'implementation' },
-            { groupId: 'de.flapdoodle.embed', artifactId: 'de.flapdoodle.embed.mongo', scope: 'testImplementation' },
-          ]);
-        }
-
-        if (application.databaseType === 'couchbase') {
-          source.addGradleDependencies([
-            { groupId: 'com.github.differentway', artifactId: 'couchmove', scope: 'implementation' },
-            { groupId: 'com.couchbase.client', artifactId: 'java-client', scope: 'implementation' },
-            { groupId: 'com.couchbase.client', artifactId: 'encryption', scope: 'implementation' },
-            { groupId: 'org.testcontainers', artifactId: 'couchbase', scope: 'testImplementation' },
-          ]);
-        }
-
-        if (application.prodDatabaseType === 'mysql') {
-          source.addGradleDependency({ groupId: 'mysql', artifactId: 'mysql-connector-java', scope: 'implementation' });
-        }
-        if (application.prodDatabaseType === 'postgresql') {
-          source.addGradleDependency({ groupId: 'org.postgresql', artifactId: 'postgresql', scope: 'implementation' });
-        }
-        if (application.prodDatabaseType === 'mariadb') {
-          source.addGradleDependency({ groupId: 'org.mariadb.jdbc', artifactId: 'mariadb-java-client', scope: 'implementation' });
-        }
-        if (application.prodDatabaseType === 'mssql') {
-          source.addGradleDependency({ groupId: 'com.microsoft.sqlserver', artifactId: 'mssql-jdbc', scope: 'implementation' });
-        }
-        if (application.devDatabaseType === 'oracle' || application.prodDatabaseType === 'oracle') {
-          source.addGradleDependency({ groupId: 'com.oracle.ojdbc', artifactId: 'ojdbc8', scope: 'implementation' });
+        // Maven database driver (handled via getDatabaseDriverForDatabase)
+        if (application.buildToolMaven && application.databaseTypeSql) {
+          source.addMavenDependency?.(getDatabaseDriverForDatabase(application.prodDatabaseType).jdbc);
         }
       },
     });

@@ -8,6 +8,14 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
       micronautLiquibase({ application, source }) {
+        source.addJavaDefinition?.({
+          dependencies: [
+            {
+              groupId: 'io.micronaut.liquibase',
+              artifactId: 'micronaut-liquibase',
+            },
+          ],
+        });
         if (application.buildToolMaven) {
           source.addMavenDefinition?.({
             properties: [
@@ -15,11 +23,6 @@ export default class extends BaseApplicationGenerator {
               { property: 'jboss-logging.version', value: application.javaDependencies['jboss-logging'] },
             ],
             dependencies: [
-              {
-                groupId: 'io.micronaut.liquibase',
-                artifactId: 'micronaut-liquibase',
-                scope: 'compile',
-              },
               {
                 groupId: 'org.liquibase.ext',
                 artifactId: 'liquibase-hibernate6',
@@ -46,12 +49,6 @@ export default class extends BaseApplicationGenerator {
                 version: '${liquibase.version}',
               },
             ],
-          });
-        } else if (application.buildToolGradle) {
-          source.addGradleDependency?.({
-            groupId: 'io.micronaut.liquibase',
-            artifactId: 'micronaut-liquibase',
-            scope: 'implementation',
           });
         }
       },
