@@ -10,7 +10,7 @@ jakarta-persistence = { module = 'jakarta.persistence:jakarta.persistence-api', 
 
 logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-encoder', version = '9.0' }
 
-micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', version = '4.9.4' }
+micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', version = '4.10.1' }
 
 redisson = { module = 'org.redisson:redisson', version = '4.3.0' }
 
