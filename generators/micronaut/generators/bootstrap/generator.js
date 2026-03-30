@@ -14,7 +14,6 @@ export default class extends BaseApplicationGenerator {
       async preparingMicronaut({ applicationDefaults }) {
         applicationDefaults({
           backendTypeJavaAny: true,
-          backendType: 'micronaut',
           hipster: 'jhipster_family_member_4',
           hipsterBugTrackerLink: 'https://github.com/jhipster/generator-jhipster-micronaut/issues?state=open',
           hipsterBugTrackerProductName: 'MHipster',
