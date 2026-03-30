@@ -8,6 +8,9 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.CONFIGURING]() {
     return this.asPreparingTaskGroup({
       async preparingMicronaut() {
+        // Set the default backend to micronaut if not set.
+        // Needs to be done in the server:bootstrap generator as it is called before server generator.
+        // jhipster:server:bootstrap generator needs to know the backend type so it won't compose with the jhipster:spring-boot:bootstrap generator.
         this.jhipsterConfig.backendType ??= 'micronaut';
       },
     });
