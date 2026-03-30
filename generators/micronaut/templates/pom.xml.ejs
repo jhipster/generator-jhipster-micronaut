@@ -172,6 +172,11 @@
                                 <version>${micronaut.core.version}</version>
                             </path>
                             <path>
+                                <groupId>io.micronaut</groupId>
+                                <artifactId>micronaut-http-validation</artifactId>
+                                <version>${micronaut.core.version}</version>
+                            </path>
+                            <path>
                                 <groupId>io.micronaut.data</groupId>
                                 <artifactId>micronaut-data-processor</artifactId>
                                 <version>${micronaut.data.version}</version>
@@ -197,6 +202,11 @@
                                 <groupId>io.micronaut.security</groupId>
                                 <artifactId>micronaut-security-annotations</artifactId>
                                 <version>${micronaut.security.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.glassfish.jaxb</groupId>
+                                <artifactId>jaxb-runtime</artifactId>
+                                <version><%= javaDependencies['jaxb-runtime'] %></version>
                             </path>
                             <%_ if (enableSwaggerCodegen) { _%>
                             <path>
