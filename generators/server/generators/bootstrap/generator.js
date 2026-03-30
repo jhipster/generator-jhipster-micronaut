@@ -5,18 +5,10 @@ export default class extends BaseApplicationGenerator {
     super(args, opts, { ...features, sbsBlueprint: true });
   }
 
-  get [BaseApplicationGenerator.CONFIGURING]() {
-    return this.asPreparingTaskGroup({
-      async preparingMicronaut() {
-        this.jhipsterConfig.backendType ??= 'micronaut';
-      },
-    });
-  }
-
   get [BaseApplicationGenerator.COMPOSING]() {
     return this.asComposingTaskGroup({
       async composingTemplateTask() {
-        await this.composeWithJHipster('jhipster-micronaut:micronaut');
+        await this.composeWith('jhipster-micronaut:micronaut:bootstrap');
       },
     });
   }

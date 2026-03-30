@@ -84,6 +84,12 @@
         "priorities": ["composing"],
         "sbs": true,
         "written": true
+      },
+      "server:bootstrap": {
+        "command": false,
+        "priorities": ["composing"],
+        "sbs": true,
+        "written": true
       }
     },
     "githubWorkflows": true,
