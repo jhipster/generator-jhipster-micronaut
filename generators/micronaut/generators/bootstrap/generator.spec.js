@@ -2,14 +2,14 @@ import { beforeAll, describe, expect, it } from 'vitest';
 
 import { defaultHelpers as helpers, result } from 'generator-jhipster/testing';
 
-const SUB_GENERATOR = 'base-application:bootstrap';
-const BLUEPRINT_NAMESPACE = `jhipster:${SUB_GENERATOR}`;
+const SUB_GENERATOR = 'micronaut:bootstrap';
+const SUB_GENERATOR_NAMESPACE = `jhipster-micronaut:${SUB_GENERATOR}`;
 
-describe('SubGenerator base-application:bootstrap of micronaut JHipster blueprint', () => {
+describe('SubGenerator micronaut:bootstrap of micronaut JHipster blueprint', () => {
   describe('run', () => {
     beforeAll(async function () {
       await helpers
-        .run(BLUEPRINT_NAMESPACE)
+        .run(SUB_GENERATOR_NAMESPACE)
         .withJHipsterConfig()
         .withOptions({
           ignoreNeedlesError: true,

@@ -13,12 +13,6 @@
         "sbs": true,
         "written": true
       },
-      "base-application:bootstrap": {
-        "command": false,
-        "priorities": [],
-        "sbs": true,
-        "written": true
-      },
       "client": {
         "command": false,
         "priorities": ["writing"],
@@ -61,15 +55,21 @@
         "sbs": true,
         "written": true
       },
-      "micronaut:cache": {
-        "command": false,
-        "priorities": ["preparing", "writing", "postWriting"],
-        "sbs": false,
-        "written": true
-      },
       "micronaut:base-dependencies": {
         "command": false,
         "priorities": ["postWriting"],
+        "sbs": false,
+        "written": true
+      },
+      "micronaut:bootstrap": {
+        "command": false,
+        "priorities": [],
+        "sbs": true,
+        "written": true
+      },
+      "micronaut:cache": {
+        "command": false,
+        "priorities": ["preparing", "writing", "postWriting"],
         "sbs": false,
         "written": true
       },

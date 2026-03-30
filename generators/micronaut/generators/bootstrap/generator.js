@@ -5,6 +5,10 @@ export default class extends BaseApplicationGenerator {
     super(args, opts, { ...features, sbsBlueprint: true });
   }
 
+  async beforeQueue() {
+    await this.dependsOnBootstrap('server');
+  }
+
   get [BaseApplicationGenerator.CONFIGURING]() {
     return this.asPreparingTaskGroup({
       async preparingMicronaut() {
