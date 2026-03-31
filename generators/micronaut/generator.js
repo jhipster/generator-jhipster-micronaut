@@ -30,6 +30,7 @@ export default class extends BaseApplicationGenerator {
       // For _global_partials_entity_/field_validators file
       this.fetchFromInstalledJHipster('java/generators/domain/templates'),
     );
+    await this.dependsOnJHipster('jhipster-micronaut:micronaut:bootstrap');
     await this.dependsOnJHipster('server');
     await this.dependsOnJHipster('java');
     await this.dependsOnJHipster('jhipster:java-simple-application:build-tool');

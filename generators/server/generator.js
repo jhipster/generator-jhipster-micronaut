@@ -8,7 +8,9 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.COMPOSING]() {
     return this.asComposingTaskGroup({
       async composingTemplateTask() {
-        await this.composeWithJHipster('jhipster-micronaut:micronaut');
+        if (this.jhipsterConfig.backendType === 'micronaut') {
+          await this.composeWithJHipster('jhipster-micronaut:micronaut');
+        }
       },
     });
   }

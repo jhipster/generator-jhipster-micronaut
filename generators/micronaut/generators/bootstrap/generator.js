@@ -5,12 +5,8 @@ export default class extends BaseApplicationGenerator {
     super(args, opts, { ...features, sbsBlueprint: true });
   }
 
-  get [BaseApplicationGenerator.CONFIGURING]() {
-    return this.asPreparingTaskGroup({
-      async preparingMicronaut() {
-        this.jhipsterConfig.backendType = 'micronaut';
-      },
-    });
+  async beforeQueue() {
+    await this.dependsOnBootstrap('server');
   }
 
   get [BaseApplicationGenerator.LOADING]() {
@@ -55,10 +51,6 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
       configure({ application }) {
-        // bootstrap-application-base generator does not respect current configured hipster value.
-        Object.assign(application, {
-          hipster: 'jhipster_family_member_4',
-        });
         if (application.authenticationType === 'oauth2') {
           application.syncUserWithIdp = true;
           application.generateBuiltInUserEntity = true;
