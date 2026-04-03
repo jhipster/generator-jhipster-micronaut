@@ -39,7 +39,7 @@ liquibase-maven-plugin = { module = 'org.liquibase:liquibase-maven-plugin', vers
 
 maven-clean-plugin = { module = 'org.apache.maven.plugins:maven-clean-plugin', version = '3.5.0' }
 
-git-commit-id-maven-plugin = { module = 'io.github.git-commit-id:git-commit-id-maven-plugin', version = '9.1.0' }
+git-commit-id-maven-plugin = { module = 'io.github.git-commit-id:git-commit-id-maven-plugin', version = '9.2.0' }
 
 jboss-logging = { module = 'org.jboss.logging:jboss-logging', version = '3.6.3.Final' }
 
