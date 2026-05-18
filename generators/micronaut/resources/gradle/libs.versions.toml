@@ -35,7 +35,7 @@ maven-resources-plugin = { module = 'org.apache.maven.plugins:maven-resources-pl
 
 maven-surefire-plugin = { module = 'org.apache.maven.plugins:maven-surefire-plugin', version = '3.5.5' }
 
-liquibase-maven-plugin = { module = 'org.liquibase:liquibase-maven-plugin', version = '5.0.2' }
+liquibase-maven-plugin = { module = 'org.liquibase:liquibase-maven-plugin', version = '5.0.3' }
 
 maven-clean-plugin = { module = 'org.apache.maven.plugins:maven-clean-plugin', version = '3.5.0' }
 
