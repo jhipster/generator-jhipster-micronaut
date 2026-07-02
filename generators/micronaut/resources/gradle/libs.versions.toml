@@ -46,7 +46,7 @@ jboss-logging = { module = 'org.jboss.logging:jboss-logging', version = '3.6.3.F
 modernizer-maven-plugin = { module = 'org.gaul:modernizer-maven-plugin', version = '3.4.0' }
 
 [plugins]
-micronaut-application = { id = 'io.micronaut.application', version = '4.6.2' }
+micronaut-application = { id = 'io.micronaut.application', version = '5.0.1' }
 
 gradle-git-properties = { id = 'com.gorylenko.gradle-git-properties', version = '3.0.3' }
 
