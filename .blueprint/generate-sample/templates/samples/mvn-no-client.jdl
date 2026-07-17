@@ -6,7 +6,6 @@ application {
     blueprints [generator-jhipster-micronaut]
     buildTool maven
     cacheProvider no
-    clientFramework angular
     creationTimestamp 1591136652677
     databaseType sql
     devDatabaseType h2Memory

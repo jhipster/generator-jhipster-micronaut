@@ -32,9 +32,6 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
   "eslint.config.ts": {
     "stateCleared": "modified",
   },
-  "jest.conf.js": {
-    "stateCleared": "modified",
-  },
   "package.json": {
     "stateCleared": "modified",
   },
@@ -75,6 +72,9 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
     "stateCleared": "modified",
   },
   "src/main/webapp/app/config/icon-loader.ts": {
+    "stateCleared": "modified",
+  },
+  "src/main/webapp/app/config/loading-bar-middleware.ts": {
     "stateCleared": "modified",
   },
   "src/main/webapp/app/config/logger-middleware.ts": {
@@ -332,6 +332,9 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
   "src/main/webapp/app/shared/reducers/index.ts": {
     "stateCleared": "modified",
   },
+  "src/main/webapp/app/shared/reducers/loading-bar.ts": {
+    "stateCleared": "modified",
+  },
   "src/main/webapp/app/shared/reducers/locale.spec.ts": {
     "stateCleared": "modified",
   },
@@ -446,6 +449,9 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
   "src/main/webapp/i18n/en/configuration.json": {
     "stateCleared": "modified",
   },
+  "src/main/webapp/i18n/en/en.js": {
+    "stateCleared": "modified",
+  },
   "src/main/webapp/i18n/en/error.json": {
     "stateCleared": "modified",
   },
@@ -500,7 +506,13 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
   "tsconfig.json": {
     "stateCleared": "modified",
   },
-  "tsconfig.test.json": {
+  "tsconfig.vitest.json": {
+    "stateCleared": "modified",
+  },
+  "vite.config.ts": {
+    "stateCleared": "modified",
+  },
+  "vitest.config.ts": {
     "stateCleared": "modified",
   },
   "webpack/environment.js": {

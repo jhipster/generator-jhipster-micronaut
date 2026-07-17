@@ -21,7 +21,6 @@ const authenticationTypeChoices = [
 export const serverTestFrameworkChoices = [{ name: 'Gatling', value: 'gatling' }];
 
 export default asCommand({
-  options: {},
   configs: {
     serverPort: {
       description: 'Server port',

@@ -47,12 +47,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "mvnw.cmd": {
     "stateCleared": "modified",
   },
-  "npmw": {
-    "stateCleared": "modified",
-  },
-  "npmw.cmd": {
-    "stateCleared": "modified",
-  },
   "package.json": {
     "stateCleared": "modified",
   },
@@ -517,12 +511,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "gradlew.bat": {
     "stateCleared": "modified",
   },
-  "npmw": {
-    "stateCleared": "modified",
-  },
-  "npmw.cmd": {
-    "stateCleared": "modified",
-  },
   "package.json": {
     "stateCleared": "modified",
   },
@@ -949,12 +937,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
     "stateCleared": "modified",
   },
   "mvnw.cmd": {
-    "stateCleared": "modified",
-  },
-  "npmw": {
-    "stateCleared": "modified",
-  },
-  "npmw.cmd": {
     "stateCleared": "modified",
   },
   "package.json": {
@@ -1386,12 +1368,6 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "mvnw.cmd": {
-    "stateCleared": "modified",
-  },
-  "npmw": {
-    "stateCleared": "modified",
-  },
-  "npmw.cmd": {
     "stateCleared": "modified",
   },
   "package.json": {

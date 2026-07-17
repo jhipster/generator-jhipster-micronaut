@@ -752,7 +752,7 @@ exports[`SubGenerator client of micronaut JHipster blueprint > run > should succ
   "src/main/webapp/app/shared/language/translate.directive.ts": {
     "stateCleared": "modified",
   },
-  "src/main/webapp/app/shared/language/translation.module.ts": {
+  "src/main/webapp/app/shared/language/translation.provider.ts": {
     "stateCleared": "modified",
   },
   "src/main/webapp/app/shared/pagination/index.ts": {
