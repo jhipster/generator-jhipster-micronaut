@@ -16,3 +16,7 @@ generators/react/generator.js skip
 generators/micronaut/generators/cache/command.js skip
 generators/java-simple-application/generators/gradle/generator.js skip
 generators/docker/generators/bootstrap/generator.js skip
+generators/micronaut/generators/base-dependencies/generator.spec.js skip
+generators/micronaut/generators/bootstrap/generator.js skip
+generators/server/generators/bootstrap/generator.js skip
+generators/micronaut/generators/base-dependencies/generator.js skip
