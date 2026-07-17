@@ -128,17 +128,18 @@ export default class extends BaseApplicationGenerator {
         // Used by micronaut-cache.
         application.javaDependencies.ehcache = application.javaManagedProperties['ehcache.version'];
       },
+      defaults({ applicationDefaults }) {
+        applicationDefaults({
+          saveUserSnapshot: ({ applicationTypeMicroservice, authenticationTypeOauth2, hasRelationshipWithBuiltInUser, dto }) =>
+            Boolean(applicationTypeMicroservice && authenticationTypeOauth2 && hasRelationshipWithBuiltInUser && dto === 'no'),
+        });
+      },
     });
   }
 
   get [BaseApplicationGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
-      defaults({ application, applicationDefaults }) {
-        applicationDefaults({
-          saveUserSnapshot: ({ applicationTypeMicroservice, authenticationTypeOauth2, hasRelationshipWithBuiltInUser, dto }) =>
-            applicationTypeMicroservice && authenticationTypeOauth2 && hasRelationshipWithBuiltInUser && dto === 'no',
-        });
-
+      defaults({ application }) {
         if (application.databaseTypeSql) {
           prepareSqlApplicationProperties({ application });
         }
