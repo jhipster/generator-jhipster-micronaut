@@ -43,13 +43,13 @@ git-commit-id-maven-plugin = { module = 'io.github.git-commit-id:git-commit-id-m
 
 jboss-logging = { module = 'org.jboss.logging:jboss-logging', version = '3.6.3.Final' }
 
-modernizer-maven-plugin = { module = 'org.gaul:modernizer-maven-plugin', version = '3.4.0' }
+modernizer-maven-plugin = { module = 'org.gaul:modernizer-maven-plugin', version = '3.5.0' }
 
 [plugins]
 micronaut-application = { id = 'io.micronaut.application', version = '4.6.2' }
 
 gradle-git-properties = { id = 'com.gorylenko.gradle-git-properties', version = '3.0.3' }
 
-openapi-generator = { id = 'org.openapi.generator', version = '7.23.0' }
+openapi-generator = { id = 'org.openapi.generator', version = '7.24.0' }
 
 shadow = { id = 'com.gradleup.shadow', version = '9.5.1' }
