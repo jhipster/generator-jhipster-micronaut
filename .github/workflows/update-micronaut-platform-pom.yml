@@ -38,12 +38,12 @@ jobs:
     if: github.repository == 'jhipster/generator-jhipster-micronaut'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 20
       - uses: actions/checkout@v7
-      - uses: jhipster/actions/setup-git@v1
-      - uses: jhipster/actions/restore-cache@v1
+      - uses: jhipster/actions/setup-git@v2
+      - uses: jhipster/actions/restore-cache@v2
         with:
           npm: true
       - name: Create commit
