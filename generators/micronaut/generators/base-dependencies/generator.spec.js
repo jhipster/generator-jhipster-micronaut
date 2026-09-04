@@ -17,7 +17,7 @@ describe('SubGenerator micronaut:base-dependencies of micronaut JHipster bluepri
         .withMockedSource()
         .withJHipsterGenerators()
         .withConfiguredBlueprint()
-        .withBlueprintConfig();
+        .withBlueprintConfig({});
     });
 
     it('should succeed', () => {
