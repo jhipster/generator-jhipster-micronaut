@@ -1,7 +1,5 @@
 package <%=packageName%>.web.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 
@@ -9,17 +7,22 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.dataformat.yaml.YAMLMapper;
 
 @Controller("/v3/api-docs")
 public class SwaggerResource {
 
-    private final ObjectMapper jsonMapper = new ObjectMapper();
-    private final ObjectMapper yamlMapper = new ObjectMapper(new YAMLFactory());
+    private final ObjectMapper jsonMapper = new JsonMapper();
+    private final ObjectMapper yamlMapper = new YAMLMapper();
 
     @Get
     public String getJsonSwagger() throws IOException {
         URL resourceAsStream = this.getClass().getResource("/META-INF/swagger/openapi.yml");
-        Object obj = yamlMapper.readValue(resourceAsStream, Object.class);
-        return jsonMapper.writeValueAsString(obj);
+        try (InputStream inputStream = resourceAsStream.openStream()) {
+            Object obj = yamlMapper.readValue(inputStream, Object.class);
+            return jsonMapper.writeValueAsString(obj);
+        }
     }
 }

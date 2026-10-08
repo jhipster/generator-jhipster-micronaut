@@ -41,7 +41,7 @@ export const getCacheProviderMavenDefinition = (cacheProvider, javaDependencies)
         dependencies: [
           {
             groupId: 'org.testcontainers',
-            artifactId: 'junit-jupiter',
+            artifactId: 'testcontainers-junit-jupiter',
             scope: 'test',
           },
           {

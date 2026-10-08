@@ -22,6 +22,10 @@ export default class extends BaseCoreGenerator {
           this.log.info(warnings.join('\n'));
         }
         this.matrix = convertToGitHubMatrix(samples);
+        // Micronaut 5 requires Java 25.
+        for (const entry of this.matrix.include) {
+          entry['java-version'] = '25';
+        }
         const githubOutputFile = getGithubOutputFile();
         this.log.info('matrix', this.matrix);
         if (githubOutputFile) {

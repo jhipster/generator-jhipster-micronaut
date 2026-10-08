@@ -1,13 +1,13 @@
 package <%=packageName%>.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 <%_ if (databaseTypeSql) { _%>
 import io.micronaut.transaction.TransactionOperations;
 <%_ } _%>
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 <%_ if (databaseTypeSql) { _%>
 import jakarta.persistence.EntityManager;
@@ -19,7 +19,7 @@ import jakarta.persistence.criteria.Root;
 <%_ } _%>
 import java.io.IOException;
 <%_ if (databaseTypeSql) { _%>
-import java.sql.Connection;
+import org.hibernate.Session;
 <%_ } _%>
 import java.util.List;
 
@@ -34,10 +34,9 @@ public final class TestUtil {
     private static final Logger log = LoggerFactory.getLogger(TestUtil.class);
 
     private static ObjectMapper createObjectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
-        mapper.registerModule(new JavaTimeModule());
-        return mapper;
+        return JsonMapper.builder()
+            .changeDefaultPropertyInclusion(inclusion -> inclusion.withValueInclusion(JsonInclude.Include.NON_EMPTY))
+            .build();
     }
 
     /**
@@ -93,7 +92,7 @@ public final class TestUtil {
      * @param clss The class type to be searched
      * @return A list of all found objects
      */
-    public static <T> List<T> findAll(TransactionOperations<Connection> transactionManager, EntityManager em, Class<T> clss) {
+    public static <T> List<T> findAll(TransactionOperations<Session> transactionManager, EntityManager em, Class<T> clss) {
         return transactionManager.executeRead(status -> {
             em.joinTransaction();
             CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -112,7 +111,7 @@ public final class TestUtil {
      * @param clss The class type to be searched
      * @param <T>
      */
-    public static <T> void removeAll(TransactionOperations<Connection> transactionManager, EntityManager em, Class<T> clss) {
+    public static <T> void removeAll(TransactionOperations<Session> transactionManager, EntityManager em, Class<T> clss) {
         try {
             transactionManager.executeWrite(status -> {
                 em.joinTransaction();

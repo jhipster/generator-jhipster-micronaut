@@ -12,7 +12,6 @@ import io.micronaut.security.authentication.AuthenticationRequest;
 import io.micronaut.security.authentication.AuthenticationResponse;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.micronaut.test.annotation.MockBean;
-import io.reactivex.rxjava3.core.Flowable;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -83,7 +82,7 @@ public class DomainUserDetailsServiceIT {
 
     @Test
     public void assertThatUserCanBeFoundByLogin() {
-        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(null, new AuthenticationRequest() {
+        AuthenticationResponse response = authenticationProvider.authenticate(null, new AuthenticationRequest() {
             @Override
             public Object getIdentity() {
                 return userOne.getLogin();
@@ -93,7 +92,7 @@ public class DomainUserDetailsServiceIT {
             public Object getSecret() {
                 return userOne.getPassword();
             }
-        })).blockingFirst();
+        });
         assertThat(response).isNotNull();
         Authentication authentication = response.getAuthentication().get();
         assertThat(authentication.getName()).isEqualTo(USER_ONE_LOGIN);
@@ -101,7 +100,7 @@ public class DomainUserDetailsServiceIT {
 
     @Test
     public void assertThatUserCanBeFoundByLoginIgnoreCase() {
-        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(null, new AuthenticationRequest() {
+        AuthenticationResponse response = authenticationProvider.authenticate(null, new AuthenticationRequest() {
             @Override
             public Object getIdentity() {
                 return userOne.getLogin().toUpperCase(Locale.ENGLISH);
@@ -111,7 +110,7 @@ public class DomainUserDetailsServiceIT {
             public Object getSecret() {
                 return userOne.getPassword();
             }
-        })).blockingFirst();
+        });
         assertThat(response).isNotNull();
         Authentication authentication = response.getAuthentication().get();
         assertThat(authentication.getName()).isEqualTo(USER_ONE_LOGIN);
@@ -119,7 +118,7 @@ public class DomainUserDetailsServiceIT {
 
     @Test
     public void assertThatUserCanBeFoundByEmail() {
-        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(null, new AuthenticationRequest() {
+        AuthenticationResponse response = authenticationProvider.authenticate(null, new AuthenticationRequest() {
             @Override
             public Object getIdentity() {
                 return userTwo.getEmail();
@@ -129,7 +128,7 @@ public class DomainUserDetailsServiceIT {
             public Object getSecret() {
                 return userTwo.getPassword();
             }
-        })).blockingFirst();
+        });
         assertThat(response).isNotNull();
         Authentication authentication = response.getAuthentication().get();
         assertThat(authentication.getName()).isEqualTo(USER_TWO_LOGIN);
@@ -137,7 +136,7 @@ public class DomainUserDetailsServiceIT {
 
     @Test
     public void assertThatUserCanNotBeFoundByEmailIgnoreCase() {
-        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(null, new AuthenticationRequest() {
+        AuthenticationResponse response = authenticationProvider.authenticate(null, new AuthenticationRequest() {
             @Override
             public Object getIdentity() {
                 return userTwo.getEmail().toUpperCase(Locale.ENGLISH);
@@ -147,14 +146,14 @@ public class DomainUserDetailsServiceIT {
             public Object getSecret() {
                 return userTwo.getPassword();
             }
-        })).blockingFirst();
+        });
         assertThat(response).isNotNull();
         assertThat(response.isAuthenticated()).isFalse();
     }
 
     @Test
     public void assertThatEmailIsPrioritizedOverLogin() {
-        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(null, new AuthenticationRequest() {
+        AuthenticationResponse response = authenticationProvider.authenticate(null, new AuthenticationRequest() {
             @Override
             public Object getIdentity() {
                 return userOne.getEmail();
@@ -164,7 +163,7 @@ public class DomainUserDetailsServiceIT {
             public Object getSecret() {
                 return userOne.getPassword();
             }
-        })).blockingFirst();
+        });
         assertThat(response).isNotNull();
         Authentication authentication = response.getAuthentication().get();
         assertThat(authentication.getName()).isEqualTo(USER_ONE_LOGIN);
@@ -172,7 +171,7 @@ public class DomainUserDetailsServiceIT {
 
     @Test
     public void assertThatUserNotActivatedExceptionIsThrownForNotActivatedUsers() {
-        AuthenticationResponse response = Flowable.fromPublisher(authenticationProvider.authenticate(null, new AuthenticationRequest() {
+        AuthenticationResponse response = authenticationProvider.authenticate(null, new AuthenticationRequest() {
             @Override
             public Object getIdentity() {
                 return userThree.getLogin();
@@ -182,7 +181,7 @@ public class DomainUserDetailsServiceIT {
             public Object getSecret() {
                 return userThree.getPassword();
             }
-        })).blockingFirst();
+        });
         assertThat(response).isNotNull();
         assertThat(response.isAuthenticated()).isFalse();
     }

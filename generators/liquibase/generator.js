@@ -25,7 +25,7 @@ export default class extends BaseApplicationGenerator {
             dependencies: [
               {
                 groupId: 'org.liquibase.ext',
-                artifactId: 'liquibase-hibernate6',
+                artifactId: 'liquibase-hibernate7',
                 scope: 'runtime',
                 exclusions: {
                   exclusion: {
@@ -38,7 +38,7 @@ export default class extends BaseApplicationGenerator {
             dependencyManagement: [
               {
                 groupId: 'org.liquibase.ext',
-                artifactId: 'liquibase-hibernate6',
+                artifactId: 'liquibase-hibernate7',
                 version: '${liquibase.version}',
               },
             ],
@@ -50,6 +50,13 @@ export default class extends BaseApplicationGenerator {
               },
             ],
           });
+        }
+      },
+      // Micronaut 5 uses Hibernate 7.
+      replaceLiquibaseHibernate6({ application }) {
+        const files = application.buildToolMaven ? ['pom.xml'] : ['gradle/liquibase.gradle'];
+        for (const file of files) {
+          this.editFile(file, { ignoreNonExisting: true }, content => content.replaceAll('liquibase-hibernate6', 'liquibase-hibernate7'));
         }
       },
     });
