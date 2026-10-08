@@ -5,6 +5,9 @@ exports[`SubGenerator cypress of micronaut JHipster blueprint > run > should suc
   ".yo-rc.json": {
     "stateCleared": "modified",
   },
+  "angular.json": {
+    "stateCleared": "modified",
+  },
   "cypress.config.ts": {
     "stateCleared": "modified",
   },

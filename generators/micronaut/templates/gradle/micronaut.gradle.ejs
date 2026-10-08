@@ -110,6 +110,9 @@ if (!project.hasProperty("runList")) {
 
 shadowJar {
     mergeServiceFiles()
+    if (project.hasProperty("e2e")) {
+        archiveFileName = 'e2e.jar'
+    }
 }
 
 gitProperties {

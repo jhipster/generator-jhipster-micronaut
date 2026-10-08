@@ -515,26 +515,5 @@ exports[`SubGenerator react of micronaut JHipster blueprint > run > should succe
   "vitest.config.ts": {
     "stateCleared": "modified",
   },
-  "webpack/environment.js": {
-    "stateCleared": "modified",
-  },
-  "webpack/logo-jhipster.png": {
-    "stateCleared": "modified",
-  },
-  "webpack/package.json": {
-    "stateCleared": "modified",
-  },
-  "webpack/utils.js": {
-    "stateCleared": "modified",
-  },
-  "webpack/webpack.common.js": {
-    "stateCleared": "modified",
-  },
-  "webpack/webpack.dev.js": {
-    "stateCleared": "modified",
-  },
-  "webpack/webpack.prod.js": {
-    "stateCleared": "modified",
-  },
 }
 `;

@@ -16,20 +16,19 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
+import { serverApiUrl } from 'app/config';
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { ProfileInfo, InfoResponse } from './profile-info.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
   private readonly http = inject(HttpClient);
-  private readonly applicationConfigService = inject(ApplicationConfigService);
 
-  private readonly infoUrl = this.applicationConfigService.getEndpointFor('management/info');
+  private readonly infoUrl = `${serverApiUrl}management/info`;
   private profileInfo$?: Observable<ProfileInfo>;
 
   getProfileInfo(): Observable<ProfileInfo> {
