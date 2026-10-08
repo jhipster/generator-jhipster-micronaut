@@ -22,26 +22,6 @@ export default class extends BaseApplicationGenerator {
               { property: 'liquibase.version', value: application.javaDependencies.liquibase },
               { property: 'jboss-logging.version', value: application.javaDependencies['jboss-logging'] },
             ],
-            dependencies: [
-              {
-                groupId: 'org.liquibase.ext',
-                artifactId: 'liquibase-hibernate7',
-                scope: 'runtime',
-                exclusions: {
-                  exclusion: {
-                    groupId: 'org.slf4j',
-                    artifactId: 'slf4j-simple',
-                  },
-                },
-              },
-            ],
-            dependencyManagement: [
-              {
-                groupId: 'org.liquibase.ext',
-                artifactId: 'liquibase-hibernate7',
-                version: '${liquibase.version}',
-              },
-            ],
             plugins: [
               {
                 groupId: 'org.liquibase',
@@ -50,13 +30,42 @@ export default class extends BaseApplicationGenerator {
               },
             ],
           });
+          if (application.databaseTypeSql && !application.reactive) {
+            source.addMavenDefinition?.({
+              dependencies: [
+                {
+                  groupId: 'org.liquibase.ext',
+                  artifactId: 'liquibase-hibernate7',
+                  scope: 'runtime',
+                  exclusions: {
+                    exclusion: {
+                      groupId: 'org.slf4j',
+                      artifactId: 'slf4j-simple',
+                    },
+                  },
+                },
+              ],
+              dependencyManagement: [
+                {
+                  groupId: 'org.liquibase.ext',
+                  artifactId: 'liquibase-hibernate7',
+                  version: '${liquibase.version}',
+                },
+              ],
+            });
+          }
         }
       },
-      // Micronaut 5 uses Hibernate 7.
+      // Micronaut 5 uses Hibernate 7, generator-jhipster hardcodes liquibase-hibernate6.
       replaceLiquibaseHibernate6({ application }) {
-        const files = application.buildToolMaven ? ['pom.xml'] : ['gradle/liquibase.gradle'];
-        for (const file of files) {
-          this.editFile(file, { ignoreNonExisting: true }, content => content.replaceAll('liquibase-hibernate6', 'liquibase-hibernate7'));
+        if (!application.databaseTypeSql) return;
+        const replaceHibernate6 = content => content.replaceAll('liquibase-hibernate6', 'liquibase-hibernate7');
+        if (application.buildToolMaven) {
+          // liquibase-maven-plugin dependencies
+          this.editFile('pom.xml', replaceHibernate6);
+        } else if (application.buildToolGradle && !application.reactive) {
+          // liquibaseRuntime dependency
+          this.editFile('gradle/liquibase.gradle', replaceHibernate6);
         }
       },
     });
