@@ -14,6 +14,9 @@ export default class extends BaseApplicationGenerator {
       async preparingMicronaut({ applicationDefaults }) {
         applicationDefaults({
           backendTypeJavaAny: true,
+          // Micronaut 5 requires Java 25.
+          javaVersion: '25',
+          javaCompatibleVersions: ['25'],
           hipster: 'jhipster_family_member_4',
           hipsterBugTrackerLink: 'https://github.com/jhipster/generator-jhipster-micronaut/issues?state=open',
           hipsterBugTrackerProductName: 'MHipster',

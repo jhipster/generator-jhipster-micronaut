@@ -1,21 +1,23 @@
 package <%=packageName%>.config;
 
-import com.fasterxml.jackson.datatype.hibernate6.Hibernate6Module;
 import io.micronaut.context.annotation.Factory;
 import jakarta.inject.Singleton;
-import org.zalando.problem.jackson.ProblemModule;
-import org.zalando.problem.violations.ConstraintViolationProblemModule;
+<%_ if (databaseTypeSql) { _%>
+import tools.jackson.datatype.hibernate7.Hibernate7Module;
+<%_ } _%>
 
 @Factory
 public class JacksonConfiguration {
+<%_ if (databaseTypeSql) { _%>
 
     /*
      * Support for Hibernate types in Jackson.
      */
     @Singleton
-    Hibernate6Module hibernate6Module() {
-        return new Hibernate6Module();
+    Hibernate7Module hibernate7Module() {
+        return new Hibernate7Module();
     }
+<%_ } _%>
 
     /*
      * Module for serialization/deserialization of RFC7807 Problem.
@@ -23,13 +25,5 @@ public class JacksonConfiguration {
     @Singleton
     ProblemModule problemModule() {
         return new ProblemModule();
-    }
-
-    /*
-     * Module for serialization/deserialization of ConstraintViolationProblem.
-     */
-    @Singleton
-    ConstraintViolationProblemModule constraintViolationProblemModule() {
-        return new ConstraintViolationProblemModule();
     }
 }

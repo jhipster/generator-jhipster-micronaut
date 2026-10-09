@@ -101,6 +101,7 @@ export const serverFiles = {
         'config/Constants.java',
         'config/DefaultProfileUtil.java',
         'config/JacksonConfiguration.java',
+        'config/ProblemModule.java',
         'config/JHipsterConfigurationEndpoint.java',
         'config/LoggingConfiguration.java',
         'config/MessagesBundleMessageSource.java',

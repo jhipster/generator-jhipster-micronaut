@@ -28,15 +28,14 @@ import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.runtime.server.EmbeddedServer;
 import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.authentication.*;
+import io.micronaut.security.authentication.provider.HttpRequestAuthenticationProvider;
 import io.micronaut.security.rules.SecurityRule;
 import io.micronaut.security.token.render.AccessRefreshToken;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import io.reactivex.rxjava3.core.Flowable;
 import org.junit.jupiter.api.Test;
 <%_ if (cacheProvider === 'redis') { _%>
 import org.junit.jupiter.api.extension.ExtendWith;
 <%_ } _%>
-import org.reactivestreams.Publisher;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -127,14 +126,14 @@ public class JWTFilterTest {
     <%_ } _%>
     @Requires(property = "spec.name", value = "JWTFilterTest")
     @Singleton
-    static class MockAuthenticationProvider implements AuthenticationProvider<HttpRequest<?>> {
+    static class MockAuthenticationProvider implements HttpRequestAuthenticationProvider<Object> {
         @Override
-        public Publisher<AuthenticationResponse> authenticate(@Nullable HttpRequest<?> httpRequest, AuthenticationRequest<?, ?> authenticationRequest) {
-            if (authenticationRequest.getIdentity().toString().equals("test-user") &&
-            authenticationRequest.getSecret().toString().equals("test-password")) {
-                return Flowable.just(AuthenticationResponse.success("test-user", Collections.emptyList()));
+        public AuthenticationResponse authenticate(@Nullable HttpRequest<Object> httpRequest, AuthenticationRequest<String, String> authenticationRequest) {
+            if (authenticationRequest.getIdentity().equals("test-user") &&
+            authenticationRequest.getSecret().equals("test-password")) {
+                return AuthenticationResponse.success("test-user", Collections.emptyList());
             }
-            return Flowable.empty();
+            return AuthenticationResponse.failure();
         }
     }
 

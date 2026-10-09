@@ -40,7 +40,6 @@ export default class extends BaseApplicationGenerator {
               { groupId: 'tech.jhipster', artifactId: 'jhipster-framework', version: application.jhipsterDependenciesVersion },
               { groupId: 'org.apache.commons', artifactId: 'commons-lang3', version: javaDependencies['commons-lang3'] },
               { groupId: 'org.mockito', artifactId: 'mockito-core', scope: 'test' },
-              { groupId: 'org.zalando', artifactId: 'jackson-datatype-problem', version: javaDependencies['jackson-datatype-problem'] },
               { groupId: 'org.zalando', artifactId: 'problem-violations', version: javaDependencies['problem-violations'] },
             ],
           },
@@ -110,9 +109,8 @@ export default class extends BaseApplicationGenerator {
               { groupId: 'ch.qos.logback', artifactId: 'logback-classic' },
               { groupId: 'io.micrometer', artifactId: 'micrometer-registry-prometheus' },
               { groupId: 'com.fasterxml.jackson.core', artifactId: 'jackson-annotations' },
-              { groupId: 'com.fasterxml.jackson.core', artifactId: 'jackson-databind' },
-              { groupId: 'com.fasterxml.jackson.datatype', artifactId: 'jackson-datatype-jsr310' },
-              { groupId: 'com.fasterxml.jackson.dataformat', artifactId: 'jackson-dataformat-yaml' },
+              { groupId: 'tools.jackson.core', artifactId: 'jackson-databind' },
+              { groupId: 'tools.jackson.dataformat', artifactId: 'jackson-dataformat-yaml' },
               { groupId: 'io.micronaut', artifactId: 'micronaut-jackson-databind' },
               { groupId: 'io.micronaut', artifactId: 'micronaut-inject' },
               { groupId: 'io.micronaut', artifactId: 'micronaut-http-client' },
@@ -143,8 +141,6 @@ export default class extends BaseApplicationGenerator {
               // Runtime
               { groupId: 'org.yaml', artifactId: 'snakeyaml', scope: 'runtime' },
               { groupId: 'org.eclipse.angus', artifactId: 'angus-mail', scope: 'runtime' },
-              // Provided / compileOnly
-              { groupId: 'org.graalvm.nativeimage', artifactId: 'svm', scope: 'provided' },
               // Test
               { groupId: 'io.micronaut.test', artifactId: 'micronaut-test-junit5', scope: 'test' },
               { groupId: 'org.junit.jupiter', artifactId: 'junit-jupiter-engine', scope: 'test' },
@@ -154,7 +150,7 @@ export default class extends BaseApplicationGenerator {
           },
           {
             condition: application.databaseTypeSql,
-            dependencies: [{ groupId: 'com.fasterxml.jackson.datatype', artifactId: 'jackson-datatype-hibernate6' }],
+            dependencies: [{ groupId: 'tools.jackson.datatype', artifactId: 'jackson-datatype-hibernate7' }],
           },
           {
             condition: application.authenticationTypeJwt || application.authenticationTypeOauth2,
@@ -182,7 +178,7 @@ export default class extends BaseApplicationGenerator {
           },
           {
             condition: application.messageBroker === 'kafka',
-            dependencies: [{ groupId: 'org.testcontainers', artifactId: 'kafka', scope: 'test' }],
+            dependencies: [{ groupId: 'org.testcontainers', artifactId: 'testcontainers-kafka', scope: 'test' }],
           },
           {
             condition: application.reactive,
@@ -220,7 +216,7 @@ export default class extends BaseApplicationGenerator {
               { groupId: 'com.github.differentway', artifactId: 'couchmove' },
               { groupId: 'com.couchbase.client', artifactId: 'java-client' },
               { groupId: 'com.couchbase.client', artifactId: 'encryption' },
-              { groupId: 'org.testcontainers', artifactId: 'couchbase', scope: 'test' },
+              { groupId: 'org.testcontainers', artifactId: 'testcontainers-couchbase', scope: 'test' },
             ],
           },
           {
@@ -317,14 +313,14 @@ export default class extends BaseApplicationGenerator {
             },
           ]);
 
-          // SQL Gradle-specific dependencies (different group IDs from Maven equivalents)
+          // SQL Gradle-specific dependencies
           if (application.databaseTypeSql) {
             source.addGradleDependencies([
-              { groupId: 'org.hibernate', artifactId: 'hibernate-core', version: hibernateVersion, scope: 'implementation' },
+              { groupId: 'org.hibernate.orm', artifactId: 'hibernate-core', version: hibernateVersion, scope: 'implementation' },
               { groupId: 'com.zaxxer', artifactId: 'HikariCP', scope: 'implementation' },
               {
-                groupId: 'org.hibernate',
-                artifactId: 'hibernate-jpamodelgen',
+                groupId: 'org.hibernate.orm',
+                artifactId: 'hibernate-processor',
                 version: hibernateVersion,
                 scope: 'annotationProcessor',
               },
@@ -338,10 +334,10 @@ export default class extends BaseApplicationGenerator {
             ]);
           }
 
-          // Gradle-specific hibernate-jcache (different group ID from Maven org.hibernate.orm)
+          // Gradle-specific hibernate-jcache
           if (application.enableHibernateCache && ['redis', 'ehcache', 'caffeine'].includes(application.cacheProvider)) {
             source.addGradleDependency({
-              groupId: 'org.hibernate',
+              groupId: 'org.hibernate.orm',
               artifactId: 'hibernate-jcache',
               version: hibernateVersion,
               scope: 'implementation',

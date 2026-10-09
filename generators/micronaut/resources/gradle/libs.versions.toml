@@ -10,15 +10,13 @@ jakarta-persistence = { module = 'jakarta.persistence:jakarta.persistence-api', 
 
 logstash-logback-encoder = { module = 'net.logstash.logback:logstash-logback-encoder', version = '9.0' }
 
-micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', version = '4.9.4' }
+micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', version = '5.2.2' }
 
 redisson = { module = 'org.redisson:redisson', version = '4.7.0' }
 
 jbcrypt = { module = 'org.mindrot:jbcrypt', version = '0.4' }
 
 problem-violations = { module = 'org.zalando:problem-violations', version = '0.29.1' }
-
-jackson-datatype-problem = { module = 'org.zalando:jackson-datatype-problem', version = '0.27.1' }
 
 # caffeine
 typesafe = { module = 'com.typesafe:config', version = '1.4.9' }
@@ -46,7 +44,7 @@ jboss-logging = { module = 'org.jboss.logging:jboss-logging', version = '3.6.3.F
 modernizer-maven-plugin = { module = 'org.gaul:modernizer-maven-plugin', version = '3.5.0' }
 
 [plugins]
-micronaut-application = { id = 'io.micronaut.application', version = '4.6.2' }
+micronaut-application = { id = 'io.micronaut.application', version = '5.0.2' }
 
 gradle-git-properties = { id = 'com.gorylenko.gradle-git-properties', version = '3.0.3' }
 

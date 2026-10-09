@@ -51,14 +51,14 @@ export const getImperativeMavenDefinition = ({ javaDependencies }) => ({
   properties: [{ property: 'hibernate.version', value: javaDependencies.hibernate }],
   dependencies: [
     // { groupId: 'org.springframework.boot', artifactId: 'spring-boot-starter-data-jpa' },
-    { groupId: 'com.fasterxml.jackson.datatype', artifactId: 'jackson-datatype-hibernate6' },
+    { groupId: 'tools.jackson.datatype', artifactId: 'jackson-datatype-hibernate7' },
     // TODO drop forced version. Refer to https://github.com/jhipster/generator-jhipster/issues/22579
 
     { groupId: 'org.hibernate.orm', artifactId: 'hibernate-core', version: '${hibernate.version}' },
-    { groupId: 'org.hibernate.orm', artifactId: 'hibernate-jpamodelgen', scope: 'provided', version: '${hibernate.version}' },
+    { groupId: 'org.hibernate.orm', artifactId: 'hibernate-processor', scope: 'provided', version: '${hibernate.version}' },
     // { groupId: 'org.hibernate.validator', artifactId: 'hibernate-validator' },
     // { groupId: 'org.springframework.security', artifactId: 'spring-security-data' },
-    { inProfile: 'IDE', groupId: 'org.hibernate.orm', artifactId: 'hibernate-jpamodelgen', version: '${hibernate.version}' },
+    { inProfile: 'IDE', groupId: 'org.hibernate.orm', artifactId: 'hibernate-processor', version: '${hibernate.version}' },
   ],
-  annotationProcessors: [{ groupId: 'org.hibernate.orm', artifactId: 'hibernate-jpamodelgen', version: '${hibernate.version}' }],
+  annotationProcessors: [{ groupId: 'org.hibernate.orm', artifactId: 'hibernate-processor', version: '${hibernate.version}' }],
 });
