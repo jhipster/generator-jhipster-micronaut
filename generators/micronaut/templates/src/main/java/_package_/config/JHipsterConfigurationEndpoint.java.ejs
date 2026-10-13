@@ -1,5 +1,7 @@
 package <%=packageName%>.config;
 
+import io.micronaut.context.env.Environment;
+import io.micronaut.context.env.PropertySource;
 import io.micronaut.context.env.PropertySourcePropertyResolver;
 import io.micronaut.core.convert.format.MapFormat;
 import io.micronaut.core.naming.conventions.StringConvention;
@@ -12,16 +14,20 @@ import java.util.regex.Pattern;
 @Endpoint("configprops")
 public class JHipsterConfigurationEndpoint {
 
-    private final PropertySourcePropertyResolver propertyResolver;
+    private final Environment environment;
     private final Pattern maskPattern;
 
-    JHipsterConfigurationEndpoint(PropertySourcePropertyResolver propertyResolver) {
-        this.propertyResolver = propertyResolver;
+    JHipsterConfigurationEndpoint(Environment environment) {
+        this.environment = environment;
         this.maskPattern = Pattern.compile(".*(password|credential|certificate|key|secret|token).*", Pattern.CASE_INSENSITIVE);
     }
 
     @Read
     Map<String, Object> getProperties() {
+        // Since Micronaut 5, Environment is no longer a PropertySourcePropertyResolver bean.
+        PropertySourcePropertyResolver propertyResolver = new PropertySourcePropertyResolver(
+            environment.getPropertySources().toArray(PropertySource[]::new)
+        );
         Map<String,Object> properties = propertyResolver.getAllProperties(StringConvention.RAW, MapFormat.MapTransformation.FLAT);
         properties.entrySet()
             .stream()

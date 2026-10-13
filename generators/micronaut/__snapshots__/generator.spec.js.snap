@@ -122,6 +122,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > run > should succ
   "src/main/java/com/mycompany/myapp/config/MessagesBundleMessageSource.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/config/ProblemModule.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/config/SnakeCasePhysicalNamingStrategy.java": {
     "stateCleared": "modified",
   },
@@ -586,6 +589,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with gradle build
   "src/main/java/com/mycompany/myapp/config/MessagesBundleMessageSource.java": {
     "stateCleared": "modified",
   },
+  "src/main/java/com/mycompany/myapp/config/ProblemModule.java": {
+    "stateCleared": "modified",
+  },
   "src/main/java/com/mycompany/myapp/config/SnakeCasePhysicalNamingStrategy.java": {
     "stateCleared": "modified",
   },
@@ -1012,6 +1018,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with maven build 
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/MessagesBundleMessageSource.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/config/ProblemModule.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/SnakeCasePhysicalNamingStrategy.java": {
@@ -1443,6 +1452,9 @@ exports[`SubGenerator server of micronaut JHipster blueprint > with some entitie
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/MessagesBundleMessageSource.java": {
+    "stateCleared": "modified",
+  },
+  "src/main/java/com/mycompany/myapp/config/ProblemModule.java": {
     "stateCleared": "modified",
   },
   "src/main/java/com/mycompany/myapp/config/SnakeCasePhysicalNamingStrategy.java": {

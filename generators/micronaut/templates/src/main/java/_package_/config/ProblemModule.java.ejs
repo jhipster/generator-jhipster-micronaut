@@ -1,0 +1,151 @@
+package <%=packageName%>.config;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import org.zalando.problem.DefaultProblem;
+import org.zalando.problem.Exceptional;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
+import org.zalando.problem.StatusType;
+import org.zalando.problem.ThrowableProblem;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.databind.deser.std.StdDeserializer;
+import tools.jackson.databind.module.SimpleModule;
+import tools.jackson.databind.ser.std.StdSerializer;
+import tools.jackson.databind.util.StdConverter;
+
+/**
+ * Jackson 3 module for serialization/deserialization of RFC7807 Problem.
+ * Port of org.zalando:jackson-datatype-problem, which only supports Jackson 2.
+ */
+public class ProblemModule extends SimpleModule {
+
+    private static final Map<Integer, StatusType> STATUSES = Arrays.stream(Status.values()).collect(
+        Collectors.toUnmodifiableMap(Status::getStatusCode, Function.identity())
+    );
+
+    public ProblemModule() {
+        super(ProblemModule.class.getSimpleName());
+        setMixInAnnotation(Exceptional.class, ExceptionalMixin.class);
+        setMixInAnnotation(DefaultProblem.class, DefaultProblemMixIn.class);
+        setMixInAnnotation(Problem.class, ProblemMixIn.class);
+        addSerializer(StatusType.class, new StatusTypeSerializer());
+        addDeserializer(StatusType.class, new StatusTypeDeserializer());
+    }
+
+    // Ignored on serialization only, so a "message" parameter is still deserialized by the any setter.
+    @JsonIgnoreProperties(value = { "message", "localizedMessage", "stackTrace", "suppressed" }, ignoreUnknown = true, allowSetters = true)
+    interface ExceptionalMixin {
+        @JsonInclude(NON_NULL)
+        ThrowableProblem getCause();
+    }
+
+    @JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "type",
+        defaultImpl = DefaultProblem.class,
+        visible = true
+    )
+    @JsonInclude(NON_EMPTY)
+    interface ProblemMixIn extends Problem {
+        @JsonProperty("type")
+        @JsonSerialize(converter = ProblemTypeConverter.class)
+        @Override
+        URI getType();
+
+        @JsonProperty("title")
+        @Override
+        String getTitle();
+
+        @JsonProperty("status")
+        @Override
+        StatusType getStatus();
+
+        @JsonProperty("detail")
+        @Override
+        String getDetail();
+
+        @JsonProperty("instance")
+        @Override
+        URI getInstance();
+
+        @JsonAnyGetter
+        @Override
+        Map<String, Object> getParameters();
+    }
+
+    abstract static class DefaultProblemMixIn {
+
+        @JsonCreator
+        DefaultProblemMixIn(
+            @JsonProperty("type") URI type,
+            @JsonProperty("title") String title,
+            @JsonProperty("status") StatusType status,
+            @JsonProperty("detail") String detail,
+            @JsonProperty("instance") URI instance,
+            @JsonProperty("cause") ThrowableProblem cause
+        ) {}
+
+        @JsonAnySetter
+        abstract void set(String key, Object value);
+    }
+
+    static class ProblemTypeConverter extends StdConverter<URI, URI> {
+
+        @Override
+        public URI convert(URI value) {
+            return Problem.DEFAULT_TYPE.equals(value) ? null : value;
+        }
+    }
+
+    static class StatusTypeSerializer extends StdSerializer<StatusType> {
+
+        StatusTypeSerializer() {
+            super(StatusType.class);
+        }
+
+        @Override
+        public void serialize(StatusType status, JsonGenerator json, SerializationContext context) {
+            json.writeNumber(status.getStatusCode());
+        }
+    }
+
+    static class StatusTypeDeserializer extends StdDeserializer<StatusType> {
+
+        StatusTypeDeserializer() {
+            super(StatusType.class);
+        }
+
+        @Override
+        public StatusType deserialize(JsonParser json, DeserializationContext context) {
+            int statusCode = json.getIntValue();
+            StatusType status = STATUSES.get(statusCode);
+            return status != null ? status : new UnknownStatus(statusCode);
+        }
+    }
+
+    record UnknownStatus(int getStatusCode) implements StatusType {
+        @Override
+        public String getReasonPhrase() {
+            return "Unknown";
+        }
+    }
+}

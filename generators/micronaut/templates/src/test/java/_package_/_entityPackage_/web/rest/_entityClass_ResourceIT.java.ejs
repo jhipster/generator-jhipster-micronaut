@@ -80,7 +80,6 @@ import io.micronaut.http.client.annotation.Client;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 <%_ if (databaseTypeSql) { _%>
-import io.micronaut.transaction.SynchronousTransactionManager;
 import io.micronaut.transaction.TransactionOperations;
 <%_ } _%>
 
@@ -93,7 +92,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 <%_ } _%>
 
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 <%_ if (databaseTypeSql && !reactive) { _%>
 import jakarta.persistence.EntityManager;
 <%_ } _%>
@@ -111,7 +109,7 @@ import java.time.temporal.ChronoUnit;<% } %>
 import java.util.Collections;
 <%_ } _%>
 <%_ if (databaseTypeSql) { _%>
-import java.sql.Connection;
+import org.hibernate.Session;
 <%_ } _%>
 import java.util.List;
 <%_ if (databaseType === 'cassandra' || anyFieldIsUUID === true || (databaseTypeSql && hasOauthUser === true)) { _%>
@@ -327,7 +325,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     private EntityManager em;
 
     @Inject
-    SynchronousTransactionManager<Connection> transactionManager;
+    TransactionOperations<Session> transactionManager;
     <%_ } _%>
     <%_ if (isUsingMapsId === true && ( dto !== 'mapstruct' && service === 'no')) { _%>
     @Inject
@@ -369,7 +367,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static <%= persistClass %> createEntity(<% if (databaseTypeSql) { %>TransactionOperations<Connection> transactionManager, EntityManager em<% } %>) {
+    public static <%= persistClass %> createEntity(<% if (databaseTypeSql) { %>TransactionOperations<Session> transactionManager, EntityManager em<% } %>) {
         <%_ if (fluentMethods) { _%>
         <%= persistClass %> <%= persistInstance %> = new <%= persistClass %>()<% for (idx in fields) { if (fields[idx].id) continue;%>
             .<%= fields[idx].fieldName %>(<%= "DEFAULT_" + fields[idx].fieldNameUnderscored.toUpperCase() %>)<% if ((fields[idx].fieldType === 'byte[]' || fields[idx].fieldType === 'ByteBuffer') && fields[idx].fieldTypeBlobContent !== 'text') { %>
@@ -447,7 +445,7 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static void deleteAll(TransactionOperations<Connection> transactionManager, EntityManager em) {
+    public static void deleteAll(TransactionOperations<Session> transactionManager, EntityManager em) {
         TestUtil.removeAll(transactionManager, em, <%= entityClass %>.class);
         <%_
             const alreadyDeletedEntities = []
@@ -543,7 +541,6 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
 <%_ } _%>
 
     @Test
-    @Transactional
     public void getAll<%= entityClassPlural %>() throws Exception {
         // Initialize the database
         <%_ if (databaseType === 'cassandra') { _%>
@@ -559,7 +556,6 @@ public class <%= entityClass %>ResourceIT <% if (databaseType === 'cassandra') {
     }
 
     @Test
-    @Transactional
     public void get<%= entityClass %>() throws Exception {
         // Initialize the database
         <%_ if (databaseType === 'cassandra') { _%>
