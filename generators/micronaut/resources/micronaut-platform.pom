@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.micronaut.platform</groupId>
   <artifactId>micronaut-platform</artifactId>
-  <version>5.2.2</version>
+  <version>5.2.3</version>
   <packaging>pom</packaging>
   <name>Micronaut Platform</name>
   <description>Bill-Of-Materials (BOM) and Gradle version catalogs for Micronaut</description>
@@ -51,7 +51,7 @@
     <azure.functions.java.library.version>3.3.0</azure.functions.java.library.version>
     <azure.sdk.version>1.3.8</azure.sdk.version>
     <brave.instrumentation.version>6.3.1</brave.instrumentation.version>
-    <bson.version>5.7.0</bson.version>
+    <bson.version>5.13.0</bson.version>
     <bytebuddy.version>1.18.12</bytebuddy.version>
     <caffeine.version>3.2.4</caffeine.version>
     <checker.qual.version>4.2.3</checker.qual.version>
@@ -100,7 +100,7 @@
     <html2md.converter.version>0.64.8</html2md.converter.version>
     <infinispan.version>16.2.2</infinispan.version>
     <jackson.annotations.version>2.22</jackson.annotations.version>
-    <jackson.dataformat.cbor.version>3.2.2</jackson.dataformat.cbor.version>
+    <jackson.dataformat.cbor.version>3.2.3</jackson.dataformat.cbor.version>
     <jackson.version>3.2.3</jackson.version>
     <jakarta.annotation.api.version>2.1.1</jakarta.annotation.api.version>
     <jakarta.data.version>1.1.0-M4</jakarta.data.version>
@@ -168,9 +168,9 @@
     <micronaut.chatbots.version>2.1.0</micronaut.chatbots.version>
     <micronaut.coherence.version>7.0.1</micronaut.coherence.version>
     <micronaut.control.panel.version>2.2.0</micronaut.control.panel.version>
-    <micronaut.core.version>5.2.15</micronaut.core.version>
+    <micronaut.core.version>5.2.17</micronaut.core.version>
     <micronaut.crac.version>3.1.0</micronaut.crac.version>
-    <micronaut.data.version>5.2.2</micronaut.data.version>
+    <micronaut.data.version>5.2.3</micronaut.data.version>
     <micronaut.discovery.client.version>5.1.0</micronaut.discovery.client.version>
     <micronaut.discovery.version>5.1.0</micronaut.discovery.version>
     <micronaut.eclipsestore.version>2.1.0</micronaut.eclipsestore.version>
@@ -211,14 +211,14 @@
     <micronaut.multitenancy.version>6.1.0</micronaut.multitenancy.version>
     <micronaut.nats.version>5.1.0</micronaut.nats.version>
     <micronaut.neo4j.version>8.1.0</micronaut.neo4j.version>
-    <micronaut.object.storage.version>3.1.0</micronaut.object.storage.version>
+    <micronaut.object.storage.version>3.1.1</micronaut.object.storage.version>
     <micronaut.openapi.version>7.3.0</micronaut.openapi.version>
     <micronaut.openrewrite.version>1.1.0</micronaut.openrewrite.version>
     <micronaut.opensearch.version>2.1.1</micronaut.opensearch.version>
     <micronaut.oracle.cloud.version>6.1.3</micronaut.oracle.cloud.version>
     <micronaut.oraclecloud.version>6.1.3</micronaut.oraclecloud.version>
     <micronaut.picocli.version>6.1.0</micronaut.picocli.version>
-    <micronaut.platform.version>5.2.2</micronaut.platform.version>
+    <micronaut.platform.version>5.2.3</micronaut.platform.version>
     <micronaut.problem.json.version>5.1.0</micronaut.problem.json.version>
     <micronaut.problem.version>5.1.0</micronaut.problem.version>
     <micronaut.projectgen.version>1.1.0</micronaut.projectgen.version>
@@ -229,9 +229,9 @@
     <micronaut.redis.version>7.2.0</micronaut.redis.version>
     <micronaut.rss.version>5.2.0</micronaut.rss.version>
     <micronaut.rxjava3.version>4.1.0</micronaut.rxjava3.version>
-    <micronaut.security.version>5.4.0</micronaut.security.version>
-    <micronaut.serde.version>3.2.4</micronaut.serde.version>
-    <micronaut.serialization.version>3.2.4</micronaut.serialization.version>
+    <micronaut.security.version>5.4.1</micronaut.security.version>
+    <micronaut.serde.version>3.2.5</micronaut.serde.version>
+    <micronaut.serialization.version>3.2.5</micronaut.serialization.version>
     <micronaut.servlet.version>6.2.2</micronaut.servlet.version>
     <micronaut.session.version>5.2.0</micronaut.session.version>
     <micronaut.sourcegen.version>2.2.3</micronaut.sourcegen.version>
@@ -301,7 +301,7 @@
     <sendgrid.version>4.10.3</sendgrid.version>
     <servlet.api.version>6.1.0</servlet.api.version>
     <slf4j.version>2.0.18</slf4j.version>
-    <snakeyaml.engine.version>3.0.1</snakeyaml.engine.version>
+    <snakeyaml.engine.version>3.2</snakeyaml.engine.version>
     <snakeyaml.version>2.4</snakeyaml.version>
     <soy.version>2024-02-26</soy.version>
     <spock.version>2.4-groovy-5.0</spock.version>
