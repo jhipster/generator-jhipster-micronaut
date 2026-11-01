@@ -21,6 +21,17 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
     it('should succeed', () => {
       expect(result.getStateSnapshot()).toMatchSnapshot();
     });
+
+    it('should fallback to cache tag in JHipsterMetricsEndpoint', () => {
+      result.assertFileContent(
+        'src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java',
+        'name = counter.getId().getTag("cache");',
+      );
+      result.assertFileContent(
+        'src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java',
+        'name = gauge.getId().getTag("cache");',
+      );
+    });
   });
 
   describe('with some entities', () => {
@@ -56,6 +67,17 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
     it('should succeed', () => {
       expect(result.getStateSnapshot()).toMatchSnapshot();
     });
+
+    it('should fallback to cache tag in JHipsterMetricsEndpoint', () => {
+      result.assertFileContent(
+        'src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java',
+        'name = counter.getId().getTag("cache");',
+      );
+      result.assertFileContent(
+        'src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java',
+        'name = gauge.getId().getTag("cache");',
+      );
+    });
   });
 
   describe('with gradle build tool', () => {
@@ -76,6 +98,17 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
     it('should succeed', () => {
       expect(result.getStateSnapshot()).toMatchSnapshot();
     });
+
+    it('should fallback to cache tag in JHipsterMetricsEndpoint', () => {
+      result.assertFileContent(
+        'src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java',
+        'name = counter.getId().getTag("cache");',
+      );
+      result.assertFileContent(
+        'src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java',
+        'name = gauge.getId().getTag("cache");',
+      );
+    });
   });
 
   describe('with maven build tool', () => {
@@ -95,6 +128,17 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
 
     it('should succeed', () => {
       expect(result.getStateSnapshot()).toMatchSnapshot();
+    });
+
+    it('should fallback to cache tag in JHipsterMetricsEndpoint', () => {
+      result.assertFileContent(
+        'src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java',
+        'name = counter.getId().getTag("cache");',
+      );
+      result.assertFileContent(
+        'src/main/java/com/mycompany/myapp/config/metric/JHipsterMetricsEndpoint.java',
+        'name = gauge.getId().getTag("cache");',
+      );
     });
   });
 });
