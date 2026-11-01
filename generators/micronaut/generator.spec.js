@@ -76,6 +76,14 @@ describe('SubGenerator server of micronaut JHipster blueprint', () => {
     it('should succeed', () => {
       expect(result.getStateSnapshot()).toMatchSnapshot();
     });
+
+    it('should rely on micronaut gradle plugin for incremental compilation and continuous mode', () => {
+      result.assertFileContent('gradle/micronaut.gradle', 'processing {\n        incremental true');
+      result.assertNoFileContent('gradle/micronaut.gradle', '-Amicronaut.processing.incremental=true');
+      result.assertNoFileContent('gradle/profile_dev.gradle', 'micronaut.io.watch.restart');
+      result.assertNoFileContent('gradle/profile_prod.gradle', 'micronaut.io.watch.restart');
+      result.assertFileContent('gradle/profile_dev.gradle', '-Dmicronaut.environments=');
+    });
   });
 
   describe('with maven build tool', () => {
