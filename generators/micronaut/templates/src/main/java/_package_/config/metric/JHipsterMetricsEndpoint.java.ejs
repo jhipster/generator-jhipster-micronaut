@@ -186,6 +186,9 @@ public class JHipsterMetricsEndpoint {
         counters.forEach(counter -> {
             String key = counter.getId().getName();
             String name = counter.getId().getTag("name");
+            if (name == null) {
+                name = counter.getId().getTag("cache");
+            }
             if (name != null) {
                 resultsCache.putIfAbsent(name, new HashMap<>());
                 if (counter.getId().getTag("result") != null) {
@@ -201,6 +204,9 @@ public class JHipsterMetricsEndpoint {
         gauges.forEach(gauge -> {
             String key = gauge.getId().getName();
             String name = gauge.getId().getTag("name");
+            if (name == null) {
+                name = gauge.getId().getTag("cache");
+            }
             if (name != null) {
                 resultsCache.putIfAbsent(name, new HashMap<>());
                 resultsCache.get(name).put(key, gauge.value());
