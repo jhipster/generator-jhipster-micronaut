@@ -38,13 +38,6 @@ tasks.withType(JavaExec) {
     } else {
         jvmArgs += '-Dmicronaut.environments=' + profiles
     }
-    if (gradle.startParameter.continuous) {
-        systemProperties(
-            'micronaut.io.watch.restart':'true',
-            'micronaut.io.watch.enabled':'true',
-            "micronaut.io.watch.paths":"src/main"
-        )
-    }
 }
 
 <%_ if (!skipClient) { _%>
