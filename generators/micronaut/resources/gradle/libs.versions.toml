@@ -23,7 +23,7 @@ typesafe = { module = 'com.typesafe:config', version = '1.4.9' }
 
 maven-compiler-plugin = { module = 'org.apache.maven.plugins:maven-compiler-plugin', version = '3.16.0' }
 
-maven-enforcer-plugin = { module = 'org.apache.maven.plugins:maven-enforcer-plugin', version = '3.6.3' }
+maven-enforcer-plugin = { module = 'org.apache.maven.plugins:maven-enforcer-plugin', version = '3.7.0' }
 
 maven-failsafe-plugin = { module = 'org.apache.maven.plugins:maven-failsafe-plugin', version = '3.5.6' }
 
